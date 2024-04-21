@@ -29,8 +29,8 @@ interface LinearItem {
 
 data class TextContentItem(
     override val id: LessonItemId,
-    val style: TextContentStyle,
     val text: String,
+    val style: TextContentStyle,
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
@@ -38,7 +38,7 @@ enum class TextContentStyle {
     Title, MultilineText
 }
 
-data class ChoiceQuestionItem(
+data class QuestionItem(
     override val id: LessonItemId,
     val question: String,
     val answers: List<Answer>,
@@ -96,7 +96,7 @@ value class ImageUrl(val url: String)
 data class ChoiceItem(
     override val id: LessonItemId,
     val question: String,
-    val options: ChoiceOption,
+    val options: List<ChoiceOption>,
 ) : LessonItem
 
 data class ChoiceOption(
