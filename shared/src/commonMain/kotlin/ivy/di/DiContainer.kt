@@ -64,7 +64,7 @@ object Di {
         scope to it
     }
 
-    fun reset(scope: DiScope) {
+    fun clear(scope: DiScope) {
         val keysForRemoval = instances.keys.filter {
             it.scope == scope
         }

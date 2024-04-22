@@ -116,7 +116,7 @@ class DiContainerTest {
         stateHolder.number shouldBe 42
 
         // when the scope is reset
-        Di.reset(Di.ScreenScope)
+        Di.clear(Di.ScreenScope)
 
         // then after the reset
         Di.get<FakeStateHolder>().number shouldBe 0
