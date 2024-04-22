@@ -19,7 +19,6 @@ target/
 .gradle
 gradlew
 gradlew.bat
-gradle-wrapper.jar
 
 # IntelliJ IDEA files
 .idea/

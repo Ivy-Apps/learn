@@ -1,15 +1,17 @@
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import di.AppModule
 import ivy.di.Di
 import ivy.di.SharedModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import theme.ColorsDemo
+import ui.navigation.Navigation
+import ui.screen.home.HomeScreen
 
 @Composable
 @Preview
 fun App() {
+    var initialized by mutableStateOf(false)
+
     LaunchedEffect(Unit) {
         Di.init(
             modules = setOf(
@@ -17,9 +19,17 @@ fun App() {
                 AppModule,
             )
         )
+        initialized = true
     }
 
     MaterialTheme {
-        ColorsDemo()
+        if (initialized) {
+            val navigation = remember { Di.get<Navigation>() }
+            LaunchedEffect(navigation) {
+                // navigate to the initial screen
+                navigation.navigate(HomeScreen())
+            }
+            navigation.NavHost()
+        }
     }
 }
