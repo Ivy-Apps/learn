@@ -9,10 +9,6 @@ data class Lesson(
     val tagline: String,
     val rootItem: LessonItemId,
     val items: Map<LessonItemId, LessonItem>,
-    /**
-     * % in [0, 1]
-     */
-    val percentCompleted: Float
 )
 
 @Serializable
