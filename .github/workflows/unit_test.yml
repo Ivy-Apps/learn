@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  unit_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GIT
