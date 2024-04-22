@@ -5,7 +5,7 @@ import kotlin.reflect.KClass
 
 object Di {
 
-    val singletons = mutableSetOf<String>()
+    val singletons = mutableSetOf<KClass<*>>()
     val instances = mutableMapOf<DependencyKey, Any>()
     val factories = mutableMapOf<DependencyKey, () -> Any>()
 
@@ -18,17 +18,17 @@ object Di {
     }
 
     inline fun <reified T : Any> DiScope.register(noinline factory: () -> T) {
-        factories[DependencyKey(this, T::class.diGraphKey())] = factory
+        factories[DependencyKey(this, T::class)] = factory
     }
 
     inline fun <reified T : Any> DiScope.singleton(noinline factory: () -> T) {
-        val className = T::class.diGraphKey()
-        factories[DependencyKey(this, className)] = factory
-        singletons.add(className)
+        val classKey = T::class
+        factories[DependencyKey(this, classKey)] = factory
+        singletons.add(classKey)
     }
 
     inline fun <reified T : Any> get(): T {
-        val classKey = T::class.diGraphKey()
+        val classKey = T::class
         val (scope, factory) = factory(classKey)
         val depKey = DependencyKey(scope, classKey)
         return if (classKey in singletons) {
@@ -52,30 +52,24 @@ object Di {
     }
 
     inline fun factory(
-        className: String
-    ): Pair<DiScope, () -> Any> = scopedFactory(ScreenScope, className)
-        ?: scopedFactory(AppScope, className)
-        ?: throw DiError("No factory found for class $className")
+        classKey: KClass<*>
+    ): Pair<DiScope, () -> Any> = scopedFactory(ScreenScope, classKey)
+        ?: scopedFactory(AppScope, classKey)
+        ?: throw DiError("No factory found for class $classKey")
 
     inline fun scopedFactory(
         scope: DiScope,
-        classKey: String
+        classKey: KClass<*>
     ): Pair<DiScope, () -> Any>? = factories[DependencyKey(scope, classKey)]?.let {
         scope to it
     }
 
-    inline fun <reified T : Any> KClass<T>.diGraphKey(): String {
-        // TODO: type.qualifiedName doesn't work because it's not supported on JS
-        return simpleName!!
-    }
-
-    fun clear(scope: DiScope) {
-        val keysForRemoval = factories.keys.filter {
+    fun reset(scope: DiScope) {
+        val keysForRemoval = instances.keys.filter {
             it.scope == scope
         }
         keysForRemoval.forEach {
             instances.remove(it)
-            factories.remove(it)
         }
     }
 
@@ -87,7 +81,7 @@ object Di {
 
     data class DependencyKey(
         val scope: DiScope,
-        val className: String
+        val klass: KClass<*>
     )
 
     sealed interface DiScope
