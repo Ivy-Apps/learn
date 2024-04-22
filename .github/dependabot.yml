@@ -1,0 +1,48 @@
+# Configuration options:
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#about-the-dependabotyml-file
+
+version: 2
+
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    registries:
+      - google
+      - jitpack
+      - maven-central
+      - jetbrains-compose-dev
+      - jetbrains-wasm-experimental
+    open-pull-requests-limit: 10
+    groups:
+      ivy-learn:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+registries:
+  google:
+    type: maven-repository
+    url: "https://maven.google.com/"
+  jitpack:
+    type: maven-repository
+    url: "https://jitpack.io/"
+  maven-central:
+    type: maven-repository
+    url: "https://repo.maven.apache.org/maven2"
+  jetbrains-compose-dev:
+    type: maven-repository
+    url: "https://maven.pkg.jetbrains.space/public/p/compose/dev"
+  jetbrains-wasm-experimental:
+    type: maven-repository
+    url: "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental"
