@@ -2,6 +2,7 @@ package ivy.di
 
 
 object Di {
+
     val singletons = mutableSetOf<String>()
     val instances = mutableMapOf<DependencyKey, Any>()
     val factories = mutableMapOf<DependencyKey, () -> Any>()
@@ -52,7 +53,7 @@ object Di {
         className: String
     ): Pair<DiScope, () -> Any> = scopedFactory(ScreenScope, className)
         ?: scopedFactory(AppScope, className)
-        ?: throw IllegalStateException("No factory found for class $className")
+        ?: throw DiError("No factory found for class $className")
 
     inline fun scopedFactory(
         scope: DiScope,
@@ -86,3 +87,5 @@ object Di {
     data object ScreenScope : DiScope
     data object AppScope : DiScope
 }
+
+class DiError(msg: String) : IllegalStateException(msg)
