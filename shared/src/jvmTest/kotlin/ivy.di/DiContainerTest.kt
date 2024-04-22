@@ -116,10 +116,22 @@ class DiContainerTest {
         stateHolder.number shouldBe 42
 
         // when the scope is reset
-        Di.clear(Di.ScreenScope)
+        Di.clearInstances(Di.ScreenScope)
 
         // then after the reset
         Di.get<FakeStateHolder>().number shouldBe 0
+    }
+
+    @Test
+    fun `di module registration works`() {
+        // given
+        Di.init(setOf(FakeModule))
+
+        // when
+        val instance = Di.get<FakeModuleDep>()
+
+        // then
+        instance.shouldNotBeNull()
     }
 }
 
@@ -140,3 +152,10 @@ class FakeViewModel(
     @Suppress("unused")
     val stateHolder: FakeStateHolder
 )
+
+class FakeModuleDep
+object FakeModule : DiModule {
+    override fun init() = Di.appScope {
+        register { FakeModuleDep() }
+    }
+}

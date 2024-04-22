@@ -9,6 +9,10 @@ object Di {
     val instances = mutableMapOf<DependencyKey, Any>()
     val factories = mutableMapOf<DependencyKey, () -> Any>()
 
+    fun init(modules: Set<DiModule>) {
+        modules.forEach(DiModule::init)
+    }
+
     fun appScope(block: DiScope.() -> Unit) {
         AppScope.block()
     }
@@ -64,7 +68,7 @@ object Di {
         scope to it
     }
 
-    fun clear(scope: DiScope) {
+    fun clearInstances(scope: DiScope) {
         instances.keys.filter {
             it.scope == scope
         }.forEach {
@@ -89,3 +93,7 @@ object Di {
 }
 
 class DiError(msg: String) : IllegalStateException(msg)
+
+interface DiModule {
+    fun init()
+}

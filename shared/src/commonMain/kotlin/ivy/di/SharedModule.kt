@@ -10,13 +10,12 @@ import kotlinx.serialization.json.Json
 import platform
 import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 
-object SharedDiModule {
-    fun init() {
-        Di.appScope {
-            singleton { platform() }
-            json()
-            ktorClient(Di.get(), Di.get())
-        }
+object SharedModule : DiModule {
+
+    override fun init() = Di.appScope {
+        singleton { platform() }
+        json()
+        ktorClient()
     }
 
     private fun Di.DiScope.json() = singleton {
@@ -26,13 +25,11 @@ object SharedDiModule {
         }
     }
 
-    private fun Di.DiScope.ktorClient(
-        platform: Platform,
-        json: Json
-    ) = singleton {
+    private fun Di.DiScope.ktorClient() = singleton {
+        val platform = Di.get<Platform>()
         platform.httpClient {
             install(ContentNegotiation) {
-                json(json)
+                json(Di.get<Json>())
             }
 
             install(Logging) {
