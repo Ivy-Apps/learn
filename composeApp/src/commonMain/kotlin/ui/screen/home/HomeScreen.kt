@@ -1,4 +1,4 @@
-package screen.home
+package ui.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ivy.di.Di
-import navigation.Navigation
-import navigation.Screen
-import screen.debug.ColorDemoScreen
+import ui.navigation.Navigation
+import ui.navigation.Screen
+import ui.screen.debug.ColorDemoScreen
 
 class HomeScreen : Screen() {
 

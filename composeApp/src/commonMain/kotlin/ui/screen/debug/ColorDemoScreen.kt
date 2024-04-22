@@ -1,4 +1,4 @@
-package screen.debug
+package ui.screen.debug
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ivy.di.Di
-import navigation.Navigation
-import navigation.Screen
-import theme.*
+import ui.navigation.Navigation
+import ui.navigation.Screen
+import ui.theme.*
 
 class ColorDemoScreen : Screen() {
     private val navigation: Navigation = Di.get()
