@@ -2,9 +2,8 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    id("ivy.shared-module")
-    id("ivy.serialization")
-    id("ivy.ktor-client")
+    id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.library")
 }
 
 kotlin {
@@ -37,22 +36,6 @@ kotlin {
     jvm()
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.kotlin.serialization)
-            implementation(libs.bundles.ktor.client.common)
-        }
-        androidMain.dependencies {
-            implementation(libs.ktor.client.android)
-        }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-        }
-        named("wasmJsMain").dependencies {
-            implementation(libs.ktor.client.js)
-        }
-        jvmMain.dependencies {
-            implementation(libs.ktor.client.java)
-        }
         jvmTest.dependencies {
             implementation(libs.bundles.test)
         }
@@ -60,5 +43,12 @@ kotlin {
 }
 
 android {
-    namespace = "ivy.learn.shared"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    defaultConfig {
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
 }
