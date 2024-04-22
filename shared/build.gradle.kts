@@ -40,6 +40,9 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlin.serialization)
         }
+        jvmTest.dependencies {
+            implementation(libs.bundles.test)
+        }
     }
 }
 
