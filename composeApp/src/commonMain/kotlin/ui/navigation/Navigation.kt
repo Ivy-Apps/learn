@@ -11,6 +11,8 @@ class Navigation {
         currentScreen?.Content()
     }
 
+    fun backstack(): List<Screen> = backstack
+
     fun navigate(screen: Screen) {
         backstack = backstack + screen.also(Screen::initialize)
     }
