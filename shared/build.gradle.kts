@@ -21,7 +21,7 @@ kotlin {
             }
         }
     }
-    
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -29,16 +29,32 @@ kotlin {
             }
         }
     }
-    
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    
+
     jvm()
-    
+
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlin.serialization)
+            implementation(libs.bundles.ktor.client.common)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+        named("wasmJsMain").dependencies {
+            implementation(libs.ktor.client.js)
+        }
+        jvmMain.dependencies {
+            implementation(libs.ktor.client.java)
+        }
+        jvmTest.dependencies {
+            implementation(libs.bundles.test)
         }
     }
 }
