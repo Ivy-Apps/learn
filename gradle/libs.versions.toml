@@ -56,6 +56,13 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor-client" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 mockk = { module = "io.mockk:mockk", version = "1.13.10" }
+plugin-androidApplication = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
+plugin-androidLibrary = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
+plugin-jetbrainsCompose = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-plugin" }
+plugin-kotlinJvm = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-kotlinMultiplatform = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+plugin-ktor = { module = "io.ktor.plugin:plugin", version.ref = "ktor" }
 
 [bundles]
 test = [
@@ -76,12 +83,3 @@ ktor-client-common = [
     "ktor-client-serialization",
     "ktor-client-logging"
 ]
-
-[plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
