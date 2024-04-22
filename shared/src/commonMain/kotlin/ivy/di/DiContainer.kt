@@ -65,10 +65,9 @@ object Di {
     }
 
     fun clear(scope: DiScope) {
-        val keysForRemoval = instances.keys.filter {
+        instances.keys.filter {
             it.scope == scope
-        }
-        keysForRemoval.forEach {
+        }.forEach {
             instances.remove(it)
         }
     }
