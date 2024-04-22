@@ -1,7 +1,9 @@
 package ivy.model
 
+import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
 
+@Serializable
 data class Lesson(
     val name: String,
     val tagline: String,
@@ -13,10 +15,12 @@ data class Lesson(
     val percentCompleted: Float
 )
 
+@Serializable
 sealed interface LessonItem {
     val id: LessonItemId
 }
 
+@Serializable
 @JvmInline
 value class LessonItemId(val value: String)
 
@@ -27,6 +31,7 @@ interface LinearItem {
     val next: LessonItemId?
 }
 
+@Serializable
 data class TextContentItem(
     override val id: LessonItemId,
     val text: String,
@@ -34,10 +39,12 @@ data class TextContentItem(
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 enum class TextContentStyle {
     Title, MultilineText
 }
 
+@Serializable
 data class QuestionItem(
     override val id: LessonItemId,
     val question: String,
@@ -46,14 +53,17 @@ data class QuestionItem(
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 data class Answer(
     val id: AnswerId,
     val text: String,
 )
 
+@Serializable
 @JvmInline
 value class AnswerId(val value: String)
 
+@Serializable
 data class OpenQuestionItem(
     override val id: LessonItemId,
     val question: String,
@@ -61,6 +71,7 @@ data class OpenQuestionItem(
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 data class LinkItem(
     override val id: LessonItemId,
     val text: String,
@@ -68,6 +79,7 @@ data class LinkItem(
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 data class LessonNavigationItem(
     override val id: LessonItemId,
     val text: String,
@@ -75,39 +87,47 @@ data class LessonNavigationItem(
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 data class LottieAnimationItem(
     override val id: LessonItemId,
     val lottie: LottieAnimation,
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 @JvmInline
 value class LottieAnimation(val url: String)
 
+@Serializable
 data class ImageItem(
     override val id: LessonItemId,
     val image: ImageUrl,
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
+@Serializable
 @JvmInline
 value class ImageUrl(val url: String)
 
+@Serializable
 data class ChoiceItem(
     override val id: LessonItemId,
     val question: String,
     val options: List<ChoiceOption>,
 ) : LessonItem
 
+@Serializable
 data class ChoiceOption(
     val id: ChoiceOptionId,
     val text: String,
     val next: LessonItemId,
 )
 
+@Serializable
 @JvmInline
 value class ChoiceOptionId(val value: String)
 
+@Serializable
 data class MysteryItem(
     override val id: LessonItemId,
     val text: String,
