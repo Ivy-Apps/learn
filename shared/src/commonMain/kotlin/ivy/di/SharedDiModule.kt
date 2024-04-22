@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 import platform
 import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 
-object AppDiModule {
+object SharedDiModule {
     fun init() {
         Di.appScope {
             singleton { platform() }
