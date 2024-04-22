@@ -1,16 +1,21 @@
 package ivy.di
 
-import io.ktor.client.*
+import LogLevel
+import Platform
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import ivy.di.Di.singleton
 import kotlinx.serialization.json.Json
+import platform
+import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 
 object AppDiModule {
     fun init() {
         Di.appScope {
+            singleton { platform() }
             json()
+            ktorClient(Di.get(), Di.get())
         }
     }
 
@@ -21,18 +26,20 @@ object AppDiModule {
         }
     }
 
-
-    private fun Di.DiScope.ktorClient(json: Json) = singleton {
-        HttpClient {
+    private fun Di.DiScope.ktorClient(
+        platform: Platform,
+        json: Json
+    ) = singleton {
+        platform.httpClient {
             install(ContentNegotiation) {
                 json(json)
             }
 
             install(Logging) {
-                level = LogLevel.BODY
+                level = KtorLogLevel.BODY
                 logger = object : Logger {
                     override fun log(message: String) {
-                        Timber.d(message)
+                        platform.log(LogLevel.Debug, message)
                     }
                 }
             }
