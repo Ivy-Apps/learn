@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build_web_wasm:
+  build_web_js:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GIT
