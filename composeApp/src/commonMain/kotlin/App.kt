@@ -24,12 +24,17 @@ fun App() {
 
     MaterialTheme {
         if (initialized) {
-            val navigation = remember { Di.get<Navigation>() }
-            LaunchedEffect(navigation) {
-                // navigate to the initial screen
-                navigation.navigate(HomeScreen())
-            }
-            navigation.NavHost()
+            NavGraph()
         }
     }
+}
+
+@Composable
+private fun NavGraph() {
+    val navigation = remember { Di.get<Navigation>() }
+    LaunchedEffect(navigation) {
+        // navigate to the initial screen
+        navigation.navigate(HomeScreen())
+    }
+    navigation.NavHost()
 }
