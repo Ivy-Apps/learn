@@ -1,5 +1,8 @@
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import di.AppModule
 import ivy.di.Di
 import ivy.di.SharedModule
@@ -36,5 +39,8 @@ private fun NavGraph() {
         // navigate to the initial screen
         navigation.navigate(HomeScreen())
     }
-    navigation.NavHost()
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        navigation.NavHost()
+    }
 }
