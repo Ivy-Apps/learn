@@ -30,4 +30,4 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build Web distribution
-        run: ./gradlew :composeApp:jsBrowserDevelopmentExecutableDistribution
+        run: ./gradlew :composeApp:jsBrowserDistribution
