@@ -1,16 +1,14 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
     id("com.android.application")
+    id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.compose")
 }
 
 kotlin {
-    js()
-    js {
-        browser {
-        }
+    js(IR) {
+        browser()
         binaries.executable()
     }
 
@@ -23,7 +21,6 @@ kotlin {
     }
 
     jvm("desktop")
-    js()
 
     listOf(
         iosX64(),

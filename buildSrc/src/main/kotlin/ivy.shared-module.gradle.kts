@@ -4,10 +4,8 @@ plugins {
 }
 
 kotlin {
-    js()
-    js {
-        browser {
-        }
+    js(IR) {
+        browser()
         binaries.executable()
     }
 
