@@ -1,11 +1,11 @@
 import io.ktor.client.*
 import io.ktor.client.engine.js.*
 
-class WasmPlatform : Platform {
-    override val name: String = "Web with Kotlin/Wasm"
+class JsPlatform : Platform {
+    override val name: String = "Web with Kotlin/JS"
 
     override fun log(level: LogLevel, msg: String) {
-        println("${level.name}: $msg")
+        console.log("${level.name}: $msg")
     }
 
     override fun httpClient(
@@ -15,4 +15,4 @@ class WasmPlatform : Platform {
     }
 }
 
-actual fun platform(): Platform = WasmPlatform()
+actual fun platform(): Platform = JsPlatform()

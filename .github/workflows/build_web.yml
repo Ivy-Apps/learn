@@ -1,4 +1,4 @@
-name: Build Web (WASM)
+name: Build Web (Kotlin JS)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build_web_wasm:
+  build_web_js:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GIT
@@ -30,4 +30,4 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build Web distribution
-        run: ./gradlew :composeApp:wasmJsBrowserDistribution
+        run: ./gradlew :composeApp:jsBrowserDistribution
