@@ -50,12 +50,12 @@ jobs:
             ${{ runner.os }}-gradle-
       
       - name: Build Web distribution
-        run: ./gradlew :composeApp:jsBrowserDistribution
+        run: ./gradlew :composeApp:jsBrowserDevelopmentExecutableDistribution
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'composeApp/build/dist/js/productionExecutable'
+          path: 'composeApp/build/dist/js/developmentExecutable'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
