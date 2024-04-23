@@ -13,7 +13,7 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
-        named("wasmJsMain").dependencies {
+        jsMain.dependencies {
             implementation(libs.ktor.client.js)
         }
         jvmMain.dependencies {
