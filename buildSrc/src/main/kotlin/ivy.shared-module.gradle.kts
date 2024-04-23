@@ -4,6 +4,13 @@ plugins {
 }
 
 kotlin {
+    js()
+    js {
+        browser {
+        }
+        binaries.executable()
+    }
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -17,7 +24,6 @@ kotlin {
     iosSimulatorArm64()
 
     jvm()
-    js()
 
     sourceSets {
         jvmTest.dependencies {

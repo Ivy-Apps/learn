@@ -7,6 +7,13 @@ plugins {
 }
 
 kotlin {
+    js()
+    js {
+        browser {
+        }
+        binaries.executable()
+    }
+
     androidTarget {
         compilations.all {
             kotlinOptions {
