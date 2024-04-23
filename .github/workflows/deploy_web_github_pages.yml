@@ -50,12 +50,13 @@ jobs:
             ${{ runner.os }}-gradle-
       
       - name: Build Web distribution
-        run: ./gradlew :composeApp:wasmJsBrowserDevelopmentExecutableDistribution
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'composeApp/build/dist/wasmJs/developmentExecutable'
+          # Upload entire repository
+          path: 'composeApp/build/dist/wasmJs/productionExecutable'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
