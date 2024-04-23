@@ -17,7 +17,6 @@ kotlin = "1.9.23"
 ktor = "2.3.10"
 ktor-client = "3.0.0-wasm2"
 logback = "1.5.5"
-arrow = "1.2.4"
 kotest = "5.8.1"
 kotlin-coroutines = "1.8.0"
 
@@ -34,14 +33,13 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version = "1.15" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
-kotest-assertions-arrow = { module = "io.kotest.extensions:kotest-assertions-arrow", version.ref = "arrow" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
-kotest-property-arrow = { module = "io.kotest.extensions:kotest-property-arrow", version.ref = "arrow" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.3" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlin-immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.7" }
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
@@ -72,8 +70,6 @@ test = [
     "mockk",
     "kotest-assertions",
     "kotest-property",
-    "kotest-property-arrow",
-    "kotest-assertions-arrow",
     "kotlin-coroutines-test"
 ]
 ktor-client-common = [
