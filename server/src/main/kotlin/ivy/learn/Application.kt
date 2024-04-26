@@ -17,5 +17,8 @@ fun Application.module() {
         get("/") {
             call.respondText("Ktor: Hello from BE!")
         }
+        get("/version") {
+            call.respondText("1.0.0")
+        }
     }
 }
