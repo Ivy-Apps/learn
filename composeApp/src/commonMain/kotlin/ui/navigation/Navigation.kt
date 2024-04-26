@@ -24,7 +24,7 @@ class Navigation {
         var lastScreen: Screen?
         do {
             lastScreen = back()
-        } while (lastScreen != null && predicate(lastScreen))
+        } while (lastScreen != null && !predicate(lastScreen))
     }
 
     fun back(): Screen? {
