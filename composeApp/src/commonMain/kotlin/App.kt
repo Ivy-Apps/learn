@@ -12,7 +12,7 @@ import ivy.di.Di
 import ivy.di.SharedModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.navigation.Navigation
-import ui.screen.home.HomeScreen
+import ui.screen.intro.IntroScreen
 import ui.theme.LearnTheme
 
 @Composable
@@ -42,7 +42,7 @@ private fun NavGraph() {
     val navigation = remember { Di.get<Navigation>() }
     LaunchedEffect(navigation) {
         // navigate to the initial screen
-        navigation.navigate(HomeScreen())
+        navigation.navigate(IntroScreen())
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
