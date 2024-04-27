@@ -20,8 +20,15 @@ ktor-client = "2.3.10"
 logback = "1.5.6"
 kotest = "5.8.1"
 kotlin-coroutines = "1.8.0"
+jebrains-exposed = "0.49.0"
 
 [libraries]
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "jebrains-exposed" }
+exposed-crypt = { group = "org.jetbrains.exposed", name = "exposed-crypt", version.ref = "jebrains-exposed" }
+exposed-dao = { group = "org.jetbrains.exposed", name = "exposed-dao", version.ref = "jebrains-exposed" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "jebrains-exposed" }
+exposed-kotlin-datetime = { group = "org.jetbrains.exposed", name = "exposed-kotlin-datetime", version.ref = "jebrains-exposed" }
+exposed-json = { group = "org.jetbrains.exposed", name = "exposed-json", version.ref = "jebrains-exposed" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -36,6 +43,8 @@ google-testparameterinjector = { module = "com.google.testparameterinjector:test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-property-arrow = { module = "io.kotest.extensions:kotest-property-arrow", version.ref = "arrow" }
+kotest-assertions-arrow = { module = "io.kotest.extensions:kotest-assertions-arrow", version.ref = "arrow" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.3" }
@@ -72,6 +81,8 @@ test = [
     "mockk",
     "kotest-assertions",
     "kotest-property",
+    "kotest-property-arrow",
+    "kotest-assertions-arrow",
     "kotlin-coroutines-test"
 ]
 ktor-client-common = [
@@ -80,4 +91,12 @@ ktor-client-common = [
     "ktor-client-core",
     "ktor-client-serialization",
     "ktor-client-logging"
+]
+jetbrains-exposed = [
+    "exposed-core",
+    "exposed-crypt",
+    "exposed-dao",
+    "exposed-jdbc",
+    "exposed-kotlin-datetime",
+    "exposed-json"
 ]
