@@ -22,6 +22,7 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.arrow.core)
     implementation(libs.bundles.jetbrains.exposed)
+    implementation(libs.postgresql.driver)
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.bundles.test)

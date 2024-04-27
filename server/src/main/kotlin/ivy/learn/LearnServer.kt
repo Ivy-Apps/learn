@@ -8,7 +8,7 @@ import ivy.learn.api.AnalyticsApi
 import ivy.learn.api.Api
 import ivy.learn.data.database.ExposedDatabase
 
-class LearnApp(
+class LearnServer(
     private val database: ExposedDatabase
 ) {
     private val apis by lazy {

@@ -9,7 +9,7 @@ import ivy.learn.di.AppModule
 
 fun main() {
     Di.init(modules = setOf(SharedModule, DataModule, AppModule))
-    val app = Di.get<LearnApp>()
+    val app = Di.get<LearnServer>()
 
     embeddedServer(
         Netty,

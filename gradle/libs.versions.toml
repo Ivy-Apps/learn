@@ -72,6 +72,7 @@ plugin-kotlinJvm = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", versi
 plugin-kotlinMultiplatform = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 plugin-ktor = { module = "io.ktor.plugin:plugin", version.ref = "ktor" }
+postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.0" }
 
 [bundles]
 test = [
