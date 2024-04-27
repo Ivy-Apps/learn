@@ -1,8 +1,12 @@
 package ui.screen.home.composable
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
 import ui.screen.home.HomeViewEvent
@@ -20,11 +24,17 @@ fun HomeContent(
             }
         ),
         title = "Learn"
-    ) {
-        Button(onClick = {
-            onEvent(HomeViewEvent.OnColorsDemoClick)
-        }) {
-            Text("Colors demo")
+    ) { contentPadding ->
+        Column(
+            modifier = Modifier
+                .padding(contentPadding)
+                .padding(horizontal = 16.dp)
+        ) {
+            Button(onClick = {
+                onEvent(HomeViewEvent.OnColorsDemoClick)
+            }) {
+                Text("Colors demo")
+            }
         }
     }
 }

@@ -1,19 +1,30 @@
 package ui.screen.debug
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import component.BackButton
+import component.LearnScaffold
 import ivy.di.Di
 import ui.navigation.Navigation
 import ui.navigation.Screen
-import ui.theme.*
+import ui.theme.Blue
+import ui.theme.BlueVariant
+import ui.theme.Gray
+import ui.theme.Green
+import ui.theme.Orange
+import ui.theme.OrangeVariant
+import ui.theme.Red
 
 class ColorDemoScreen : Screen() {
     private val navigation: Navigation = Di.get()
@@ -27,23 +38,26 @@ class ColorDemoScreen : Screen() {
 
     @Composable
     private fun ColorsDemo() {
-        LazyColumn {
-            item {
-                Button(
-                    onClick = {
-                        navigation.back()
-                    }
-                ) {
-                    Text("Back")
+        LearnScaffold(
+            backButton = BackButton(
+                onBackClick = {
+                    navigation.back()
                 }
+            ),
+            title = "Colors Demo"
+        ) { contentPadding ->
+            LazyColumn(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                contentPadding = contentPadding
+            ) {
+                colorItem(name = "Blue", color = Blue)
+                colorItem(name = "Blue Variant", color = BlueVariant)
+                colorItem(name = "Orange", color = Orange)
+                colorItem(name = "Orange Variant", color = OrangeVariant)
+                colorItem(name = "Red", color = Red)
+                colorItem(name = "Green", color = Green)
+                colorItem(name = "Gray", color = Gray)
             }
-            colorItem(name = "Blue", color = Blue)
-            colorItem(name = "Blue Variant", color = BlueVariant)
-            colorItem(name = "Orange", color = Orange)
-            colorItem(name = "Orange Variant", color = OrangeVariant)
-            colorItem(name = "Red", color = Red)
-            colorItem(name = "Green", color = Green)
-            colorItem(name = "Gray", color = Gray)
         }
     }
 
