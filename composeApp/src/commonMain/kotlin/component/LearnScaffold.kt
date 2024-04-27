@@ -33,9 +33,9 @@ enum class BackIcon {
 
 @Composable
 fun LearnScaffold(
-    modifier: Modifier = Modifier,
     backButton: BackButton?,
     title: String,
+    modifier: Modifier = Modifier,
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit

@@ -1,9 +1,7 @@
 package ui.screen.intro
 
-data class IntroViewState(
-    val info: String
-)
+class IntroViewState
 
 sealed interface IntroViewEvent {
-    data object BackClick : IntroViewEvent
+    data object OnContinueClick : IntroViewEvent
 }

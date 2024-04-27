@@ -23,7 +23,9 @@ fun IntroContent(
     ) {
         Text(text = "Hello!")
         Text(text = "Learn programming by thinking.")
-        Button(onClick = {}) {
+        Button(onClick = {
+            onEvent(IntroViewEvent.OnContinueClick)
+        }) {
             Text("Let's go")
         }
     }

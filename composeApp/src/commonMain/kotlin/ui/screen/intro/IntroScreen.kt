@@ -2,20 +2,22 @@ package ui.screen.intro
 
 import androidx.compose.runtime.Composable
 import ivy.di.Di
-import ui.navigation.Navigation
+import ivy.di.Di.register
 import ui.navigation.Screen
 import ui.screen.intro.composable.IntroContent
 
 class IntroScreen : Screen() {
-    private val navigation: Navigation = Di.get()
+    override fun onDi(): Di.ScreenScope.() -> Unit = {
+        register { IntroViewModel(Di.get()) }
+    }
 
-    override fun onDi(): Di.ScreenScope.() -> Unit = {}
+    private val viewModel: IntroViewModel by lazy { Di.get() }
 
     @Composable
     override fun Content() {
         IntroContent(
-            viewState = IntroViewState(""),
-            onEvent = {}
+            viewState = viewModel.viewState(),
+            onEvent = viewModel::onEvent
         )
     }
 }
