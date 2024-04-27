@@ -5,8 +5,10 @@ import arrow.core.raise.catch
 import arrow.core.raise.either
 import arrow.core.raise.ensure
 import arrow.core.raise.ensureNotNull
+import ivy.learn.data.database.tables.AnalyticsEvents
 import org.jetbrains.exposed.sql.Database
-import java.net.URI
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 
 data class ExposedDatabaseConfig(
     val url: String,
@@ -21,7 +23,7 @@ class DbConfigProvider {
      * In the format "postgres://$user:$password@$host:$port/$database".
      */
     fun fromHerokuDbUrl(
-        herokuDbUrl: String?
+        herokuDbUrl: String? = System.getenv("DATABASE_URL")
     ): Either<HerokuConfigError, ExposedDatabaseConfig> = either {
         ensureNotNull(herokuDbUrl) { HerokuConfigError.NullUrl }
         ensure(herokuDbUrl.startsWith("postgres://")) {
@@ -78,28 +80,32 @@ class DbConfigProvider {
 }
 
 class ExposedDatabase(
-    private val herokuDbUrl: String = System.getenv("DATABASE_URL")
+    private val dbConfigProvider: DbConfigProvider,
 ) {
-    fun connect(): Either<ConnectionError, Database> = catch({
-        val dbUri = URI(herokuDbUrl)
+    fun initialize(): Either<ConnectionError, Database> = catch({
+        either {
+            val config = dbConfigProvider.fromHerokuDbUrl()
+                .mapLeft(ConnectionError::InvalidConfig).bind()
 
-        val username = dbUri.userInfo.split(":").first()
-        val password = dbUri.userInfo.split(":").last()
-        val dbUrl = "jdbc:postgresql://${dbUri.host}:${dbUri.port}${dbUri.path.drop(1)}"
-
-        Either.Right(
             Database.connect(
-                url = dbUrl,
-                driver = "org.postgresql.Driver",
-                user = username,
-                password = password
-            )
-        )
+                url = config.url,
+                driver = config.driver,
+                user = config.user,
+                password = config.password
+            ).also(::createDbSchema)
+        }
     }) { e ->
         Either.Left(ConnectionError.Unknown(e))
     }
 
+    private fun createDbSchema(database: Database) {
+        transaction {
+            SchemaUtils.create(AnalyticsEvents)
+        }
+    }
+
     sealed interface ConnectionError {
+        data class InvalidConfig(val error: DbConfigProvider.HerokuConfigError) : ConnectionError
         data class Unknown(val e: Throwable) : ConnectionError
     }
 }
