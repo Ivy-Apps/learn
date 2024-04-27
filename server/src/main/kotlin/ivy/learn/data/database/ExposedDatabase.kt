@@ -82,30 +82,35 @@ class DbConfigProvider {
 class ExposedDatabase(
     private val dbConfigProvider: DbConfigProvider,
 ) {
-    fun initialize(): Either<ConnectionError, Database> = catch({
+    fun init(): Either<InitializationError, Database> = catch({
         either {
             val config = dbConfigProvider.fromHerokuDbUrl()
-                .mapLeft(ConnectionError::InvalidConfig).bind()
+                .mapLeft(InitializationError::InvalidConfig).bind()
 
             Database.connect(
                 url = config.url,
                 driver = config.driver,
                 user = config.user,
                 password = config.password
-            ).also(::createDbSchema)
+            ).let(::createDbSchema)
+                .mapLeft(InitializationError::DbSchemaError).bind()
         }
     }) { e ->
-        Either.Left(ConnectionError.Unknown(e))
+        Either.Left(InitializationError.Unknown(e))
     }
 
-    private fun createDbSchema(database: Database) {
+    private fun createDbSchema(database: Database): Either<Throwable, Database> = catch({
         transaction {
             SchemaUtils.create(AnalyticsEvents)
         }
+        Either.Right(database)
+    }) {
+        Either.Left(it)
     }
 
-    sealed interface ConnectionError {
-        data class InvalidConfig(val error: DbConfigProvider.HerokuConfigError) : ConnectionError
-        data class Unknown(val e: Throwable) : ConnectionError
+    sealed interface InitializationError {
+        data class InvalidConfig(val error: DbConfigProvider.HerokuConfigError) : InitializationError
+        data class DbSchemaError(val error: Throwable) : InitializationError
+        data class Unknown(val e: Throwable) : InitializationError
     }
 }
