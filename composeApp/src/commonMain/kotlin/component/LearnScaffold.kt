@@ -58,14 +58,16 @@ fun LearnScaffold(
 private fun LearnTopAppBar(
     backButton: BackButton?,
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    actions: @Composable (Modifier) -> Unit = {}
 ) {
     TopAppBar(
         modifier = modifier,
         content = {
             var backButtonWidth by remember { mutableStateOf(0.dp) }
+            var actionsWidth by remember { mutableStateOf(0.dp) }
+            val density = LocalDensity.current
             if (backButton != null) {
-                val density = LocalDensity.current
                 BackButton(
                     modifier = Modifier.onSizeChanged {
                         backButtonWidth = with(density) { it.width.toDp() }
@@ -74,8 +76,16 @@ private fun LearnTopAppBar(
                 )
             }
             Spacer(Modifier.weight(1f))
+            Spacer(Modifier.width(actionsWidth))
+
             Text(title)
+
             Spacer(Modifier.weight(1f))
+            actions(
+                Modifier.onSizeChanged {
+                    actionsWidth = with(density) { it.width.toDp() }
+                }
+            )
             Spacer(Modifier.width(backButtonWidth))
         }
     )
