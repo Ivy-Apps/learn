@@ -1,21 +1,21 @@
-package ui.screen.home
+package ui.screen.intro
 
 import androidx.compose.runtime.Composable
 import ivy.di.Di
 import ivy.di.Di.register
 import ui.navigation.Screen
-import ui.screen.home.composable.HomeContent
+import ui.screen.intro.composable.IntroContent
 
-class HomeScreen : Screen() {
+class IntroScreen : Screen() {
     override fun onDi(): Di.ScreenScope.() -> Unit = {
-        register { HomeViewModel(Di.get()) }
+        register { IntroViewModel(Di.get()) }
     }
 
-    private val viewModel: HomeViewModel by lazy { Di.get() }
+    private val viewModel: IntroViewModel by lazy { Di.get() }
 
     @Composable
     override fun Content() {
-        HomeContent(
+        IntroContent(
             viewState = viewModel.viewState(),
             onEvent = viewModel::onEvent
         )

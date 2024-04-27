@@ -1,7 +1,9 @@
 package ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -47,8 +49,15 @@ fun LearnTheme(
         false -> LightColorScheme
     }
 
+    val shape = Shapes(
+        small = RoundedCornerShape(percent = 50),
+        medium = RoundedCornerShape(percent = 50),
+        large = RoundedCornerShape(percent = 50)
+    )
+
     MaterialTheme(
         colors = colorScheme,
+        shapes = shape,
         content = content
     )
 }
