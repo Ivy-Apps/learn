@@ -1,6 +1,7 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("io.ktor.plugin")
+    id("org.jetbrains.kotlin.plugin.serialization")
     application
 }
 
@@ -23,6 +24,9 @@ dependencies {
     implementation(libs.arrow.core)
     implementation(libs.bundles.jetbrains.exposed)
     implementation(libs.postgresql.driver)
+    implementation(libs.kotlin.serialization)
+    implementation(libs.ktor.server.contentNegotiation)
+    implementation(libs.ktor.serialization.json)
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.bundles.test)
