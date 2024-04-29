@@ -7,7 +7,11 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import ivy.di.Di.singleton
+import ivy.model.*
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import platform
 import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 
@@ -24,6 +28,19 @@ object SharedModule : DiModule {
             ignoreUnknownKeys = true
             isLenient = true
             coerceInputValues = true
+            serializersModule = SerializersModule {
+                polymorphic(LessonItem::class) {
+                    subclass(ChoiceItem.serializer())
+                    subclass(ImageItem.serializer())
+                    subclass(LessonNavigationItem.serializer())
+                    subclass(LinkItem.serializer())
+                    subclass(LottieAnimationItem.serializer())
+                    subclass(MysteryItem.serializer())
+                    subclass(OpenQuestionItem.serializer())
+                    subclass(QuestionItem.serializer())
+                    subclass(TextContentItem.serializer())
+                }
+            }
         }
     }
 
