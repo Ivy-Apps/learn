@@ -9,7 +9,8 @@ import ivy.learn.api.LessonsApi
 import ivy.learn.data.database.ExposedDatabase
 
 class LearnServer(
-    private val database: ExposedDatabase
+    private val database: ExposedDatabase,
+    private val devMode: Boolean,
 ) {
     private val apis by lazy {
         setOf(
@@ -25,7 +26,9 @@ class LearnServer(
 
     fun init(ktorApp: Application) {
         database.init().onLeft {
-            throw InitializationError("Failed to initialize database: $it")
+            if (!devMode) {
+                throw InitializationError("Failed to initialize database: $it")
+            }
         }
         onDi()
 

@@ -11,13 +11,16 @@ import ivy.learn.data.di.DataModule
 import ivy.learn.di.AppModule
 import kotlinx.serialization.json.Json
 
-fun main() {
-    Di.init(modules = setOf(SharedModule, DataModule, AppModule))
+fun main(args: Array<String>) {
+    val devMode = "dev" in args
+    Di.init(modules = setOf(SharedModule, DataModule, AppModule(devMode = devMode)))
     val app = Di.get<LearnServer>()
 
+    val port = System.getenv("PORT")?.toInt() ?: (8080..8090).random()
+    println("Starting server on port $port...")
     embeddedServer(
         Netty,
-        port = System.getenv("PORT")?.toInt() ?: 8080,
+        port = port,
         host = "0.0.0.0",
         module = {
             configureSever()

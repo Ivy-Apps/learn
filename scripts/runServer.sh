@@ -11,4 +11,4 @@ if [ ! -f "settings.gradle.kts" ]; then
     exit 1
 fi
 
-./gradlew :server:run
+./gradlew :server:run --args='dev'

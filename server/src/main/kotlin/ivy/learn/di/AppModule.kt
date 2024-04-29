@@ -5,8 +5,13 @@ import ivy.di.Di.singleton
 import ivy.di.DiModule
 import ivy.learn.LearnServer
 
-object AppModule : DiModule {
+class AppModule(private val devMode: Boolean) : DiModule {
     override fun init() = Di.appScope {
-        singleton { LearnServer(Di.get()) }
+        singleton {
+            LearnServer(
+                database = Di.get(),
+                devMode = devMode,
+            )
+        }
     }
 }
