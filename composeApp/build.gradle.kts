@@ -49,6 +49,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlin.immutableCollections)
+            implementation(libs.thirdparty.lottieMultiplatform)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

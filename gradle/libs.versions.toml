@@ -23,13 +23,6 @@ kotlin-coroutines = "1.8.0"
 jebrains-exposed = "0.49.0"
 
 [libraries]
-exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "jebrains-exposed" }
-exposed-crypt = { group = "org.jetbrains.exposed", name = "exposed-crypt", version.ref = "jebrains-exposed" }
-exposed-dao = { group = "org.jetbrains.exposed", name = "exposed-dao", version.ref = "jebrains-exposed" }
-exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "jebrains-exposed" }
-exposed-kotlin-datetime = { group = "org.jetbrains.exposed", name = "exposed-kotlin-datetime", version.ref = "jebrains-exposed" }
-exposed-json = { group = "org.jetbrains.exposed", name = "exposed-json", version.ref = "jebrains-exposed" }
-arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
@@ -37,32 +30,39 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "jebrains-exposed" }
+exposed-crypt = { group = "org.jetbrains.exposed", name = "exposed-crypt", version.ref = "jebrains-exposed" }
+exposed-dao = { group = "org.jetbrains.exposed", name = "exposed-dao", version.ref = "jebrains-exposed" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "jebrains-exposed" }
+exposed-json = { group = "org.jetbrains.exposed", name = "exposed-json", version.ref = "jebrains-exposed" }
+exposed-kotlin-datetime = { group = "org.jetbrains.exposed", name = "exposed-kotlin-datetime", version.ref = "jebrains-exposed" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version = "1.15" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-assertions-arrow = { module = "io.kotest.extensions:kotest-assertions-arrow", version.ref = "arrow" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-property-arrow = { module = "io.kotest.extensions:kotest-property-arrow", version.ref = "arrow" }
-kotest-assertions-arrow = { module = "io.kotest.extensions:kotest-assertions-arrow", version.ref = "arrow" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
+kotlin-immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.7" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.3" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-kotlin-immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.7" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-client" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor-client" }
+ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor-client" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor-client" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-client" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-client" }
+ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-client" }
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
-ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-client" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-client" }
-ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-client" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-client" }
-ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor-client" }
-ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client" }
-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor-client" }
-ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor-client" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 mockk = { module = "io.mockk:mockk", version = "1.13.10" }
 plugin-androidApplication = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
@@ -73,6 +73,7 @@ plugin-kotlinMultiplatform = { module = "org.jetbrains.kotlin:kotlin-gradle-plug
 plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 plugin-ktor = { module = "io.ktor.plugin:plugin", version.ref = "ktor" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.0" }
+thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
 
 [bundles]
 test = [
