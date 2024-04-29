@@ -14,9 +14,9 @@ class LessonsApi(
 ) : Api {
     override fun Routing.endpoints() {
         // Endpoint that gets a lesson by ID
-        get("/lessons/{id}", endpoint<Lesson> { params ->
+        get("/lesson/{id}", endpoint<Lesson> { params ->
             val lessonId = params["id"]?.let(::LessonId)
-            ensureNotNull(lessonId) { ServerError.BadRequest("\"lessons/{id}\" is required") }
+            ensureNotNull(lessonId) { ServerError.BadRequest("Lesson ID is missing!") }
             repository.fetchLessonById(lessonId)
                 .mapLeft(ServerError::Unknown).bind()
         })

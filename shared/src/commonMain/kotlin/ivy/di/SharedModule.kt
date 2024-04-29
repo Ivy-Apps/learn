@@ -4,6 +4,7 @@ import LogLevel
 import Platform
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import ivy.di.Di.singleton
 import kotlinx.serialization.json.Json
@@ -22,6 +23,7 @@ object SharedModule : DiModule {
         Json {
             ignoreUnknownKeys = true
             isLenient = true
+            coerceInputValues = true
         }
     }
 
@@ -29,7 +31,7 @@ object SharedModule : DiModule {
         val platform = Di.get<Platform>()
         platform.httpClient {
             install(ContentNegotiation) {
-                json(Di.get<Json>())
+                json(Di.get<Json>(), contentType = ContentType.Any)
             }
 
             install(Logging) {

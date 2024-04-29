@@ -6,6 +6,7 @@ import ivy.di.Di
 import ivy.di.Di.register
 import ivy.learn.api.AnalyticsApi
 import ivy.learn.api.LessonsApi
+import ivy.learn.api.StatusApi
 import ivy.learn.data.database.ExposedDatabase
 
 class LearnServer(
@@ -15,13 +16,15 @@ class LearnServer(
     private val apis by lazy {
         setOf(
             Di.get<AnalyticsApi>(),
-            Di.get<LessonsApi>()
+            Di.get<LessonsApi>(),
+            Di.get<StatusApi>()
         )
     }
 
     private fun onDi() = Di.appScope {
         register { AnalyticsApi() }
         register { LessonsApi(Di.get()) }
+        register { StatusApi() }
     }
 
     fun init(ktorApp: Application) {

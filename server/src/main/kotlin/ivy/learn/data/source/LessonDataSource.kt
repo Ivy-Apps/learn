@@ -10,8 +10,8 @@ class LessonDataSource(
     private val httpClient: HttpClient
 ) {
     suspend fun fetchLessonById(id: LessonId): Lesson = httpClient.get(
-        urlString = "https://api.github.com/repos/Ivy-Apps/learn-content" +
-                "/contents/content/lessons" +
+        urlString = "https://raw.githubusercontent.com/Ivy-Apps/learn-content" +
+                "/main/content/lessons" +
                 "/${id.value}.json"
     ) {
         headers {

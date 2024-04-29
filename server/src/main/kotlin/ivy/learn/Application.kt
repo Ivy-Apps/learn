@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
     Di.init(modules = setOf(SharedModule, DataModule, AppModule(devMode = devMode)))
     val app = Di.get<LearnServer>()
 
-    val port = System.getenv("PORT")?.toInt() ?: (8080..8090).random()
+    val port = System.getenv("PORT")?.toInt() ?: 8081
     println("Starting server on port $port...")
     embeddedServer(
         Netty,
@@ -31,6 +31,6 @@ fun main(args: Array<String>) {
 
 private fun Application.configureSever() {
     install(ContentNegotiation) {
-        json(Di.get<Json>())
+        json(json = Di.get<Json>())
     }
 }
