@@ -5,11 +5,16 @@ import kotlin.jvm.JvmInline
 
 @Serializable
 data class Lesson(
+    val id: LessonId,
     val name: String,
     val tagline: String,
     val rootItem: LessonItemId,
     val items: Map<LessonItemId, LessonItem>,
 )
+
+@Serializable
+@JvmInline
+value class LessonId(val value: String)
 
 @Serializable
 sealed interface LessonItem {
