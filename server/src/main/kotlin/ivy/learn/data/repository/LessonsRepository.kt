@@ -1,12 +1,17 @@
 package ivy.learn.data.repository
 
 import arrow.core.Either
-import io.ktor.client.*
+import arrow.core.raise.catch
+import ivy.learn.data.source.LessonDataSource
 import ivy.model.Lesson
 import ivy.model.LessonId
 
 class LessonsRepository(
-    private val httpClient: HttpClient
+    private val lessonDataSource: LessonDataSource
 ) {
-    fun fetchLessonById(id: LessonId): Either<String, Lesson> = TODO()
+    suspend fun fetchLessonById(id: LessonId): Either<String, Lesson> = catch({
+        Either.Right(lessonDataSource.fetchLessonById(id))
+    }, {
+        Either.Left("Failed to fetch '${id.value}' lesson: $it}")
+    })
 }

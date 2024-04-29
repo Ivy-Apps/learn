@@ -21,7 +21,7 @@ class LearnServer(
 
     private fun onDi() = Di.appScope {
         register { AnalyticsApi() }
-        register { LessonsApi() }
+        register { LessonsApi(Di.get()) }
     }
 
     fun init(ktorApp: Application) {

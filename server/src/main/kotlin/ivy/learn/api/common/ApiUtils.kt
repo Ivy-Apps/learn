@@ -9,20 +9,20 @@ import io.ktor.util.pipeline.*
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.api.common.model.ServerErrorResponse
 
-suspend inline fun <reified T : Any> PipelineContext<*, ApplicationCall>.endpoint(
-    handler: Raise<ServerError>.(Parameters) -> T
-) {
-    either { handler(call.parameters) }
-        .onLeft { error ->
-            call.respond(
-                status = when (error) {
-                    is ServerError.BadRequest -> HttpStatusCode.BadRequest
-                    is ServerError.Unknown -> HttpStatusCode.InternalServerError
-                },
-                message = ServerErrorResponse(error.msg)
-            )
-        }
-        .onRight { response ->
-            call.respond(HttpStatusCode.OK, response)
-        }
+inline fun <reified T : Any> endpoint(
+    crossinline handler: suspend Raise<ServerError>.(Parameters) -> T
+): suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit = {
+    either {
+        handler(call.parameters)
+    }.onLeft { error ->
+        call.respond(
+            status = when (error) {
+                is ServerError.BadRequest -> HttpStatusCode.BadRequest
+                is ServerError.Unknown -> HttpStatusCode.InternalServerError
+            },
+            message = ServerErrorResponse(error.msg)
+        )
+    }.onRight { response ->
+        call.respond(HttpStatusCode.OK, response)
+    }
 }
