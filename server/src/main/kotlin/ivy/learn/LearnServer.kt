@@ -7,10 +7,10 @@ import ivy.di.Di.register
 import ivy.learn.api.AnalyticsApi
 import ivy.learn.api.LessonsApi
 import ivy.learn.api.StatusApi
-import ivy.learn.data.database.ExposedDatabase
+import ivy.learn.data.database.Database
 
 class LearnServer(
-    private val database: ExposedDatabase,
+    private val database: Database,
     private val devMode: Boolean,
 ) {
     private val apis by lazy {

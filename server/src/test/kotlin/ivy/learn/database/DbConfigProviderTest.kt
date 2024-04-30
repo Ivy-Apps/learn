@@ -5,9 +5,9 @@ import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
+import ivy.learn.data.database.DatabaseConfig
 import ivy.learn.data.database.DbConfigProvider
 import ivy.learn.data.database.DbConfigProvider.HerokuConfigError
-import ivy.learn.data.database.ExposedDatabaseConfig
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +31,7 @@ class DbConfigProviderTest {
         val res = configProvider.fromHerokuDbUrl(validUrl)
 
         // then
-        res.shouldBeRight() shouldBe ExposedDatabaseConfig(
+        res.shouldBeRight() shouldBe DatabaseConfig(
             url = "jdbc:postgresql://ec1-2-3.eu-west-1.compute.amazonaws.com:1234/db",
             driver = "org.postgresql.Driver",
             user = "user",
