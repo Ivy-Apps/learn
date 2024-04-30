@@ -2,11 +2,10 @@ jdk:
   - openjdk17
 
 install:
-  - ./gradlew clean :shared:compileKotlinJvm
+  - ./gradlew clean :shared:build  # Ensuring everything is built including dependencies
 
 build:
-  - ./gradlew :shared:jvmJar
-  - ./gradlew :shared:publishJvmPublicationToMavenLocal
+  - ./gradlew :shared:publishToMavenLocal  # This should include jar creation if configured
   - mkdir -p build/libs
-  - cp shared/build/libs/*.jar build/libs/
-  - cp shared/build/publications/jvm/* build/libs/
+  - cp -v shared/build/libs/*.jar build/libs/  # Verbose copy to log output
+  - cp -v shared/build/publications/jvm/*.pom build/libs/  # Copy POM files as well
