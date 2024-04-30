@@ -6,12 +6,12 @@ plugins {
 }
 
 group = "ivy.learn.shared"
-version = "1.0.4"
+version = "1.0.5"
+
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            // This line specifies that the output of the 'kotlin' component should be published
             from(components["kotlin"])
         }
     }

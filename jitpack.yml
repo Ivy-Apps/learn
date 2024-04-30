@@ -7,3 +7,6 @@ install:
 build:
   - ./gradlew :shared:jvmJar
   - ./gradlew :shared:publishJvmPublicationToMavenLocal
+  - mkdir -p build/libs
+  - cp shared/build/libs/*.jar build/libs/
+  - cp shared/build/publications/jvm/* build/libs/
