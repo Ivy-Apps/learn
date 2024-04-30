@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ivy.learn.shared"
-version = "1.0.3"
+version = "1.0.4"
 
 publishing {
     publications {

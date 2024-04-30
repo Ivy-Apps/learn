@@ -2,7 +2,8 @@ jdk:
   - openjdk17
 
 install:
-  - ./gradlew clean :shared:build
+  - ./gradlew clean :shared:compileKotlinJvm
 
 build:
-  - ./gradlew clean :shared:publishToMavenLocal
+  - ./gradlew :shared:jvmJar
+  - ./gradlew :shared:publishJvmPublicationToMavenLocal
