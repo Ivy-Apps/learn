@@ -1,5 +1,8 @@
 jdk:
   - openjdk17
 
+install:
+  - ./gradlew clean :shared:build
+
 build:
   - ./gradlew clean :shared:publishToMavenLocal
