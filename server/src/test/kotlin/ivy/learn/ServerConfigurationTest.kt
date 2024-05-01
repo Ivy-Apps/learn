@@ -50,7 +50,7 @@ class ServerConfigurationTest {
         HOST("IVY_LEARN_DB_HOST"),
         DATABASE("IVY_LEARN_DB_DATABASE"),
         USER("IVY_LEARN_DB_USER"),
-        PORT("IVY_LEARN_DB_PORT"),
+        DB_PORT("IVY_LEARN_DB_PORT"),
         PASSWORD("IVY_LEARN_DB_PASSWORD"),
         GITHUB_PAT("IVY_LEARN_GITHUB_PAT")
     }

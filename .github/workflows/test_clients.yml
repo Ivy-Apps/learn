@@ -1,4 +1,4 @@
-name: Unit tests Server
+name: Test clients (unit test)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  unit_test_server:
+  unit_test_client:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GIT
@@ -30,4 +30,4 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Run unit tests
-        run: ./gradlew server:test
+        run: ./gradlew jvmTest
