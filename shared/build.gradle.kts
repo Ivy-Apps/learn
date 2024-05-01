@@ -7,3 +7,11 @@ plugins {
 android {
     namespace = "ivy.learn.shared"
 }
+
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.arrow.core)
+        }
+    }
+}

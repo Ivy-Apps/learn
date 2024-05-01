@@ -1,1 +1,0 @@
-const val BE_URL = "https://ivy-learn-0c3c19230895.herokuapp.com"

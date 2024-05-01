@@ -6,6 +6,9 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import ivy.data.ServerUrlProvider
+import ivy.data.ServerUrlProviderImpl
+import ivy.di.Di.register
 import ivy.di.Di.singleton
 import ivy.model.*
 import kotlinx.serialization.json.Json
@@ -21,6 +24,7 @@ object SharedModule : DiModule {
         singleton { platform() }
         json()
         ktorClient()
+        register<ServerUrlProvider> { ServerUrlProviderImpl() }
     }
 
     private fun Di.DiScope.json() = singleton {
