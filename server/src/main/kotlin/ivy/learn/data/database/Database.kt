@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class Database {
-    fun init(config: DatabaseConfig): Either<InitializationError, Database> = catch({
+    fun init(config: DatabaseConfig): Either<String, Database> = catch({
         either {
             with(config) {
                 Database.connect(
@@ -19,11 +19,13 @@ class Database {
                     user = user,
                     password = password
                 ).let(::createDbSchema)
-                    .mapLeft(InitializationError::DbSchemaError).bind()
+                    .mapLeft {
+                        "Database schema creation failed: $it"
+                    }.bind()
             }
         }
     }) { e ->
-        Either.Left(InitializationError.Unknown(e))
+        Either.Left("Database connection failed: $e")
     }
 
     private fun createDbSchema(database: Database): Either<Throwable, Database> = catch({
@@ -33,10 +35,5 @@ class Database {
         Either.Right(database)
     }) {
         Either.Left(it)
-    }
-
-    sealed interface InitializationError {
-        data class DbSchemaError(val error: Throwable) : InitializationError
-        data class Unknown(val e: Throwable) : InitializationError
     }
 }
