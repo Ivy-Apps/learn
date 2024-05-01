@@ -18,14 +18,23 @@ Learn programming by thinking.
 
 You need to have a PostgreSQL database.
 
+```
+brew install postgresql
+brew services start postgresql@14
+psql -d ivy_learn -c "CREATE USER postgres WITH PASSWORD 'password';"
+psql -d ivy_learn -c "ALTER USER postgres WITH SUPERUSER;"
+```
+
 **Environment Variables**
 
-- "IVY_LEARN_DB_HOST"
-- "IVY_LEARN_DB_DATABASE"
-- "IVY_LEARN_DB_USER"
-- "IVY_LEARN_DB_PORT"
-- "IVY_LEARN_DB_PASSWORD"
-- "IVY_LEARN_GITHUB_PAT"
+```zshrc
+export IVY_LEARN_DB_HOST="localhost"
+export IVY_LEARN_DB_DATABASE="ivy_learn"
+export IVY_LEARN_DB_USER="postgres"
+export IVY_LEARN_DB_PORT="5432"
+export IVY_LEARN_DB_PASSWORD="password"
+export IVY_LEARN_GITHUB_PAT="your_github_personal_access_token"
+```
 
 **To run the sever:**
 

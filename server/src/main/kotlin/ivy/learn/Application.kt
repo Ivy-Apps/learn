@@ -24,7 +24,9 @@ fun main(args: Array<String>) {
         host = "0.0.0.0",
         module = {
             configureSever()
-            app.init(this)
+            app.init(this).onLeft {
+                throw ServerInitializationException(reason = it)
+            }
         },
     ).start(wait = true)
 }
@@ -34,3 +36,5 @@ private fun Application.configureSever() {
         json(json = Di.get<Json>())
     }
 }
+
+class ServerInitializationException(reason: String) : Exception("Server initialization failed: $reason")
