@@ -31,6 +31,7 @@ class LearnServer(
 
     fun init(ktorApp: Application): Either<String, Unit> = either {
         val config = configurationProvider.fromEnvironment().bind()
+        Di.appScope { register { config } }
         database.init(config.database).bind()
 
         injectDependencies()

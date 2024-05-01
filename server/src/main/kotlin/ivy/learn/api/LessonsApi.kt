@@ -16,7 +16,7 @@ class LessonsApi(
         // Endpoint that gets a lesson by ID
         get("/lesson/{id}", endpoint<Lesson> { params ->
             val lessonId = params["id"]?.let(::LessonId)
-            ensureNotNull(lessonId) { ServerError.BadRequest("Lesson ID is missing!") }
+            ensureNotNull(lessonId) { ServerError.BadRequest("Lesson id is missing!") }
             repository.fetchLessonById(lessonId)
                 .mapLeft(ServerError::Unknown).bind()
         })

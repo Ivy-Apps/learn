@@ -10,7 +10,7 @@ import ivy.learn.data.source.LessonDataSource
 object DataModule : DiModule {
     override fun init() = Di.appScope {
         register { Database() }
-        register { LessonDataSource(Di.get()) }
+        register { LessonDataSource(Di.get(), Di.get()) }
         register { LessonsRepository(Di.get()) }
     }
 }

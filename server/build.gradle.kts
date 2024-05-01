@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.bundles.ktor.client.common)
     implementation(libs.ktor.client.java)
     testImplementation(libs.ktor.server.tests)
+    testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.bundles.test)
 }
