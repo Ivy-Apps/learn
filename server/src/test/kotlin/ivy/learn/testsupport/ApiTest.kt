@@ -1,23 +1,17 @@
 package ivy.learn.testsupport
 
-import io.ktor.server.testing.*
 import ivy.data.ServerUrlProvider
 import ivy.di.Di
 import ivy.di.Di.register
-import ivy.learn.LearnServer
 import ivy.learn.initDi
+import kotlinx.coroutines.test.runTest
 
 open class ApiTest {
-    fun apiTest(block: suspend ApiTest.() -> Unit) = testApplication {
-
+    fun apiTest(block: suspend ApiTest.() -> Unit) = runTest {
         initDi(devMode = true)
         Di.appScope { register<ServerUrlProvider> { FakeServerUrlProvider() } }
-        application {
-            Di.get<LearnServer>().init(this).onLeft {
-                throw Exception("Server initialization failed: $it")
-            }
-        }
         block()
+        Di.reset()
     }
 
     class FakeServerUrlProvider : ServerUrlProvider {

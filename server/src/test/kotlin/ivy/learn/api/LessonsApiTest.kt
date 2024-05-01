@@ -12,12 +12,12 @@ class LessonsApiTest : ApiTest() {
     @Test
     fun `fetches existing lesson`() = apiTest {
         // Given
-        val datasource = LessonDataSource(Di.get(), Di.get())
+        val datasource: LessonDataSource = Di.get()
 
         // When
         val result = datasource.fetchLesson(LessonId("test7"))
 
         // Then
-        result.shouldBeRight().id shouldBe "test"
+        result.shouldBeRight().id shouldBe LessonId("test")
     }
 }
