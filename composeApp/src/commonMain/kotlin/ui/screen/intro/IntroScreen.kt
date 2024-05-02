@@ -7,6 +7,8 @@ import ui.navigation.Screen
 import ui.screen.intro.composable.IntroContent
 
 class IntroScreen : Screen() {
+    override val path: String = "intro"
+
     override fun onDi(): Di.ScreenScope.() -> Unit = {
         register { IntroViewModel(Di.get()) }
     }

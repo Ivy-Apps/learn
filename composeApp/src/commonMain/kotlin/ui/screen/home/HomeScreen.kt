@@ -7,6 +7,8 @@ import ui.navigation.Screen
 import ui.screen.home.composable.HomeContent
 
 class HomeScreen : Screen() {
+    override val path: String = "home"
+
     override fun onDi(): Di.ScreenScope.() -> Unit = {
         register { HomeViewModel(Di.get()) }
     }

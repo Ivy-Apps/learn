@@ -3,7 +3,6 @@ import io.ktor.client.engine.js.*
 
 class JsPlatform : Platform {
     override val name: String = "Web with Kotlin/JS"
-    override val debug: Boolean = false
 
     override fun log(level: LogLevel, msg: String) {
         console.log("${level.name}: $msg")

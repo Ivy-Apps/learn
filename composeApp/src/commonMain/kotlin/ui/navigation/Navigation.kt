@@ -1,11 +1,12 @@
 package ui.navigation
 
+import SystemNavigation
 import androidx.compose.runtime.*
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.plus
 import kotlinx.collections.immutable.toPersistentList
 
-class Navigation {
+class Navigation(private val systemNavigation: SystemNavigation) {
     private var backstack by mutableStateOf(persistentListOf<Screen>())
 
     @Composable
@@ -18,6 +19,7 @@ class Navigation {
 
     fun navigate(screen: Screen) {
         backstack = backstack.plus(screen.also(Screen::initialize))
+        systemNavigation.navigateTo(screen)
     }
 
     fun backUntil(predicate: (Screen) -> Boolean) {
@@ -30,6 +32,9 @@ class Navigation {
     fun back(): Screen? {
         val lastScreen = backstack.lastOrNull()
         backstack = backstack.dropLast(1).toPersistentList()
-        return lastScreen?.also(Screen::destroy)
+        return lastScreen?.also {
+            it.destroy()
+            systemNavigation.navigateBack()
+        }
     }
 }
