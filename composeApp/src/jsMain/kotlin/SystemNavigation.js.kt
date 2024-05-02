@@ -3,14 +3,12 @@ import ui.navigation.Screen
 
 class WebSystemNavigation : SystemNavigation {
     override fun navigateTo(screen: Screen) {
-        // Construct the path based on the screen's path
-        val path = "/${screen.path}"
+        // TODO: Temporary workaround until we support deep links
+        val path = "" // "/${screen.path}"
 
-        // Create a state object as a dynamic object
         val stateObject = js("({})")
-        stateObject.screen = screen.path
-
-        // Use the history API to push the new state
+        // TODO: Temporary workaround until we support deep links
+        stateObject.screen = "" //screen.path
         window.history.pushState(stateObject, "", path)
     }
 
