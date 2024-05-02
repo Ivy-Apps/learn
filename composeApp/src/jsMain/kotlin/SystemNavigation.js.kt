@@ -13,13 +13,7 @@ class WebSystemNavigation : SystemNavigation {
     }
 
     override fun navigateBack() {
-        // Check if there's more than one entry in the history stack
-        if (window.history.length > 1) {
-            window.history.back()
-        } else {
-            // Handle what happens if there's no history to go back to
-            // Perhaps navigate to a default screen or show a message
-        }
+        window.history.back()
     }
 }
 
