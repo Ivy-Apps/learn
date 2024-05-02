@@ -9,6 +9,8 @@ import kotlinx.coroutines.SupervisorJob
 
 abstract class Screen {
 
+    abstract val path: String
+
     private lateinit var job: CompletableJob
     protected lateinit var screenScope: CoroutineScope
 

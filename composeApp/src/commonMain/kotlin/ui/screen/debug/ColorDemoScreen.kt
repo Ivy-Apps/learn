@@ -1,11 +1,7 @@
 package ui.screen.debug
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Text
@@ -18,15 +14,11 @@ import component.LearnScaffold
 import ivy.di.Di
 import ui.navigation.Navigation
 import ui.navigation.Screen
-import ui.theme.Blue
-import ui.theme.BlueVariant
-import ui.theme.Gray
-import ui.theme.Green
-import ui.theme.Orange
-import ui.theme.OrangeVariant
-import ui.theme.Red
+import ui.theme.*
 
 class ColorDemoScreen : Screen() {
+    override val path: String = "colorDemo"
+
     private val navigation: Navigation = Di.get()
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {}
