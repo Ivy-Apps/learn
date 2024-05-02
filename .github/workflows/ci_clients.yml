@@ -1,0 +1,90 @@
+name: Clients CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build_android_debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GIT
+        uses: actions/checkout@v4
+
+      - name: Setup Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '18'
+
+      - name: Enable Gradle Wrapper caching (optimization)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Debug APK
+        run: ./gradlew :composeApp:assembleDebug
+
+      - name: Upload APK to Github Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ivy-Learn-Debug.apk
+          path: composeApp/build/outputs/apk/debug/composeApp-debug.apk
+
+  build_web_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GIT
+        uses: actions/checkout@v4
+
+      - name: Setup Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '18'
+
+      - name: Enable Gradle Wrapper caching (optimization)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Web distribution
+        run: ./gradlew :composeApp:jsBrowserDistribution
+
+  unit_test_clients:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GIT
+        uses: actions/checkout@v4
+
+      - name: Setup Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '18'
+
+      - name: Enable Gradle Wrapper caching (optimization)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run unit tests
+        run: ./gradlew jvmTest
+

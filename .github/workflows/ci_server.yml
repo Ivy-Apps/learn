@@ -1,4 +1,4 @@
-name: Test Server
+name: Server CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  test_server:
+  build_test_server:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -44,6 +44,19 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Build Server
+        run: ./gradlew stage
+
+      - name: Start Server
+        run: |
+          chmod +x ./server/build/install/server/bin/server
+          ./server/build/install/server/bin/server &
+          sleep 5
+
+      - name: Wait for the server to get ready
+        run: |
+          while ! nc -z localhost 8081; do sleep 1; done
 
       - name: Run unit tests
         run: ./gradlew server:test
