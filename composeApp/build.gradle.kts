@@ -50,6 +50,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlin.immutableCollections)
             implementation(libs.thirdparty.lottieMultiplatform)
+            implementation(libs.thirdparty.kamel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
