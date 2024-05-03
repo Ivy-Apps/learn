@@ -32,7 +32,9 @@ fun CourseContent(
         ) {
             items(viewState.items) {
                 when (it) {
-                    is CourseItemViewState.Arrow -> TODO()
+                    is CourseItemViewState.Arrow -> LessonArrow(
+                        progress = it.progress
+                    )
                     is CourseItemViewState.Lesson -> LessonCard(
                         lesson = it,
                         onLessonClick = {
