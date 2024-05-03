@@ -14,6 +14,8 @@ class CourseViewModel(
             name = "Kotlin fundamentals",
             items = persistentListOf(
                 CourseItemViewState.Lesson(
+                    imageUrl = "https://cdn.pixabay.com/photo/2023/03/03/14/16/light-7827771_128" +
+                            "0.jpg",
                     name = "ADTs",
                     tagLine = "Learn the power of modeling your data easily with algebraic data " +
                             "types",
@@ -23,6 +25,8 @@ class CourseViewModel(
                     progress = ProgressViewState.ToDo
                 ),
                 CourseItemViewState.Lesson(
+                    imageUrl = "https://cdn.pixabay.com/photo/2023/03/03/14/16/light-7827771_128" +
+                            "0.jpg",
                     name = "ADTs - part 2",
                     tagLine = "Learn the power of modeling your data easily with algebraic data " +
                             "types",
@@ -32,6 +36,8 @@ class CourseViewModel(
                     progress = ProgressViewState.Upcoming
                 ),
                 CourseItemViewState.Lesson(
+                    imageUrl = "https://cdn.pixabay.com/photo/2023/03/03/14/16/light-7827771_128" +
+                            "0.jpg",
                     name = "ADTs - part 3",
                     tagLine = "Learn the power of modeling your data easily with algebraic data " +
                             "types",

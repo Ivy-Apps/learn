@@ -1,6 +1,7 @@
 package ui.screen.course.composable
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,7 +32,8 @@ fun CourseContent(
                 .fillMaxSize()
                 .padding(contentPadding),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(top = 20.dp, bottom = 48.dp)
         ) {
             items(viewState.items) {
                 when (it) {

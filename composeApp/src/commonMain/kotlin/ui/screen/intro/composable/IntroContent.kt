@@ -2,6 +2,7 @@ package ui.screen.intro.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -40,9 +41,12 @@ fun IntroContent(
             Spacer(modifier = Modifier.height(4.dp))
             Title(text = "Learn programming by thinking.")
             Spacer(modifier = Modifier.height(24.dp))
-            Button(onClick = {
-                onEvent(IntroViewEvent.OnContinueClick)
-            }) {
+            Button(
+                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
+                onClick = {
+                    onEvent(IntroViewEvent.OnContinueClick)
+                }
+            ) {
                 Text("Let's go")
             }
             Spacer(modifier = Modifier.height(4.dp))
