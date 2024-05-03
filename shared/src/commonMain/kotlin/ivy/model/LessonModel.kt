@@ -44,7 +44,7 @@ data class TextContentItem(
 
 @Serializable
 enum class TextContentStyle {
-    Title, MultilineText
+    Heading, Body
 }
 
 @Serializable
@@ -61,6 +61,7 @@ data class QuestionItem(
 data class Answer(
     val id: AnswerId,
     val text: String,
+    val explanation: String?,
 )
 
 @Serializable
