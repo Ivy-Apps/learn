@@ -76,6 +76,7 @@ plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serializati
 plugin-ktor = { module = "io.ktor.plugin:plugin", version.ref = "ktor" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.3" }
 thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
+thirdparty-kamel = { module = "media.kamel:kamel-image", version = "0.9.4" }
 
 [bundles]
 test = [

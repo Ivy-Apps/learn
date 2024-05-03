@@ -1,4 +1,4 @@
-package component
+package component.button
 
 import androidx.compose.runtime.Composable
 
