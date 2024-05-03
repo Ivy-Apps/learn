@@ -6,15 +6,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +25,7 @@ import component.text.Title
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import ui.screen.home.HomeItemViewState
+import ui.theme.Gray
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -77,9 +78,10 @@ private fun ContinueButton(
         onClick = onClick,
         content = {
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                modifier = Modifier.size(24.dp),
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = MaterialTheme.colors.secondary
+                tint = Gray
             )
         }
     )
