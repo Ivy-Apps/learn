@@ -1,4 +1,4 @@
-package ivy.data
+package ivy.data.source
 
 import arrow.core.Either
 import arrow.core.raise.catch
@@ -7,20 +7,20 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import ivy.model.Lesson
-import ivy.model.LessonId
+import ivy.data.ServerUrlProvider
+import ivy.data.source.model.TopicsResponse
 
-class LessonDataSource(
+class TopicsDataSource(
     private val httpClient: HttpClient,
     private val urlProvider: ServerUrlProvider,
 ) {
-    suspend fun fetchLesson(id: LessonId): Either<String, Lesson> = catch({
+    suspend fun fetchTopics(): Either<String, TopicsResponse> = catch({
         httpClient.get(
-            "${urlProvider.serverUrl}/lessons/${id.value}"
+            "${urlProvider.serverUrl}/topics"
         ) {
             contentType(ContentType.Application.Json)
-        }.body<Lesson>().right()
+        }.body<TopicsResponse>().right()
     }) { e ->
-        Either.Left("Failed to fetch lesson: ${e.message}")
+        Either.Left("Failed to fetch topics: ${e.message}")
     }
 }

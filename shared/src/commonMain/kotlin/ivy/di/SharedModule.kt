@@ -6,9 +6,11 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import ivy.data.LessonDataSource
 import ivy.data.ServerUrlProvider
 import ivy.data.ServerUrlProviderImpl
+import ivy.data.source.CoursesDataSource
+import ivy.data.source.LessonDataSource
+import ivy.data.source.TopicsDataSource
 import ivy.di.Di.register
 import ivy.di.Di.singleton
 import ivy.model.*
@@ -22,11 +24,13 @@ import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 object SharedModule : DiModule {
 
     override fun init() = Di.appScope {
-        singleton { platform() }
+        singleton<Platform> { platform() }
         json()
         ktorClient()
         register<ServerUrlProvider> { ServerUrlProviderImpl() }
         register { LessonDataSource(Di.get(), Di.get()) }
+        register { TopicsDataSource(Di.get(), Di.get()) }
+        register { CoursesDataSource(Di.get(), Di.get()) }
     }
 
     private fun Di.DiScope.json() = singleton {

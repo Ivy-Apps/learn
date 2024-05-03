@@ -6,16 +6,21 @@ import kotlin.jvm.JvmInline
 
 @Serializable
 data class Lesson(
-    val id: LessonId,
+    override val id: LessonId,
     val name: String,
     val tagline: String,
+    val content: LessonContent,
+) : Identifiable<LessonId>
+
+@Serializable
+data class LessonContent(
     val rootItem: LessonItemId,
     val items: Map<LessonItemId, LessonItem>,
 )
 
 @Serializable
 @JvmInline
-value class LessonId(val value: String)
+value class LessonId(override val value: String) : Id
 
 @Serializable
 sealed interface LessonItem {
@@ -44,7 +49,7 @@ data class TextContentItem(
 
 @Serializable
 enum class TextContentStyle {
-    Title, MultilineText
+    Heading, Body
 }
 
 @Serializable
@@ -61,6 +66,7 @@ data class QuestionItem(
 data class Answer(
     val id: AnswerId,
     val text: String,
+    val explanation: String?,
 )
 
 @Serializable
