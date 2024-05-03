@@ -35,7 +35,7 @@ fun HomeContent(
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalArrangement = Arrangement.spacedBy(24.dp),
-            contentPadding = PaddingValues(bottom = 48.dp, start = 24.dp, end = 24.dp)
+            contentPadding = PaddingValues(top = 20.dp, bottom = 48.dp, start = 24.dp, end = 24.dp)
         ) {
             items(
                 items = viewState.items,
@@ -60,7 +60,7 @@ fun HomeContent(
                         })
 
                     is HomeItemViewState.Section -> Section(
-                        modifier = Modifier.padding(top = 16.dp),
+                        modifier = Modifier.padding(top = 12.dp),
                         section = it
                     )
                 }
