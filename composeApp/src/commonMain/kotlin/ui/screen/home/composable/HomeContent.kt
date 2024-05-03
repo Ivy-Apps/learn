@@ -1,5 +1,7 @@
 package ui.screen.home.composable
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -30,12 +32,17 @@ fun HomeContent(
                 .padding(contentPadding)
                 .padding(horizontal = 16.dp)
         ) {
-            items(viewState.items, key = {
-                "$it"
-            }) {
+            items(viewState.items) {
                 when (it) {
-                    is HomeItemViewState.Course -> CourseCard(course = it, onEvent = onEvent)
-                    is HomeItemViewState.Section -> Section(section = it)
+                    is HomeItemViewState.Course -> {
+                        Spacer(Modifier.height(12.dp))
+                        CourseCard(course = it, onEvent = onEvent)
+                    }
+
+                    is HomeItemViewState.Section -> {
+                        Spacer(Modifier.height(16.dp))
+                        Section(section = it)
+                    }
                 }
             }
         }
