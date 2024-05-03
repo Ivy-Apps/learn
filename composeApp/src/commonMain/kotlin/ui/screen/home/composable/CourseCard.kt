@@ -25,7 +25,7 @@ import component.text.Title
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import ui.screen.home.HomeItemViewState
-import ui.theme.Gray
+import ui.theme.LightGray
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -43,7 +43,9 @@ fun CourseCard(
         Column {
             Box {
                 KamelImage(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
                     contentScale = ContentScale.FillWidth,
                     resource = asyncPainterResource(course.imageUrl),
                     contentDescription = null
@@ -78,10 +80,10 @@ private fun ContinueButton(
         onClick = onClick,
         content = {
             Icon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(32.dp),
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = Gray
+                tint = LightGray
             )
         }
     )
