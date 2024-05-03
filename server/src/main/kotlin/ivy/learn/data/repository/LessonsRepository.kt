@@ -1,14 +1,26 @@
 package ivy.learn.data.repository
 
 import arrow.core.Either
-import ivy.learn.data.source.LessonDataSource
+import arrow.core.raise.either
+import ivy.learn.data.source.LessonContentDataSource
 import ivy.model.CourseId
 import ivy.model.Lesson
 import ivy.model.LessonId
 
 class LessonsRepository(
-    private val lessonDataSource: LessonDataSource
+    private val lessonContentDataSource: LessonContentDataSource
 ) {
-    suspend fun fetchLesson(course: CourseId, lesson: LessonId): Either<String, Lesson> =
-        lessonDataSource.fetchLessonById(course, lesson)
+    suspend fun fetchLesson(
+        course: CourseId,
+        lesson: LessonId
+    ): Either<String, Lesson> = either {
+        val content = lessonContentDataSource.fetchLessonById(course, lesson).bind()
+        Lesson(
+            id = lesson,
+            name = "",
+            tagline = "",
+            content = content
+        )
+    }
+
 }

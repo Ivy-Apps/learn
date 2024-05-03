@@ -8,17 +8,17 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import ivy.learn.ServerConfiguration
 import ivy.model.CourseId
-import ivy.model.Lesson
+import ivy.model.LessonContent
 import ivy.model.LessonId
 
-class LessonDataSource(
+class LessonContentDataSource(
     private val httpClient: HttpClient,
     private val config: ServerConfiguration,
 ) {
     suspend fun fetchLessonById(
         course: CourseId,
         lesson: LessonId
-    ): Either<String, Lesson> = catch({
+    ): Either<String, LessonContent> = catch({
         httpClient.get(
             urlString = "https://raw.githubusercontent.com/Ivy-Apps/learn-content" +
                     "/main/content/lessons" +
@@ -28,7 +28,7 @@ class LessonDataSource(
                 append("Authorization", "token ${config.privateContentGitHubPat}")
                 append("Accept", "application/vnd.github.v3+json")
             }
-        }.body<Lesson>().right()
+        }.body<LessonContent>().right()
     }) { e ->
         Either.Left("Failed to fetch lesson: ${e.message}")
     }

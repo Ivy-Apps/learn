@@ -9,6 +9,11 @@ data class Lesson(
     val id: LessonId,
     val name: String,
     val tagline: String,
+    val content: LessonContent,
+)
+
+@Serializable
+data class LessonContent(
     val rootItem: LessonItemId,
     val items: Map<LessonItemId, LessonItem>,
 )
