@@ -24,28 +24,22 @@ import component.text.SubTitle
 import component.text.Title
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import ivy.model.CourseId
 import ui.screen.home.HomeItemViewState
-import ui.screen.home.HomeViewEvent
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CourseCard(
     course: HomeItemViewState.Course,
     modifier: Modifier = Modifier,
-    onEvent: (HomeViewEvent) -> Unit
+    onCourseClick: () -> Unit
 ) {
     Card(
         modifier = modifier.sizeIn(maxWidth = 500.dp),
         shape = RoundedCornerShape(24.dp),
         elevation = 4.dp,
-        onClick = {
-            onEvent(HomeViewEvent.OnCourseClick(CourseId(course.id)))
-        }
+        onClick = onCourseClick
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-        ) {
+        Column {
             Box {
                 KamelImage(
                     modifier = Modifier.fillMaxWidth(),
@@ -55,14 +49,20 @@ fun CourseCard(
                 )
                 ContinueButton(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    onClick = {
-                        onEvent(HomeViewEvent.OnCourseClick(CourseId(course.id)))
-                    })
+                    onClick = onCourseClick
+                )
             }
             Spacer(Modifier.height(12.dp))
-            Title(course.name)
+            Title(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = course.name
+            )
             Spacer(Modifier.height(8.dp))
-            SubTitle(course.tagLine)
+            SubTitle(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = course.tagLine
+            )
+            Spacer(Modifier.height(12.dp))
         }
     }
 }
