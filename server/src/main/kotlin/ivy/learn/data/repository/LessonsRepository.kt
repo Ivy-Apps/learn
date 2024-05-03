@@ -22,4 +22,9 @@ class LessonsRepository(
         lesson.copy(content = content)
     }
 
+    suspend fun fetchPartialLessons(courseId: CourseId): Either<String, List<Lesson>> = either {
+        ensureNotNull(CoursesContent.coursesMap[courseId]?.lessons?.map { lessonId ->
+            CoursesContent.lessonsMap[lessonId] ?: raise("No lesson found for id $lessonId")
+        }) { "No lessons found for course id $courseId" }
+    }
 }

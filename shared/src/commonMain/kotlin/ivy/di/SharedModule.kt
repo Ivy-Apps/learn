@@ -24,7 +24,7 @@ import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 object SharedModule : DiModule {
 
     override fun init() = Di.appScope {
-        singleton { platform() }
+        singleton<Platform> { platform() }
         json()
         ktorClient()
         register<ServerUrlProvider> { ServerUrlProviderImpl() }
