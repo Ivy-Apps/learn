@@ -17,6 +17,9 @@ class CourseScreen() : Screen() {
 
     @Composable
     override fun Content() {
-        CourseContent()
+        CourseContent(
+            viewState = viewModel.viewState(),
+            onEvent = viewModel::onEvent
+        )
     }
 }

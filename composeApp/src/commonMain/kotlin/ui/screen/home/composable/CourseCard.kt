@@ -65,7 +65,7 @@ fun CourseCard(
             Spacer(Modifier.height(4.dp))
             SubTitle(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = course.tagLine
+                text = course.tagline
             )
             Spacer(Modifier.height(12.dp))
         }

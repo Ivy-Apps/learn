@@ -19,7 +19,7 @@ class HomeViewModel(
                             "industrial-style-of-dark-interior-design-3d-render.jpg?s=1024x1024&" +
                             "w=is&k=20&c=Go89XVVSsi53IH_nPZ2yMRLXhrz051zKh379-RrBAkQ=",
                     name = "Kotlin fundamentals",
-                    tagLine = "Learn the advanced concepts in Kotlin"
+                    tagline = "Learn the advanced concepts in Kotlin"
                 ),
                 HomeItemViewState.Course(
                     id = "567",
@@ -27,7 +27,7 @@ class HomeViewModel(
                             "industrial-style-of-dark-interior-design-3d-render.jpg?s=1024x1024&" +
                             "w=is&k=20&c=Go89XVVSsi53IH_nPZ2yMRLXhrz051zKh379-RrBAkQ=",
                     name = "Kotlin fundamentals",
-                    tagLine = "Learn the advanced concepts in Kotlin"
+                    tagline = "Learn the advanced concepts in Kotlin"
                 ),
                 HomeItemViewState.Section(title = "Programming"),
                 HomeItemViewState.Course(
@@ -35,7 +35,7 @@ class HomeViewModel(
                     imageUrl = "https://cdn.pixabay.com/photo/2023/03/03/14/16/light-7827771_128" +
                             "0.jpg",
                     name = "General programming",
-                    tagLine = "Learn programming by thinking. Get in depth knowledge of how " +
+                    tagline = "Learn programming by thinking. Get in depth knowledge of how " +
                             "complicated systems work."
                 )
             )
