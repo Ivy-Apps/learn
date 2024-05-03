@@ -25,7 +25,7 @@ fun lesson(
 
 interface LessonScope {
     @LessonDsl
-    fun text(id: String, builder: TextScope.() -> Unit)
+    fun textItem(id: String, builder: TextScope.() -> Unit)
 
     @LessonDsl
     fun question(id: String, builder: QuestionScope.() -> Unit)
@@ -48,21 +48,16 @@ interface LessonScope {
     )
 
     @LessonDsl
-    fun lottie(
-        id: String,
-        jsonUrl: String
-    )
+    fun lottie(id: String, jsonUrl: String)
 
     @LessonDsl
-    fun image(
-        id: String,
-        imageUrl: String
-    )
+    fun image(id: String, imageUrl: String)
 
     @LessonDsl
-    fun choice(
-        id: String, builder: ChoiceScope.() -> Unit
-    )
+    fun choice(id: String, builder: ChoiceScope.() -> Unit)
+
+    @LessonDsl
+    fun mystery(id: String, builder: MysteryItemScope.() -> Unit)
 
     fun build(): LessonContent
 }
@@ -77,7 +72,7 @@ interface TextScope {
 
 interface QuestionScope {
     @LessonDsl
-    fun question(text: String)
+    fun questionText(text: String)
 
     @LessonDsl
     fun answer(
@@ -101,6 +96,14 @@ interface ChoiceScope {
     fun option(
         text: String, next: LessonItemId
     )
+}
+
+interface MysteryItemScope {
+    @LessonDsl
+    fun text(text: String)
+
+    @LessonDsl
+    fun hiddenItemId(item: LessonItemId)
 }
 
 @DslMarker

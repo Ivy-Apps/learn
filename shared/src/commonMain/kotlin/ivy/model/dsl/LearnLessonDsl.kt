@@ -7,7 +7,7 @@ class LessonScopeImpl : LessonScope {
     private var currentItem: LessonItemId? = null
     private val items = mutableMapOf<LessonItemId, LessonItem>()
 
-    override fun text(id: String, builder: TextScope.() -> Unit) {
+    override fun textItem(id: String, builder: TextScope.() -> Unit) {
         val scope = TextScopeImpl().also(builder)
         items[chain(id)] = TextContentItem(
             id = LessonItemId(id),
@@ -101,6 +101,16 @@ class LessonScopeImpl : LessonScope {
         )
     }
 
+    override fun mystery(id: String, builder: MysteryItemScope.() -> Unit) {
+        val scope = MysteryItemScopeImpl().also(builder)
+        items[chain(id)] = MysteryItem(
+            id = LessonItemId(id),
+            text = scope.text,
+            hidden = scope.hiddenItemId!!,
+            next = null,
+        )
+    }
+
     override fun build(): LessonContent = LessonContent(
         rootItem = rootItem!!,
         items = items
@@ -153,7 +163,7 @@ class QuestionScopeImpl : QuestionScope {
     lateinit var question: String
     val answers = mutableListOf<AnswerData>()
 
-    override fun question(text: String) {
+    override fun questionText(text: String) {
         question = text
     }
 
@@ -201,6 +211,19 @@ class ChoiceScopeImpl : ChoiceScope {
         val text: String,
         val next: LessonItemId
     )
+}
+
+class MysteryItemScopeImpl : MysteryItemScope {
+    lateinit var text: String
+    var hiddenItemId: LessonItemId? = null
+
+    override fun text(text: String) {
+        this.text = text
+    }
+
+    override fun hiddenItemId(item: LessonItemId) {
+        hiddenItemId = item
+    }
 }
 
 data class LessonContent(
