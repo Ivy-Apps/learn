@@ -34,7 +34,7 @@ fun HomeContent(
             modifier = Modifier.padding(contentPadding),
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(24.dp),
             contentPadding = PaddingValues(bottom = 48.dp, start = 24.dp, end = 24.dp)
         ) {
             items(
