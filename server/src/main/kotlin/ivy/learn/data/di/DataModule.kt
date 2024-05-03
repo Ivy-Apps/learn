@@ -4,7 +4,9 @@ import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.DiModule
 import ivy.learn.data.database.Database
+import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.LessonsRepository
+import ivy.learn.data.repository.TopicsRepository
 import ivy.learn.data.source.LessonContentDataSource
 
 object DataModule : DiModule {
@@ -12,5 +14,7 @@ object DataModule : DiModule {
         register { Database() }
         register { LessonContentDataSource(Di.get(), Di.get()) }
         register { LessonsRepository(Di.get()) }
+        register { CoursesRepository() }
+        register { TopicsRepository() }
     }
 }

@@ -30,8 +30,8 @@ class LearnServer(
         register { AnalyticsApi() }
         register { LessonsApi(Di.get()) }
         register { StatusApi() }
-        register { TopicsApi() }
-        register { CoursesApi() }
+        register { TopicsApi(Di.get(), Di.get()) }
+        register { CoursesApi(Di.get()) }
     }
 
     fun init(ktorApp: Application): Either<String, Unit> = either {

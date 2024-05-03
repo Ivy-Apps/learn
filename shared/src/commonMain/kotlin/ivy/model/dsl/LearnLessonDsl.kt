@@ -225,8 +225,3 @@ class MysteryItemScopeImpl : MysteryItemScope {
         hiddenItemId = item
     }
 }
-
-data class LessonContent(
-    val rootItem: LessonItemId,
-    val items: Map<LessonItemId, LessonItem>,
-)

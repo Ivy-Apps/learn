@@ -2,7 +2,7 @@ package ivy.learn.data.cms.course
 
 import ivy.learn.data.cms.dsl.CourseDsl
 
-object ProgrammingFundamentals : CourseDsl({
+object GeneralProgramming : CourseDsl({
     name = "General Programming"
     tagline = "Learn the basics of programming"
     lesson(
