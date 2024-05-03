@@ -3,8 +3,10 @@ package ui.screen.home.composable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -27,12 +29,27 @@ fun HomeContent(
         ),
         title = "Learn"
     ) { contentPadding ->
-        LazyColumn(
+        LazyVerticalGrid(
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
+            columns = GridCells.Fixed(2)
         ) {
-            items(viewState.items) {
+            items(
+                items = viewState.items,
+                span = {
+                    when (it) {
+                        is HomeItemViewState.Course -> GridItemSpan(1)
+                        is HomeItemViewState.Section -> GridItemSpan(2)
+                    }
+                },
+                key = {
+                    when (it) {
+                        is HomeItemViewState.Course -> it.id
+                        is HomeItemViewState.Section -> it.title
+                    }
+                }
+            ) {
                 when (it) {
                     is HomeItemViewState.Course -> {
                         Spacer(Modifier.height(12.dp))
