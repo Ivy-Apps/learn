@@ -10,7 +10,7 @@ class CourseScreen() : Screen() {
     override val path: String = "course"
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
-        register { CourseViewModel() }
+        register { CourseViewModel(Di.get()) }
     }
 
     private val viewModel: CourseViewModel by lazy { Di.get() }

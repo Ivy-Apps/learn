@@ -1,7 +1,11 @@
 package ui.navigation
 
 import SystemNavigation
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.plus
 import kotlinx.collections.immutable.toPersistentList
@@ -34,7 +38,7 @@ class Navigation(private val systemNavigation: SystemNavigation) {
         backstack = backstack.dropLast(1).toPersistentList()
         return lastScreen?.also {
             it.destroy()
-            systemNavigation.navigateBack()
+//            systemNavigation.navigateBack()
         }
     }
 }

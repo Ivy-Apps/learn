@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import kotlinx.collections.immutable.persistentListOf
 import ui.ComposeViewModel
 import ui.navigation.Navigation
+import ui.screen.course.CourseScreen
 
 class HomeViewModel(
     private val navigation: Navigation
@@ -54,6 +55,6 @@ class HomeViewModel(
     }
 
     private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {
-        // TODO - go to course
+        navigation.navigate(CourseScreen())
     }
 }

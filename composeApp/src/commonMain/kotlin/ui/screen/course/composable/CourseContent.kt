@@ -1,6 +1,7 @@
 package ui.screen.course.composable
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,7 +27,9 @@ fun CourseContent(
         title = viewState.name
     ) { contentPadding ->
         LazyColumn(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -35,6 +38,7 @@ fun CourseContent(
                     is CourseItemViewState.Arrow -> LessonArrow(
                         progress = it.progress
                     )
+
                     is CourseItemViewState.Lesson -> LessonCard(
                         lesson = it,
                         onLessonClick = {
