@@ -1,6 +1,7 @@
 package ui.screen.home
 
 import androidx.compose.runtime.Immutable
+import ivy.model.CourseId
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
@@ -21,5 +22,5 @@ sealed interface HomeItemViewState {
 
 sealed interface HomeViewEvent {
     data object OnBackClick : HomeViewEvent
-    data object OnColorsDemoClick : HomeViewEvent
+    data class OnCourseClick(val id: CourseId) : HomeViewEvent
 }

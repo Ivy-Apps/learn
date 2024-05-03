@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import kotlinx.collections.immutable.persistentListOf
 import ui.ComposeViewModel
 import ui.navigation.Navigation
-import ui.screen.debug.ColorDemoScreen
 
 class HomeViewModel(
     private val navigation: Navigation
@@ -38,7 +37,7 @@ class HomeViewModel(
     override fun onEvent(event: HomeViewEvent) {
         when (event) {
             HomeViewEvent.OnBackClick -> handleBackClick()
-            HomeViewEvent.OnColorsDemoClick -> handleColorsDemoClick()
+            is HomeViewEvent.OnCourseClick -> handleCourseClick(event)
         }
     }
 
@@ -46,7 +45,7 @@ class HomeViewModel(
         navigation.back()
     }
 
-    private fun handleColorsDemoClick() {
-        navigation.navigate(ColorDemoScreen())
+    private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {
+        // TODO - go to course
     }
 }
