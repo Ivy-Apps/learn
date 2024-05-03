@@ -6,11 +6,11 @@ import kotlin.jvm.JvmInline
 
 @Serializable
 data class Lesson(
-    val id: LessonId,
+    override val id: LessonId,
     val name: String,
     val tagline: String,
     val content: LessonContent,
-)
+) : Identifiable<LessonId>
 
 @Serializable
 data class LessonContent(
@@ -20,7 +20,7 @@ data class LessonContent(
 
 @Serializable
 @JvmInline
-value class LessonId(val value: String)
+value class LessonId(override val value: String) : Id
 
 @Serializable
 sealed interface LessonItem {

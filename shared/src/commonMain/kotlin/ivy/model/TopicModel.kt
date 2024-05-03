@@ -5,11 +5,11 @@ import kotlin.jvm.JvmInline
 
 @Serializable
 data class Topic(
-    val id: TopicId,
+    override val id: TopicId,
     val name: String,
     val courses: List<CourseId>
-)
+) : Identifiable<TopicId>
 
 @JvmInline
 @Serializable
-value class TopicId(val value: String)
+value class TopicId(override val value: String) : Id

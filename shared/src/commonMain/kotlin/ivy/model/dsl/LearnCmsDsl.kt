@@ -1,11 +1,8 @@
 package ivy.model.dsl
 
-import ivy.model.Lesson
-import ivy.model.LessonId
-import ivy.model.LessonItemId
-import ivy.model.TextContentStyle
+import ivy.model.*
 
-@LessonDsl
+@LearnCmsDsl
 fun lesson(
     id: LessonId,
     name: String,
@@ -18,94 +15,93 @@ fun lesson(
         id = id,
         name = name,
         tagline = tagline,
-        rootItem = content.rootItem,
-        items = content.items,
+        content = content,
     )
 }
 
 interface LessonScope {
-    @LessonDsl
+    @LearnCmsDsl
     fun textItem(id: String, builder: TextScope.() -> Unit)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun question(id: String, builder: QuestionScope.() -> Unit)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun openQuestion(id: String, builder: OpenQuestionScope.() -> Unit)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun lessonNavigation(
         id: String,
         text: String,
         onClick: LessonItemId
     )
 
-    @LessonDsl
+    @LearnCmsDsl
     fun link(
         id: String,
         text: String,
         url: String
     )
 
-    @LessonDsl
+    @LearnCmsDsl
     fun lottie(id: String, jsonUrl: String)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun image(id: String, imageUrl: String)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun choice(id: String, builder: ChoiceScope.() -> Unit)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun mystery(id: String, builder: MysteryItemScope.() -> Unit)
 
     fun build(): LessonContent
 }
 
 interface TextScope {
-    @LessonDsl
+    @LearnCmsDsl
     fun style(style: TextContentStyle)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun text(text: String)
 }
 
 interface QuestionScope {
-    @LessonDsl
+    @LearnCmsDsl
     fun questionText(text: String)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun answer(
         text: String, explanation: String? = null, correct: Boolean = false
     )
 }
 
 interface OpenQuestionScope {
-    @LessonDsl
+    @LearnCmsDsl
     fun question(text: String)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun correctAnswer(text: String)
 }
 
 interface ChoiceScope {
-    @LessonDsl
+    @LearnCmsDsl
     fun question(text: String)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun option(
         text: String, next: LessonItemId
     )
 }
 
 interface MysteryItemScope {
-    @LessonDsl
+    @LearnCmsDsl
     fun text(text: String)
 
-    @LessonDsl
+    @LearnCmsDsl
     fun hiddenItemId(item: LessonItemId)
 }
 
 @DslMarker
 @Target(AnnotationTarget.CLASS, AnnotationTarget.TYPEALIAS, AnnotationTarget.TYPE, AnnotationTarget.FUNCTION)
-annotation class LessonDsl
+annotation class LearnCmsDsl
