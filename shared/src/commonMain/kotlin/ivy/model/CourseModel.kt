@@ -8,7 +8,7 @@ data class Course(
     val id: CourseId,
     val name: String,
     val tagline: String,
-    val icon: ImageUrl,
+    val icon: ImageUrl?,
     val lessons: List<LessonId>,
 )
 

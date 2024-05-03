@@ -7,6 +7,7 @@ import ivy.learn.api.common.Api
 import ivy.learn.api.common.endpoint
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.LessonsRepository
+import ivy.model.CourseId
 import ivy.model.Lesson
 import ivy.model.LessonId
 
@@ -19,10 +20,12 @@ class LessonsApi(
 
     @KtorDsl
     private fun Routing.lessonById() {
-        get("/lessons/{id}", endpoint<Lesson> { params ->
-            val lessonId = params["id"]?.let(::LessonId)
+        get("/lessons/{courseId}/{lessonId}", endpoint<Lesson> { params ->
+            val courseId = params["courseId"]?.let(::CourseId)
+            val lessonId = params["lessonId"]?.let(::LessonId)
+            ensureNotNull(courseId) { ServerError.BadRequest("Course id is missing!") }
             ensureNotNull(lessonId) { ServerError.BadRequest("Lesson id is missing!") }
-            repository.fetchLessonById(lessonId)
+            repository.fetchLesson(courseId, lessonId)
                 .mapLeft(ServerError::Unknown).bind()
         })
     }

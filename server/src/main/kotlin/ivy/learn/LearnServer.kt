@@ -8,9 +8,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
 import ivy.di.Di
 import ivy.di.Di.register
-import ivy.learn.api.AnalyticsApi
-import ivy.learn.api.LessonsApi
-import ivy.learn.api.StatusApi
+import ivy.learn.api.*
 import ivy.learn.data.database.Database
 import kotlinx.serialization.json.Json
 
@@ -22,7 +20,9 @@ class LearnServer(
         setOf(
             Di.get<AnalyticsApi>(),
             Di.get<LessonsApi>(),
-            Di.get<StatusApi>()
+            Di.get<StatusApi>(),
+            Di.get<CoursesApi>(),
+            Di.get<TopicsApi>(),
         )
     }
 
@@ -30,6 +30,8 @@ class LearnServer(
         register { AnalyticsApi() }
         register { LessonsApi(Di.get()) }
         register { StatusApi() }
+        register { TopicsApi() }
+        register { CoursesApi() }
     }
 
     fun init(ktorApp: Application): Either<String, Unit> = either {
