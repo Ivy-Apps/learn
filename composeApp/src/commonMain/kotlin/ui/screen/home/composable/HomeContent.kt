@@ -31,13 +31,11 @@ fun HomeContent(
         title = "Learn"
     ) { contentPadding ->
         LazyVerticalGrid(
-            modifier = Modifier
-                .padding(contentPadding)
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.padding(contentPadding),
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(bottom = 48.dp)
+            contentPadding = PaddingValues(bottom = 48.dp, start = 24.dp, end = 24.dp)
         ) {
             items(
                 items = viewState.items,

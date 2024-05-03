@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import component.text.SubTitle
 import component.text.Title
@@ -58,9 +59,10 @@ fun CourseCard(
             Spacer(Modifier.height(12.dp))
             Title(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = course.name
+                text = course.name,
+                fontWeight = FontWeight.Bold
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(4.dp))
             SubTitle(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.tagLine
