@@ -6,6 +6,7 @@ import ivy.di.Di.register
 import ivy.model.CourseId
 import ui.navigation.Screen
 import ui.screen.course.composable.CourseContent
+import ui.screen.course.mapper.CourseViewStateMapper
 
 class CourseScreen(
     private val courseId: CourseId,
@@ -14,6 +15,7 @@ class CourseScreen(
     override val path: String = "course"
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
+        register { CourseViewStateMapper() }
         register {
             CourseViewModel(
                 courseId = courseId,
