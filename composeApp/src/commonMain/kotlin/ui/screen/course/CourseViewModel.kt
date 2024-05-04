@@ -1,14 +1,20 @@
 package ui.screen.course
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import arrow.core.identity
 import data.CourseRepository
 import ivy.data.source.model.CourseResponse
 import ivy.model.CourseId
+import ivy.model.LessonId
 import kotlinx.collections.immutable.persistentListOf
 import ui.ComposeViewModel
 import ui.navigation.Navigation
 import ui.screen.course.mapper.CourseViewStateMapper
+import ui.screen.lesson.LessonScreen
 
 class CourseViewModel(
     private val courseId: CourseId,
@@ -47,6 +53,11 @@ class CourseViewModel(
     }
 
     private fun handleLessonClick(lesson: CourseItemViewState.Lesson) {
-        // TODO - navigate to lesson
+        navigation.navigate(
+            LessonScreen(
+                id = LessonId("4579"),
+                name = "Lesson 1"
+            )
+        )
     }
 }
