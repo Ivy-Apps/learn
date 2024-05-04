@@ -19,6 +19,7 @@ fun IntroLegalText(
         withStyle(SpanStyle(MaterialTheme.colors.onBackground)) {
             append("By continuing, you agree to our ")
         }
+        // TODO: Update the URL to the correct terms of use URL
         pushStringAnnotation(tag = "URL", annotation = "https://www.example.com/terms")
         withStyle(
             style = SpanStyle(
@@ -32,6 +33,7 @@ fun IntroLegalText(
         withStyle(SpanStyle(MaterialTheme.colors.onBackground)) {
             append(" and ")
         }
+        // TODO: Update the URL to the correct privacy policy URL
         pushStringAnnotation(tag = "URL", annotation = "https://www.example.com/privacy")
         withStyle(
             style = SpanStyle(

@@ -37,16 +37,23 @@ fun IntroContent(
             Spacer(modifier = Modifier.height(12.dp))
             Title(text = "Learn programming by thinking.")
             Spacer(modifier = Modifier.height(24.dp))
-            Button(
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
-                onClick = {
-                    onEvent(IntroViewEvent.OnContinueClick)
-                }
-            ) {
-                Text("Let's go")
-            }
+            ContinueButton(onClick = { onEvent(IntroViewEvent.OnContinueClick) })
             Spacer(modifier = Modifier.weight(1f))
             IntroLegalText()
         }
+    }
+}
+
+@Composable
+private fun ContinueButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
+        onClick = onClick,
+    ) {
+        Text("Let's go")
     }
 }
