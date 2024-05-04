@@ -1,5 +1,13 @@
 package ui.screen.lesson
 
-class LessonViewState
+import androidx.compose.runtime.Immutable
+import ivy.model.Lesson
 
-sealed interface LessonViewEvent
+@Immutable
+data class LessonViewState(
+    val lesson: Lesson
+)
+
+sealed interface LessonViewEvent {
+    data object OnBackClick : LessonViewEvent
+}

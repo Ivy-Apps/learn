@@ -14,13 +14,16 @@ class LessonScreen(
     override val path: String = "lesson"
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
-        register { LessonViewModel() }
+        register { LessonViewModel(Di.get()) }
     }
 
     private val viewModel: LessonViewModel by lazy { Di.get() }
 
     @Composable
     override fun Content() {
-        LessonContent()
+        LessonContent(
+            viewState = viewModel.viewState(),
+            onEvent = viewModel::onEvent
+        )
     }
 }
