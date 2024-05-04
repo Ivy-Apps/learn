@@ -6,7 +6,7 @@ import ivy.learn.data.cms.dsl.LessonImage
 object DataStructures : CourseDsl({
     name = "Data Structures"
     tagline = "Lists, Sets, Maps, Stacks, Trees and more."
-    imageUrl = "https://i.ibb.co/0BRty6H/ds.webp"
+    imageUrl = "https://i.ibb.co/dmzmqXV/ds2.webp"
     lesson(
         name = "Arrays",
         tagline = "The simplest data structure.",
