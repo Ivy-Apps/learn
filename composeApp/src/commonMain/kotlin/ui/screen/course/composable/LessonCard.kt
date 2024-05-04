@@ -53,7 +53,7 @@ fun LessonCard(
             Column(
                 modifier = Modifier.height(height)
                     .padding(
-                        start = if (isLargeScreen()) 24.dp else 16.dp,
+                        start = if (isLargeScreen()) 24.dp else 20.dp,
                         end = if (isLargeScreen()) 16.dp else 12.dp
                     ),
                 verticalArrangement = Arrangement.Center,
@@ -76,7 +76,7 @@ private fun LessonImage(
 ) {
     KamelImage(
         modifier = modifier
-            .aspectRatio(0.8f),
+            .aspectRatio(1f),
         contentScale = ContentScale.Crop,
         contentAlignment = Alignment.CenterStart,
         resource = asyncPainterResource(imageUrl),
