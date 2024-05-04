@@ -34,7 +34,7 @@ fun IntroContent(
                 repeat = true
             )
             Headline(text = "Hello!")
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             Title(text = "Learn programming by thinking.")
             Spacer(modifier = Modifier.height(24.dp))
             Button(
