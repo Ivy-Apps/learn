@@ -41,7 +41,7 @@ fun CourseCard(
                 onClick = onCourseClick
             )
             val isLargeScreen = isLargeScreen()
-            Spacer(Modifier.height(if (isLargeScreen) 24.dp else 20.dp))
+            Spacer(Modifier.height(if (isLargeScreen) 24.dp else 16.dp))
             Title(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.name,
@@ -52,7 +52,7 @@ fun CourseCard(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.tagline
             )
-            Spacer(Modifier.height(if (isLargeScreen) 32.dp else 24.dp))
+            Spacer(Modifier.height(if (isLargeScreen) 32.dp else 16.dp))
         }
     }
 }
@@ -67,7 +67,7 @@ private fun Banner(
         KamelImage(
             modifier = modifier
                 .fillMaxWidth()
-                .aspectRatio(4f),
+                .aspectRatio(if (isLargeScreen()) 4f else 3.5f),
             contentScale = ContentScale.Crop,
             resource = asyncPainterResource(imageUrl),
             contentDescription = null
