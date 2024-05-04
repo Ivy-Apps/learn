@@ -2,7 +2,7 @@ package ivy.model.dsl
 
 import ivy.model.*
 
-class LessonScopeImpl : LessonScope {
+class LessonContentScopeImpl : LessonContentScope {
     private var rootItem: LessonItemId? = null
     private var currentItem: LessonItemId? = null
     private val items = mutableMapOf<LessonItemId, LessonItem>()
