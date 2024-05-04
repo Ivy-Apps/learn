@@ -1,28 +1,18 @@
 package ivy.model.dsl
 
-import ivy.model.*
+import ivy.model.LessonContent
+import ivy.model.LessonItemId
+import ivy.model.TextContentStyle
 
 @LearnCmsDsl
-fun lesson(
-    id: LessonId,
-    name: String,
-    tagline: String,
-    imageUrl: String,
-    builder: LessonScope.() -> Unit
-): Lesson {
-    val scope = LessonScopeImpl()
-    scope.builder()
-    val content = scope.build()
-    return Lesson(
-        id = id,
-        name = name,
-        tagline = tagline,
-        image = ImageUrl(imageUrl),
-        content = content,
-    )
+fun lessonContent(
+    builder: LessonContentScope.() -> Unit
+): LessonContent {
+    val scope = LessonContentScopeImpl().apply(builder)
+    return scope.build()
 }
 
-interface LessonScope {
+interface LessonContentScope {
     @LearnCmsDsl
     fun textItem(id: String, builder: TextScope.() -> Unit)
 
