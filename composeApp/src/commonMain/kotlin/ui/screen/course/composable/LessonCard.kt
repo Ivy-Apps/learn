@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import component.isLargeScreen
 import component.text.SubTitle
 import component.text.Title
 import io.kamel.image.KamelImage
@@ -28,7 +29,9 @@ fun LessonCard(
     onLessonClick: () -> Unit
 ) {
     Card(
-        modifier = modifier.sizeIn(maxWidth = 600.dp),
+        modifier = modifier
+            .sizeIn(maxWidth = 600.dp)
+            .fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
         elevation = 4.dp,
         border = BorderStroke(
@@ -42,25 +45,25 @@ fun LessonCard(
         onClick = onLessonClick
     ) {
         Row {
-            val height = 132.dp
+            val height = 148.dp
             LessonImage(
                 modifier = Modifier.height(height),
                 imageUrl = lesson.imageUrl
             )
             Column(
-                modifier = Modifier.height(height),
+                modifier = Modifier.height(height)
+                    .padding(
+                        start = if (isLargeScreen()) 24.dp else 16.dp,
+                        end = if (isLargeScreen()) 16.dp else 12.dp
+                    ),
                 verticalArrangement = Arrangement.Center,
             ) {
                 Title(
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     text = lesson.name,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(4.dp))
-                SubTitle(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = lesson.tagline
-                )
+                SubTitle(text = lesson.tagline)
             }
         }
     }
@@ -74,7 +77,7 @@ private fun LessonImage(
     KamelImage(
         modifier = modifier
             .aspectRatio(0.8f),
-        contentScale = ContentScale.FillHeight,
+        contentScale = ContentScale.Crop,
         contentAlignment = Alignment.CenterStart,
         resource = asyncPainterResource(imageUrl),
         contentDescription = null

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import component.isLargeScreen
 import component.text.SubTitle
 import component.text.Title
 import io.kamel.image.KamelImage
@@ -39,7 +40,8 @@ fun CourseCard(
                 imageUrl = course.imageUrl,
                 onClick = onCourseClick
             )
-            Spacer(Modifier.height(16.dp))
+            val isLargeScreen = isLargeScreen()
+            Spacer(Modifier.height(if (isLargeScreen) 16.dp else 12.dp))
             Title(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.name,
@@ -50,7 +52,7 @@ fun CourseCard(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.tagline
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(if (isLargeScreen) 16.dp else 12.dp))
         }
     }
 }
@@ -65,8 +67,8 @@ private fun Banner(
         KamelImage(
             modifier = modifier
                 .fillMaxWidth()
-                .height(148.dp),
-            contentScale = ContentScale.FillWidth,
+                .aspectRatio(2f),
+            contentScale = ContentScale.Crop,
             resource = asyncPainterResource(imageUrl),
             contentDescription = null
         )
