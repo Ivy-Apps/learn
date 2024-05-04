@@ -61,15 +61,15 @@ class LearnServer(
 
     private fun Application.configureCORS() {
         install(CORS) {
-            methods.add(HttpMethod.Options)
-            methods.add(HttpMethod.Put)
-            methods.add(HttpMethod.Delete)
-            methods.add(HttpMethod.Patch)
-            headers.add(HttpHeaders.Authorization)
-            headers.add(HttpHeaders.ContentType)
-            headers.add(HttpHeaders.AccessControlAllowOrigin)
-            headers.add(HttpHeaders.AccessControlAllowHeaders)
-            headers.add(HttpHeaders.AccessControlAllowMethods)
+            allowMethod(HttpMethod.Options)
+            allowMethod(HttpMethod.Put)
+            allowMethod(HttpMethod.Delete)
+            allowMethod(HttpMethod.Patch)
+            allowHeader(HttpHeaders.Authorization)
+            allowHeader(HttpHeaders.ContentType)
+            allowHeader(HttpHeaders.AccessControlAllowOrigin)
+            allowHeader(HttpHeaders.AccessControlAllowHeaders)
+            allowHeader(HttpHeaders.AccessControlAllowMethods)
             anyHost()
         }
     }
