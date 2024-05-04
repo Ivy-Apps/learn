@@ -39,7 +39,7 @@ fun CourseCard(
                 imageUrl = course.imageUrl,
                 onClick = onCourseClick
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(16.dp))
             Title(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.name,
@@ -50,7 +50,7 @@ fun CourseCard(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = course.tagline
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(16.dp))
         }
     }
 }
@@ -65,7 +65,7 @@ private fun Banner(
         KamelImage(
             modifier = modifier
                 .fillMaxWidth()
-                .height(160.dp),
+                .height(148.dp),
             contentScale = ContentScale.FillWidth,
             resource = asyncPainterResource(imageUrl),
             contentDescription = null
