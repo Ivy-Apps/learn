@@ -28,7 +28,7 @@ fun LessonCard(
     onLessonClick: () -> Unit
 ) {
     Card(
-        modifier = modifier.sizeIn(maxWidth = 500.dp),
+        modifier = modifier.sizeIn(maxWidth = 600.dp),
         shape = RoundedCornerShape(24.dp),
         elevation = 4.dp,
         border = BorderStroke(

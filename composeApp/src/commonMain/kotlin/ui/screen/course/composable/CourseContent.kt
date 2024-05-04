@@ -36,7 +36,7 @@ fun CourseContent(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(
-                top = 20.dp,
+                top = 32.dp,
                 bottom = 48.dp,
                 start = horizontalPadding,
                 end = horizontalPadding,

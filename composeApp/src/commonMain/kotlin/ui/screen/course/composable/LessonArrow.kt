@@ -18,7 +18,7 @@ fun LessonArrow(
     modifier: Modifier = Modifier
 ) {
     Icon(
-        modifier = modifier.size(64.dp),
+        modifier = modifier.size(48.dp),
         imageVector = Icons.Filled.KeyboardArrowDown,
         contentDescription = null,
         tint = when (progress) {
