@@ -9,6 +9,7 @@ fun programmingFundamentals101() = lesson(
     id = LessonId("programming-fundamentals-101"),
     name = "Programming Fundamentals 101",
     tagline = "Learn the basics of programming",
+    imageUrl = "TBD"
 ) {
     mystery("question-1-answer") {
         text("Show explanation")

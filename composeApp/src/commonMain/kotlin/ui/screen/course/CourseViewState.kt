@@ -15,7 +15,7 @@ sealed interface CourseItemViewState {
     data class Lesson(
         val imageUrl: String,
         val name: String,
-        val tagLine: String,
+        val tagline: String,
         val progress: ProgressViewState
     ) : CourseItemViewState
 }

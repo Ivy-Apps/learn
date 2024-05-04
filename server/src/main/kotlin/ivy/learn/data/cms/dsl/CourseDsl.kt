@@ -48,12 +48,17 @@ class CourseScopeImpl : CourseScope {
 
     val lessons = mutableListOf<Lesson>()
 
-    override fun lesson(name: String, tagline: String) {
+    override fun lesson(
+        name: String,
+        tagline: String,
+        imageUrl: String,
+    ) {
         lessons.add(
             Lesson(
                 id = LessonId(nameToId(name)),
                 name = name,
                 tagline = tagline,
+                image = ImageUrl(imageUrl),
                 content = EmptyContent
             )
         )
@@ -76,5 +81,9 @@ interface CourseScope {
     var imageUrl: String
 
     @LearnCmsDsl
-    fun lesson(name: String, tagline: String)
+    fun lesson(
+        name: String,
+        tagline: String,
+        imageUrl: String,
+    )
 }

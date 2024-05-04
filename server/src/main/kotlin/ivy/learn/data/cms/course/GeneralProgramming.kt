@@ -7,7 +7,8 @@ object GeneralProgramming : CourseDsl({
     tagline = "Learn the basics of programming"
     imageUrl = "tbd"
     lesson(
-        "Programming Fundamentals 101",
-        "Learn the basics of programming"
+        name = "Programming Fundamentals 101",
+        tagline = "Learn the basics of programming",
+        imageUrl = "tbd"
     )
 })

@@ -59,7 +59,7 @@ fun LessonCard(
                 Spacer(Modifier.height(4.dp))
                 SubTitle(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    text = lesson.tagLine
+                    text = lesson.tagline
                 )
             }
         }

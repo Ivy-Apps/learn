@@ -69,7 +69,12 @@ fun HomeContent(
                     is HomeItemViewState.Course -> CourseCard(
                         course = it,
                         onCourseClick = {
-                            onEvent(HomeViewEvent.OnCourseClick(CourseId(it.id)))
+                            onEvent(
+                                HomeViewEvent.OnCourseClick(
+                                    id = CourseId(it.id),
+                                    name = it.name
+                                )
+                            )
                         })
 
                     is HomeItemViewState.Section -> Section(

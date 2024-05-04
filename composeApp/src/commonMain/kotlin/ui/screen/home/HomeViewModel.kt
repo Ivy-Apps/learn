@@ -44,6 +44,6 @@ class HomeViewModel(
     }
 
     private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {
-        navigation.navigate(CourseScreen())
+        navigation.navigate(CourseScreen(courseId = event.id, courseName = event.name))
     }
 }
