@@ -1,12 +1,8 @@
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import data.di.DataModule
 import di.AppModule
 import ivy.di.Di
 import ivy.di.SharedModule
@@ -25,6 +21,7 @@ fun App() {
             modules = setOf(
                 SharedModule,
                 AppModule,
+                DataModule,
             )
         )
         initialized = true

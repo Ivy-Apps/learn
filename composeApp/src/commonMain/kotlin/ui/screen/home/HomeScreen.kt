@@ -10,7 +10,7 @@ class HomeScreen : Screen() {
     override val path: String = "home"
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
-        register { HomeViewModel(Di.get()) }
+        register { HomeViewModel(Di.get(), Di.get(), Di.get()) }
     }
 
     private val viewModel: HomeViewModel by lazy { Di.get() }
