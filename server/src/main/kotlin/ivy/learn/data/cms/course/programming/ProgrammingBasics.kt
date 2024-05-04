@@ -2,7 +2,6 @@ package ivy.learn.data.cms.course.programming
 
 import ivy.learn.data.cms.dsl.CourseDsl
 import ivy.learn.data.cms.dsl.LessonImage
-import ivy.learn.data.cms.dsl.LessonImage2
 
 object ProgrammingBasics : CourseDsl({
     name = "Programming Basics"
@@ -19,6 +18,11 @@ object ProgrammingBasics : CourseDsl({
         imageUrl = "https://i.ibb.co/fp0DJ6h/computations.webp"
     )
     lesson(
+        name = "Side-effects",
+        tagline = "The world is a big place. How do we interact with it?",
+        imageUrl = "https://i.ibb.co/PtZJmnC/side-effects.webp"
+    )
+    lesson(
         name = "Variables",
         tagline = "Storing computations for later use and more.",
         imageUrl = "https://i.ibb.co/Rc0fLvn/variables.webp"
@@ -26,17 +30,17 @@ object ProgrammingBasics : CourseDsl({
     lesson(
         name = "Branching",
         tagline = "This or that? If, when, else, and other choices.",
-        imageUrl = LessonImage
+        imageUrl = "https://i.ibb.co/MBnY3N1/branching.webp"
     )
     lesson(
         name = "Loops",
         tagline = "Doing things over and over again. And again. And again.",
-        imageUrl = LessonImage
+        imageUrl = "https://i.ibb.co/JdxqdcR/loops.webp"
     )
     lesson(
         name = "Functions",
         tagline = "f: A -> B. Extracting computations into reusable units.",
-        imageUrl = LessonImage2
+        imageUrl = "https://i.ibb.co/TKv1Cr3/functions.webp"
     )
     lesson(
         name = "Classes",

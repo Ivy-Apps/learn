@@ -2,6 +2,7 @@ package ivy.learn.data.cms.course.programming
 
 import ivy.learn.data.cms.dsl.CourseDsl
 import ivy.learn.data.cms.dsl.LessonImage
+import ivy.learn.data.cms.dsl.LessonImage2
 
 object FunctionalProgramming : CourseDsl({
     name = "Functional Programming (FP)"
@@ -15,7 +16,7 @@ object FunctionalProgramming : CourseDsl({
     lesson(
         name = "Types of functions",
         tagline = "Partial, total, pure. Learn these important distinctions.",
-        imageUrl = LessonImage
+        imageUrl = LessonImage2
     )
     lesson(
         name = "Higher order functions",
@@ -30,7 +31,7 @@ object FunctionalProgramming : CourseDsl({
     lesson(
         name = "Immutability",
         tagline = "Values that never change. The key to functional programming.",
-        imageUrl = LessonImage
+        imageUrl = LessonImage2
     )
     lesson(
         name = "Functor",

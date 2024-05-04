@@ -14,11 +14,6 @@ object ObjectOrientedProgramming : CourseDsl({
         imageUrl = LessonImage
     )
     lesson(
-        name = "What is a class?",
-        tagline = "A blueprint for creating objects. The definition of a type.",
-        imageUrl = LessonImage2
-    )
-    lesson(
         name = "Encapsulation",
         tagline = "Hiding the internal state of an object and requiring all interaction to be performed through an object's methods.",
         imageUrl = LessonImage
@@ -47,6 +42,11 @@ object ObjectOrientedProgramming : CourseDsl({
         name = "Design Patterns",
         tagline = "Solutions to common problems in software design.",
         imageUrl = LessonImage
+    )
+    lesson(
+        name = "Dependency Injection (DI)",
+        tagline = "A technique in which an object receives other objects that it depends on.",
+        imageUrl = LessonImage2
     )
     lesson(
         name = "SOLID Principles",
