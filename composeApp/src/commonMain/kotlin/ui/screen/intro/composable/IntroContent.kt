@@ -1,14 +1,7 @@
 package ui.screen.intro.composable
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +14,7 @@ import component.text.Title
 import ui.screen.intro.IntroViewEvent
 import ui.screen.intro.IntroViewState
 
+
 @Composable
 fun IntroContent(
     viewState: IntroViewState,
@@ -28,10 +22,12 @@ fun IntroContent(
 ) {
     Surface {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .padding(all = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Spacer(modifier = Modifier.weight(1f))
             LearnLottieAnimation(
                 modifier = Modifier.size(400.dp),
                 animationFile = "intro_lottie_anim.json",
@@ -49,12 +45,8 @@ fun IntroContent(
             ) {
                 Text("Let's go")
             }
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "By continuing you agree with Terms & conditions and " +
-                        "Privacy Policy",
-                style = MaterialTheme.typography.body2
-            )
+            Spacer(modifier = Modifier.weight(1f))
+            IntroLegalText()
         }
     }
 }
