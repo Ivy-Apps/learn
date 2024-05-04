@@ -1,46 +1,50 @@
 package ivy.learn.data.cms.course.programming
 
 import ivy.learn.data.cms.dsl.CourseDsl
-import ivy.learn.data.cms.dsl.LessonImageUrl
+import ivy.learn.data.cms.dsl.LessonImage
 
 object ProgrammingBasics : CourseDsl({
     name = "Programming Basics"
     tagline = "Learn the basics of programming from a different perspective."
-    imageUrl =
-        "https://i.ibb.co/nMLdcD5/DALL-E-2024-05-04-20-50-03-A-wide-banner-image-for-a-course-titled-Programming-Basics-with-the-tagli.webp"
+    imageUrl = "https://i.ibb.co/PgG6ZWh/programming-basics.webp"
     lesson(
         name = "What is programming?",
         tagline = "An introduction to programming. And why we need it?",
-        imageUrl = LessonImageUrl
+        imageUrl = "https://i.ibb.co/0CbSJNR/what-is-programming.webp"
     )
     lesson(
         name = "Computations",
         tagline = "The purpose of computers is to compute. What does that mean?",
-        imageUrl = LessonImageUrl
+        imageUrl = "https://i.ibb.co/fp0DJ6h/computations.webp"
+    )
+    lesson(
+        name = "Side-effects",
+        tagline = "The world is a big place. How do we interact with it?",
+        imageUrl = "https://i.ibb.co/PtZJmnC/side-effects.webp"
     )
     lesson(
         name = "Variables",
         tagline = "Storing computations for later use and more.",
-        imageUrl = LessonImageUrl
+        imageUrl = "https://i.ibb.co/Rc0fLvn/variables.webp"
     )
     lesson(
         name = "Branching",
         tagline = "This or that? If, when, else, and other choices.",
-        imageUrl = LessonImageUrl
+        imageUrl = "https://i.ibb.co/MBnY3N1/branching.webp"
     )
     lesson(
         name = "Loops",
         tagline = "Doing things over and over again. And again. And again.",
-        imageUrl = LessonImageUrl
+        imageUrl = "https://i.ibb.co/JdxqdcR/loops.webp"
     )
     lesson(
         name = "Functions",
         tagline = "f: A -> B. Extracting computations into reusable units.",
-        imageUrl = LessonImageUrl
+        imageUrl = "https://i.ibb.co/TKv1Cr3/functions.webp"
     )
     lesson(
         name = "Classes",
         tagline = "Objects. Functions with shared state. And the heart of OOP.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage
     )
 })

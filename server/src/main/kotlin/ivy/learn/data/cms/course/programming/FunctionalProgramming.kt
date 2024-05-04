@@ -1,46 +1,46 @@
 package ivy.learn.data.cms.course.programming
 
 import ivy.learn.data.cms.dsl.CourseDsl
-import ivy.learn.data.cms.dsl.CourseImageUrl
-import ivy.learn.data.cms.dsl.LessonImageUrl
+import ivy.learn.data.cms.dsl.LessonImage
+import ivy.learn.data.cms.dsl.LessonImage2
 
 object FunctionalProgramming : CourseDsl({
     name = "Functional Programming (FP)"
     tagline = "Programming with mathematical functions. Pure, declarative and powerful."
-    imageUrl = CourseImageUrl
+    imageUrl = "https://i.ibb.co/Rpfw32H/fp.webp"
     lesson(
         name = "What is a function?",
         tagline = "A mathematical relation between a set of inputs and a set of outputs.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage
     )
     lesson(
         name = "Types of functions",
         tagline = "Partial, total, pure. Learn these important distinctions.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage2
     )
     lesson(
         name = "Higher order functions",
         tagline = "Functions that take functions as arguments or return functions.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage
     )
     lesson(
         name = "Recursion",
         tagline = "Functions that call themselves. The power of self-reference.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage
     )
     lesson(
         name = "Immutability",
         tagline = "Values that never change. The key to functional programming.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage2
     )
     lesson(
         name = "Functor",
         tagline = "A type that can be mapped over. A container for a value.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage
     )
     lesson(
         name = "Monad",
         tagline = "A type that can be flatMapped over. The heart of FP.",
-        imageUrl = LessonImageUrl
+        imageUrl = LessonImage
     )
 })

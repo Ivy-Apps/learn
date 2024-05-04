@@ -10,10 +10,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import component.BackButton
-import component.LearnScaffold
-import component.isLargeScreen
-import component.platformHorizontalPadding
+import component.*
 import ivy.model.CourseId
 import ui.screen.home.HomeItemViewState
 import ui.screen.home.HomeViewEvent
@@ -32,14 +29,20 @@ fun HomeContent(
         ),
         title = "Learn"
     ) { contentPadding ->
-        val columnsCount = if (isLargeScreen()) 3 else 2
+        val columnsCount = when (screenWidth().value) {
+            in 0f..600f -> 1
+            in 600f..1200f -> 2
+            else -> 3
+        }
         val horizontalPadding = platformHorizontalPadding()
         LazyVerticalGrid(
             modifier = Modifier.padding(contentPadding),
             columns = GridCells.Fixed(
                 count = columnsCount
             ),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(
+                if (isLargeScreen()) 16.dp else 12.dp
+            ),
             horizontalArrangement = Arrangement.spacedBy(
                 if (isLargeScreen()) 24.dp else 12.dp
             ),
