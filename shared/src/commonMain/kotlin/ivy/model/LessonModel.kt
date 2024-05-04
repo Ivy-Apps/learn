@@ -9,6 +9,7 @@ data class Lesson(
     override val id: LessonId,
     val name: String,
     val tagline: String,
+    val image: ImageUrl,
     val content: LessonContent,
 ) : Identifiable<LessonId>
 

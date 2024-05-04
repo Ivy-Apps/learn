@@ -8,7 +8,7 @@ data class Course(
     override val id: CourseId,
     val name: String,
     val tagline: String,
-    val icon: ImageUrl?,
+    val image: ImageUrl,
     val lessons: List<LessonId>,
 ) : Identifiable<CourseId>
 

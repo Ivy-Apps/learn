@@ -6,7 +6,9 @@ import ivy.model.*
 fun lesson(
     id: LessonId,
     name: String,
-    tagline: String, builder: LessonScope.() -> Unit
+    tagline: String,
+    imageUrl: String,
+    builder: LessonScope.() -> Unit
 ): Lesson {
     val scope = LessonScopeImpl()
     scope.builder()
@@ -15,6 +17,7 @@ fun lesson(
         id = id,
         name = name,
         tagline = tagline,
+        image = ImageUrl(imageUrl),
         content = content,
     )
 }

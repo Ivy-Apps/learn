@@ -51,6 +51,7 @@ kotlin {
             implementation(libs.kotlin.immutableCollections)
             implementation(libs.thirdparty.lottieMultiplatform)
             implementation(libs.thirdparty.kamel)
+            implementation(libs.arrow.core)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

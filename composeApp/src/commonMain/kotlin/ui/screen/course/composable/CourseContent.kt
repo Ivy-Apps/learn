@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
+import component.platformHorizontalPadding
 import ui.screen.course.CourseItemViewState
 import ui.screen.course.CourseViewEvent
 import ui.screen.course.CourseViewState
@@ -27,13 +28,19 @@ fun CourseContent(
         }),
         title = viewState.name
     ) { contentPadding ->
+        val horizontalPadding = platformHorizontalPadding()
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(top = 20.dp, bottom = 48.dp)
+            contentPadding = PaddingValues(
+                top = 32.dp,
+                bottom = 48.dp,
+                start = horizontalPadding,
+                end = horizontalPadding,
+            )
         ) {
             items(viewState.items) {
                 when (it) {

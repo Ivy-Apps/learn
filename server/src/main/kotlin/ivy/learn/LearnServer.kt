@@ -2,9 +2,11 @@ package ivy.learn
 
 import arrow.core.Either
 import arrow.core.raise.either
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
 import ivy.di.Di
 import ivy.di.Di.register
@@ -35,7 +37,10 @@ class LearnServer(
     }
 
     fun init(ktorApp: Application): Either<String, Unit> = either {
-        ktorApp.configureContentNegotiation()
+        with(ktorApp) {
+            configureCORS()
+            configureContentNegotiation()
+        }
         val config = configurationProvider.fromEnvironment().bind()
         Di.appScope { register { config } }
         database.init(config.database).bind()
@@ -51,6 +56,21 @@ class LearnServer(
     private fun Application.configureContentNegotiation() {
         install(ContentNegotiation) {
             json(json = Di.get<Json>())
+        }
+    }
+
+    private fun Application.configureCORS() {
+        install(CORS) {
+            methods.add(HttpMethod.Options)
+            methods.add(HttpMethod.Put)
+            methods.add(HttpMethod.Delete)
+            methods.add(HttpMethod.Patch)
+            headers.add(HttpHeaders.Authorization)
+            headers.add(HttpHeaders.ContentType)
+            headers.add(HttpHeaders.AccessControlAllowOrigin)
+            headers.add(HttpHeaders.AccessControlAllowHeaders)
+            headers.add(HttpHeaders.AccessControlAllowMethods)
+            anyHost()
         }
     }
 }

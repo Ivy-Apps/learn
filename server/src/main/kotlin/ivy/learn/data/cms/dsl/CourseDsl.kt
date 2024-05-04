@@ -1,9 +1,6 @@
 package ivy.learn.data.cms.dsl
 
-import ivy.model.Course
-import ivy.model.CourseId
-import ivy.model.Lesson
-import ivy.model.LessonId
+import ivy.model.*
 import ivy.model.dsl.LearnCmsDsl
 
 abstract class CoursesDsl(
@@ -47,15 +44,21 @@ abstract class CourseDsl(
 class CourseScopeImpl : CourseScope {
     override lateinit var name: String
     override lateinit var tagline: String
+    override lateinit var imageUrl: String
 
     val lessons = mutableListOf<Lesson>()
 
-    override fun lesson(name: String, tagline: String) {
+    override fun lesson(
+        name: String,
+        tagline: String,
+        imageUrl: String,
+    ) {
         lessons.add(
             Lesson(
                 id = LessonId(nameToId(name)),
                 name = name,
                 tagline = tagline,
+                image = ImageUrl(imageUrl),
                 content = EmptyContent
             )
         )
@@ -66,7 +69,7 @@ class CourseScopeImpl : CourseScope {
             id = CourseId(nameToId(name)),
             name = name,
             tagline = tagline,
-            icon = null,
+            image = ImageUrl(imageUrl),
             lessons = lessons.map(Lesson::id)
         )
     }
@@ -75,7 +78,12 @@ class CourseScopeImpl : CourseScope {
 interface CourseScope {
     var name: String
     var tagline: String
+    var imageUrl: String
 
     @LearnCmsDsl
-    fun lesson(name: String, tagline: String)
+    fun lesson(
+        name: String,
+        tagline: String,
+        imageUrl: String,
+    )
 }
