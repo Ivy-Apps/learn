@@ -42,7 +42,7 @@ class LessonViewModel(
 
     override fun onEvent(event: LessonViewEvent) {
         when (event) {
-            LessonViewEvent.OnBackClick -> TODO()
+            LessonViewEvent.OnBackClick -> handleBackClick()
         }
     }
 
