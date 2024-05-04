@@ -1,10 +1,26 @@
 package ivy.learn.data.cms.course.programming
 
 import ivy.learn.data.cms.dsl.CourseDsl
+import ivy.learn.data.cms.dsl.CourseImageUrl
+import ivy.learn.data.cms.dsl.LessonImageUrl
 
 object ProgrammingFundamentals : CourseDsl({
     name = "Programming Fundamentals"
-    tagline = "Learn the basics of programming from a different perspective."
-    imageUrl =
-        "https://i.ibb.co/nMLdcD5/DALL-E-2024-05-04-20-50-03-A-wide-banner-image-for-a-course-titled-Programming-Basics-with-the-tagli.webp"
+    tagline = "Explore the core ideas powering today's software."
+    imageUrl = CourseImageUrl
+    lesson(
+        name = "Type Systems",
+        tagline = "The foundation of modern programming languages.",
+        imageUrl = LessonImageUrl
+    )
+    lesson(
+        name = "Algebraic Data Types (ADTs)",
+        tagline = "SUMs, PRODUCTs and the core of data modeling.",
+        imageUrl = LessonImageUrl
+    )
+    lesson(
+        name = "Pattern Matching",
+        tagline = "The power of ADTs in action.",
+        imageUrl = LessonImageUrl
+    )
 })
