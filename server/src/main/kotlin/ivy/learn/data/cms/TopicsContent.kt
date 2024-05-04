@@ -1,5 +1,10 @@
 package ivy.learn.data.cms
 
+import ivy.learn.data.cms.course.android.AndroidArchitecture
+import ivy.learn.data.cms.course.android.ScreenArchitecture
+import ivy.learn.data.cms.course.kotlin.DataModeling
+import ivy.learn.data.cms.course.kotlin.ErrorHandling
+import ivy.learn.data.cms.course.kotlin.KotlinDSLs
 import ivy.learn.data.cms.course.programming.*
 import ivy.learn.data.cms.dsl.TopicsDsl
 
@@ -12,9 +17,12 @@ object TopicsContent : TopicsDsl({
         course(ObjectOrientedProgramming)
     }
     topic("Kotlin") {
-
+        course(DataModeling)
+        course(ErrorHandling)
+        course(KotlinDSLs)
     }
-    topic("Compose") {
-
+    topic("Android") {
+        course(AndroidArchitecture)
+        course(ScreenArchitecture)
     }
 })

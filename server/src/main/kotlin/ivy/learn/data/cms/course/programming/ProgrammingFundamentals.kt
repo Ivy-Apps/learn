@@ -23,4 +23,9 @@ object ProgrammingFundamentals : CourseDsl({
         tagline = "The power of ADTs in action.",
         imageUrl = LessonImage
     )
+    lesson(
+        name = "Unit Testing",
+        tagline = "Ensuring your code works as expected.",
+        imageUrl = LessonImage2
+    )
 })
