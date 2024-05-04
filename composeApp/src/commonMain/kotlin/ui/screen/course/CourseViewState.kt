@@ -23,7 +23,7 @@ sealed interface CourseItemViewState {
 @Immutable
 enum class ProgressViewState {
     Completed,
-    ToDo,
+    Current,
     Upcoming
 }
 

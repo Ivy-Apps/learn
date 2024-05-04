@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.LearnLottieAnimation
+import component.platformHorizontalPadding
 import component.text.Headline
 import component.text.Title
 import ui.screen.intro.IntroViewEvent
@@ -23,7 +24,10 @@ fun IntroContent(
     Surface {
         Column(
             modifier = Modifier.fillMaxSize()
-                .padding(all = 24.dp),
+                .padding(
+                    vertical = 24.dp,
+                    horizontal = platformHorizontalPadding()
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

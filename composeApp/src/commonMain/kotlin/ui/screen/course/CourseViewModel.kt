@@ -22,7 +22,7 @@ class CourseViewModel(
                     progress = ProgressViewState.Completed
                 ),
                 CourseItemViewState.Arrow(
-                    progress = ProgressViewState.ToDo
+                    progress = ProgressViewState.Current
                 ),
                 CourseItemViewState.Lesson(
                     imageUrl = "https://cdn.pixabay.com/photo/2023/03/03/14/16/light-7827771_128" +
@@ -30,7 +30,7 @@ class CourseViewModel(
                     name = "ADTs - part 2",
                     tagLine = "Learn the power of modeling your data easily with algebraic data " +
                             "types",
-                    progress = ProgressViewState.ToDo
+                    progress = ProgressViewState.Current
                 ),
                 CourseItemViewState.Arrow(
                     progress = ProgressViewState.Upcoming

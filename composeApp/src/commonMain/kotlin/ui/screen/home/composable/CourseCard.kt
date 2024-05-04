@@ -1,13 +1,6 @@
 package ui.screen.home.composable
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -42,20 +35,10 @@ fun CourseCard(
         onClick = onCourseClick
     ) {
         Column {
-            Box {
-                KamelImage(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    contentScale = ContentScale.FillWidth,
-                    resource = asyncPainterResource(course.imageUrl),
-                    contentDescription = null
-                )
-                ContinueButton(
-                    modifier = Modifier.align(Alignment.TopEnd),
-                    onClick = onCourseClick
-                )
-            }
+            Banner(
+                imageUrl = course.imageUrl,
+                onClick = onCourseClick
+            )
             Spacer(Modifier.height(12.dp))
             Title(
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -69,6 +52,28 @@ fun CourseCard(
             )
             Spacer(Modifier.height(12.dp))
         }
+    }
+}
+
+@Composable
+private fun Banner(
+    imageUrl: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box {
+        KamelImage(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(160.dp),
+            contentScale = ContentScale.FillWidth,
+            resource = asyncPainterResource(imageUrl),
+            contentDescription = null
+        )
+        ContinueButton(
+            modifier = Modifier.align(Alignment.TopEnd),
+            onClick = onClick
+        )
     }
 }
 

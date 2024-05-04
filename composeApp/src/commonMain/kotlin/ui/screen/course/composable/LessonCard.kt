@@ -1,13 +1,7 @@
 package ui.screen.course.composable
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -15,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,7 +19,6 @@ import io.kamel.image.asyncPainterResource
 import ui.screen.course.CourseItemViewState
 import ui.screen.course.ProgressViewState
 import ui.theme.Gray
-import ui.theme.Green
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -41,23 +33,24 @@ fun LessonCard(
         elevation = 4.dp,
         border = BorderStroke(
             width = 2.dp,
-            color = progressToColor(lesson.progress)
+            color = if (lesson.progress == ProgressViewState.Current) {
+                MaterialTheme.colors.primary
+            } else {
+                Gray
+            }
         ),
         onClick = onLessonClick
     ) {
         Row {
-            KamelImage(
-                modifier = Modifier
-                    .width(160.dp)
-                    .height(160.dp),
-                contentScale = ContentScale.FillBounds,
-                contentAlignment = Alignment.CenterStart,
-                resource = asyncPainterResource(lesson.imageUrl),
-                contentDescription = null
+            val height = 132.dp
+            LessonImage(
+                modifier = Modifier.height(height),
+                imageUrl = lesson.imageUrl
             )
-
-            Column {
-                Spacer(Modifier.height(24.dp))
+            Column(
+                modifier = Modifier.height(height),
+                verticalArrangement = Arrangement.Center,
+            ) {
                 Title(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = lesson.name,
@@ -68,17 +61,22 @@ fun LessonCard(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = lesson.tagLine
                 )
-                Spacer(Modifier.height(24.dp))
             }
         }
     }
 }
 
 @Composable
-fun progressToColor(progress: ProgressViewState): Color {
-    return when (progress) {
-        ProgressViewState.Completed -> Green
-        ProgressViewState.ToDo -> MaterialTheme.colors.secondary
-        ProgressViewState.Upcoming -> Gray
-    }
+private fun LessonImage(
+    imageUrl: String,
+    modifier: Modifier = Modifier,
+) {
+    KamelImage(
+        modifier = modifier
+            .aspectRatio(0.8f),
+        contentScale = ContentScale.FillHeight,
+        contentAlignment = Alignment.CenterStart,
+        resource = asyncPainterResource(imageUrl),
+        contentDescription = null
+    )
 }
