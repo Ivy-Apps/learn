@@ -6,7 +6,8 @@ import kotlin.jvm.JvmInline
 
 @Immutable
 data class LessonViewState(
-    val lesson: ImmutableList<LessonItemViewState>
+    val title: String,
+    val items: ImmutableList<LessonItemViewState>
 )
 
 @Immutable
@@ -15,7 +16,7 @@ sealed interface LessonItemViewState {
 }
 
 @Immutable
-data class TextContentItemViewState(
+data class TextItemViewState(
     override val id: LessonItemIdViewState,
     val text: String,
     val style: TextStyleViewState

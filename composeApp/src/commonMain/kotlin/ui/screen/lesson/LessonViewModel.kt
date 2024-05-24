@@ -17,7 +17,7 @@ class LessonViewModel(
     @Composable
     override fun viewState(): LessonViewState {
         return LessonViewState(
-            lesson = Lesson(
+            items = Lesson(
                 id = LessonId(value = "123"),
                 name = "Lesson 1",
                 tagline = "Learn programming by thinking...",
