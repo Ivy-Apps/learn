@@ -1,14 +1,19 @@
 package ui.screen.intro.composable
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.LearnLottieAnimation
+import component.button.CtaButton
 import component.platformHorizontalPadding
 import component.text.Headline
 import component.text.Title
@@ -53,11 +58,9 @@ private fun ContinueButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    Button(
+    CtaButton(
         modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
-        onClick = onClick,
-    ) {
-        Text("Let's go")
-    }
+        text = "LET'S GO",
+        onClick = onClick
+    )
 }

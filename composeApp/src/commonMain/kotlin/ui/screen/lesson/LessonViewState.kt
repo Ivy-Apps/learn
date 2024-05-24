@@ -31,12 +31,20 @@ enum class TextStyleViewState {
 data class QuestionItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
-    val answers: ImmutableList<AnswerViewState>
+    val type: QuestionType,
+    val answers: ImmutableList<AnswerViewState>,
+    val answered: Boolean
 ) : LessonItemViewState
 
 @Immutable
+enum class QuestionType {
+    SingleChoice,
+    MultipleChoice
+}
+
+@Immutable
 data class AnswerViewState(
-    val id: LessonItemIdViewState,
+    val id: String,
     val text: String,
     val explanation: String?,
     val correct: Boolean,
@@ -103,4 +111,10 @@ value class LessonItemIdViewState(val value: String)
 
 sealed interface LessonViewEvent {
     data object OnBackClick : LessonViewEvent
+    data class OnCheckQuestionClick(val id: LessonItemIdViewState) : LessonViewEvent
+    data class OnAnswerCheckChange(
+        val questionId: LessonItemIdViewState,
+        val answerId: String,
+        val checked: Boolean
+    ) : LessonViewEvent
 }

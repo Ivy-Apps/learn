@@ -23,6 +23,7 @@ import ui.screen.lesson.MysteryItemViewState
 import ui.screen.lesson.OpenQuestionItemViewState
 import ui.screen.lesson.QuestionItemViewState
 import ui.screen.lesson.TextItemViewState
+import ui.screen.lesson.composable.item.QuestionLessonItem
 import ui.screen.lesson.composable.item.TextLessonItem
 
 @Composable
@@ -62,7 +63,22 @@ fun LessonContent(
                     is LottieAnimationItemViewState -> TODO()
                     is MysteryItemViewState -> TODO()
                     is OpenQuestionItemViewState -> TODO()
-                    is QuestionItemViewState -> TODO()
+                    is QuestionItemViewState -> QuestionLessonItem(
+                        viewState = it,
+                        onAnswerCheckChange = { answerViewState, checked ->
+                            onEvent(
+                                LessonViewEvent.OnAnswerCheckChange(
+                                    questionId = it.id,
+                                    answerId = answerViewState.id,
+                                    checked = checked
+                                )
+                            )
+                        },
+                        onCheckClick = {
+                            onEvent(LessonViewEvent.OnCheckQuestionClick(it.id))
+                        }
+                    )
+
                     is TextItemViewState -> TextLessonItem(it)
                 }
             }
