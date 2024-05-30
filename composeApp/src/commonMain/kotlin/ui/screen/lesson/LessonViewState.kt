@@ -32,13 +32,13 @@ enum class TextStyleViewState {
 data class QuestionItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
-    val type: QuestionType,
+    val type: QuestionTypeViewState,
     val answers: ImmutableList<AnswerViewState>,
     val answered: Boolean
 ) : LessonItemViewState
 
 @Immutable
-enum class QuestionType {
+enum class QuestionTypeViewState {
     SingleChoice,
     MultipleChoice
 }
@@ -127,6 +127,7 @@ sealed interface QuestionViewEvent : LessonViewEvent {
 
     data class AnswerCheckChange(
         override val questionId: LessonItemIdViewState,
+        val questionType: QuestionTypeViewState,
         val answerId: String,
         val checked: Boolean
     ) : QuestionViewEvent

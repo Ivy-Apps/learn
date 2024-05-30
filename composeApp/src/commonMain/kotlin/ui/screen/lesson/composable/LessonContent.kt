@@ -104,12 +104,13 @@ private fun LessonItemsLazyColum(
 
                 is QuestionItemViewState -> QuestionLessonItem(
                     viewState = it,
-                    onAnswerCheckChange = { answerViewState, checked ->
+                    onAnswerCheckChange = { type, answerViewState, checked ->
                         onEvent(
                             QuestionViewEvent.AnswerCheckChange(
                                 questionId = it.id,
+                                questionType = type,
                                 answerId = answerViewState.id,
-                                checked = checked
+                                checked = checked,
                             )
                         )
                     },

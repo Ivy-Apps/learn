@@ -108,7 +108,7 @@ class LessonViewStateMapper(
     ): QuestionItemViewState = QuestionItemViewState(
         id = id.toViewState(),
         question = question,
-        type = if (correct.size == 1) QuestionType.SingleChoice else QuestionType.MultipleChoice,
+        type = if (correct.size == 1) QuestionTypeViewState.SingleChoice else QuestionTypeViewState.MultipleChoice,
         answers = answers.map { it.toViewState(this, localState) }
             .toImmutableList(),
         answered = id in localState.completed,
