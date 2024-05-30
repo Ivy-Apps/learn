@@ -21,7 +21,7 @@ fun TextLessonItem(
         )
 
         TextStyleViewState.Body -> Body(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = modifier.padding(top = 12.dp),
             text = viewState.text
         )
     }

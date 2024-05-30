@@ -14,6 +14,7 @@ import component.BackButton
 import component.LearnScaffold
 import component.platformHorizontalPadding
 import ui.screen.lesson.*
+import ui.screen.lesson.composable.item.ImageLessonItem
 import ui.screen.lesson.composable.item.QuestionLessonItem
 import ui.screen.lesson.composable.item.TextLessonItem
 
@@ -78,9 +79,7 @@ private fun LessonItemsLazyColum(
                     // TODO
                 }
 
-                is ImageItemViewState -> {
-                    // TODO
-                }
+                is ImageItemViewState -> ImageLessonItem(it)
 
                 is LessonNavigationItemViewState -> {
                     // TODO

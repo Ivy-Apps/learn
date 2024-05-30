@@ -51,7 +51,10 @@ fun QuestionLessonItem(
             }
             if (!viewState.answered) {
                 Spacer(Modifier.height(12.dp))
-                CheckButton(onClick = onCheckClick)
+                CheckButton(
+                    modifier = Modifier.align(Alignment.End),
+                    onClick = onCheckClick
+                )
             }
         }
     }
