@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.compose")
     id("com.google.devtools.ksp")
+    idea
 }
 
 kotlin {
@@ -34,16 +35,9 @@ kotlin {
         }
     }
 
-    sourceSets.commonMain {
-        kotlin.srcDir("build/generated/ksp/main/kotlin")
-    }
-    sourceSets.jvmTest {
-        kotlin.srcDir("build/generated/ksp/test/kotlin")
-    }
-
     sourceSets {
-        dependencies {
-            ksp(libs.arrow.optics.ksp)
+        commonMain {
+            kotlin.srcDirs("build/generated/ksp/commonMain/kotlin")
         }
 
         val desktopMain by getting
@@ -69,6 +63,10 @@ kotlin {
             implementation(compose.desktop.currentOs)
         }
     }
+}
+
+dependencies {
+    ksp(libs.arrow.optics.ksp)
 }
 
 android {
@@ -119,4 +117,24 @@ compose.desktop {
 
 compose.experimental {
     web.application {}
+}
+
+// Configure KSP to output to the commonMain directory
+ksp {
+    arg("optics.gen", "true")
+}
+
+tasks.withType<com.google.devtools.ksp.gradle.KspTask> {
+    doLast {
+        copy {
+            from("build/generated/ksp/js/jsMain/kotlin")
+            into("build/generated/ksp/commonMain/kotlin")
+            include("**/*.kt")
+        }
+        delete("build/generated/ksp/js/jsMain/kotlin")
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    dependsOn(tasks.withType<com.google.devtools.ksp.gradle.KspTask>())
 }

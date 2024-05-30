@@ -2,6 +2,7 @@ package ui.screen.lesson
 
 import androidx.compose.runtime.*
 import arrow.core.Either
+import arrow.optics.optics
 import data.LessonRepository
 import ivy.model.*
 import kotlinx.collections.immutable.persistentListOf
@@ -69,6 +70,7 @@ class LessonViewModel(
         }
     }
 
+    @optics
     data class LocalState(
         val answers: Map<LessonItemId, Set<AnswerId>>,
         val openAnswers: Map<LessonItemId, String>,
