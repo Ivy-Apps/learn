@@ -49,8 +49,10 @@ fun QuestionLessonItem(
                     }
                 )
             }
-            Spacer(Modifier.height(12.dp))
-            CheckButton(onClick = onCheckClick)
+            if (!viewState.answered) {
+                Spacer(Modifier.height(12.dp))
+                CheckButton(onClick = onCheckClick)
+            }
         }
     }
 }
@@ -125,9 +127,8 @@ private fun AnswerCheckbox(
         enabled = correct == null,
         colors = CheckboxDefaults.colors(
             checkedColor = MaterialTheme.colors.primary,
-            checkmarkColor = answeredColor,
+            checkmarkColor = MaterialTheme.colors.onPrimary,
             disabledColor = answeredColor,
-            disabledIndeterminateColor = answeredColor
         )
     )
 }
