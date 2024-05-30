@@ -7,6 +7,7 @@ import ivy.model.LessonId
 import ui.navigation.Screen
 import ui.screen.lesson.composable.LessonContent
 import ui.screen.lesson.handler.OnBackClickEventHandler
+import ui.screen.lesson.mapper.LessonViewStateMapper
 
 class LessonScreen(
     private val lessonId: LessonId,
@@ -15,6 +16,8 @@ class LessonScreen(
     override val path: String = "lesson"
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
+        register { LessonViewStateMapper() }
+        register { OnBackClickEventHandler(Di.get()) }
         register {
             LessonViewModel(
                 lessonId = lessonId,

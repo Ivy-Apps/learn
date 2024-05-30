@@ -20,7 +20,7 @@ class LessonViewModel(
     override val screenScope: CoroutineScope,
     private val repository: LessonRepository,
     private val viewStateMapper: LessonViewStateMapper,
-    private val eventHandlers: Set<EventHandler<Any, LocalState>>
+    private val eventHandlers: Set<EventHandler<*, LocalState>>
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
 
     private var lessonResponse by mutableStateOf<Either<String, Lesson>?>(null)
@@ -57,8 +57,11 @@ class LessonViewModel(
             handler.eventType == event::class
         }
         checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
+
         screenScope.launch {
-            with(eventHandler) { handleEvent(event) }
+            @Suppress("UNCHECKED_CAST")
+            val typedEventHandler = eventHandler as EventHandler<LessonViewEvent, LocalState>
+            with(typedEventHandler) { handleEvent(event) }
         }
     }
 

@@ -13,6 +13,7 @@ data class CourseViewState(
 sealed interface CourseItemViewState {
     data class Arrow(val progress: ProgressViewState) : CourseItemViewState
     data class Lesson(
+        val id: String,
         val imageUrl: String,
         val name: String,
         val tagline: String,
