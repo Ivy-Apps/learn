@@ -58,7 +58,7 @@ class LessonViewModel(
 
     override fun onEvent(event: LessonViewEvent) {
         val eventHandler = eventHandlers.firstOrNull { handler ->
-            handler.eventType == event::class
+            event::class in handler.eventTypes
         }
         checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
 

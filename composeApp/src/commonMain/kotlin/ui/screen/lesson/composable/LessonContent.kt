@@ -106,7 +106,7 @@ private fun LessonItemsLazyColum(
                     viewState = it,
                     onAnswerCheckChange = { answerViewState, checked ->
                         onEvent(
-                            LessonViewEvent.OnAnswerCheckChange(
+                            QuestionViewEvent.AnswerCheckChange(
                                 questionId = it.id,
                                 answerId = answerViewState.id,
                                 checked = checked
@@ -114,7 +114,7 @@ private fun LessonItemsLazyColum(
                         )
                     },
                     onCheckClick = {
-                        onEvent(LessonViewEvent.OnCheckQuestionClick(it.id))
+                        onEvent(QuestionViewEvent.CheckClick(it.id))
                     }
                 )
 

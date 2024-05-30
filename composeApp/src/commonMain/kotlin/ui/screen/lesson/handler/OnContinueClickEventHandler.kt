@@ -8,7 +8,7 @@ import ui.screen.lesson.mapper.toDomain
 
 class OnContinueClickEventHandler :
     EventHandler<LessonViewEvent.OnContinueClick, LessonViewModel.LocalState> {
-    override val eventType = LessonViewEvent.OnContinueClick::class
+    override val eventTypes = setOf(LessonViewEvent.OnContinueClick::class)
 
     override suspend fun LessonVmContext.handleEvent(
         event: LessonViewEvent.OnContinueClick

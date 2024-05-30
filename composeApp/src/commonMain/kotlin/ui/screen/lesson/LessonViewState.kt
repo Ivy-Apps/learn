@@ -119,11 +119,17 @@ value class LessonItemIdViewState(val value: String)
 
 sealed interface LessonViewEvent {
     data object OnBackClick : LessonViewEvent
-    data class OnCheckQuestionClick(val id: LessonItemIdViewState) : LessonViewEvent
-    data class OnAnswerCheckChange(
-        val questionId: LessonItemIdViewState,
+    data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
+}
+
+sealed interface QuestionViewEvent : LessonViewEvent {
+    val questionId: LessonItemIdViewState
+
+    data class AnswerCheckChange(
+        override val questionId: LessonItemIdViewState,
         val answerId: String,
         val checked: Boolean
-    ) : LessonViewEvent
-    data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
+    ) : QuestionViewEvent
+
+    data class CheckClick(override val questionId: LessonItemIdViewState) : QuestionViewEvent
 }
