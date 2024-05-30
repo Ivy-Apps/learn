@@ -1,10 +1,6 @@
 package ui.screen.course
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import arrow.core.identity
 import data.CourseRepository
 import ivy.data.source.model.CourseResponse
@@ -55,7 +51,7 @@ class CourseViewModel(
     private fun handleLessonClick(lesson: CourseItemViewState.Lesson) {
         navigation.navigate(
             LessonScreen(
-                id = LessonId("4579"),
+                lessonId = LessonId("4579"),
                 name = "Lesson 1"
             )
         )
