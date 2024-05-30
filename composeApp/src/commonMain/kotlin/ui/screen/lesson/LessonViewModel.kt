@@ -1,52 +1,84 @@
 package ui.screen.lesson
 
-import androidx.compose.runtime.Composable
-import ivy.model.ImageUrl
-import ivy.model.Lesson
-import ivy.model.LessonContent
-import ivy.model.LessonId
-import ivy.model.LessonItemId
-import ivy.model.TextContentItem
-import ivy.model.TextContentStyle
+import androidx.compose.runtime.*
+import arrow.core.Either
+import data.LessonRepository
+import ivy.model.*
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import ui.ComposeViewModel
-import ui.navigation.Navigation
+import ui.EventHandler
+import ui.VmContext
+import ui.screen.lesson.mapper.LessonViewStateMapper
+
 
 class LessonViewModel(
-    private val navigation: Navigation
-) : ComposeViewModel<LessonViewState, LessonViewEvent> {
-    @Composable
-    override fun viewState(): LessonViewState {
-        return LessonViewState(
-            lesson = Lesson(
-                id = LessonId(value = "123"),
-                name = "Lesson 1",
-                tagline = "Learn programming by thinking...",
-                image = ImageUrl(
-                    url = "https://cdn.pixabay.com/photo/2024/04/23/11/55/building-" +
-                            "8714863_1280.jpg"
-                ),
-                content = LessonContent(
-                    rootItem = LessonItemId(value = "324"),
-                    items = mapOf(
-                        LessonItemId("4") to TextContentItem(
-                            id = LessonItemId(value = "5"),
-                            text = "What are ADTs - ADTs or algebraic data types are...",
-                            style = TextContentStyle.Body,
-                            next = null
-                        )
-                    )
-                )
-            )
-        )
+    private val lessonId: LessonId,
+    private val lessonName: String,
+    override val screenScope: CoroutineScope,
+    private val repository: LessonRepository,
+    private val viewStateMapper: LessonViewStateMapper,
+    private val eventHandlers: Set<EventHandler<*, LocalState>>
+) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
+
+    private var lessonResponse by mutableStateOf<Either<String, Lesson>?>(null)
+    private var localState by mutableStateOf(LocalState.Initial)
+
+    override val state: LocalState
+        get() = localState
+
+    override fun modify(transformation: (LocalState) -> LocalState) {
+        localState = transformation(localState)
     }
 
-    override fun onEvent(event: LessonViewEvent) {
-        when (event) {
-            LessonViewEvent.OnBackClick -> handleBackClick()
+    @Composable
+    override fun viewState(): LessonViewState {
+        LaunchedEffect(Unit) {
+            lessonResponse = repository.fetchLesson(id = lessonId)
+        }
+        return when (val response = lessonResponse) {
+            is Either.Right -> remember(localState, lessonResponse) {
+                with(viewStateMapper) {
+                    response.value.toViewState(localState)
+                }
+            }
+
+            null, is Either.Left -> LessonViewState(
+                title = lessonName,
+                items = persistentListOf()
+            )
         }
     }
 
-    private fun handleBackClick() {
-        navigation.back()
+    override fun onEvent(event: LessonViewEvent) {
+        val eventHandler = eventHandlers.firstOrNull { handler ->
+            handler.eventType == event::class
+        }
+        checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
+
+        screenScope.launch {
+            @Suppress("UNCHECKED_CAST")
+            val typedEventHandler = eventHandler as EventHandler<LessonViewEvent, LocalState>
+            with(typedEventHandler) { handleEvent(event) }
+        }
+    }
+
+    data class LocalState(
+        val answers: Map<LessonItemId, Set<AnswerId>>,
+        val openAnswers: Map<LessonItemId, String>,
+        val answered: Set<LessonItemId>,
+        val choices: Map<LessonItemId, ChoiceOptionId>,
+    ) {
+        companion object {
+            val Initial = LocalState(
+                answers = emptyMap(),
+                openAnswers = emptyMap(),
+                answered = emptySet(),
+                choices = emptyMap(),
+            )
+        }
     }
 }
+
+typealias LessonVmContext = VmContext<LessonViewModel.LocalState>

@@ -22,6 +22,7 @@ class CourseViewStateMapper {
 
     private fun Lesson.toViewState(): CourseItemViewState.Lesson {
         return CourseItemViewState.Lesson(
+            id = id.value,
             imageUrl = image.url,
             name = name,
             tagline = tagline,

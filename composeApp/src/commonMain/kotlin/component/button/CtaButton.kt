@@ -8,15 +8,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PrimaryButton(
+fun CtaButton(
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-        onClick = onClick
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
+        onClick = onClick,
     ) {
         Text(text = text)
     }

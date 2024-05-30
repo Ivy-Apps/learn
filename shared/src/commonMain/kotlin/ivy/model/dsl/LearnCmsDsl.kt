@@ -2,7 +2,9 @@ package ivy.model.dsl
 
 import ivy.model.LessonContent
 import ivy.model.LessonItemId
-import ivy.model.TextContentStyle
+import ivy.model.TextStyle
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @LearnCmsDsl
 fun lessonContent(
@@ -10,6 +12,10 @@ fun lessonContent(
 ): LessonContent {
     val scope = LessonContentScopeImpl().apply(builder)
     return scope.build()
+}
+
+fun serializeLesson(lesson: LessonContent) {
+    println(Json.encodeToString(lesson))
 }
 
 interface LessonContentScope {
@@ -52,16 +58,12 @@ interface LessonContentScope {
 }
 
 interface TextScope {
-    @LearnCmsDsl
-    fun style(style: TextContentStyle)
-
-    @LearnCmsDsl
-    fun text(text: String)
+    var style: TextStyle
+    var text: String
 }
 
 interface QuestionScope {
-    @LearnCmsDsl
-    fun questionText(text: String)
+    var question: String
 
     @LearnCmsDsl
     fun answer(
@@ -70,11 +72,8 @@ interface QuestionScope {
 }
 
 interface OpenQuestionScope {
-    @LearnCmsDsl
-    fun question(text: String)
-
-    @LearnCmsDsl
-    fun correctAnswer(text: String)
+    var question: String
+    var correctAnswer: String
 }
 
 interface ChoiceScope {
@@ -96,5 +95,4 @@ interface MysteryItemScope {
 }
 
 @DslMarker
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPEALIAS, AnnotationTarget.TYPE, AnnotationTarget.FUNCTION)
 annotation class LearnCmsDsl

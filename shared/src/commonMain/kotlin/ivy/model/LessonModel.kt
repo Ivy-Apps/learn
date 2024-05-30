@@ -40,16 +40,16 @@ interface LinearItem {
 }
 
 @Serializable
-@SerialName("TextContentItem")
-data class TextContentItem(
+@SerialName("TextItem")
+data class TextItem(
     override val id: LessonItemId,
     val text: String,
-    val style: TextContentStyle,
+    val style: TextStyle,
     override val next: LessonItemId?,
 ) : LessonItem, LinearItem
 
 @Serializable
-enum class TextContentStyle {
+enum class TextStyle {
     Heading, Body
 }
 
