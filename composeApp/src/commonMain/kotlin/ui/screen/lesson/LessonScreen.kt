@@ -8,6 +8,8 @@ import ivy.model.LessonId
 import ui.navigation.Screen
 import ui.screen.lesson.composable.LessonContent
 import ui.screen.lesson.handler.OnBackClickEventHandler
+import ui.screen.lesson.handler.OnContinueClickEventHandler
+import ui.screen.lesson.handler.QuestionViewEventHandler
 import ui.screen.lesson.mapper.LessonTreeManager
 import ui.screen.lesson.mapper.LessonViewStateMapper
 
@@ -20,8 +22,10 @@ class LessonScreen(
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
         register { LessonTreeManager() }
-        register { LessonViewStateMapper(Di.get()) }
+        register { LessonViewStateMapper(Di.get(), Di.get()) }
         register { OnBackClickEventHandler(Di.get()) }
+        register { OnContinueClickEventHandler() }
+        register { QuestionViewEventHandler() }
         register {
             LessonViewModel(
                 courseId = courseId,
@@ -31,7 +35,9 @@ class LessonScreen(
                 repository = Di.get(),
                 viewStateMapper = Di.get(),
                 eventHandlers = setOf(
-                    Di.get<OnBackClickEventHandler>()
+                    Di.get<OnBackClickEventHandler>(),
+                    Di.get<OnContinueClickEventHandler>(),
+                    Di.get<QuestionViewEventHandler>(),
                 )
             )
         }

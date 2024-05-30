@@ -7,7 +7,8 @@ import kotlin.jvm.JvmInline
 @Immutable
 data class LessonViewState(
     val title: String,
-    val items: ImmutableList<LessonItemViewState>
+    val items: ImmutableList<LessonItemViewState>,
+    val cta: CtaViewState?,
 )
 
 @Immutable
@@ -31,13 +32,13 @@ enum class TextStyleViewState {
 data class QuestionItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
-    val type: QuestionType,
+    val type: QuestionTypeViewState,
     val answers: ImmutableList<AnswerViewState>,
     val answered: Boolean
 ) : LessonItemViewState
 
 @Immutable
-enum class QuestionType {
+enum class QuestionTypeViewState {
     SingleChoice,
     MultipleChoice
 }
@@ -59,6 +60,12 @@ data class OpenQuestionItemViewState(
     val correctAnswer: String,
     val answered: Boolean,
 ) : LessonItemViewState
+
+sealed interface CtaViewState {
+    val currentItemId: LessonItemIdViewState
+
+    data class Continue(override val currentItemId: LessonItemIdViewState) : CtaViewState
+}
 
 @Immutable
 data class LinkItemViewState(
@@ -112,10 +119,18 @@ value class LessonItemIdViewState(val value: String)
 
 sealed interface LessonViewEvent {
     data object OnBackClick : LessonViewEvent
-    data class OnCheckQuestionClick(val id: LessonItemIdViewState) : LessonViewEvent
-    data class OnAnswerCheckChange(
-        val questionId: LessonItemIdViewState,
+    data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
+}
+
+sealed interface QuestionViewEvent : LessonViewEvent {
+    val questionId: LessonItemIdViewState
+
+    data class AnswerCheckChange(
+        override val questionId: LessonItemIdViewState,
+        val questionType: QuestionTypeViewState,
         val answerId: String,
         val checked: Boolean
-    ) : LessonViewEvent
+    ) : QuestionViewEvent
+
+    data class CheckClick(override val questionId: LessonItemIdViewState) : QuestionViewEvent
 }

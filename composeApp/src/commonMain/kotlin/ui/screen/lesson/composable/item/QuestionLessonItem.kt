@@ -1,11 +1,6 @@
 package ui.screen.lesson.composable.item
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
@@ -21,7 +16,7 @@ import component.text.BodySmall
 import component.text.SubTitle
 import ui.screen.lesson.AnswerViewState
 import ui.screen.lesson.QuestionItemViewState
-import ui.screen.lesson.QuestionType
+import ui.screen.lesson.QuestionTypeViewState
 import ui.theme.Green
 import ui.theme.Red
 
@@ -29,7 +24,7 @@ import ui.theme.Red
 fun QuestionLessonItem(
     viewState: QuestionItemViewState,
     modifier: Modifier = Modifier,
-    onAnswerCheckChange: (AnswerViewState, Boolean) -> Unit,
+    onAnswerCheckChange: (QuestionTypeViewState, AnswerViewState, Boolean) -> Unit,
     onCheckClick: () -> Unit
 ) {
     Card(
@@ -39,7 +34,7 @@ fun QuestionLessonItem(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             QuestionText(text = viewState.question)
-            if (viewState.type == QuestionType.MultipleChoice) {
+            if (viewState.type == QuestionTypeViewState.MultipleChoice) {
                 Spacer(Modifier.height(4.dp))
                 SelectAllThatApplyText()
             }
@@ -50,12 +45,18 @@ fun QuestionLessonItem(
                     questionType = viewState.type,
                     questionAnswered = viewState.answered,
                     onCheckedChange = { checked ->
-                        onAnswerCheckChange(it, checked)
+                        onAnswerCheckChange(viewState.type, it, checked)
                     }
                 )
             }
-            Spacer(Modifier.height(12.dp))
-            CheckButton(onClick = onCheckClick)
+            if (!viewState.answered) {
+                Spacer(Modifier.height(12.dp))
+                CheckButton(
+                    modifier = Modifier.align(Alignment.End),
+                    enabled = viewState.answers.any { it.selected },
+                    onClick = onCheckClick
+                )
+            }
         }
     }
 }
@@ -81,7 +82,7 @@ private fun SelectAllThatApplyText(
 @Composable
 private fun AnswerItem(
     viewState: AnswerViewState,
-    questionType: QuestionType,
+    questionType: QuestionTypeViewState,
     questionAnswered: Boolean,
     modifier: Modifier = Modifier,
     onCheckedChange: (Boolean) -> Unit
@@ -112,7 +113,7 @@ private fun AnswerItem(
 
 @Composable
 private fun AnswerCheckbox(
-    questionType: QuestionType,
+    questionType: QuestionTypeViewState,
     selected: Boolean,
     correct: Boolean?,
     modifier: Modifier = Modifier,
@@ -130,9 +131,8 @@ private fun AnswerCheckbox(
         enabled = correct == null,
         colors = CheckboxDefaults.colors(
             checkedColor = MaterialTheme.colors.primary,
-            checkmarkColor = answeredColor,
+            checkmarkColor = MaterialTheme.colors.onPrimary,
             disabledColor = answeredColor,
-            disabledIndeterminateColor = answeredColor
         )
     )
 }
@@ -168,10 +168,12 @@ private fun AnswerExplanationText(
 @Composable
 private fun CheckButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     PrimaryButton(
         modifier = modifier,
+        enabled = enabled,
         text = "CHECK",
         onClick = onClick
     )

@@ -2,6 +2,7 @@ package ui.screen.lesson
 
 import androidx.compose.runtime.*
 import arrow.core.Either
+import arrow.optics.optics
 import data.LessonRepository
 import ivy.model.*
 import kotlinx.collections.immutable.persistentListOf
@@ -29,7 +30,7 @@ class LessonViewModel(
     override val state: LocalState
         get() = localState
 
-    override fun modify(transformation: (LocalState) -> LocalState) {
+    override fun modifyState(transformation: (LocalState) -> LocalState) {
         localState = transformation(localState)
     }
 
@@ -50,14 +51,15 @@ class LessonViewModel(
 
             null, is Either.Left -> LessonViewState(
                 title = lessonName,
-                items = persistentListOf()
+                items = persistentListOf(),
+                cta = null,
             )
         }
     }
 
     override fun onEvent(event: LessonViewEvent) {
         val eventHandler = eventHandlers.firstOrNull { handler ->
-            handler.eventType == event::class
+            event::class in handler.eventTypes
         }
         checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
 
@@ -68,18 +70,19 @@ class LessonViewModel(
         }
     }
 
+    @optics
     data class LocalState(
         val answers: Map<LessonItemId, Set<AnswerId>>,
         val openAnswers: Map<LessonItemId, String>,
-        val answered: Set<LessonItemId>,
+        val completed: Set<LessonItemId>,
         val choices: Map<LessonItemId, ChoiceOptionId>,
     ) {
         companion object {
             val Initial = LocalState(
                 answers = emptyMap(),
                 openAnswers = emptyMap(),
-                answered = emptySet(),
                 choices = emptyMap(),
+                completed = emptySet(),
             )
         }
     }
