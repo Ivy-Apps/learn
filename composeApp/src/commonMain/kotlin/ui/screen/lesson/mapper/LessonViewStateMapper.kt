@@ -1,8 +1,8 @@
 package ui.screen.lesson.mapper
 
 import ivy.model.*
-import ivy.model.TextContentStyle.Body
-import ivy.model.TextContentStyle.Heading
+import ivy.model.TextStyle.Body
+import ivy.model.TextStyle.Heading
 import kotlinx.collections.immutable.toImmutableList
 import ui.screen.lesson.*
 
@@ -35,7 +35,7 @@ class LessonViewStateMapper(
         is MysteryItem -> toViewState(localState, items)
         is OpenQuestionItem -> toViewState(localState)
         is QuestionItem -> toViewState(localState)
-        is TextContentItem -> toViewState()
+        is TextItem -> toViewState()
     }
 
     private fun ChoiceItem.toViewState(): ChoiceItemViewState = ChoiceItemViewState(
@@ -114,7 +114,7 @@ class LessonViewStateMapper(
         selected = id in localState.answers.getOrElse(question.id) { emptySet() },
     )
 
-    private fun TextContentItem.toViewState(): TextItemViewState = TextItemViewState(
+    private fun TextItem.toViewState(): TextItemViewState = TextItemViewState(
         id = id.toViewState(),
         text = text,
         style = when (style) {

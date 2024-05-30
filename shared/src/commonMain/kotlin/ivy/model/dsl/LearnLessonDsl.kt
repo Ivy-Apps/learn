@@ -9,7 +9,7 @@ class LessonContentScopeImpl : LessonContentScope {
 
     override fun textItem(id: String, builder: TextScope.() -> Unit) {
         val scope = TextScopeImpl().also(builder)
-        items[chain(id)] = TextContentItem(
+        items[chain(id)] = TextItem(
             id = LessonItemId(id),
             text = scope.text,
             style = scope.style,
@@ -138,7 +138,7 @@ class LessonContentScopeImpl : LessonContentScope {
             is MysteryItem -> copy(next = next)
             is OpenQuestionItem -> copy(next = next)
             is QuestionItem -> copy(next = next)
-            is TextContentItem -> copy(next = next)
+            is TextItem -> copy(next = next)
         }
         items[id] = updated
     }
@@ -146,26 +146,13 @@ class LessonContentScopeImpl : LessonContentScope {
 }
 
 class TextScopeImpl : TextScope {
-    var style: TextContentStyle = TextContentStyle.Body
-    lateinit var text: String
-
-    override fun style(style: TextContentStyle) {
-        this.style = style
-    }
-
-    override fun text(text: String) {
-        this.text = text
-    }
-
+    override var style: TextStyle = TextStyle.Body
+    override var text: String = ""
 }
 
 class QuestionScopeImpl : QuestionScope {
-    lateinit var question: String
+    override var question: String = ""
     val answers = mutableListOf<AnswerData>()
-
-    override fun questionText(text: String) {
-        question = text
-    }
 
     override fun answer(
         text: String,
@@ -183,16 +170,8 @@ class QuestionScopeImpl : QuestionScope {
 }
 
 class OpenQuestionScopeImpl : OpenQuestionScope {
-    lateinit var question: String
-    lateinit var correctAnswer: String
-
-    override fun question(text: String) {
-        question = text
-    }
-
-    override fun correctAnswer(text: String) {
-        correctAnswer = text
-    }
+    override var question: String = ""
+    override var correctAnswer: String = ""
 }
 
 class ChoiceScopeImpl : ChoiceScope {

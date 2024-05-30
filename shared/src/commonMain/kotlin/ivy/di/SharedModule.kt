@@ -48,7 +48,7 @@ object SharedModule : DiModule {
                     subclass(MysteryItem.serializer())
                     subclass(OpenQuestionItem.serializer())
                     subclass(QuestionItem.serializer())
-                    subclass(TextContentItem.serializer())
+                    subclass(TextItem.serializer())
                 }
             }
         }
