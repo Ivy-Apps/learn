@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.compose")
+    id("com.google.devtools.ksp")
 }
 
 kotlin {
@@ -33,7 +34,18 @@ kotlin {
         }
     }
 
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+    sourceSets.jvmTest {
+        kotlin.srcDir("build/generated/ksp/test/kotlin")
+    }
+
     sourceSets {
+        dependencies {
+            ksp(libs.arrow.optics.ksp)
+        }
+
         val desktopMain by getting
 
         androidMain.dependencies {
@@ -51,7 +63,7 @@ kotlin {
             implementation(libs.kotlin.immutableCollections)
             implementation(libs.thirdparty.lottieMultiplatform)
             implementation(libs.thirdparty.kamel)
-            implementation(libs.arrow.core)
+            implementation(libs.bundles.arrow)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.plugin.kotlinMultiplatform)
     implementation(libs.plugin.kotlinSerialization)
     implementation(libs.plugin.ktor)
+    implementation(libs.plugin.ksp)
 
     // Make version catalog available in precompiled scripts
     // https://github.com/gradle/gradle/issues/15383#issuecomment-1567461389

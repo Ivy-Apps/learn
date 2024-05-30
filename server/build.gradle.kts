@@ -3,6 +3,7 @@ plugins {
     id("io.ktor.plugin")
     id("org.jetbrains.kotlin.plugin.serialization")
     application
+    id("com.google.devtools.ksp")
 }
 
 group = "ivy.learn"
@@ -16,12 +17,22 @@ tasks {
     create("stage").dependsOn("installDist")
 }
 
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+    sourceSets.test {
+        kotlin.srcDir("build/generated/ksp/test/kotlin")
+    }
+}
+
 dependencies {
     implementation(projects.shared)
     implementation(libs.logback)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
-    implementation(libs.arrow.core)
+    implementation(libs.bundles.arrow)
+    ksp(libs.arrow.optics.ksp)
     implementation(libs.bundles.jetbrains.exposed)
     implementation(libs.postgresql.driver)
     implementation(libs.kotlin.serialization)

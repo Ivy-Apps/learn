@@ -31,6 +31,8 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+arrow-optics = { module = "io.arrow-kt:arrow-optics", version.ref = "arrow" }
+arrow-optics-ksp = { module = "io.arrow-kt:arrow-optics-ksp-plugin", version.ref = "arrow" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "jebrains-exposed" }
@@ -78,8 +80,13 @@ plugin-ktor = { module = "io.ktor.plugin:plugin", version.ref = "ktor" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.3" }
 thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
 thirdparty-kamel = { module = "media.kamel:kamel-image", version = "0.9.4" }
+plugin-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version = "1.9.23-1.0.20" }
 
 [bundles]
+arrow = [
+    "arrow-core",
+    "arrow-optics"
+]
 test = [
     "kotlin-test",
     "kotlin-test-junit",
