@@ -22,7 +22,7 @@ class LessonScreen(
 
     override fun onDi(): Di.ScreenScope.() -> Unit = {
         register { LessonTreeManager() }
-        register { LessonViewStateMapper(Di.get()) }
+        register { LessonViewStateMapper(Di.get(), Di.get()) }
         register { OnBackClickEventHandler(Di.get()) }
         register { OnContinueClickEventHandler() }
         register { QuestionViewEventHandler() }

@@ -30,7 +30,7 @@ class LessonViewModel(
     override val state: LocalState
         get() = localState
 
-    override fun modify(transformation: (LocalState) -> LocalState) {
+    override fun modifyState(transformation: (LocalState) -> LocalState) {
         localState = transformation(localState)
     }
 

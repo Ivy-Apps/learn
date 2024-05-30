@@ -12,13 +12,14 @@ class LessonTreeManager {
         lesson = lesson,
         localState = localState,
         currentItemId = lesson.rootItem,
+        autoLoadNextN = 1
     )
 
     private fun load(
         lesson: LessonContent,
         localState: LessonViewModel.LocalState,
         currentItemId: LessonItemId,
-        autoLoadNextN: Int = 1,
+        autoLoadNextN: Int,
     ): List<LessonItem> {
         val currentItem = lesson.items[currentItemId] ?: return emptyList()
         val nextItemId = currentItem.nextItemId(localState)
@@ -53,7 +54,7 @@ class LessonTreeManager {
         localState: LessonViewModel.LocalState
     ): LessonItemId? = when (this) {
         is LinearItem -> next
-        is ChoiceItem -> localState.choices[this.id]?.let { choiceId ->
+        is ChoiceItem -> localState.choices[id]?.let { choiceId ->
             options.firstOrNull { it.id == choiceId }?.next
         }
 

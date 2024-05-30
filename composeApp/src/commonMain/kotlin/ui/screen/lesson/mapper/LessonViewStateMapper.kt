@@ -1,5 +1,7 @@
 package ui.screen.lesson.mapper
 
+import LogLevel
+import Platform
 import ivy.model.*
 import ivy.model.TextStyle.Body
 import ivy.model.TextStyle.Heading
@@ -7,7 +9,8 @@ import kotlinx.collections.immutable.toImmutableList
 import ui.screen.lesson.*
 
 class LessonViewStateMapper(
-    private val lessonTreeManager: LessonTreeManager
+    private val lessonTreeManager: LessonTreeManager,
+    private val platform: Platform,
 ) {
     fun Lesson.toViewState(
         localState: LessonViewModel.LocalState,
@@ -16,6 +19,7 @@ class LessonViewStateMapper(
             lesson = content,
             localState = localState
         )
+        platform.log(LogLevel.Debug, "Local state: $localState")
         return LessonViewState(
             title = name,
             items = lessonItems.mapNotNull {

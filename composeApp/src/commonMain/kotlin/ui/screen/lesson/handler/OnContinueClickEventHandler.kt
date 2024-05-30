@@ -14,7 +14,7 @@ class OnContinueClickEventHandler :
     override suspend fun LessonVmContext.handleEvent(
         event: LessonViewEvent.OnContinueClick
     ) {
-        modify {
+        modifyState {
             LocalState.completed.modify(it) { completed ->
                 completed + event.currentItemId.toDomain()
             }

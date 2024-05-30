@@ -13,7 +13,7 @@ interface VmContext<State> {
     val state: State
 
     @EventHandlerDsl
-    fun modify(transformation: (State) -> State)
+    fun modifyState(transformation: (State) -> State)
 
     val screenScope: CoroutineScope
 }
