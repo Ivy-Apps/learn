@@ -18,7 +18,7 @@ class LessonTreeManager {
         lesson: LessonContent,
         localState: LessonViewModel.LocalState,
         currentItemId: LessonItemId,
-        autoLoadedTimes: Int = 0,
+        autoLoadNextN: Int = 1,
     ): List<LessonItem> {
         val currentItem = lesson.items[currentItemId] ?: return emptyList()
         val nextItemId = currentItem.nextItemId(localState)
@@ -27,11 +27,11 @@ class LessonTreeManager {
                 is QuestionItem,
                 is OpenQuestionItem,
                 is ChoiceItem -> {
-                    currentItemId in localState.answered
+                    currentItemId in localState.completed
                 }
 
                 else -> {
-                    autoLoadedTimes < 1
+                    currentItemId in localState.completed || autoLoadNextN > 0
                 }
             }
         }?.let {
@@ -39,7 +39,11 @@ class LessonTreeManager {
                 lesson = lesson,
                 localState = localState,
                 currentItemId = nextItemId,
-                autoLoadedTimes = autoLoadedTimes + 1,
+                autoLoadNextN = if (currentItemId in localState.completed) {
+                    autoLoadNextN
+                } else {
+                    autoLoadNextN - 1
+                },
             )
         }.orEmpty()
     }

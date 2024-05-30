@@ -1,5 +1,6 @@
 package ui.screen.lesson.composable
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,71 +28,97 @@ fun LessonContent(
         }),
         title = viewState.title
     ) { contentPadding ->
-        val horizontalPadding = platformHorizontalPadding()
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(
-                bottom = 48.dp,
-                start = horizontalPadding,
-                end = horizontalPadding,
-            )
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .padding(contentPadding)
         ) {
-            items(
-                items = viewState.items,
-                key = {
-                    it.id.value
+            LessonItemsLazyColum(
+                viewState = viewState,
+                onEvent = onEvent,
+            )
+            if (viewState.cta != null) {
+                Cta(
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                        .padding(bottom = 48.dp),
+                    viewState = viewState.cta,
+                    onContinueClick = { itemId ->
+                        onEvent(LessonViewEvent.OnContinueClick(itemId))
+                    },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LessonItemsLazyColum(
+    viewState: LessonViewState,
+    onEvent: (LessonViewEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val horizontalPadding = platformHorizontalPadding()
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = PaddingValues(
+            bottom = 96.dp,
+            start = horizontalPadding,
+            end = horizontalPadding,
+        )
+    ) {
+        items(
+            items = viewState.items,
+            key = {
+                it.id.value
+            }
+        ) {
+            when (it) {
+                is ChoiceItemViewState -> {
+                    // TODO
                 }
-            ) {
-                when (it) {
-                    is ChoiceItemViewState -> {
-                        // TODO
-                    }
 
-                    is ImageItemViewState -> {
-                        // TODO
-                    }
+                is ImageItemViewState -> {
+                    // TODO
+                }
 
-                    is LessonNavigationItemViewState -> {
-                        // TODO
-                    }
+                is LessonNavigationItemViewState -> {
+                    // TODO
+                }
 
-                    is LinkItemViewState -> {
-                        // TODO
-                    }
+                is LinkItemViewState -> {
+                    // TODO
+                }
 
-                    is LottieAnimationItemViewState -> {
-                        // TODO
-                    }
+                is LottieAnimationItemViewState -> {
+                    // TODO
+                }
 
-                    is MysteryItemViewState -> {
-                        // TODO
-                    }
+                is MysteryItemViewState -> {
+                    // TODO
+                }
 
-                    is OpenQuestionItemViewState -> {
-                        // TODO
-                    }
+                is OpenQuestionItemViewState -> {
+                    // TODO
+                }
 
-                    is QuestionItemViewState -> QuestionLessonItem(
-                        viewState = it,
-                        onAnswerCheckChange = { answerViewState, checked ->
-                            onEvent(
-                                LessonViewEvent.OnAnswerCheckChange(
-                                    questionId = it.id,
-                                    answerId = answerViewState.id,
-                                    checked = checked
-                                )
+                is QuestionItemViewState -> QuestionLessonItem(
+                    viewState = it,
+                    onAnswerCheckChange = { answerViewState, checked ->
+                        onEvent(
+                            LessonViewEvent.OnAnswerCheckChange(
+                                questionId = it.id,
+                                answerId = answerViewState.id,
+                                checked = checked
                             )
-                        },
-                        onCheckClick = {
-                            onEvent(LessonViewEvent.OnCheckQuestionClick(it.id))
-                        }
-                    )
+                        )
+                    },
+                    onCheckClick = {
+                        onEvent(LessonViewEvent.OnCheckQuestionClick(it.id))
+                    }
+                )
 
-                    is TextItemViewState -> TextLessonItem(it)
-                }
+                is TextItemViewState -> TextLessonItem(it)
             }
         }
     }

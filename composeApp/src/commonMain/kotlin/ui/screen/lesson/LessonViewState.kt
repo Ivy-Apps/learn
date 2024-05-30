@@ -7,7 +7,8 @@ import kotlin.jvm.JvmInline
 @Immutable
 data class LessonViewState(
     val title: String,
-    val items: ImmutableList<LessonItemViewState>
+    val items: ImmutableList<LessonItemViewState>,
+    val cta: CtaViewState?,
 )
 
 @Immutable
@@ -59,6 +60,12 @@ data class OpenQuestionItemViewState(
     val correctAnswer: String,
     val answered: Boolean,
 ) : LessonItemViewState
+
+sealed interface CtaViewState {
+    val currentItemId: LessonItemIdViewState
+
+    data class Continue(override val currentItemId: LessonItemIdViewState) : CtaViewState
+}
 
 @Immutable
 data class LinkItemViewState(
@@ -118,4 +125,5 @@ sealed interface LessonViewEvent {
         val answerId: String,
         val checked: Boolean
     ) : LessonViewEvent
+    data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
 }

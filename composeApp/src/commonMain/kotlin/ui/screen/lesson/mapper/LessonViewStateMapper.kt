@@ -12,14 +12,21 @@ class LessonViewStateMapper(
     fun Lesson.toViewState(
         localState: LessonViewModel.LocalState,
     ): LessonViewState {
+        val lessonItems = lessonTreeManager.loadUserProgress(
+            lesson = content,
+            localState = localState
+        )
         return LessonViewState(
             title = name,
-            items = lessonTreeManager.loadUserProgress(
-                lesson = content,
-                localState = localState
-            ).mapNotNull {
+            items = lessonItems.mapNotNull {
                 it.toViewState(localState, content.items)
-            }.toImmutableList()
+            }.toImmutableList(),
+            cta = when (val currentItem = lessonItems.lastOrNull()) {
+                null, is QuestionItem, is OpenQuestionItem,
+                is ChoiceItem -> null
+
+                else -> CtaViewState.Continue(currentItem.id.toViewState())
+            }
         )
     }
 
@@ -89,7 +96,7 @@ class LessonViewStateMapper(
         question = question,
         answer = localState.openAnswers[id],
         correctAnswer = correctAnswer,
-        answered = id in localState.answered,
+        answered = id in localState.completed,
     )
 
     private fun QuestionItem.toViewState(
@@ -100,7 +107,7 @@ class LessonViewStateMapper(
         type = if (correct.size == 1) QuestionType.SingleChoice else QuestionType.MultipleChoice,
         answers = answers.map { it.toViewState(this, localState) }
             .toImmutableList(),
-        answered = id in localState.answered,
+        answered = id in localState.completed,
     )
 
     private fun Answer.toViewState(
