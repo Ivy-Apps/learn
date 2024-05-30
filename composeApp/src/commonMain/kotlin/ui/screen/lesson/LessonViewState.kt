@@ -56,7 +56,8 @@ data class OpenQuestionItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
     val answer: String?,
-    val correctAnswer: String
+    val correctAnswer: String,
+    val answered: Boolean,
 ) : LessonItemViewState
 
 @Immutable

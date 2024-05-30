@@ -3,8 +3,7 @@ package ui.screen.lesson
 import androidx.compose.runtime.*
 import arrow.core.Either
 import data.LessonRepository
-import ivy.model.Lesson
-import ivy.model.LessonId
+import ivy.model.*
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ import ui.screen.lesson.mapper.LessonViewStateMapper
 
 class LessonViewModel(
     private val lessonId: LessonId,
-    lessonName: String,
+    private val lessonName: String,
     override val screenScope: CoroutineScope,
     private val repository: LessonRepository,
     private val viewStateMapper: LessonViewStateMapper,
@@ -24,7 +23,7 @@ class LessonViewModel(
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
 
     private var lessonResponse by mutableStateOf<Either<String, Lesson>?>(null)
-    private var localState by mutableStateOf(LocalState.initial(lessonName = lessonName))
+    private var localState by mutableStateOf(LocalState.Initial)
 
     override val state: LocalState
         get() = localState
@@ -41,12 +40,12 @@ class LessonViewModel(
         return when (val response = lessonResponse) {
             is Either.Right -> remember(localState, lessonResponse) {
                 with(viewStateMapper) {
-                    response.value.toViewState()
+                    response.value.toViewState(localState)
                 }
             }
 
             null, is Either.Left -> LessonViewState(
-                title = "",
+                title = lessonName,
                 items = persistentListOf()
             )
         }
@@ -66,11 +65,19 @@ class LessonViewModel(
     }
 
     data class LocalState(
-        val lessonName: String,
+        val currentItem: LessonItemId?,
+        val answers: Map<LessonItemId, Set<AnswerId>>,
+        val openAnswers: Map<LessonItemId, String>,
+        val submittedAnswers: Set<LessonItemId>,
+        val choices: Map<LessonItemId, ChoiceOptionId>,
     ) {
         companion object {
-            fun initial(lessonName: String) = LocalState(
-                lessonName = lessonName
+            val Initial = LocalState(
+                currentItem = null,
+                answers = emptyMap(),
+                openAnswers = emptyMap(),
+                submittedAnswers = emptySet(),
+                choices = emptyMap(),
             )
         }
     }
