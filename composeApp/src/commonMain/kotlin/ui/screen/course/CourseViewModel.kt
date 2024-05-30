@@ -51,6 +51,7 @@ class CourseViewModel(
     private fun handleLessonClick(lesson: CourseItemViewState.Lesson) {
         navigation.navigate(
             LessonScreen(
+                courseId = courseId,
                 lessonId = LessonId(lesson.id),
                 lessonName = lesson.name,
             )

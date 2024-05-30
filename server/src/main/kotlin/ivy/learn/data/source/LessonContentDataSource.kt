@@ -22,7 +22,7 @@ class LessonContentDataSource(
         httpClient.get(
             urlString = "https://raw.githubusercontent.com/Ivy-Apps/learn-content" +
                     "/main/content/lessons" +
-                    "/{${course.value}/${lesson.value}.json"
+                    "/${course.value}/${lesson.value}.json"
         ) {
             headers {
                 append("Authorization", "token ${config.privateContentGitHubPat}")
