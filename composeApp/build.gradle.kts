@@ -1,3 +1,4 @@
+import com.google.devtools.ksp.gradle.KspTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -120,11 +121,7 @@ compose.experimental {
 }
 
 // Configure KSP to output to the commonMain directory
-ksp {
-    arg("optics.gen", "true")
-}
-
-tasks.withType<com.google.devtools.ksp.gradle.KspTask> {
+tasks.withType<KspTask> {
     doLast {
         copy {
             from("build/generated/ksp/js/jsMain/kotlin")
@@ -133,8 +130,4 @@ tasks.withType<com.google.devtools.ksp.gradle.KspTask> {
         }
         delete("build/generated/ksp/js/jsMain/kotlin")
     }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    dependsOn(tasks.withType<com.google.devtools.ksp.gradle.KspTask>())
 }
