@@ -8,6 +8,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import ivy.data.ServerUrlProvider
+import ivy.model.CourseId
 import ivy.model.Lesson
 import ivy.model.LessonId
 
@@ -15,9 +16,12 @@ class LessonDataSource(
     private val httpClient: HttpClient,
     private val urlProvider: ServerUrlProvider,
 ) {
-    suspend fun fetchLesson(id: LessonId): Either<String, Lesson> = catch({
+    suspend fun fetchLesson(
+        course: CourseId,
+        lesson: LessonId
+    ): Either<String, Lesson> = catch({
         httpClient.get(
-            "${urlProvider.serverUrl}/lessons/${id.value}"
+            "${urlProvider.serverUrl}/lessons/${course.value}/${lesson.value}"
         ) {
             contentType(ContentType.Application.Json)
         }.body<Lesson>().right()

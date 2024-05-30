@@ -14,6 +14,7 @@ import ui.screen.lesson.mapper.LessonViewStateMapper
 
 
 class LessonViewModel(
+    private val courseId: CourseId,
     private val lessonId: LessonId,
     private val lessonName: String,
     override val screenScope: CoroutineScope,
@@ -35,7 +36,10 @@ class LessonViewModel(
     @Composable
     override fun viewState(): LessonViewState {
         LaunchedEffect(Unit) {
-            lessonResponse = repository.fetchLesson(id = lessonId)
+            lessonResponse = repository.fetchLesson(
+                course = courseId,
+                lesson = lessonId
+            )
         }
         return when (val response = lessonResponse) {
             is Either.Right -> remember(localState, lessonResponse) {

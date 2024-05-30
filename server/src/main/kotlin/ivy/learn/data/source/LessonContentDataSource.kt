@@ -15,14 +15,14 @@ class LessonContentDataSource(
     private val httpClient: HttpClient,
     private val config: ServerConfiguration,
 ) {
-    suspend fun fetchLessonById(
+    suspend fun fetchLessonContent(
         course: CourseId,
         lesson: LessonId
     ): Either<String, LessonContent> = catch({
         httpClient.get(
             urlString = "https://raw.githubusercontent.com/Ivy-Apps/learn-content" +
                     "/main/content/lessons" +
-                    "/{${course.value}/${lesson.value}.json"
+                    "/${course.value}/${lesson.value}.json"
         ) {
             headers {
                 append("Authorization", "token ${config.privateContentGitHubPat}")
@@ -30,6 +30,6 @@ class LessonContentDataSource(
             }
         }.body<LessonContent>().right()
     }) { e ->
-        Either.Left("Failed to fetch lesson: ${e.message}")
+        Either.Left("Failed to fetch lesson content: ${e.message}")
     }
 }
