@@ -18,7 +18,7 @@ class LessonsRepository(
     ): Either<String, Lesson> = either {
         val lesson = CoursesContent.lessonsMap[lessonId]
         ensureNotNull(lesson) { "No lesson found for id $lessonId" }
-        val content = lessonContentDataSource.fetchLessonById(courseId, lessonId).bind()
+        val content = lessonContentDataSource.fetchLessonContent(courseId, lessonId).bind()
         lesson.copy(content = content)
     }
 

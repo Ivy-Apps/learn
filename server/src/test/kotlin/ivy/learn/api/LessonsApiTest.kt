@@ -1,6 +1,7 @@
 package ivy.learn.api
 
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.maps.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import ivy.data.source.LessonDataSource
 import ivy.di.Di
@@ -23,5 +24,6 @@ class LessonsApiTest : ApiTest() {
 
         // Then
         result.shouldBeRight().id shouldBe LessonId("demo-lesson")
+        result.shouldBeRight().content.items.shouldNotBeEmpty()
     }
 }

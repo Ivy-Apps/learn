@@ -15,7 +15,7 @@ class LessonContentDataSource(
     private val httpClient: HttpClient,
     private val config: ServerConfiguration,
 ) {
-    suspend fun fetchLessonById(
+    suspend fun fetchLessonContent(
         course: CourseId,
         lesson: LessonId
     ): Either<String, LessonContent> = catch({
@@ -30,6 +30,6 @@ class LessonContentDataSource(
             }
         }.body<LessonContent>().right()
     }) { e ->
-        Either.Left("Failed to fetch lesson: ${e.message}")
+        Either.Left("Failed to fetch lesson content: ${e.message}")
     }
 }
