@@ -12,17 +12,7 @@ import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
 import component.platformHorizontalPadding
-import ui.screen.lesson.ChoiceItemViewState
-import ui.screen.lesson.ImageItemViewState
-import ui.screen.lesson.LessonNavigationItemViewState
-import ui.screen.lesson.LessonViewEvent
-import ui.screen.lesson.LessonViewState
-import ui.screen.lesson.LinkItemViewState
-import ui.screen.lesson.LottieAnimationItemViewState
-import ui.screen.lesson.MysteryItemViewState
-import ui.screen.lesson.OpenQuestionItemViewState
-import ui.screen.lesson.QuestionItemViewState
-import ui.screen.lesson.TextItemViewState
+import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.QuestionLessonItem
 import ui.screen.lesson.composable.item.TextLessonItem
 
@@ -56,13 +46,34 @@ fun LessonContent(
                 }
             ) {
                 when (it) {
-                    is ChoiceItemViewState -> TODO()
-                    is ImageItemViewState -> TODO()
-                    is LessonNavigationItemViewState -> TODO()
-                    is LinkItemViewState -> TODO()
-                    is LottieAnimationItemViewState -> TODO()
-                    is MysteryItemViewState -> TODO()
-                    is OpenQuestionItemViewState -> TODO()
+                    is ChoiceItemViewState -> {
+                        // TODO
+                    }
+
+                    is ImageItemViewState -> {
+                        // TODO
+                    }
+
+                    is LessonNavigationItemViewState -> {
+                        // TODO
+                    }
+
+                    is LinkItemViewState -> {
+                        // TODO
+                    }
+
+                    is LottieAnimationItemViewState -> {
+                        // TODO
+                    }
+
+                    is MysteryItemViewState -> {
+                        // TODO
+                    }
+
+                    is OpenQuestionItemViewState -> {
+                        // TODO
+                    }
+
                     is QuestionItemViewState -> QuestionLessonItem(
                         viewState = it,
                         onAnswerCheckChange = { answerViewState, checked ->
