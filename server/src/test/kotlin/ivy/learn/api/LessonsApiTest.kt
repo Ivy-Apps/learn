@@ -18,7 +18,7 @@ class LessonsApiTest : ApiTest() {
 
         // When
         val result = datasource.fetchLesson(
-            course = CourseId("demo"),
+            course = CourseId("demo-course"),
             lesson = LessonId("demo-lesson"),
         )
 
