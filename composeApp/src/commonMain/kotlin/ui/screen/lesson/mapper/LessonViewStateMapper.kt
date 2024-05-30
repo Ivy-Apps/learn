@@ -3,17 +3,23 @@ package ui.screen.lesson.mapper
 import ivy.model.*
 import ivy.model.TextContentStyle.Body
 import ivy.model.TextContentStyle.Heading
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import ui.screen.lesson.*
 
-class LessonViewStateMapper {
+class LessonViewStateMapper(
+    private val lessonTreeManager: LessonTreeManager
+) {
     fun Lesson.toViewState(
         localState: LessonViewModel.LocalState,
     ): LessonViewState {
         return LessonViewState(
             title = name,
-            items = persistentListOf()
+            items = lessonTreeManager.loadUserProgress(
+                lesson = content,
+                localState = localState
+            ).mapNotNull {
+                it.toViewState(localState, content.items)
+            }.toImmutableList()
         )
     }
 
@@ -83,7 +89,7 @@ class LessonViewStateMapper {
         question = question,
         answer = localState.openAnswers[id],
         correctAnswer = correctAnswer,
-        answered = id in localState.submittedAnswers,
+        answered = id in localState.answered,
     )
 
     private fun QuestionItem.toViewState(
@@ -94,7 +100,7 @@ class LessonViewStateMapper {
         type = if (correct.size == 1) QuestionType.SingleChoice else QuestionType.MultipleChoice,
         answers = answers.map { it.toViewState(this, localState) }
             .toImmutableList(),
-        answered = id in localState.submittedAnswers,
+        answered = id in localState.answered,
     )
 
     private fun Answer.toViewState(

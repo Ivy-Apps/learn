@@ -65,18 +65,16 @@ class LessonViewModel(
     }
 
     data class LocalState(
-        val currentItem: LessonItemId?,
         val answers: Map<LessonItemId, Set<AnswerId>>,
         val openAnswers: Map<LessonItemId, String>,
-        val submittedAnswers: Set<LessonItemId>,
+        val answered: Set<LessonItemId>,
         val choices: Map<LessonItemId, ChoiceOptionId>,
     ) {
         companion object {
             val Initial = LocalState(
-                currentItem = null,
                 answers = emptyMap(),
                 openAnswers = emptyMap(),
-                submittedAnswers = emptySet(),
+                answered = emptySet(),
                 choices = emptyMap(),
             )
         }
