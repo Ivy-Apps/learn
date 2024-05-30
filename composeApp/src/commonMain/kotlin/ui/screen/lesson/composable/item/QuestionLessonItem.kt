@@ -53,6 +53,7 @@ fun QuestionLessonItem(
                 Spacer(Modifier.height(12.dp))
                 CheckButton(
                     modifier = Modifier.align(Alignment.End),
+                    enabled = viewState.answers.any { it.selected },
                     onClick = onCheckClick
                 )
             }
@@ -167,10 +168,12 @@ private fun AnswerExplanationText(
 @Composable
 private fun CheckButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     PrimaryButton(
         modifier = modifier,
+        enabled = enabled,
         text = "CHECK",
         onClick = onClick
     )

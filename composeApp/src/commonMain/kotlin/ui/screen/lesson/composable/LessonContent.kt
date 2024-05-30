@@ -38,9 +38,8 @@ fun LessonContent(
                 onEvent = onEvent,
             )
             if (viewState.cta != null) {
-                Cta(
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                        .padding(bottom = 48.dp),
+                CtaBar(
+                    modifier = Modifier.align(Alignment.BottomCenter),
                     viewState = viewState.cta,
                     onContinueClick = { itemId ->
                         onEvent(LessonViewEvent.OnContinueClick(itemId))

@@ -11,10 +11,12 @@ import androidx.compose.ui.unit.dp
 fun PrimaryButton(
     text: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier,
+        enabled = enabled,
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
         onClick = onClick
     ) {
