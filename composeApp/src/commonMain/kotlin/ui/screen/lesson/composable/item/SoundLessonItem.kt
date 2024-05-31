@@ -5,9 +5,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import component.button.SecondaryButton
 import ui.screen.lesson.SoundItemViewState
+import ui.screen.lesson.composable.ItemSpacing
 
 @Composable
 fun SoundLessonItem(
@@ -16,7 +16,7 @@ fun SoundLessonItem(
     modifier: Modifier = Modifier,
 ) {
     SecondaryButton(
-        modifier = modifier.padding(top = 12.dp),
+        modifier = modifier.padding(top = ItemSpacing),
         text = viewState.text,
         icon = Icons.Default.PlayArrow,
         onClick = { onClick(viewState.soundUrl) },

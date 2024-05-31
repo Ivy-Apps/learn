@@ -29,7 +29,14 @@ class LessonViewStateMapper(
                 null, is QuestionItem, is OpenQuestionItem,
                 is ChoiceItem -> null
 
-                else -> CtaViewState.Continue(currentItem.id.toViewState())
+                else -> {
+                    platform.log(LogLevel.Debug, "Current item: $currentItem")
+                    if (currentItem is LinearItem && currentItem.next == null) {
+                        CtaViewState.Finish(currentItem.id.toViewState())
+                    } else {
+                        CtaViewState.Continue(currentItem.id.toViewState())
+                    }
+                }
             }
         )
     }
