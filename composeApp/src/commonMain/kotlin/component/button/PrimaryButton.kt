@@ -17,7 +17,7 @@ fun PrimaryButton(
     Button(
         modifier = modifier,
         enabled = enabled,
-        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         onClick = onClick
     ) {
         Text(text = text)
