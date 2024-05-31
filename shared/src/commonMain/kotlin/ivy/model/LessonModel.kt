@@ -152,3 +152,16 @@ data class MysteryItem(
     val hidden: LessonItemId,
     override val next: LessonItemId?
 ) : LessonItem, LinearItem
+
+@Serializable
+@SerialName("SoundItem")
+data class SoundItem(
+    override val id: LessonItemId,
+    val text: String,
+    val sound: SoundUrl,
+    override val next: LessonItemId?
+) : LessonItem, LinearItem
+
+@Serializable
+@JvmInline
+value class SoundUrl(val url: String)

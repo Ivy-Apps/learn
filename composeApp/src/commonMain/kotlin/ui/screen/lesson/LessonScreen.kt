@@ -9,6 +9,7 @@ import ui.navigation.Screen
 import ui.screen.lesson.composable.LessonContent
 import ui.screen.lesson.handler.OnBackClickEventHandler
 import ui.screen.lesson.handler.OnContinueClickEventHandler
+import ui.screen.lesson.handler.OnSoundClickEventHandler
 import ui.screen.lesson.handler.QuestionViewEventHandler
 import ui.screen.lesson.mapper.LessonTreeManager
 import ui.screen.lesson.mapper.LessonViewStateMapper
@@ -26,6 +27,7 @@ class LessonScreen(
         register { OnBackClickEventHandler(Di.get()) }
         register { OnContinueClickEventHandler() }
         register { QuestionViewEventHandler() }
+        register { OnSoundClickEventHandler(Di.get()) }
         register {
             LessonViewModel(
                 courseId = courseId,
@@ -38,6 +40,7 @@ class LessonScreen(
                     Di.get<OnBackClickEventHandler>(),
                     Di.get<OnContinueClickEventHandler>(),
                     Di.get<QuestionViewEventHandler>(),
+                    Di.get<OnSoundClickEventHandler>()
                 )
             )
         }

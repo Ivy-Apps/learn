@@ -18,6 +18,7 @@ import component.platformHorizontalPadding
 import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.ImageLessonItem
 import ui.screen.lesson.composable.item.QuestionLessonItem
+import ui.screen.lesson.composable.item.SoundLessonItem
 import ui.screen.lesson.composable.item.TextLessonItem
 
 @Composable
@@ -129,6 +130,13 @@ private fun LessonItemsLazyColum(
                 )
 
                 is TextItemViewState -> TextLessonItem(it)
+
+                is SoundItemViewState -> SoundLessonItem(
+                    viewState = it,
+                    onClick = { soundUrl ->
+                        onEvent(LessonViewEvent.OnSoundClick(soundUrl))
+                    }
+                )
             }
         }
     }

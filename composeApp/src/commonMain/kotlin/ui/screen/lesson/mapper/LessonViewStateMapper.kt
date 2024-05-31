@@ -47,6 +47,7 @@ class LessonViewStateMapper(
         is OpenQuestionItem -> toViewState(localState)
         is QuestionItem -> toViewState(localState)
         is TextItem -> toViewState()
+        is SoundItem -> toViewState()
     }
 
     private fun ChoiceItem.toViewState(): ChoiceItemViewState = ChoiceItemViewState(
@@ -132,6 +133,12 @@ class LessonViewStateMapper(
             Heading -> TextStyleViewState.Heading
             Body -> TextStyleViewState.Body
         }
+    )
+
+    private fun SoundItem.toViewState(): SoundItemViewState = SoundItemViewState(
+        id = id.toViewState(),
+        soundUrl = sound.url,
+        text = text,
     )
 }
 

@@ -77,6 +77,9 @@ interface LessonContentScope {
     @LearnCmsDsl
     fun mystery(id: String, builder: MysteryItemScope.() -> Unit)
 
+    @LearnCmsDsl
+    fun sound(id: String, text: String, soundUrl: String)
+
     fun build(): LessonContent
 }
 

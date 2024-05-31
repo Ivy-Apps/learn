@@ -44,10 +44,21 @@ fun demoLesson() = lessonContent {
         text = "Good job! You answered your first question correctly. Here's another question for you."
         style = TextStyle.Body
     }
-    openQuestion("q2") {
-        question = "What is the answer to the ultimate question of life, the universe, and everything?"
-        correctAnswer = "42"
-    }
+    sound(
+        id = "complete-sound",
+        text = "Complete Lesson sound",
+        soundUrl = "https://github.com/ILIYANGERMANOV/ivy-resources/raw/master/ivy-learn/sounds/complete-lesson.mp3"
+    )
+    sound(
+        id = "ups",
+        text = "Ups sound",
+        soundUrl = "https://github.com/ILIYANGERMANOV/ivy-resources/raw/master/ivy-learn/sounds/ups.wav"
+    )
+    sound(
+        id = "success",
+        text = "Success sound",
+        soundUrl = "https://github.com/ILIYANGERMANOV/ivy-resources/raw/master/ivy-learn/sounds/success.mp3"
+    )
     image("img2", CourseImage)
     textItem("content3") {
         text = "Congratulations! You're on fire!"
@@ -66,6 +77,10 @@ fun demoLesson() = lessonContent {
     textItem("end") {
         text = "End of demo lesson."
         style = TextStyle.Body
+    }
+    openQuestion("q2") {
+        question = "What is the answer to the ultimate question of life, the universe, and everything?"
+        correctAnswer = "42"
     }
 }
 
