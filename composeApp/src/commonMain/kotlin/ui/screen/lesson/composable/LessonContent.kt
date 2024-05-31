@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,6 +18,7 @@ import component.platformHorizontalPadding
 import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.ImageLessonItem
 import ui.screen.lesson.composable.item.QuestionLessonItem
+import ui.screen.lesson.composable.item.SoundLessonItem
 import ui.screen.lesson.composable.item.TextLessonItem
 
 @Composable
@@ -57,9 +60,18 @@ private fun LessonItemsLazyColum(
     modifier: Modifier = Modifier,
 ) {
     val horizontalPadding = platformHorizontalPadding()
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(viewState.items.size) {
+        if (viewState.items.size > 1) {
+            listState.animateScrollToItem(viewState.items.lastIndex)
+        }
+    }
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
+        state = listState,
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = PaddingValues(
             bottom = 96.dp,
@@ -118,6 +130,13 @@ private fun LessonItemsLazyColum(
                 )
 
                 is TextItemViewState -> TextLessonItem(it)
+
+                is SoundItemViewState -> SoundLessonItem(
+                    viewState = it,
+                    onClick = { soundUrl ->
+                        onEvent(LessonViewEvent.OnSoundClick(soundUrl))
+                    }
+                )
             }
         }
     }

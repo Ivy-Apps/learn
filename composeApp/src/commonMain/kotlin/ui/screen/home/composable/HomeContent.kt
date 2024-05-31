@@ -29,10 +29,10 @@ fun HomeContent(
         ),
         title = "Learn"
     ) { contentPadding ->
-        val columnsCount = when (screenWidth().value) {
-            in 0f..600f -> 1
-            in 600f..1200f -> 2
-            else -> 3
+        val columnsCount = when (screenType()) {
+            ScreenType.Mobile -> 1
+            ScreenType.Tablet -> 2
+            ScreenType.Desktop -> 3
         }
         val horizontalPadding = platformHorizontalPadding()
         LazyVerticalGrid(

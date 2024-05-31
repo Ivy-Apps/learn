@@ -117,9 +117,17 @@ data class MysteryItemViewState(
 @Immutable
 value class LessonItemIdViewState(val value: String)
 
+@Immutable
+data class SoundItemViewState(
+    override val id: LessonItemIdViewState,
+    val text: String,
+    val soundUrl: String
+) : LessonItemViewState
+
 sealed interface LessonViewEvent {
     data object OnBackClick : LessonViewEvent
     data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
+    data class OnSoundClick(val soundUrl: String) : LessonViewEvent
 }
 
 sealed interface QuestionViewEvent : LessonViewEvent {

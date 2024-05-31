@@ -31,6 +31,8 @@ class LessonTreeManager {
                     currentItemId in localState.completed
                 }
 
+                is SoundItem -> true
+
                 else -> {
                     currentItemId in localState.completed || autoLoadNextN > 0
                 }

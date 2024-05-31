@@ -1,8 +1,6 @@
 package ivy.model.dsl
 
-import ivy.model.LessonContent
-import ivy.model.LessonItemId
-import ivy.model.TextStyle
+import ivy.model.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -14,8 +12,33 @@ fun lessonContent(
     return scope.build()
 }
 
-fun serializeLesson(lesson: LessonContent) {
+fun printLessonJson(lesson: LessonContent) {
+    validateIds(lesson)
     println(Json.encodeToString(lesson))
+}
+
+private fun validateIds(lesson: LessonContent) {
+    allItemsIds(
+        currentId = lesson.rootItem,
+        lesson = lesson,
+    ).forEach { itemId ->
+        if (itemId !in lesson.items) {
+            error("Item with id $itemId is not defined in the lesson")
+        }
+    }
+}
+
+private fun allItemsIds(
+    currentId: LessonItemId?,
+    lesson: LessonContent
+): Set<LessonItemId> {
+    if (currentId == null) return emptySet()
+    return setOf(currentId) + when (val currentItem = lesson.items[currentId]) {
+        is LessonNavigationItem -> allItemsIds(currentItem.next, lesson) + currentItem.onClick
+        is ChoiceItem -> currentItem.options.flatMap { allItemsIds(it.next, lesson) }.toSet()
+        is LinearItem -> allItemsIds(currentItem.next, lesson)
+        else -> emptySet()
+    }
 }
 
 interface LessonContentScope {
@@ -53,6 +76,9 @@ interface LessonContentScope {
 
     @LearnCmsDsl
     fun mystery(id: String, builder: MysteryItemScope.() -> Unit)
+
+    @LearnCmsDsl
+    fun sound(id: String, text: String, soundUrl: String)
 
     fun build(): LessonContent
 }

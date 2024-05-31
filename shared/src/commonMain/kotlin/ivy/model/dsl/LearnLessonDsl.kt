@@ -111,6 +111,15 @@ class LessonContentScopeImpl : LessonContentScope {
         )
     }
 
+    override fun sound(id: String, text: String, soundUrl: String) {
+        items[chain(id)] = SoundItem(
+            id = LessonItemId(id),
+            text = text,
+            sound = SoundUrl(soundUrl),
+            next = null,
+        )
+    }
+
     override fun build(): LessonContent = LessonContent(
         rootItem = rootItem!!,
         items = items
@@ -139,6 +148,7 @@ class LessonContentScopeImpl : LessonContentScope {
             is OpenQuestionItem -> copy(next = next)
             is QuestionItem -> copy(next = next)
             is TextItem -> copy(next = next)
+            is SoundItem -> copy(next = next)
         }
         items[id] = updated
     }

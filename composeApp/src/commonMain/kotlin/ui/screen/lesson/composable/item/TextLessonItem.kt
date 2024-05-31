@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.text.Body
-import component.text.Headline
+import component.text.HeadlineSmall
 import ui.screen.lesson.TextItemViewState
 import ui.screen.lesson.TextStyleViewState
 
@@ -15,7 +15,7 @@ fun TextLessonItem(
     modifier: Modifier = Modifier
 ) {
     when (viewState.style) {
-        TextStyleViewState.Heading -> Headline(
+        TextStyleViewState.Heading -> HeadlineSmall(
             modifier = modifier.padding(top = 16.dp),
             text = viewState.text
         )

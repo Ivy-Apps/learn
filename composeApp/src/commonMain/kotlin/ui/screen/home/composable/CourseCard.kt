@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import component.ScreenType.*
 import component.isLargeScreen
+import component.screenType
 import component.text.SubTitle
 import component.text.Title
 import io.kamel.image.KamelImage
@@ -67,7 +69,13 @@ private fun Banner(
         KamelImage(
             modifier = modifier
                 .fillMaxWidth()
-                .aspectRatio(if (isLargeScreen()) 4f else 3.5f),
+                .aspectRatio(
+                    when (screenType()) {
+                        Mobile -> 3.5f
+                        Tablet -> 4f
+                        Desktop -> 5f
+                    }
+                ),
             contentScale = ContentScale.Crop,
             resource = asyncPainterResource(imageUrl),
             contentDescription = null

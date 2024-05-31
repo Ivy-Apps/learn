@@ -6,15 +6,14 @@ import ivy.learn.data.cms.course.demo.DemoCourse
 import ivy.learn.data.cms.course.kotlin.DataModeling
 import ivy.learn.data.cms.course.kotlin.ErrorHandling
 import ivy.learn.data.cms.course.kotlin.KotlinDSLs
-import ivy.learn.data.cms.course.programming.*
+import ivy.learn.data.cms.course.programming.DataStructures
+import ivy.learn.data.cms.course.programming.FunctionalProgramming
+import ivy.learn.data.cms.course.programming.ObjectOrientedProgramming
+import ivy.learn.data.cms.course.programming.ProgrammingFundamentals
 import ivy.learn.data.cms.dsl.TopicsDsl
 
 object TopicsContent : TopicsDsl({
-    topic("Demo") {
-        course(DemoCourse)
-    }
-    topic("Programming") {
-        course(ProgrammingBasics)
+    topic("Software Engineering") {
         course(ProgrammingFundamentals)
         course(DataStructures)
         course(FunctionalProgramming)
@@ -28,5 +27,8 @@ object TopicsContent : TopicsDsl({
     topic("Android") {
         course(AndroidArchitecture)
         course(ScreenArchitecture)
+    }
+    topic("Demo") {
+        course(DemoCourse)
     }
 })

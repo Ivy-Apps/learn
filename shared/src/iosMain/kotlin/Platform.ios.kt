@@ -14,6 +14,11 @@ class IOSPlatform : Platform {
     ): HttpClient = HttpClient(Darwin) {
         config(this)
     }
+
+    override fun playSound(soundUrl: String) {
+        // TODO: Implement
+    }
 }
+
 
 actual fun platform(): Platform = IOSPlatform()

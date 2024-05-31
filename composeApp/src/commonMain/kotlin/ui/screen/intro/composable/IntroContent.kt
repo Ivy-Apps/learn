@@ -1,12 +1,6 @@
 package ui.screen.intro.composable
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -60,7 +54,7 @@ private fun ContinueButton(
 ) {
     CtaButton(
         modifier = modifier,
-        text = "LET'S GO",
+        text = "LET'S GO!",
         onClick = onClick
     )
 }

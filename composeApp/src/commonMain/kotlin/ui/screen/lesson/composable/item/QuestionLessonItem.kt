@@ -50,7 +50,7 @@ fun QuestionLessonItem(
                 )
             }
             if (!viewState.answered) {
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(8.dp))
                 CheckButton(
                     modifier = Modifier.align(Alignment.End),
                     enabled = viewState.answers.any { it.selected },
