@@ -6,8 +6,8 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import ivy.data.HerokuServerUrlProvider
 import ivy.data.ServerUrlProvider
-import ivy.data.ServerUrlProviderImpl
 import ivy.data.source.CoursesDataSource
 import ivy.data.source.LessonDataSource
 import ivy.data.source.TopicsDataSource
@@ -27,7 +27,7 @@ object SharedModule : DiModule {
         singleton<Platform> { platform() }
         json()
         ktorClient()
-        register<ServerUrlProvider> { ServerUrlProviderImpl() }
+        register<ServerUrlProvider> { HerokuServerUrlProvider() }
         register { LessonDataSource(Di.get(), Di.get()) }
         register { TopicsDataSource(Di.get(), Di.get()) }
         register { CoursesDataSource(Di.get(), Di.get()) }
