@@ -22,7 +22,7 @@ fun CtaBar(
     Box(
         modifier = modifier.fillMaxWidth()
             .background(MaterialTheme.colors.background)
-            .padding(bottom = 16.dp, top = 12.dp),
+            .padding(vertical = 8.dp),
         contentAlignment = Alignment.Center,
     ) {
         when (viewState) {
