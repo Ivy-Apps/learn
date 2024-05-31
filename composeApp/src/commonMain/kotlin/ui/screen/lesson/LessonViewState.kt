@@ -140,5 +140,8 @@ sealed interface QuestionViewEvent : LessonViewEvent {
         val checked: Boolean
     ) : QuestionViewEvent
 
-    data class CheckClick(override val questionId: LessonItemIdViewState) : QuestionViewEvent
+    data class CheckClick(
+        override val questionId: LessonItemIdViewState,
+        val answers: List<AnswerViewState>,
+    ) : QuestionViewEvent
 }

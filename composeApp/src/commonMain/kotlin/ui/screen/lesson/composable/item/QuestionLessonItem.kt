@@ -25,7 +25,7 @@ fun QuestionLessonItem(
     viewState: QuestionItemViewState,
     modifier: Modifier = Modifier,
     onAnswerCheckChange: (QuestionTypeViewState, AnswerViewState, Boolean) -> Unit,
-    onCheckClick: () -> Unit
+    onCheckClick: (List<AnswerViewState>) -> Unit
 ) {
     Card(
         modifier = modifier.padding(top = 12.dp),
@@ -54,7 +54,7 @@ fun QuestionLessonItem(
                 CheckButton(
                     modifier = Modifier.align(Alignment.End),
                     enabled = viewState.answers.any { it.selected },
-                    onClick = onCheckClick
+                    onClick = { onCheckClick(viewState.answers) }
                 )
             }
         }

@@ -25,8 +25,8 @@ class LessonScreen(
         register { LessonTreeManager() }
         register { LessonViewStateMapper(Di.get(), Di.get()) }
         register { OnBackClickEventHandler(Di.get()) }
-        register { OnContinueClickEventHandler() }
-        register { QuestionViewEventHandler() }
+        register { OnContinueClickEventHandler(Di.get()) }
+        register { QuestionViewEventHandler(Di.get()) }
         register { OnSoundClickEventHandler(Di.get()) }
         register {
             LessonViewModel(

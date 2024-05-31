@@ -1,7 +1,9 @@
 package ui.screen.lesson.handler
 
+import Platform
 import arrow.optics.dsl.index
 import arrow.optics.typeclasses.Index
+import ivy.content.SoundsUrls
 import ivy.model.AnswerId
 import ui.EventHandler
 import ui.screen.lesson.LessonViewModel.LocalState
@@ -13,7 +15,9 @@ import ui.screen.lesson.answers
 import ui.screen.lesson.completed
 import ui.screen.lesson.mapper.toDomain
 
-class QuestionViewEventHandler :
+class QuestionViewEventHandler(
+    private val platform: Platform,
+) :
     EventHandler<QuestionViewEvent, LocalState> {
     override val eventTypes = setOf(
         QuestionViewEvent.AnswerCheckChange::class,
@@ -70,5 +74,11 @@ class QuestionViewEventHandler :
                 completed + event.questionId.toDomain()
             }
         }
+        val correctAnswer = event.answers.all {
+            it.selected == it.correct
+        }
+        platform.playSound(
+            if (correctAnswer) SoundsUrls.Success else SoundsUrls.Ups
+        )
     }
 }

@@ -84,13 +84,13 @@ private fun LessonItemsLazyColum(
             key = {
                 it.id.value
             }
-        ) {
-            when (it) {
+        ) { itemViewState ->
+            when (itemViewState) {
                 is ChoiceItemViewState -> {
                     // TODO
                 }
 
-                is ImageItemViewState -> ImageLessonItem(it)
+                is ImageItemViewState -> ImageLessonItem(itemViewState)
 
                 is LessonNavigationItemViewState -> {
                     // TODO
@@ -113,26 +113,26 @@ private fun LessonItemsLazyColum(
                 }
 
                 is QuestionItemViewState -> QuestionLessonItem(
-                    viewState = it,
+                    viewState = itemViewState,
                     onAnswerCheckChange = { type, answerViewState, checked ->
                         onEvent(
                             QuestionViewEvent.AnswerCheckChange(
-                                questionId = it.id,
+                                questionId = itemViewState.id,
                                 questionType = type,
                                 answerId = answerViewState.id,
                                 checked = checked,
                             )
                         )
                     },
-                    onCheckClick = {
-                        onEvent(QuestionViewEvent.CheckClick(it.id))
+                    onCheckClick = { answers ->
+                        onEvent(QuestionViewEvent.CheckClick(itemViewState.id, answers))
                     }
                 )
 
-                is TextItemViewState -> TextLessonItem(it)
+                is TextItemViewState -> TextLessonItem(itemViewState)
 
                 is SoundItemViewState -> SoundLessonItem(
-                    viewState = it,
+                    viewState = itemViewState,
                     onClick = { soundUrl ->
                         onEvent(LessonViewEvent.OnSoundClick(soundUrl))
                     }
