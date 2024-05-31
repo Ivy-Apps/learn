@@ -17,6 +17,7 @@ import component.text.SubTitle
 import ui.screen.lesson.AnswerViewState
 import ui.screen.lesson.QuestionItemViewState
 import ui.screen.lesson.QuestionTypeViewState
+import ui.screen.lesson.composable.ItemSpacingBig
 import ui.theme.Green
 import ui.theme.Red
 
@@ -28,7 +29,7 @@ fun QuestionLessonItem(
     onCheckClick: (List<AnswerViewState>) -> Unit
 ) {
     Card(
-        modifier = modifier.padding(top = 12.dp),
+        modifier = modifier.padding(top = ItemSpacingBig),
         shape = RoundedCornerShape(16.dp),
         elevation = 4.dp
     ) {

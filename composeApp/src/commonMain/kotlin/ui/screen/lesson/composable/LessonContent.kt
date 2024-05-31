@@ -21,6 +21,9 @@ import ui.screen.lesson.composable.item.QuestionLessonItem
 import ui.screen.lesson.composable.item.SoundLessonItem
 import ui.screen.lesson.composable.item.TextLessonItem
 
+val ItemSpacing = 12.dp
+val ItemSpacingBig = 16.dp
+
 @Composable
 fun LessonContent(
     viewState: LessonViewState,
