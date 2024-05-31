@@ -19,16 +19,22 @@ class LessonContentDataSource(
         course: CourseId,
         lesson: LessonId
     ): Either<String, LessonContent> = catch({
+        val url = "https://raw.githubusercontent.com/Ivy-Apps/learn-content" +
+                "/main/content/lessons" +
+                "/${course.value}/${lesson.value}.json"
         httpClient.get(
-            urlString = "https://raw.githubusercontent.com/Ivy-Apps/learn-content" +
-                    "/main/content/lessons" +
-                    "/${course.value}/${lesson.value}.json"
+            urlString = url
         ) {
             headers {
                 append("Authorization", "token ${config.privateContentGitHubPat}")
                 append("Accept", "application/vnd.github.v3+json")
             }
-        }.body<LessonContent>().right()
+        }.let {
+            when (it.status.value) {
+                404 -> Either.Left("Lesson content for '$url' not found")
+                else -> it.body<LessonContent>().right()
+            }
+        }
     }) { e ->
         Either.Left("Failed to fetch lesson content: ${e.message}")
     }
