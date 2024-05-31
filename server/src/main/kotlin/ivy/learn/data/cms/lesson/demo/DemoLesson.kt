@@ -5,7 +5,7 @@ import ivy.learn.data.cms.dsl.LessonImage
 import ivy.model.LessonItemId
 import ivy.model.TextStyle
 import ivy.model.dsl.lessonContent
-import ivy.model.dsl.serializeLesson
+import ivy.model.dsl.printLessonJson
 
 fun demoLesson() = lessonContent {
     textItem("title") {
@@ -70,5 +70,5 @@ fun demoLesson() = lessonContent {
 }
 
 fun main() {
-    serializeLesson(demoLesson())
+    printLessonJson(demoLesson())
 }
