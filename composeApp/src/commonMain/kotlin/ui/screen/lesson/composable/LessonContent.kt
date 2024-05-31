@@ -47,6 +47,9 @@ fun LessonContent(
                     onContinueClick = { itemId ->
                         onEvent(LessonViewEvent.OnContinueClick(itemId))
                     },
+                    onFinishClick = { itemId ->
+                        onEvent(LessonViewEvent.OnFinishClick(itemId))
+                    }
                 )
             }
         }

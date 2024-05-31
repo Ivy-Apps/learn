@@ -65,6 +65,7 @@ sealed interface CtaViewState {
     val currentItemId: LessonItemIdViewState
 
     data class Continue(override val currentItemId: LessonItemIdViewState) : CtaViewState
+    data class Finish(override val currentItemId: LessonItemIdViewState) : CtaViewState
 }
 
 @Immutable
@@ -128,6 +129,7 @@ sealed interface LessonViewEvent {
     data object OnBackClick : LessonViewEvent
     data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
     data class OnSoundClick(val soundUrl: String) : LessonViewEvent
+    data class OnFinishClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
 }
 
 sealed interface QuestionViewEvent : LessonViewEvent {

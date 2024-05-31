@@ -74,13 +74,13 @@ fun demoLesson() = lessonContent {
         text = "Go to Question 1",
         onClick = LessonItemId("q1")
     )
-    textItem("end") {
-        text = "End of demo lesson."
-        style = TextStyle.Body
-    }
     openQuestion("q2") {
         question = "What is the answer to the ultimate question of life, the universe, and everything?"
         correctAnswer = "42"
+    }
+    textItem("end") {
+        text = "End of demo lesson."
+        style = TextStyle.Body
     }
 }
 

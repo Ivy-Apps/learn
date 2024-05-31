@@ -17,6 +17,7 @@ import ui.screen.lesson.LessonItemIdViewState
 fun CtaBar(
     viewState: CtaViewState,
     onContinueClick: (LessonItemIdViewState) -> Unit,
+    onFinishClick: (LessonItemIdViewState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -28,6 +29,10 @@ fun CtaBar(
         when (viewState) {
             is CtaViewState.Continue -> ContinueButton(
                 onClick = { onContinueClick(viewState.currentItemId) }
+            )
+
+            is CtaViewState.Finish -> FinishButton(
+                onClick = { onFinishClick(viewState.currentItemId) }
             )
         }
     }
@@ -41,6 +46,18 @@ private fun ContinueButton(
     CtaButton(
         modifier = modifier,
         text = "CONTINUE",
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun FinishButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    CtaButton(
+        modifier = modifier,
+        text = "FINISH!",
         onClick = onClick,
     )
 }

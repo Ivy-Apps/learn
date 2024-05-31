@@ -7,10 +7,7 @@ import ivy.model.CourseId
 import ivy.model.LessonId
 import ui.navigation.Screen
 import ui.screen.lesson.composable.LessonContent
-import ui.screen.lesson.handler.OnBackClickEventHandler
-import ui.screen.lesson.handler.OnContinueClickEventHandler
-import ui.screen.lesson.handler.OnSoundClickEventHandler
-import ui.screen.lesson.handler.QuestionViewEventHandler
+import ui.screen.lesson.handler.*
 import ui.screen.lesson.mapper.LessonTreeManager
 import ui.screen.lesson.mapper.LessonViewStateMapper
 
@@ -28,6 +25,7 @@ class LessonScreen(
         register { OnContinueClickEventHandler(Di.get()) }
         register { QuestionViewEventHandler(Di.get()) }
         register { OnSoundClickEventHandler(Di.get()) }
+        register { OnFinishClickEventHandler(Di.get(), Di.get()) }
         register {
             LessonViewModel(
                 courseId = courseId,
@@ -40,7 +38,8 @@ class LessonScreen(
                     Di.get<OnBackClickEventHandler>(),
                     Di.get<OnContinueClickEventHandler>(),
                     Di.get<QuestionViewEventHandler>(),
-                    Di.get<OnSoundClickEventHandler>()
+                    Di.get<OnSoundClickEventHandler>(),
+                    Di.get<OnFinishClickEventHandler>(),
                 )
             )
         }
