@@ -21,3 +21,18 @@ fun Headline(
         fontWeight = FontWeight.Black,
     )
 }
+
+@Composable
+fun HeadlineSmall(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colors.onBackground,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = MaterialTheme.typography.h5,
+        color = color,
+        fontWeight = FontWeight.Black,
+    )
+}
