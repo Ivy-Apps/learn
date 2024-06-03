@@ -14,12 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
-import component.platformHorizontalPadding
+import component.ScreenType
+import component.screenType
 import ui.screen.lesson.*
-import ui.screen.lesson.composable.item.ImageLessonItem
-import ui.screen.lesson.composable.item.QuestionLessonItem
-import ui.screen.lesson.composable.item.SoundLessonItem
-import ui.screen.lesson.composable.item.TextLessonItem
+import ui.screen.lesson.composable.item.*
 
 val ItemSpacing = 12.dp
 val ItemSpacingBig = 16.dp
@@ -65,7 +63,11 @@ private fun LessonItemsLazyColum(
     onEvent: (LessonViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val horizontalPadding = platformHorizontalPadding()
+    val horizontalPadding = when (screenType()) {
+        ScreenType.Mobile -> 16.dp
+        ScreenType.Tablet -> 24.dp
+        ScreenType.Desktop -> 64.dp
+    }
     val listState = rememberLazyListState()
 
     LaunchedEffect(viewState.items.size) {
@@ -106,9 +108,7 @@ private fun LessonItemsLazyColum(
                     // TODO
                 }
 
-                is LottieAnimationItemViewState -> {
-                    // TODO
-                }
+                is LottieAnimationItemViewState -> LottieAnimationLessonItem(itemViewState)
 
                 is MysteryItemViewState -> {
                     // TODO

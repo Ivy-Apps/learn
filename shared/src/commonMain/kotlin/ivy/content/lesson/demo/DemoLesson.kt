@@ -1,4 +1,4 @@
-package ivy.learn.data.cms.lesson.demo
+package ivy.content.lesson.demo
 
 import ivy.content.CourseImage
 import ivy.content.LessonImage

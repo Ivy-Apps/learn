@@ -1,26 +1,33 @@
-package ivy.learn.data.cms.lesson.programmingfundamentals
+package ivy.content.lesson.programmingfundamentals
 
+import ivy.content.LottieUrls
 import ivy.model.TextStyle
 import ivy.model.dsl.lessonContent
 import ivy.model.dsl.printLessonJson
+import ivy.model.dsl.textBuilder
 
 fun programmingMathInDisguise() = lessonContent {
     lottie("harry_hi_anim") {
-        jsonUrl = "tbd"
+        jsonUrl = LottieUrls.HarrySunglases
     }
     text("harry_hi") {
-        text = "Meet Harry, a shape-shifting alien from the KX-147 planet. " +
-                "Harry is a gifted scientist who can solve complex problems in a simple and elegant way. " +
-                "He's also quite impatient and tends to test his ideas in Friday on production."
+        text = textBuilder {
+            line("Meet Harry, a shape-shifting alien from the KX-147 planet.")
+            line("Harry is a gifted scientist who can solve complex problems in a simple and elegant way.")
+            line("He's also quite impatient and tends to test his ideas in Friday on production.")
+        }
         style = TextStyle.Body
     }
     lottie("harry_crash_anim") {
-        jsonUrl = "tbf"
+        jsonUrl = LottieUrls.SpaceshipFly
     }
     text("harry_crash") {
-        text = "Unfortunately, during one of his time-traveling experiments, Harry crashed his spaceship on Earth. " +
-                "He needs your help to fix it and get back home. " +
-                "Harry has a plan, but he needs your knowledge and help to fix his ship."
+        text = textBuilder {
+            line("Unfortunately, during one of his time-traveling experiments... ")
+            line("Harry crashed his spaceship on Earth. (Oops!)")
+            line("Now he needs your help to fix it and get back home.")
+            line("But don't worry, Harry has a plan!")
+        }
     }
 }
 

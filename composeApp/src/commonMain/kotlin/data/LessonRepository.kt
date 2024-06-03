@@ -2,8 +2,8 @@ package data
 
 import arrow.core.Either
 import arrow.core.right
+import ivy.content.lesson.programmingfundamentals.programmingMathInDisguise
 import ivy.data.source.LessonDataSource
-import ivy.learn.data.cms.lesson.programmingfundamentals.programmingMathInDisguise
 import ivy.model.CourseId
 import ivy.model.ImageUrl
 import ivy.model.Lesson

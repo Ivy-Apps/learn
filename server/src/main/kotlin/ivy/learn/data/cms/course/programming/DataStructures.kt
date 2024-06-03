@@ -1,7 +1,7 @@
 package ivy.learn.data.cms.course.programming
 
+import ivy.content.LessonImage
 import ivy.learn.data.cms.dsl.CourseDsl
-import ivy.learn.data.cms.dsl.LessonImage
 
 object DataStructures : CourseDsl({
     name = "Data Structures"

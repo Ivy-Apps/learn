@@ -1,8 +1,8 @@
 package ivy.learn.data.cms.course.programming
 
+import ivy.content.LessonImage
+import ivy.content.LessonImage2
 import ivy.learn.data.cms.dsl.CourseDsl
-import ivy.learn.data.cms.dsl.LessonImage
-import ivy.learn.data.cms.dsl.LessonImage2
 
 object FunctionalProgramming : CourseDsl({
     name = "Functional Programming (FP)"

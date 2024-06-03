@@ -1,8 +1,8 @@
 package ivy.learn.data.cms.course.demo
 
+import ivy.content.CourseImage
+import ivy.content.LessonImage
 import ivy.learn.data.cms.dsl.CourseDsl
-import ivy.learn.data.cms.dsl.CourseImage
-import ivy.learn.data.cms.dsl.LessonImage
 
 object DemoCourse : CourseDsl({
     name = "Demo Course"

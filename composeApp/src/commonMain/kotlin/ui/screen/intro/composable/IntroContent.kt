@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import component.LearnLottieAnimation
+import component.LocalLottieAnimation
 import component.button.CtaButton
 import component.platformHorizontalPadding
 import component.text.Headline
@@ -31,7 +31,7 @@ fun IntroContent(
             verticalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            LearnLottieAnimation(
+            LocalLottieAnimation(
                 modifier = Modifier.size(400.dp),
                 animationFile = "intro_lottie_anim.json",
                 repeat = true

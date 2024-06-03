@@ -137,3 +137,34 @@ interface LinkScope {
 
 @DslMarker
 annotation class LearnCmsDsl
+
+@TextBuilderDsl
+fun textBuilder(builder: TextBuilderScope.() -> Unit): String {
+    val scope = TextBuilder().apply(builder)
+    return scope.build()
+}
+
+interface TextBuilderScope {
+    @TextBuilderDsl
+    fun line(text: String)
+
+    fun newLine()
+}
+
+class TextBuilder : TextBuilderScope {
+    private val lines = mutableListOf<String>()
+
+    override fun line(text: String) {
+        lines += text
+    }
+
+    override fun newLine() {
+        lines += ""
+    }
+
+    fun build(): String = lines.joinToString("\n")
+}
+
+@DslMarker
+annotation class TextBuilderDsl
+
