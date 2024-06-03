@@ -53,11 +53,11 @@ fun programmingMathInDisguise() = lessonContent {
     choice("gravity_choice") {
         question = "Do you think 3141.59 grams of gold on $HarryPlanet is the same as on Earth?"
         option(
-            text = "Yes, gold is gold.",
+            text = "Yes, gold is gold",
             next = LessonItemId("same_weight"),
         )
         option(
-            text = "No, gravity affects weight.",
+            text = "No, gravity affects weight",
             next = LessonItemId("diff_weight"),
         )
     }

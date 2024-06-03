@@ -60,7 +60,7 @@ class LessonViewStateMapper(
     private fun ChoiceItem.toViewState(): ChoiceItemViewState = ChoiceItemViewState(
         id = id.toViewState(),
         question = question,
-        options = options.map { it.toViewState() }
+        options = options.map { it.toViewState() }.toImmutableList(),
     )
 
     private fun ChoiceOption.toViewState(): ChoiceOptionViewState = ChoiceOptionViewState(

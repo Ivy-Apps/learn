@@ -98,7 +98,7 @@ data class ImageItemViewState(
 data class ChoiceItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
-    val options: List<ChoiceOptionViewState>,
+    val options: ImmutableList<ChoiceOptionViewState>,
 ) : LessonItemViewState
 
 @Immutable
