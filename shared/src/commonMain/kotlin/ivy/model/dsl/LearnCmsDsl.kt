@@ -43,7 +43,11 @@ private fun allItemsIds(
 
 interface LessonContentScope {
     @LearnCmsDsl
-    fun text(id: String, builder: TextScope.() -> Unit)
+    fun text(
+        id: String,
+        nextItemId: String? = null,
+        builder: TextScope.() -> Unit
+    )
 
     @LearnCmsDsl
     fun question(id: String, builder: QuestionScope.() -> Unit)

@@ -7,7 +7,11 @@ class LessonContentScopeImpl : LessonContentScope {
     private var currentItem: LessonItemId? = null
     private val items = mutableMapOf<LessonItemId, LessonItem>()
 
-    override fun text(id: String, builder: TextScope.() -> Unit) {
+    override fun text(
+        id: String,
+        nextItemId: String?,
+        builder: TextScope.() -> Unit
+    ) {
         val scope = TextScopeImpl().also(builder)
         items[chain(id)] = TextItem(
             id = LessonItemId(id),
@@ -134,15 +138,14 @@ class LessonContentScopeImpl : LessonContentScope {
         val lessonItemId = LessonItemId(id)
         if (rootItem == null) {
             rootItem = lessonItemId
-            currentItem = rootItem
         } else {
-            items[currentItem!!]!!.chainTo(lessonItemId)
-            currentItem = lessonItemId
+            items[currentItem!!]!!.setNextTo(lessonItemId)
         }
+        currentItem = lessonItemId
         return currentItem!!
     }
 
-    private fun LessonItem.chainTo(next: LessonItemId) {
+    private fun LessonItem.setNextTo(next: LessonItemId) {
         val updated = when (this) {
             is ChoiceItem -> this
             is ImageItem -> copy(next = next)
