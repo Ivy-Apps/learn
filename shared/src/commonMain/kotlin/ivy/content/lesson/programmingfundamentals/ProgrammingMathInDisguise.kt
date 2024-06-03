@@ -85,7 +85,7 @@ fun programmingMathInDisguise() = lessonContent {
         text = textBuilder {
             line("Correct! Gravity affects weights.")
             line("weight = mass * gravitational acceleration")
-            line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
+            line("Assuming the Earth's and my planet's gravity are different, then the gold will weight differently.")
         }
         style = TextStyle.Body
     }
