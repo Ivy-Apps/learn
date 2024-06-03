@@ -23,7 +23,17 @@ fun TextLessonItem(
         )
 
         TextStyleViewState.Body -> BodyBig(
-            modifier = modifier.padding(top = ItemSpacing),
+            modifier = modifier.padding(
+                top = ItemSpacing
+            ),
+            text = viewState.text,
+            textAlign = TextAlign.Center,
+        )
+
+        TextStyleViewState.BodyBigSpacing -> BodyBig(
+            modifier = modifier.padding(
+                top = ItemSpacingBig
+            ),
             text = viewState.text,
             textAlign = TextAlign.Center,
         )

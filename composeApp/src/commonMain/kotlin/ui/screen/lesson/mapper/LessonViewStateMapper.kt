@@ -3,8 +3,7 @@ package ui.screen.lesson.mapper
 import LogLevel
 import Platform
 import ivy.model.*
-import ivy.model.TextStyle.Body
-import ivy.model.TextStyle.Heading
+import ivy.model.TextStyle.*
 import kotlinx.collections.immutable.toImmutableList
 import ui.screen.lesson.*
 
@@ -139,6 +138,7 @@ class LessonViewStateMapper(
         style = when (style) {
             Heading -> TextStyleViewState.Heading
             Body -> TextStyleViewState.Body
+            BodyBigSpacing -> TextStyleViewState.BodyBigSpacing
         }
     )
 

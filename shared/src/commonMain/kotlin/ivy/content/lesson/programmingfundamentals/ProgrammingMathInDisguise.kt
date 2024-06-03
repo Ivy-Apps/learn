@@ -57,34 +57,34 @@ fun programmingMathInDisguise() = lessonContent {
     choice("gravity_choice") {
         question = "Do you think 3141.59 grams of gold on $HarryPlanet is the same as on Earth?"
         option(
-            text = "Yes, gold is gold",
-            next = LessonItemId("same_weight1"),
+            text = "Same weight, gold is gold",
+            next = LessonItemId("same_w1"),
         )
         option(
-            text = "No, gravity affects weight",
-            next = LessonItemId("diff_weight1"),
+            text = "Different weight, gravity affects weight",
+            next = LessonItemId("diff_w1"),
         )
     }
-    text("same_weight1", next = "same_weight2") {
-        text = "Harry: \"Nope\""
+    text("same_w1", next = "same_w2") {
+        text = "Harry says \"Nope\""
         style = TextStyle.Heading
     }
-    text("same_weight2", next = "gravity_question") {
+    text("same_w2", next = "gravity_question") {
         text = textBuilder {
             line("That's very unlikely! Gravity affects weights.")
-            line("Formula: weight = mass * gravitational acceleration")
-            line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
+            line("weight = mass * gravitational acceleration")
+            line("Assuming the Earth's and my planet's gravity are different, then the gold will weight differently.")
         }
         style = TextStyle.Body
     }
-    text("diff_weigh1", next = "diff_weight2") {
-        text = "Harry: \"That's right!\""
+    text("diff_w1", next = "diff_w2") {
+        text = "Harry says \"That's right!\""
         style = TextStyle.Heading
     }
-    text("diff_weight2", next = "gravity_question") {
+    text("diff_w2", next = "gravity_question") {
         text = textBuilder {
             line("Correct! Gravity affects weights.")
-            line("Formula: weight = mass * gravitational acceleration")
+            line("weight = mass * gravitational acceleration")
             line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
         }
         style = TextStyle.Body
@@ -109,8 +109,15 @@ fun programmingMathInDisguise() = lessonContent {
             explanation = "Gravity is not subtracted from your mass."
         )
     }
+    text("first_program") {
+        text = textBuilder {
+            line("Knowing that let's create our first program!")
+            line("We need a function that will calculate the mass of gold by its weight on Earth.")
+        }
+        style = TextStyle.BodyBigSpacing
+    }
     text("final") {
-        text = "That's it!"
+        text = "End of lesson."
         style = TextStyle.Heading
     }
 }

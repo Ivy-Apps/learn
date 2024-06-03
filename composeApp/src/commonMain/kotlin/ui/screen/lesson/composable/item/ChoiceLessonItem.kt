@@ -23,7 +23,7 @@ fun ChoiceLessonItem(
         modifier = modifier.padding(top = ItemSpacingBig),
     ) {
         QuestionText(text = viewState.question)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(16.dp))
         ChoicesOptions(
             options = viewState.options,
             onChoiceClick = onChoiceClick,
