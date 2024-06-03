@@ -1,9 +1,6 @@
 package ui.screen.lesson.composable
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -21,7 +18,7 @@ import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.*
 
 val ItemSpacing = 12.dp
-val ItemSpacingBig = 20.dp
+val ItemSpacingBig = 48.dp
 
 @Composable
 fun LessonContent(
@@ -73,9 +70,11 @@ private fun LessonItemsLazyColum(
 
     LaunchedEffect(viewState.items.size) {
         if (viewState.items.size > 1) {
-            listState.animateScrollToItem(viewState.items.lastIndex)
-            delay(1_000) // ensure auto scrolls works for images that are loading
-            listState.animateScrollToItem(viewState.items.lastIndex)
+            // ensure auto scrolls works for images that are loading
+            repeat(4) {
+                listState.animateScrollToItem(viewState.items.lastIndex)
+                delay(200)
+            }
         }
     }
 
@@ -155,6 +154,9 @@ private fun LessonItemsLazyColum(
                     }
                 )
             }
+        }
+        item("empty_space") {
+            Spacer(Modifier.height(200.dp))
         }
     }
 }

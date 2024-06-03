@@ -31,7 +31,7 @@ class LessonTreeManager {
                     currentItemId in localState.completed
                 }
 
-                is SoundItem, is LottieAnimationItem -> true
+                is ImageItem, is SoundItem, is LottieAnimationItem -> true
 
                 else -> {
                     currentItemId in localState.completed ||

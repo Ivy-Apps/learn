@@ -25,6 +25,10 @@ fun programmingMathInDisguise() = lessonContent {
         }
         style = TextStyle.Body
     }
+    text("harry_experimenting") {
+        text = "Harry loves experimenting... a lot!"
+        style = TextStyle.Heading
+    }
     lottie("harry_crash_anim") {
         jsonUrl = LottieUrls.SpaceshipFly
     }
@@ -36,12 +40,12 @@ fun programmingMathInDisguise() = lessonContent {
             line("But don't worry, Harry has a plan!")
         }
     }
-    image("harry_plan_mg") {
-        imageUrl = "https://i.ibb.co/gvBWYJ3/harry-spaceship-repair.webp"
-    }
     text("chapter_1_title") {
         text = "Chapter 1: Repairing the spaceship"
         style = TextStyle.Heading
+    }
+    image("harry_plan_mg") {
+        imageUrl = "https://i.ibb.co/gvBWYJ3/harry-spaceship-repair.webp"
     }
     text("chater_1_intro") {
         text = textBuilder {
@@ -54,25 +58,33 @@ fun programmingMathInDisguise() = lessonContent {
         question = "Do you think 3141.59 grams of gold on $HarryPlanet is the same as on Earth?"
         option(
             text = "Yes, gold is gold",
-            next = LessonItemId("same_weight"),
+            next = LessonItemId("same_weight1"),
         )
         option(
             text = "No, gravity affects weight",
-            next = LessonItemId("diff_weight"),
+            next = LessonItemId("diff_weight1"),
         )
     }
-    text("same_weight", next = "gravity_question") {
+    text("same_weight1", next = "same_weight2") {
+        text = "Harry: \"Nope\""
+        style = TextStyle.Heading
+    }
+    text("same_weight2", next = "gravity_question") {
         text = textBuilder {
-            line("Harry: Nope, very unlikely! Gravity affects weights.")
-            line("weight = mass * gravitational acceleration")
+            line("That's very unlikely! Gravity affects weights.")
+            line("Formula: weight = mass * gravitational acceleration")
             line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
         }
         style = TextStyle.Body
     }
-    text("diff_weight", next = "gravity_question") {
+    text("diff_weigh1", next = "diff_weight2") {
+        text = "Harry: \"That's right!\""
+        style = TextStyle.Heading
+    }
+    text("diff_weight2", next = "gravity_question") {
         text = textBuilder {
-            line("Harry: Yes, that's right! Gravity affects weights.")
-            line("weight = mass * gravitational acceleration")
+            line("Correct! Gravity affects weights.")
+            line("Formula: weight = mass * gravitational acceleration")
             line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
         }
         style = TextStyle.Body

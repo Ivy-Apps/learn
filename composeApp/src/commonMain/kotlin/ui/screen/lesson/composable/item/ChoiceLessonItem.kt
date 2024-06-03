@@ -6,12 +6,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.button.PrimaryButton
-import component.text.SubTitle
 import kotlinx.collections.immutable.ImmutableList
 import ui.screen.lesson.ChoiceItemViewState
 import ui.screen.lesson.ChoiceOptionViewState
 import ui.screen.lesson.composable.ItemSpacingBig
 import ui.screen.lesson.composable.item.common.QuestionCard
+import ui.screen.lesson.composable.item.common.QuestionText
 
 @Composable
 fun ChoiceLessonItem(
@@ -29,14 +29,6 @@ fun ChoiceLessonItem(
             onChoiceClick = onChoiceClick,
         )
     }
-}
-
-@Composable
-private fun QuestionText(
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    SubTitle(modifier = modifier, text = text)
 }
 
 @Composable
