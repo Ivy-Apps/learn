@@ -1,18 +1,18 @@
 package ivy.learn.data.cms.lesson.demo
 
-import ivy.learn.data.cms.dsl.CourseImage
-import ivy.learn.data.cms.dsl.LessonImage
+import ivy.content.CourseImage
+import ivy.content.LessonImage
 import ivy.model.LessonItemId
 import ivy.model.TextStyle
 import ivy.model.dsl.lessonContent
 import ivy.model.dsl.printLessonJson
 
 fun demoLesson() = lessonContent {
-    textItem("title") {
+    text("title") {
         text = "Demo Lesson"
         style = TextStyle.Heading
     }
-    textItem("content") {
+    text("content") {
         text = "This is a demo lesson for testing purposes."
         style = TextStyle.Body
     }
@@ -42,7 +42,7 @@ fun demoLesson() = lessonContent {
             explanation = "1 is not the answer to the ultimate question of life, the universe, and everything."
         )
     }
-    textItem("content2") {
+    text("content2") {
         text = "Good job! You answered your first question correctly. Here's another question for you."
         style = TextStyle.Body
     }
@@ -61,11 +61,11 @@ fun demoLesson() = lessonContent {
     image("img2") {
         imageUrl = CourseImage
     }
-    textItem("content3") {
+    text("content3") {
         text = "Congratulations! You're on fire!"
         style = TextStyle.Body
     }
-    textItem("content4") {
+    text("content4") {
         text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                 "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".repeat(3)
         style = TextStyle.Body
@@ -78,7 +78,7 @@ fun demoLesson() = lessonContent {
         question = "What is the answer to the ultimate question of life, the universe, and everything?"
         correctAnswer = "42"
     }
-    textItem("end") {
+    text("end") {
         text = "End of demo lesson."
         style = TextStyle.Body
     }

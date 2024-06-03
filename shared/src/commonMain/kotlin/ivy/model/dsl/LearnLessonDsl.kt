@@ -7,7 +7,7 @@ class LessonContentScopeImpl : LessonContentScope {
     private var currentItem: LessonItemId? = null
     private val items = mutableMapOf<LessonItemId, LessonItem>()
 
-    override fun textItem(id: String, builder: TextScope.() -> Unit) {
+    override fun text(id: String, builder: TextScope.() -> Unit) {
         val scope = TextScopeImpl().also(builder)
         items[chain(id)] = TextItem(
             id = LessonItemId(id),

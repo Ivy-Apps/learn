@@ -12,11 +12,11 @@ class OnFinishClickEventHandler(
     private val platform: Platform,
     private val navigation: Navigation,
 ) :
-    EventHandler<LessonViewEvent.OnContinueClick, LocalState> {
-    override val eventTypes = setOf(LessonViewEvent.OnContinueClick::class)
+    EventHandler<LessonViewEvent.OnFinishClick, LocalState> {
+    override val eventTypes = setOf(LessonViewEvent.OnFinishClick::class)
 
     override suspend fun LessonVmContext.handleEvent(
-        event: LessonViewEvent.OnContinueClick
+        event: LessonViewEvent.OnFinishClick
     ) {
         navigation.back()
         platform.playSound(SoundsUrls.CompleteLesson)

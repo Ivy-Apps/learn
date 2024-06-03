@@ -1,5 +1,6 @@
 package ivy.learn.data.cms.dsl
 
+import ivy.content.nameToId
 import ivy.model.CourseId
 import ivy.model.Topic
 import ivy.model.TopicId
