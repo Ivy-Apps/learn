@@ -16,6 +16,7 @@ import component.BackButton
 import component.LearnScaffold
 import component.ScreenType
 import component.screenType
+import kotlinx.coroutines.delay
 import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.*
 
@@ -72,6 +73,8 @@ private fun LessonItemsLazyColum(
 
     LaunchedEffect(viewState.items.size) {
         if (viewState.items.size > 1) {
+            listState.animateScrollToItem(viewState.items.lastIndex)
+            delay(1_000) // ensure auto scrolls works for images that are loading
             listState.animateScrollToItem(viewState.items.lastIndex)
         }
     }

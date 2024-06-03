@@ -61,7 +61,7 @@ fun programmingMathInDisguise() = lessonContent {
             next = LessonItemId("diff_weight"),
         )
     }
-    text("same_weight") {
+    text("same_weight", next = "gravity_question") {
         text = textBuilder {
             line("Harry: Nope, very unlikely! Gravity affects weights.")
             line("weight = mass * gravitational acceleration")
@@ -69,13 +69,37 @@ fun programmingMathInDisguise() = lessonContent {
         }
         style = TextStyle.Body
     }
-    text("diff_weight") {
+    text("diff_weight", next = "gravity_question") {
         text = textBuilder {
             line("Harry: Yes, that's right! Gravity affects weights.")
             line("weight = mass * gravitational acceleration")
             line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
         }
         style = TextStyle.Body
+    }
+    question("gravity_question") {
+        question = "What is the formula for weight?"
+        answer(
+            text = "weight = mass * gravitational acceleration",
+            correct = true,
+            explanation = "The higher the gravity, the more you weight."
+        )
+        answer(
+            text = "weight = mass / gravitational acceleration",
+            explanation = "Gravity pulls you down, not up."
+        )
+        answer(
+            text = "weight = mass + gravitational acceleration",
+            explanation = "Gravity is not added to your mass."
+        )
+        answer(
+            text = "weight = mass - gravitational acceleration",
+            explanation = "Gravity is not subtracted from your mass."
+        )
+    }
+    text("final") {
+        text = "That's it!"
+        style = TextStyle.Heading
     }
 }
 

@@ -45,7 +45,7 @@ interface LessonContentScope {
     @LearnCmsDsl
     fun text(
         id: String,
-        nextItemId: String? = null,
+        next: String? = null,
         builder: TextScope.() -> Unit
     )
 

@@ -1,18 +1,17 @@
 package ui.screen.lesson.composable.item
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import component.button.PrimaryOutlinedButton
+import component.button.PrimaryButton
 import component.text.SubTitle
 import kotlinx.collections.immutable.ImmutableList
 import ui.screen.lesson.ChoiceItemViewState
 import ui.screen.lesson.ChoiceOptionViewState
 import ui.screen.lesson.composable.ItemSpacingBig
+import ui.screen.lesson.composable.item.common.QuestionCard
 
 @Composable
 fun ChoiceLessonItem(
@@ -20,19 +19,15 @@ fun ChoiceLessonItem(
     onChoiceClick: (ChoiceOptionViewState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    QuestionCard(
         modifier = modifier.padding(top = ItemSpacingBig),
-        shape = RoundedCornerShape(16.dp),
-        elevation = 4.dp
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            QuestionText(text = viewState.question)
-            Spacer(Modifier.height(8.dp))
-            ChoicesOptions(
-                options = viewState.options,
-                onChoiceClick = onChoiceClick,
-            )
-        }
+        QuestionText(text = viewState.question)
+        Spacer(Modifier.height(8.dp))
+        ChoicesOptions(
+            options = viewState.options,
+            onChoiceClick = onChoiceClick,
+        )
     }
 }
 
@@ -72,7 +67,7 @@ private fun ChoiceOption(
     onClick: (ChoiceOptionViewState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    PrimaryOutlinedButton(
+    PrimaryButton(
         modifier = modifier,
         text = viewState.text,
         onClick = { onClick(viewState) },

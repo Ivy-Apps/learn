@@ -4,12 +4,12 @@ import ivy.model.*
 
 class LessonContentScopeImpl : LessonContentScope {
     private var rootItem: LessonItemId? = null
-    private var currentItem: LessonItemId? = null
+    private var currentItemId: LessonItemId? = null
     private val items = mutableMapOf<LessonItemId, LessonItem>()
 
     override fun text(
         id: String,
-        nextItemId: String?,
+        next: String?,
         builder: TextScope.() -> Unit
     ) {
         val scope = TextScopeImpl().also(builder)
@@ -17,7 +17,7 @@ class LessonContentScopeImpl : LessonContentScope {
             id = LessonItemId(id),
             text = scope.text,
             style = scope.style,
-            next = null,
+            next = next?.let(::LessonItemId),
         )
     }
 
@@ -139,10 +139,13 @@ class LessonContentScopeImpl : LessonContentScope {
         if (rootItem == null) {
             rootItem = lessonItemId
         } else {
-            items[currentItem!!]!!.setNextTo(lessonItemId)
+            val currentItem = items[currentItemId!!]!!
+            if (currentItem.nextOrNull() == null) {
+                currentItem.setNextTo(lessonItemId)
+            }
         }
-        currentItem = lessonItemId
-        return currentItem!!
+        currentItemId = lessonItemId
+        return currentItemId!!
     }
 
     private fun LessonItem.setNextTo(next: LessonItemId) {
@@ -161,6 +164,12 @@ class LessonContentScopeImpl : LessonContentScope {
         items[id] = updated
     }
 
+    private fun LessonItem.nextOrNull(): LessonItemId? {
+        return when (this) {
+            is LinearItem -> next
+            else -> null
+        }
+    }
 }
 
 class TextScopeImpl : TextScope {

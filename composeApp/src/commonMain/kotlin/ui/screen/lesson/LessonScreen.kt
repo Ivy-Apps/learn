@@ -26,7 +26,7 @@ class LessonScreen(
         register { QuestionViewEventHandler(Di.get()) }
         register { OnSoundClickEventHandler(Di.get()) }
         register { OnFinishClickEventHandler(Di.get(), Di.get()) }
-        register { OnChoiceClickEventHandler() }
+        register { OnChoiceClickEventHandler(Di.get()) }
         register {
             LessonViewModel(
                 courseId = courseId,
