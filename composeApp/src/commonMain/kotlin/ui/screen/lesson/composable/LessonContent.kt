@@ -20,7 +20,7 @@ import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.*
 
 val ItemSpacing = 12.dp
-val ItemSpacingBig = 16.dp
+val ItemSpacingBig = 20.dp
 
 @Composable
 fun LessonContent(
