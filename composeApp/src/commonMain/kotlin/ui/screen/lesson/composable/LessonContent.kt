@@ -94,9 +94,17 @@ private fun LessonItemsLazyColum(
             }
         ) { itemViewState ->
             when (itemViewState) {
-                is ChoiceItemViewState -> {
-                    // TODO
-                }
+                is ChoiceItemViewState -> ChoiceLessonItem(
+                    viewState = itemViewState,
+                    onChoiceClick = { choiceOptionViewState ->
+                        onEvent(
+                            LessonViewEvent.OnChoiceClick(
+                                questionId = itemViewState.id,
+                                choiceId = choiceOptionViewState.id
+                            )
+                        )
+                    }
+                )
 
                 is ImageItemViewState -> ImageLessonItem(itemViewState)
 
@@ -122,7 +130,7 @@ private fun LessonItemsLazyColum(
                     viewState = itemViewState,
                     onAnswerCheckChange = { type, answerViewState, checked ->
                         onEvent(
-                            QuestionViewEvent.AnswerCheckChange(
+                            QuestionViewEvent.OnAnswerCheckChange(
                                 questionId = itemViewState.id,
                                 questionType = type,
                                 answerId = answerViewState.id,
@@ -131,7 +139,7 @@ private fun LessonItemsLazyColum(
                         )
                     },
                     onCheckClick = { answers ->
-                        onEvent(QuestionViewEvent.CheckClick(itemViewState.id, answers))
+                        onEvent(QuestionViewEvent.OnCheckClick(itemViewState.id, answers))
                     }
                 )
 

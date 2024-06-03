@@ -1,6 +1,7 @@
 package ivy.content.lesson.programmingfundamentals
 
 import ivy.content.LottieUrls
+import ivy.model.LessonItemId
 import ivy.model.TextStyle
 import ivy.model.dsl.lessonContent
 import ivy.model.dsl.printLessonJson
@@ -35,16 +36,46 @@ fun programmingMathInDisguise() = lessonContent {
             line("But don't worry, Harry has a plan!")
         }
     }
+    image("harry_plan_mg") {
+        imageUrl = "https://i.ibb.co/gvBWYJ3/harry-spaceship-repair.webp"
+    }
     text("chapter_1_title") {
-        text = "Chapter 1: Repairing the Spaceship"
+        text = "Chapter 1: Repairing the spaceship"
         style = TextStyle.Heading
     }
     text("chater_1_intro") {
         text = textBuilder {
             line("Harry planned to use his superior math and science skills.")
-            line("To repair his warp drive, Harry needs exactly 3141.59 grams of gold.")
+            line("To repair his warp drive, Harry needs exactly pure gold that weights 3141.59 grams.")
             line("However, it turned out that things on Earth are different from his $HarryPlanet home planet...")
         }
+    }
+    choice("gravity_choice") {
+        question = "Do you think 3141.59 grams of gold on $HarryPlanet is the same as on Earth?"
+        option(
+            text = "Yes, gold is gold.",
+            next = LessonItemId("same_weight"),
+        )
+        option(
+            text = "No, gravity affects weight.",
+            next = LessonItemId("diff_weight"),
+        )
+    }
+    text("same_weight") {
+        text = textBuilder {
+            line("Harry: Nope, very unlikely! Gravity affects weights.")
+            line("weight = mass * gravitational acceleration")
+            line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
+        }
+        style = TextStyle.Body
+    }
+    text("diff_weight") {
+        text = textBuilder {
+            line("Harry: Yes, that's right! Gravity affects weights.")
+            line("weight = mass * gravitational acceleration")
+            line("Assuming the Earth and my planet have different gravity => gold will weight differently.")
+        }
+        style = TextStyle.Body
     }
 }
 

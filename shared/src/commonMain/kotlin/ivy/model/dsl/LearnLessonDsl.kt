@@ -190,12 +190,8 @@ class OpenQuestionScopeImpl : OpenQuestionScope {
 }
 
 class ChoiceScopeImpl : ChoiceScope {
-    lateinit var question: String
+    override var question: String = ""
     val options = mutableListOf<ChoiceData>()
-
-    override fun question(text: String) {
-        question = text
-    }
 
     override fun option(text: String, next: LessonItemId) {
         options.add(ChoiceData(text, next))

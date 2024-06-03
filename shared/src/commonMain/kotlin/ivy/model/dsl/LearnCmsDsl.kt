@@ -95,8 +95,7 @@ interface OpenQuestionScope {
 }
 
 interface ChoiceScope {
-    @LearnCmsDsl
-    fun question(text: String)
+    var question: String
 
     @LearnCmsDsl
     fun option(
