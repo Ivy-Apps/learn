@@ -20,20 +20,20 @@ class QuestionViewEventHandler(
 ) :
     EventHandler<QuestionViewEvent, LocalState> {
     override val eventTypes = setOf(
-        QuestionViewEvent.AnswerCheckChange::class,
-        QuestionViewEvent.CheckClick::class,
+        QuestionViewEvent.OnAnswerCheckChange::class,
+        QuestionViewEvent.OnCheckClick::class,
     )
 
     override suspend fun LessonVmContext.handleEvent(
         event: QuestionViewEvent
     ) {
         when (event) {
-            is QuestionViewEvent.AnswerCheckChange -> handleAnswerCheckChange(event)
-            is QuestionViewEvent.CheckClick -> handleCheckClick(event)
+            is QuestionViewEvent.OnAnswerCheckChange -> handleAnswerCheckChange(event)
+            is QuestionViewEvent.OnCheckClick -> handleCheckClick(event)
         }
     }
 
-    private fun LessonVmContext.handleAnswerCheckChange(event: QuestionViewEvent.AnswerCheckChange) {
+    private fun LessonVmContext.handleAnswerCheckChange(event: QuestionViewEvent.OnAnswerCheckChange) {
         modifyState { state ->
             val questionId = event.questionId.toDomain()
             val answerId = AnswerId(event.answerId)
@@ -68,7 +68,7 @@ class QuestionViewEventHandler(
         }
     }
 
-    private fun LessonVmContext.handleCheckClick(event: QuestionViewEvent.CheckClick) {
+    private fun LessonVmContext.handleCheckClick(event: QuestionViewEvent.OnCheckClick) {
         modifyState { state ->
             LocalState.completed.modify(state) { completed ->
                 completed + event.questionId.toDomain()

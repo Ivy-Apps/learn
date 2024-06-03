@@ -43,7 +43,11 @@ private fun allItemsIds(
 
 interface LessonContentScope {
     @LearnCmsDsl
-    fun textItem(id: String, builder: TextScope.() -> Unit)
+    fun text(
+        id: String,
+        next: String? = null,
+        builder: TextScope.() -> Unit
+    )
 
     @LearnCmsDsl
     fun question(id: String, builder: QuestionScope.() -> Unit)
@@ -52,24 +56,16 @@ interface LessonContentScope {
     fun openQuestion(id: String, builder: OpenQuestionScope.() -> Unit)
 
     @LearnCmsDsl
-    fun lessonNavigation(
-        id: String,
-        text: String,
-        onClick: LessonItemId
-    )
+    fun lessonNavigation(id: String, builder: LessonNavigationScope.() -> Unit)
 
     @LearnCmsDsl
-    fun link(
-        id: String,
-        text: String,
-        url: String
-    )
+    fun link(id: String, builder: LinkScope.() -> Unit)
 
     @LearnCmsDsl
-    fun lottie(id: String, jsonUrl: String)
+    fun lottie(id: String, builder: LottieAnimationScope.() -> Unit)
 
     @LearnCmsDsl
-    fun image(id: String, imageUrl: String)
+    fun image(id: String, builder: ImageScope.() -> Unit)
 
     @LearnCmsDsl
     fun choice(id: String, builder: ChoiceScope.() -> Unit)
@@ -78,7 +74,7 @@ interface LessonContentScope {
     fun mystery(id: String, builder: MysteryItemScope.() -> Unit)
 
     @LearnCmsDsl
-    fun sound(id: String, text: String, soundUrl: String)
+    fun sound(id: String, builder: SoundScope.() -> Unit)
 
     fun build(): LessonContent
 }
@@ -103,8 +99,7 @@ interface OpenQuestionScope {
 }
 
 interface ChoiceScope {
-    @LearnCmsDsl
-    fun question(text: String)
+    var question: String
 
     @LearnCmsDsl
     fun option(
@@ -120,5 +115,59 @@ interface MysteryItemScope {
     fun hiddenItemId(item: LessonItemId)
 }
 
+interface LottieAnimationScope {
+    var jsonUrl: String
+}
+
+interface ImageScope {
+    var imageUrl: String
+}
+
+interface SoundScope {
+    var soundUrl: String
+    var buttonText: String
+}
+
+interface LessonNavigationScope {
+    var text: String
+    var onClick: LessonItemId
+}
+
+interface LinkScope {
+    var text: String
+    var url: String
+}
+
 @DslMarker
 annotation class LearnCmsDsl
+
+@TextBuilderDsl
+fun textBuilder(builder: TextBuilderScope.() -> Unit): String {
+    val scope = TextBuilder().apply(builder)
+    return scope.build()
+}
+
+interface TextBuilderScope {
+    @TextBuilderDsl
+    fun line(text: String)
+
+    fun newLine()
+}
+
+class TextBuilder : TextBuilderScope {
+    private val lines = mutableListOf<String>()
+
+    override fun line(text: String) {
+        lines += text
+    }
+
+    override fun newLine() {
+        lines += ""
+    }
+
+    fun build(): String = lines.joinToString("\n")
+}
+
+@DslMarker
+annotation class TextBuilderDsl
+

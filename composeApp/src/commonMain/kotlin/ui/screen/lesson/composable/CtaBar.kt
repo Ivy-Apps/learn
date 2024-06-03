@@ -57,7 +57,7 @@ private fun FinishButton(
 ) {
     CtaButton(
         modifier = modifier,
-        text = "FINISH!",
+        text = "COMPLETE LESSON",
         onClick = onClick,
     )
 }

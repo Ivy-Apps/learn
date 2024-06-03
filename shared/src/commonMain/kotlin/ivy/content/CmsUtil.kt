@@ -1,4 +1,4 @@
-package ivy.learn.data.cms.dsl
+package ivy.content
 
 import ivy.model.LessonContent
 import ivy.model.LessonItemId

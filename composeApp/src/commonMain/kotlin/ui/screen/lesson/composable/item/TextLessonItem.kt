@@ -3,7 +3,8 @@ package ui.screen.lesson.composable.item
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import component.text.Body
+import androidx.compose.ui.text.style.TextAlign
+import component.text.BodyBig
 import component.text.HeadlineSmall
 import ui.screen.lesson.TextItemViewState
 import ui.screen.lesson.TextStyleViewState
@@ -21,9 +22,20 @@ fun TextLessonItem(
             text = viewState.text
         )
 
-        TextStyleViewState.Body -> Body(
-            modifier = modifier.padding(top = ItemSpacing),
-            text = viewState.text
+        TextStyleViewState.Body -> BodyBig(
+            modifier = modifier.padding(
+                top = ItemSpacing
+            ),
+            text = viewState.text,
+            textAlign = TextAlign.Center,
+        )
+
+        TextStyleViewState.BodyBigSpacing -> BodyBig(
+            modifier = modifier.padding(
+                top = ItemSpacingBig
+            ),
+            text = viewState.text,
+            textAlign = TextAlign.Center,
         )
     }
 }

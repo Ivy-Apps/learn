@@ -1,7 +1,7 @@
 package ivy.learn.data.cms.course.programming
 
+import ivy.content.LessonImage
 import ivy.learn.data.cms.dsl.CourseDsl
-import ivy.learn.data.cms.dsl.LessonImage
 
 object ProgrammingFundamentals : CourseDsl({
     name = "Programming Fundamentals"
@@ -9,7 +9,7 @@ object ProgrammingFundamentals : CourseDsl({
     imageUrl = "https://i.ibb.co/PTXn42F/fundamentals.webp"
     lesson(
         name = "Programming: Math in disguise",
-        tagline = "Why your calculator is more powerful than you think?",
+        tagline = "Mathematical functions and formulas can do much more than you think.",
         imageUrl = LessonImage
     )
 })

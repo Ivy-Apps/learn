@@ -4,16 +4,20 @@ import ivy.model.*
 
 class LessonContentScopeImpl : LessonContentScope {
     private var rootItem: LessonItemId? = null
-    private var currentItem: LessonItemId? = null
+    private var currentItemId: LessonItemId? = null
     private val items = mutableMapOf<LessonItemId, LessonItem>()
 
-    override fun textItem(id: String, builder: TextScope.() -> Unit) {
+    override fun text(
+        id: String,
+        next: String?,
+        builder: TextScope.() -> Unit
+    ) {
         val scope = TextScopeImpl().also(builder)
         items[chain(id)] = TextItem(
             id = LessonItemId(id),
             text = scope.text,
             style = scope.style,
-            next = null,
+            next = next?.let(::LessonItemId),
         )
     }
 
@@ -49,36 +53,40 @@ class LessonContentScopeImpl : LessonContentScope {
         )
     }
 
-    override fun lessonNavigation(id: String, text: String, onClick: LessonItemId) {
+    override fun lessonNavigation(id: String, builder: LessonNavigationScope.() -> Unit) {
+        val scope = LessonNavigationScopeImpl().also(builder)
         items[chain(id)] = LessonNavigationItem(
             id = LessonItemId(id),
-            text = text,
-            onClick = onClick,
+            text = scope.text,
+            onClick = scope.onClick,
             next = null,
         )
     }
 
-    override fun link(id: String, text: String, url: String) {
+    override fun link(id: String, builder: LinkScope.() -> Unit) {
+        val scope = LinkScopeImpl().also(builder)
         items[chain(id)] = LinkItem(
             id = LessonItemId(id),
-            text = text,
-            url = url,
+            text = scope.text,
+            url = scope.url,
             next = null,
         )
     }
 
-    override fun lottie(id: String, jsonUrl: String) {
+    override fun lottie(id: String, builder: LottieAnimationScope.() -> Unit) {
+        val scope = LottieAnimationScopeImpl().also(builder)
         items[chain(id)] = LottieAnimationItem(
             id = LessonItemId(id),
-            lottie = LottieAnimation(url = jsonUrl),
+            lottie = LottieAnimation(url = scope.jsonUrl),
             next = null,
         )
     }
 
-    override fun image(id: String, imageUrl: String) {
+    override fun image(id: String, builder: ImageScope.() -> Unit) {
+        val scope = ImageScopeImpl().also(builder)
         items[chain(id)] = ImageItem(
             id = LessonItemId(id),
-            image = ImageUrl(imageUrl),
+            image = ImageUrl(scope.imageUrl),
             next = null,
         )
     }
@@ -111,11 +119,12 @@ class LessonContentScopeImpl : LessonContentScope {
         )
     }
 
-    override fun sound(id: String, text: String, soundUrl: String) {
+    override fun sound(id: String, builder: SoundScope.() -> Unit) {
+        val scope = SoundScopeImpl().also(builder)
         items[chain(id)] = SoundItem(
             id = LessonItemId(id),
-            text = text,
-            sound = SoundUrl(soundUrl),
+            text = scope.buttonText,
+            sound = SoundUrl(scope.soundUrl),
             next = null,
         )
     }
@@ -129,15 +138,17 @@ class LessonContentScopeImpl : LessonContentScope {
         val lessonItemId = LessonItemId(id)
         if (rootItem == null) {
             rootItem = lessonItemId
-            currentItem = rootItem
         } else {
-            items[currentItem!!]!!.chainTo(lessonItemId)
-            currentItem = lessonItemId
+            val currentItem = items[currentItemId!!]!!
+            if (currentItem.nextOrNull() == null) {
+                currentItem.setNextTo(lessonItemId)
+            }
         }
-        return currentItem!!
+        currentItemId = lessonItemId
+        return currentItemId!!
     }
 
-    private fun LessonItem.chainTo(next: LessonItemId) {
+    private fun LessonItem.setNextTo(next: LessonItemId) {
         val updated = when (this) {
             is ChoiceItem -> this
             is ImageItem -> copy(next = next)
@@ -153,6 +164,12 @@ class LessonContentScopeImpl : LessonContentScope {
         items[id] = updated
     }
 
+    private fun LessonItem.nextOrNull(): LessonItemId? {
+        return when (this) {
+            is LinearItem -> next
+            else -> null
+        }
+    }
 }
 
 class TextScopeImpl : TextScope {
@@ -185,12 +202,8 @@ class OpenQuestionScopeImpl : OpenQuestionScope {
 }
 
 class ChoiceScopeImpl : ChoiceScope {
-    lateinit var question: String
+    override var question: String = ""
     val options = mutableListOf<ChoiceData>()
-
-    override fun question(text: String) {
-        question = text
-    }
 
     override fun option(text: String, next: LessonItemId) {
         options.add(ChoiceData(text, next))
@@ -213,4 +226,27 @@ class MysteryItemScopeImpl : MysteryItemScope {
     override fun hiddenItemId(item: LessonItemId) {
         hiddenItemId = item
     }
+}
+
+class LottieAnimationScopeImpl : LottieAnimationScope {
+    override var jsonUrl: String = ""
+}
+
+class ImageScopeImpl : ImageScope {
+    override var imageUrl: String = ""
+}
+
+class LessonNavigationScopeImpl : LessonNavigationScope {
+    override var text: String = ""
+    override var onClick: LessonItemId = LessonItemId("")
+}
+
+class SoundScopeImpl : SoundScope {
+    override var soundUrl: String = ""
+    override var buttonText: String = ""
+}
+
+class LinkScopeImpl : LinkScope {
+    override var text: String = ""
+    override var url: String = ""
 }

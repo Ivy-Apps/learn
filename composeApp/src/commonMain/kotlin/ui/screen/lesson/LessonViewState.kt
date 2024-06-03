@@ -25,7 +25,7 @@ data class TextItemViewState(
 
 @Immutable
 enum class TextStyleViewState {
-    Heading, Body
+    Heading, Body, BodyBigSpacing
 }
 
 @Immutable
@@ -98,7 +98,7 @@ data class ImageItemViewState(
 data class ChoiceItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
-    val options: List<ChoiceOptionViewState>,
+    val options: ImmutableList<ChoiceOptionViewState>,
 ) : LessonItemViewState
 
 @Immutable
@@ -130,19 +130,23 @@ sealed interface LessonViewEvent {
     data class OnContinueClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
     data class OnSoundClick(val soundUrl: String) : LessonViewEvent
     data class OnFinishClick(val currentItemId: LessonItemIdViewState) : LessonViewEvent
+    data class OnChoiceClick(
+        val questionId: LessonItemIdViewState,
+        val choiceId: String
+    ) : LessonViewEvent
 }
 
 sealed interface QuestionViewEvent : LessonViewEvent {
     val questionId: LessonItemIdViewState
 
-    data class AnswerCheckChange(
+    data class OnAnswerCheckChange(
         override val questionId: LessonItemIdViewState,
         val questionType: QuestionTypeViewState,
         val answerId: String,
         val checked: Boolean
     ) : QuestionViewEvent
 
-    data class CheckClick(
+    data class OnCheckClick(
         override val questionId: LessonItemIdViewState,
         val answers: List<AnswerViewState>,
     ) : QuestionViewEvent

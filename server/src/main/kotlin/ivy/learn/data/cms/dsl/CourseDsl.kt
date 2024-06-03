@@ -1,5 +1,7 @@
 package ivy.learn.data.cms.dsl
 
+import ivy.content.EmptyContent
+import ivy.content.nameToId
 import ivy.model.*
 import ivy.model.dsl.LearnCmsDsl
 

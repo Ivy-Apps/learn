@@ -31,10 +31,12 @@ class LessonTreeManager {
                     currentItemId in localState.completed
                 }
 
-                is SoundItem -> true
+                is ImageItem, is SoundItem, is LottieAnimationItem -> true
 
                 else -> {
-                    currentItemId in localState.completed || autoLoadNextN > 0
+                    currentItemId in localState.completed ||
+                            autoLoadNextN > 0 ||
+                            (currentItem is TextItem && currentItem.style == TextStyle.Heading)
                 }
             }
         }?.let {

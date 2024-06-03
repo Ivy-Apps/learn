@@ -1,9 +1,6 @@
 package ui.screen.lesson.composable
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,15 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
-import component.platformHorizontalPadding
+import component.ScreenType
+import component.screenType
+import kotlinx.coroutines.delay
 import ui.screen.lesson.*
-import ui.screen.lesson.composable.item.ImageLessonItem
-import ui.screen.lesson.composable.item.QuestionLessonItem
-import ui.screen.lesson.composable.item.SoundLessonItem
-import ui.screen.lesson.composable.item.TextLessonItem
+import ui.screen.lesson.composable.item.*
 
 val ItemSpacing = 12.dp
-val ItemSpacingBig = 16.dp
+val ItemSpacingBig = 48.dp
 
 @Composable
 fun LessonContent(
@@ -65,12 +61,20 @@ private fun LessonItemsLazyColum(
     onEvent: (LessonViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val horizontalPadding = platformHorizontalPadding()
+    val horizontalPadding = when (screenType()) {
+        ScreenType.Mobile -> 16.dp
+        ScreenType.Tablet -> 24.dp
+        ScreenType.Desktop -> 64.dp
+    }
     val listState = rememberLazyListState()
 
     LaunchedEffect(viewState.items.size) {
         if (viewState.items.size > 1) {
-            listState.animateScrollToItem(viewState.items.lastIndex)
+            // ensure auto scrolls works for images that are loading
+            repeat(4) {
+                listState.animateScrollToItem(viewState.items.lastIndex)
+                delay(200)
+            }
         }
     }
 
@@ -92,9 +96,17 @@ private fun LessonItemsLazyColum(
             }
         ) { itemViewState ->
             when (itemViewState) {
-                is ChoiceItemViewState -> {
-                    // TODO
-                }
+                is ChoiceItemViewState -> ChoiceLessonItem(
+                    viewState = itemViewState,
+                    onChoiceClick = { choiceOptionViewState ->
+                        onEvent(
+                            LessonViewEvent.OnChoiceClick(
+                                questionId = itemViewState.id,
+                                choiceId = choiceOptionViewState.id
+                            )
+                        )
+                    }
+                )
 
                 is ImageItemViewState -> ImageLessonItem(itemViewState)
 
@@ -106,9 +118,7 @@ private fun LessonItemsLazyColum(
                     // TODO
                 }
 
-                is LottieAnimationItemViewState -> {
-                    // TODO
-                }
+                is LottieAnimationItemViewState -> LottieAnimationLessonItem(itemViewState)
 
                 is MysteryItemViewState -> {
                     // TODO
@@ -122,7 +132,7 @@ private fun LessonItemsLazyColum(
                     viewState = itemViewState,
                     onAnswerCheckChange = { type, answerViewState, checked ->
                         onEvent(
-                            QuestionViewEvent.AnswerCheckChange(
+                            QuestionViewEvent.OnAnswerCheckChange(
                                 questionId = itemViewState.id,
                                 questionType = type,
                                 answerId = answerViewState.id,
@@ -131,7 +141,7 @@ private fun LessonItemsLazyColum(
                         )
                     },
                     onCheckClick = { answers ->
-                        onEvent(QuestionViewEvent.CheckClick(itemViewState.id, answers))
+                        onEvent(QuestionViewEvent.OnCheckClick(itemViewState.id, answers))
                     }
                 )
 
@@ -144,6 +154,9 @@ private fun LessonItemsLazyColum(
                     }
                 )
             }
+        }
+        item("empty_space") {
+            Spacer(Modifier.height(200.dp))
         }
     }
 }

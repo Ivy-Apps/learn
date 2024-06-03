@@ -3,8 +3,7 @@ package ui.screen.lesson.mapper
 import LogLevel
 import Platform
 import ivy.model.*
-import ivy.model.TextStyle.Body
-import ivy.model.TextStyle.Heading
+import ivy.model.TextStyle.*
 import kotlinx.collections.immutable.toImmutableList
 import ui.screen.lesson.*
 
@@ -60,7 +59,7 @@ class LessonViewStateMapper(
     private fun ChoiceItem.toViewState(): ChoiceItemViewState = ChoiceItemViewState(
         id = id.toViewState(),
         question = question,
-        options = options.map { it.toViewState() }
+        options = options.map { it.toViewState() }.toImmutableList(),
     )
 
     private fun ChoiceOption.toViewState(): ChoiceOptionViewState = ChoiceOptionViewState(
@@ -139,6 +138,7 @@ class LessonViewStateMapper(
         style = when (style) {
             Heading -> TextStyleViewState.Heading
             Body -> TextStyleViewState.Body
+            BodyBigSpacing -> TextStyleViewState.BodyBigSpacing
         }
     )
 

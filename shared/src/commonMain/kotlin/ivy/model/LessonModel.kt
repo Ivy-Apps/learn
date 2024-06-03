@@ -50,7 +50,9 @@ data class TextItem(
 
 @Serializable
 enum class TextStyle {
-    Heading, Body
+    Heading,
+    Body,
+    BodyBigSpacing
 }
 
 @Serializable
