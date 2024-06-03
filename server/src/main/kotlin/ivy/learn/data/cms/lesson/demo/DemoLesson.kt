@@ -16,7 +16,9 @@ fun demoLesson() = lessonContent {
         text = "This is a demo lesson for testing purposes."
         style = TextStyle.Body
     }
-    image("img1", LessonImage)
+    image("img1") {
+        imageUrl = LessonImage
+    }
     question("q1") {
         question = "What is the answer to the ultimate question of life, the universe, and everything?"
         answer(
@@ -44,22 +46,21 @@ fun demoLesson() = lessonContent {
         text = "Good job! You answered your first question correctly. Here's another question for you."
         style = TextStyle.Body
     }
-    sound(
-        id = "complete-sound",
-        text = "Complete Lesson sound",
+    sound("complete-sound") {
+        buttonText = "Complete Lesson sound"
         soundUrl = "https://github.com/ILIYANGERMANOV/ivy-resources/raw/master/ivy-learn/sounds/complete-lesson.mp3"
-    )
-    sound(
-        id = "ups",
-        text = "Ups sound",
+    }
+    sound("ups") {
+        buttonText = "Ups sound"
         soundUrl = "https://github.com/ILIYANGERMANOV/ivy-resources/raw/master/ivy-learn/sounds/ups.wav"
-    )
-    sound(
-        id = "success",
-        text = "Success sound",
+    }
+    sound("success") {
+        buttonText = "Success sound"
         soundUrl = "https://github.com/ILIYANGERMANOV/ivy-resources/raw/master/ivy-learn/sounds/success.mp3"
-    )
-    image("img2", CourseImage)
+    }
+    image("img2") {
+        imageUrl = CourseImage
+    }
     textItem("content3") {
         text = "Congratulations! You're on fire!"
         style = TextStyle.Body
@@ -69,11 +70,10 @@ fun demoLesson() = lessonContent {
                 "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".repeat(3)
         style = TextStyle.Body
     }
-    lessonNavigation(
-        id = "next",
-        text = "Go to Question 1",
+    lessonNavigation("next") {
+        text = "Go to Question 1"
         onClick = LessonItemId("q1")
-    )
+    }
     openQuestion("q2") {
         question = "What is the answer to the ultimate question of life, the universe, and everything?"
         correctAnswer = "42"

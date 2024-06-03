@@ -52,24 +52,16 @@ interface LessonContentScope {
     fun openQuestion(id: String, builder: OpenQuestionScope.() -> Unit)
 
     @LearnCmsDsl
-    fun lessonNavigation(
-        id: String,
-        text: String,
-        onClick: LessonItemId
-    )
+    fun lessonNavigation(id: String, builder: LessonNavigationScope.() -> Unit)
 
     @LearnCmsDsl
-    fun link(
-        id: String,
-        text: String,
-        url: String
-    )
+    fun link(id: String, builder: LinkScope.() -> Unit)
 
     @LearnCmsDsl
-    fun lottie(id: String, jsonUrl: String)
+    fun lottie(id: String, builder: LottieAnimationScope.() -> Unit)
 
     @LearnCmsDsl
-    fun image(id: String, imageUrl: String)
+    fun image(id: String, builder: ImageScope.() -> Unit)
 
     @LearnCmsDsl
     fun choice(id: String, builder: ChoiceScope.() -> Unit)
@@ -78,7 +70,7 @@ interface LessonContentScope {
     fun mystery(id: String, builder: MysteryItemScope.() -> Unit)
 
     @LearnCmsDsl
-    fun sound(id: String, text: String, soundUrl: String)
+    fun sound(id: String, builder: SoundScope.() -> Unit)
 
     fun build(): LessonContent
 }
@@ -118,6 +110,29 @@ interface MysteryItemScope {
 
     @LearnCmsDsl
     fun hiddenItemId(item: LessonItemId)
+}
+
+interface LottieAnimationScope {
+    var jsonUrl: String
+}
+
+interface ImageScope {
+    var imageUrl: String
+}
+
+interface SoundScope {
+    var soundUrl: String
+    var buttonText: String
+}
+
+interface LessonNavigationScope {
+    var text: String
+    var onClick: LessonItemId
+}
+
+interface LinkScope {
+    var text: String
+    var url: String
 }
 
 @DslMarker

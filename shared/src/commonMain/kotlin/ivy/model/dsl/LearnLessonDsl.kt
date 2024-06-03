@@ -49,36 +49,40 @@ class LessonContentScopeImpl : LessonContentScope {
         )
     }
 
-    override fun lessonNavigation(id: String, text: String, onClick: LessonItemId) {
+    override fun lessonNavigation(id: String, builder: LessonNavigationScope.() -> Unit) {
+        val scope = LessonNavigationScopeImpl().also(builder)
         items[chain(id)] = LessonNavigationItem(
             id = LessonItemId(id),
-            text = text,
-            onClick = onClick,
+            text = scope.text,
+            onClick = scope.onClick,
             next = null,
         )
     }
 
-    override fun link(id: String, text: String, url: String) {
+    override fun link(id: String, builder: LinkScope.() -> Unit) {
+        val scope = LinkScopeImpl().also(builder)
         items[chain(id)] = LinkItem(
             id = LessonItemId(id),
-            text = text,
-            url = url,
+            text = scope.text,
+            url = scope.url,
             next = null,
         )
     }
 
-    override fun lottie(id: String, jsonUrl: String) {
+    override fun lottie(id: String, builder: LottieAnimationScope.() -> Unit) {
+        val scope = LottieAnimationScopeImpl().also(builder)
         items[chain(id)] = LottieAnimationItem(
             id = LessonItemId(id),
-            lottie = LottieAnimation(url = jsonUrl),
+            lottie = LottieAnimation(url = scope.jsonUrl),
             next = null,
         )
     }
 
-    override fun image(id: String, imageUrl: String) {
+    override fun image(id: String, builder: ImageScope.() -> Unit) {
+        val scope = ImageScopeImpl().also(builder)
         items[chain(id)] = ImageItem(
             id = LessonItemId(id),
-            image = ImageUrl(imageUrl),
+            image = ImageUrl(scope.imageUrl),
             next = null,
         )
     }
@@ -111,11 +115,12 @@ class LessonContentScopeImpl : LessonContentScope {
         )
     }
 
-    override fun sound(id: String, text: String, soundUrl: String) {
+    override fun sound(id: String, builder: SoundScope.() -> Unit) {
+        val scope = SoundScopeImpl().also(builder)
         items[chain(id)] = SoundItem(
             id = LessonItemId(id),
-            text = text,
-            sound = SoundUrl(soundUrl),
+            text = scope.buttonText,
+            sound = SoundUrl(scope.soundUrl),
             next = null,
         )
     }
@@ -213,4 +218,27 @@ class MysteryItemScopeImpl : MysteryItemScope {
     override fun hiddenItemId(item: LessonItemId) {
         hiddenItemId = item
     }
+}
+
+class LottieAnimationScopeImpl : LottieAnimationScope {
+    override var jsonUrl: String = ""
+}
+
+class ImageScopeImpl : ImageScope {
+    override var imageUrl: String = ""
+}
+
+class LessonNavigationScopeImpl : LessonNavigationScope {
+    override var text: String = ""
+    override var onClick: LessonItemId = LessonItemId("")
+}
+
+class SoundScopeImpl : SoundScope {
+    override var soundUrl: String = ""
+    override var buttonText: String = ""
+}
+
+class LinkScopeImpl : LinkScope {
+    override var text: String = ""
+    override var url: String = ""
 }
