@@ -158,7 +158,7 @@ class TextBuilder : TextBuilderScope {
     private val lines = mutableListOf<String>()
 
     override fun line(text: String) {
-        lines += text
+        lines += text + "\n"
     }
 
     override fun newLine() {
@@ -166,6 +166,7 @@ class TextBuilder : TextBuilderScope {
     }
 
     fun build(): String = lines.joinToString("\n")
+        .dropLast(1) // the last new-line isn't needed
 }
 
 @DslMarker

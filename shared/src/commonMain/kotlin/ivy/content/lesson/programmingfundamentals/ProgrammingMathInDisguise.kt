@@ -53,6 +53,7 @@ fun programmingMathInDisguise() = lessonContent {
             line("To repair his warp drive, Harry needs exactly pure gold that weights 3141.59 grams.")
             line("However, it turned out that things on Earth are different from his $HarryPlanet home planet...")
         }
+        style = TextStyle.BodyMediumSpacing
     }
     choice("gravity_choice") {
         question = "Do you think 3141.59 grams of gold on $HarryPlanet is the same as on Earth?"

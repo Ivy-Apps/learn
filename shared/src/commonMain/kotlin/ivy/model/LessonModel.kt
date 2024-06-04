@@ -52,6 +52,7 @@ data class TextItem(
 enum class TextStyle {
     Heading,
     Body,
+    BodyMediumSpacing,
     BodyBigSpacing
 }
 

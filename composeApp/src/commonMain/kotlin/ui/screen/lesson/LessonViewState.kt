@@ -32,7 +32,10 @@ data class TextItemViewState(
 
 @Immutable
 enum class TextStyleViewState {
-    Heading, Body, BodyBigSpacing
+    Heading,
+    Body,
+    BodyMediumSpacing,
+    BodyBigSpacing,
 }
 
 @Immutable

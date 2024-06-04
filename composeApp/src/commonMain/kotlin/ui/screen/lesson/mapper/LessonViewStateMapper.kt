@@ -151,6 +151,7 @@ class LessonViewStateMapper(
         style = when (style) {
             Heading -> TextStyleViewState.Heading
             Body -> TextStyleViewState.Body
+            BodyMediumSpacing -> TextStyleViewState.BodyMediumSpacing
             BodyBigSpacing -> TextStyleViewState.BodyBigSpacing
         }
     )
