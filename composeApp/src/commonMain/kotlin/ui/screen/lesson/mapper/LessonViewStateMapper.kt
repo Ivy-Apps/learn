@@ -37,17 +37,19 @@ class LessonViewStateMapper(
                     }
                 }
             },
-            progress = toProgressViewState(localState)
+            progress = toProgressViewState(lessonItems)
         )
     }
 
     private fun Lesson.toProgressViewState(
-        localState: LessonViewModel.LocalState,
+        lessonItems: List<LessonItem>,
     ): LessonProgressViewState {
-        val done = localState.completed.size
-        val total = (content.items.size - content.items.values.sumOf {
+        val done = lessonItems.size
+        val unreachablePaths = content.items.values.sumOf {
             if (it is ChoiceItem) (it.options.size - 1).coerceAtLeast(0) else 0
-        }).coerceAtLeast(0)
+        }
+        val total = (content.items.size - unreachablePaths - 1) // -1 for the finish item
+            .coerceAtLeast(0)
         return LessonProgressViewState(done, total)
     }
 
