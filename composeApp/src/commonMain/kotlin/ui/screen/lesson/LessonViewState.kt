@@ -42,6 +42,7 @@ enum class TextStyleViewState {
 data class QuestionItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
+    val clarification: String?,
     val type: QuestionTypeViewState,
     val answers: ImmutableList<AnswerViewState>,
     val answered: Boolean

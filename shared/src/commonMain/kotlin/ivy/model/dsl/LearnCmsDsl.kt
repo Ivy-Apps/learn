@@ -86,6 +86,7 @@ interface TextScope {
 
 interface QuestionScope {
     var question: String
+    var clarification: String?
 
     @LearnCmsDsl
     fun answer(

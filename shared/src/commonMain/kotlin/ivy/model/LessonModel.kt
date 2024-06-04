@@ -61,6 +61,7 @@ enum class TextStyle {
 data class QuestionItem(
     override val id: LessonItemId,
     val question: String,
+    val clarification: String?,
     val answers: List<Answer>,
     val correct: Set<AnswerId>,
     override val next: LessonItemId?,

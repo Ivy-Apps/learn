@@ -32,6 +32,10 @@ fun QuestionLessonItem(
         modifier = modifier.padding(top = ItemSpacingBig),
     ) {
         QuestionText(text = viewState.question)
+        if (viewState.clarification != null) {
+            Spacer(Modifier.height(4.dp))
+            ClarificationText(clarification = viewState.clarification)
+        }
         if (viewState.type == QuestionTypeViewState.MultipleChoice) {
             Spacer(Modifier.height(4.dp))
             SelectAllThatApplyText()
@@ -58,6 +62,17 @@ fun QuestionLessonItem(
     }
 }
 
+@Composable
+private fun ClarificationText(
+    clarification: String,
+    modifier: Modifier = Modifier,
+) {
+    BodySmall(
+        modifier = modifier,
+        text = clarification,
+        color = MaterialTheme.colors.secondary,
+    )
+}
 
 @Composable
 private fun SelectAllThatApplyText(
@@ -65,7 +80,7 @@ private fun SelectAllThatApplyText(
 ) {
     BodySmall(
         modifier = modifier,
-        text = "Select all that apply:"
+        text = "Select all that apply:",
     )
 }
 

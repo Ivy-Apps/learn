@@ -36,6 +36,7 @@ class LessonContentScopeImpl : LessonContentScope {
         items[chain(id)] = QuestionItem(
             id = LessonItemId(id),
             question = scope.question,
+            clarification = scope.clarification,
             answers = domainAnswers.map { it.first },
             correct = domainAnswers.filter { it.second }
                 .map { it.first.id }.toSet(),
@@ -179,6 +180,7 @@ class TextScopeImpl : TextScope {
 
 class QuestionScopeImpl : QuestionScope {
     override var question: String = ""
+    override var clarification: String? = null
     val answers = mutableListOf<AnswerData>()
 
     override fun answer(

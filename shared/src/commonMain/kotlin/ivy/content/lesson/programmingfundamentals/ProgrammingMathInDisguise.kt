@@ -64,6 +64,7 @@ fun programmingMathInDisguise() = lessonContent {
     }
     question("gravity_question") {
         question = "What is the formula for weight?"
+        clarification = "1C = 274.15K"
         answer(
             text = "weight = mass * gravitational acceleration",
             correct = true,
@@ -151,7 +152,6 @@ private fun LessonContentScope.questionFinalSolution() {
 private fun LessonContentScope.functionCompositionRecap() {
 
 }
-
 
 
 fun main() {
