@@ -6,10 +6,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import component.isLargeScreen
@@ -45,17 +47,23 @@ fun LessonCard(
         onClick = onLessonClick
     ) {
         Row {
-            val height = 148.dp
+            var height by remember { mutableStateOf(132.dp) }
             LessonImage(
                 modifier = Modifier.height(height),
                 imageUrl = lesson.imageUrl
             )
+            val density = LocalDensity.current
             Column(
-                modifier = Modifier.height(height)
+                modifier = Modifier
+                    .onSizeChanged {
+                        height = minOf(with(density) { it.height.toDp() }, height)
+                    }
+                    .defaultMinSize(minHeight = height)
                     .padding(
                         start = if (isLargeScreen()) 24.dp else 20.dp,
                         end = if (isLargeScreen()) 16.dp else 12.dp
-                    ),
+                    )
+                    .padding(vertical = 16.dp),
                 verticalArrangement = Arrangement.Center,
             ) {
                 Title(

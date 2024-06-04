@@ -23,7 +23,7 @@ import ui.theme.Gray
 fun LessonProgressBar(
     viewState: LessonProgressViewState,
     modifier: Modifier = Modifier,
-    progressBarWidth: Dp = 124.dp,
+    progressBarWidth: Dp = 164.dp,
 ) {
     Box(modifier = modifier) {
         val progressPercent by animateFloatAsState(

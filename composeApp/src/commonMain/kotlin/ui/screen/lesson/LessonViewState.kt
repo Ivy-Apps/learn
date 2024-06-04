@@ -32,13 +32,17 @@ data class TextItemViewState(
 
 @Immutable
 enum class TextStyleViewState {
-    Heading, Body, BodyBigSpacing
+    Heading,
+    Body,
+    BodyMediumSpacing,
+    BodyBigSpacing,
 }
 
 @Immutable
 data class QuestionItemViewState(
     override val id: LessonItemIdViewState,
     val question: String,
+    val clarification: String?,
     val type: QuestionTypeViewState,
     val answers: ImmutableList<AnswerViewState>,
     val answered: Boolean

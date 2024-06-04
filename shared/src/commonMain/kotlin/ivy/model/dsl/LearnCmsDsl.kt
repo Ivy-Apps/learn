@@ -86,6 +86,7 @@ interface TextScope {
 
 interface QuestionScope {
     var question: String
+    var clarification: String?
 
     @LearnCmsDsl
     fun answer(
@@ -158,7 +159,7 @@ class TextBuilder : TextBuilderScope {
     private val lines = mutableListOf<String>()
 
     override fun line(text: String) {
-        lines += text
+        lines += text + "\n"
     }
 
     override fun newLine() {
@@ -166,8 +167,32 @@ class TextBuilder : TextBuilderScope {
     }
 
     fun build(): String = lines.joinToString("\n")
+        .dropLast(1) // the last new-line isn't needed
 }
 
 @DslMarker
 annotation class TextBuilderDsl
+
+fun codeBuilder(builder: CodeBuilderScope.() -> Unit): String {
+    val scope = CodeBuilder().apply(builder)
+    return scope.build()
+}
+
+interface CodeBuilderScope {
+    @CodeBuilderDsl
+    fun line(text: String)
+}
+
+class CodeBuilder : CodeBuilderScope {
+    private val lines = mutableListOf<String>()
+
+    override fun line(text: String) {
+        lines += text
+    }
+
+    fun build(): String = lines.joinToString("\n")
+}
+
+@DslMarker
+annotation class CodeBuilderDsl
 

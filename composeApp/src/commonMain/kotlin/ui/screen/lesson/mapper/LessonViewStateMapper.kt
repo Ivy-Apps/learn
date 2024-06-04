@@ -50,6 +50,7 @@ class LessonViewStateMapper(
         }
         val total = (content.items.size - unreachablePaths - 1) // -1 for the finish item
             .coerceAtLeast(0)
+        platform.log(LogLevel.Debug, "done = $done, $unreachablePaths = $unreachablePaths, total = $total")
         return LessonProgressViewState(done, total)
     }
 
@@ -128,6 +129,7 @@ class LessonViewStateMapper(
     ): QuestionItemViewState = QuestionItemViewState(
         id = id.toViewState(),
         question = question,
+        clarification = clarification,
         type = if (correct.size == 1) QuestionTypeViewState.SingleChoice else QuestionTypeViewState.MultipleChoice,
         answers = answers.map { it.toViewState(this, localState) }
             .toImmutableList(),
@@ -151,6 +153,7 @@ class LessonViewStateMapper(
         style = when (style) {
             Heading -> TextStyleViewState.Heading
             Body -> TextStyleViewState.Body
+            BodyMediumSpacing -> TextStyleViewState.BodyMediumSpacing
             BodyBigSpacing -> TextStyleViewState.BodyBigSpacing
         }
     )

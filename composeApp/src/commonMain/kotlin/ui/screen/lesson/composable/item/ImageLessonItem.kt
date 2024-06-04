@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import ui.screen.lesson.ImageItemViewState
-import ui.screen.lesson.composable.ItemSpacing
+import ui.screen.lesson.composable.ItemSpacingMedium
 
 @Composable
 fun ImageLessonItem(
@@ -19,7 +19,7 @@ fun ImageLessonItem(
 ) {
     KamelImage(
         modifier = modifier
-            .padding(top = ItemSpacing)
+            .padding(top = ItemSpacingMedium)
             .size(264.dp)
             .clip(RoundedCornerShape(16.dp)),
         resource = asyncPainterResource(viewState.imageUrl),

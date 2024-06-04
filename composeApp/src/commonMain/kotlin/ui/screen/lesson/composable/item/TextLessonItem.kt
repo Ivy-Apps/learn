@@ -10,6 +10,7 @@ import ui.screen.lesson.TextItemViewState
 import ui.screen.lesson.TextStyleViewState
 import ui.screen.lesson.composable.ItemSpacing
 import ui.screen.lesson.composable.ItemSpacingBig
+import ui.screen.lesson.composable.ItemSpacingMedium
 
 @Composable
 fun TextLessonItem(
@@ -22,20 +23,31 @@ fun TextLessonItem(
             text = viewState.text
         )
 
-        TextStyleViewState.Body -> BodyBig(
-            modifier = modifier.padding(
-                top = ItemSpacing
-            ),
+        TextStyleViewState.Body -> BodyText(
+            modifier = modifier.padding(top = ItemSpacing),
             text = viewState.text,
-            textAlign = TextAlign.Start,
         )
 
-        TextStyleViewState.BodyBigSpacing -> BodyBig(
-            modifier = modifier.padding(
-                top = ItemSpacingBig
-            ),
+        TextStyleViewState.BodyMediumSpacing -> BodyText(
+            modifier = modifier.padding(top = ItemSpacingMedium),
             text = viewState.text,
-            textAlign = TextAlign.Start,
+        )
+
+        TextStyleViewState.BodyBigSpacing -> BodyText(
+            modifier = modifier.padding(top = ItemSpacingBig),
+            text = viewState.text,
         )
     }
+}
+
+@Composable
+private fun BodyText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    BodyBig(
+        modifier = modifier,
+        text = text,
+        textAlign = TextAlign.Start,
+    )
 }
