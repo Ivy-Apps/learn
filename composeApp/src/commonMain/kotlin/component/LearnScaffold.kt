@@ -1,21 +1,12 @@
 package component
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -38,6 +29,7 @@ fun LearnScaffold(
     modifier: Modifier = Modifier,
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
+    topBarCenterContent: (@Composable () -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
@@ -45,7 +37,8 @@ fun LearnScaffold(
         topBar = {
             LearnTopAppBar(
                 backButton = backButton,
-                title = title
+                title = title,
+                centerContent = topBarCenterContent,
             )
         },
         bottomBar = bottomBar,
@@ -59,7 +52,8 @@ private fun LearnTopAppBar(
     backButton: BackButton?,
     title: String,
     modifier: Modifier = Modifier,
-    actions: @Composable (Modifier) -> Unit = {}
+    actions: @Composable (Modifier) -> Unit = {},
+    centerContent: (@Composable () -> Unit)? = null,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -78,7 +72,17 @@ private fun LearnTopAppBar(
             Spacer(Modifier.weight(1f))
             Spacer(Modifier.width(actionsWidth))
 
-            Text(title)
+            if (centerContent != null) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(title)
+                    Spacer(Modifier.height(4.dp))
+                    centerContent()
+                }
+            } else {
+                Text(title)
+            }
 
             Spacer(Modifier.weight(1f))
             actions(

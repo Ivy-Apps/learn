@@ -36,8 +36,19 @@ class LessonViewStateMapper(
                         CtaViewState.Continue(currentItem.id.toViewState())
                     }
                 }
-            }
+            },
+            progress = toProgressViewState(localState)
         )
+    }
+
+    private fun Lesson.toProgressViewState(
+        localState: LessonViewModel.LocalState,
+    ): LessonProgressViewState {
+        val done = localState.completed.size
+        val total = (content.items.size - content.items.values.sumOf {
+            if (it is ChoiceItem) (it.options.size - 1).coerceAtLeast(0) else 0
+        }).coerceAtLeast(0)
+        return LessonProgressViewState(done, total)
     }
 
     private fun LessonItem.toViewState(

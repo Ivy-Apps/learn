@@ -26,10 +26,15 @@ fun LessonContent(
     onEvent: (LessonViewEvent) -> Unit
 ) {
     LearnScaffold(
-        backButton = BackButton(onBackClick = {
-            onEvent(LessonViewEvent.OnBackClick)
-        }),
-        title = viewState.title
+        backButton = BackButton(
+            onBackClick = {
+                onEvent(LessonViewEvent.OnBackClick)
+            }
+        ),
+        title = viewState.title,
+        topBarCenterContent = {
+            LessonProgressBar(viewState = viewState.progress)
+        }
     ) { contentPadding ->
         Box(
             modifier = Modifier.fillMaxSize()
