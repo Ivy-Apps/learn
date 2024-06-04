@@ -27,7 +27,7 @@ fun TextLessonItem(
                 top = ItemSpacing
             ),
             text = viewState.text,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
         )
 
         TextStyleViewState.BodyBigSpacing -> BodyBig(
@@ -35,7 +35,7 @@ fun TextLessonItem(
                 top = ItemSpacingBig
             ),
             text = viewState.text,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
         )
     }
 }

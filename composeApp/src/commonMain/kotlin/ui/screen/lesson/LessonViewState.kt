@@ -9,6 +9,13 @@ data class LessonViewState(
     val title: String,
     val items: ImmutableList<LessonItemViewState>,
     val cta: CtaViewState?,
+    val progress: LessonProgressViewState,
+)
+
+@Immutable
+data class LessonProgressViewState(
+    val done: Int,
+    val total: Int,
 )
 
 @Immutable

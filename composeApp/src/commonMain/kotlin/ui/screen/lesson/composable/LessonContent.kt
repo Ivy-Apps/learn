@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
-import component.ScreenType
+import component.ScreenType.*
 import component.screenType
 import kotlinx.coroutines.delay
 import ui.screen.lesson.*
@@ -26,10 +26,15 @@ fun LessonContent(
     onEvent: (LessonViewEvent) -> Unit
 ) {
     LearnScaffold(
-        backButton = BackButton(onBackClick = {
-            onEvent(LessonViewEvent.OnBackClick)
-        }),
-        title = viewState.title
+        backButton = BackButton(
+            onBackClick = {
+                onEvent(LessonViewEvent.OnBackClick)
+            }
+        ),
+        title = viewState.title,
+        topBarCenterContent = {
+            LessonProgressBar(viewState = viewState.progress)
+        }
     ) { contentPadding ->
         Box(
             modifier = Modifier.fillMaxSize()
@@ -62,9 +67,9 @@ private fun LessonItemsLazyColum(
     modifier: Modifier = Modifier,
 ) {
     val horizontalPadding = when (screenType()) {
-        ScreenType.Mobile -> 16.dp
-        ScreenType.Tablet -> 24.dp
-        ScreenType.Desktop -> 64.dp
+        Mobile -> 16.dp
+        Tablet -> 24.dp
+        Desktop -> 64.dp
     }
     val listState = rememberLazyListState()
 
@@ -156,7 +161,14 @@ private fun LessonItemsLazyColum(
             }
         }
         item("empty_space") {
-            Spacer(Modifier.height(200.dp))
+            Spacer(
+                Modifier.height(
+                    when (screenType()) {
+                        Mobile, Tablet -> 32.dp
+                        Desktop -> 200.dp
+                    }
+                )
+            )
         }
     }
 }

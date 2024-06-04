@@ -5,7 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import component.ScreenType.*
 import component.button.PrimaryButton
+import component.screenType
 import kotlinx.collections.immutable.ImmutableList
 import ui.screen.lesson.ChoiceItemViewState
 import ui.screen.lesson.ChoiceOptionViewState
@@ -37,10 +39,7 @@ private fun ChoicesOptions(
     onChoiceClick: (ChoiceOptionViewState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
+    ChoiceOptionsContainer(modifier = modifier) {
         for ((index, itemViewState) in options.withIndex()) {
             ChoiceOption(
                 viewState = itemViewState,
@@ -49,6 +48,27 @@ private fun ChoicesOptions(
             if (index != options.lastIndex) {
                 Spacer(Modifier.width(16.dp))
             }
+        }
+    }
+}
+
+@Composable
+private fun ChoiceOptionsContainer(
+    modifier: Modifier = Modifier,
+    options: @Composable () -> Unit
+) {
+    when (screenType()) {
+        Mobile, Tablet -> Column(
+            modifier = modifier,
+        ) {
+            options()
+        }
+
+        Desktop -> Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            options()
         }
     }
 }

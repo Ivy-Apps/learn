@@ -36,8 +36,21 @@ class LessonViewStateMapper(
                         CtaViewState.Continue(currentItem.id.toViewState())
                     }
                 }
-            }
+            },
+            progress = toProgressViewState(lessonItems)
         )
+    }
+
+    private fun Lesson.toProgressViewState(
+        lessonItems: List<LessonItem>,
+    ): LessonProgressViewState {
+        val done = lessonItems.size
+        val unreachablePaths = content.items.values.sumOf {
+            if (it is ChoiceItem) (it.options.size - 1).coerceAtLeast(0) else 0
+        }
+        val total = (content.items.size - unreachablePaths - 1) // -1 for the finish item
+            .coerceAtLeast(0)
+        return LessonProgressViewState(done, total)
     }
 
     private fun LessonItem.toViewState(
