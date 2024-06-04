@@ -74,8 +74,9 @@ private fun LessonItemsLazyColum(
     }
     val listState = rememberLazyListState()
 
-    LaunchedEffect(viewState.items.size) {
-        if (viewState.items.size > 1) {
+    val itemsCount = viewState.items.size
+    LaunchedEffect(itemsCount) {
+        if (itemsCount >= 2 && !viewState.items[itemsCount - 2].isQuestion()) {
             // ensure auto scrolls works for images that are loading
             repeat(4) {
                 listState.animateScrollToItem(viewState.items.lastIndex)
@@ -172,4 +173,9 @@ private fun LessonItemsLazyColum(
             )
         }
     }
+}
+
+private fun LessonItemViewState.isQuestion(): Boolean = when (this) {
+    is QuestionItemViewState, is OpenQuestionItemViewState -> true
+    else -> false
 }

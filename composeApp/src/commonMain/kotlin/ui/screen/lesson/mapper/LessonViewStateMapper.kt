@@ -50,6 +50,7 @@ class LessonViewStateMapper(
         }
         val total = (content.items.size - unreachablePaths - 1) // -1 for the finish item
             .coerceAtLeast(0)
+        platform.log(LogLevel.Debug, "done = $done, $unreachablePaths = $unreachablePaths, total = $total")
         return LessonProgressViewState(done, total)
     }
 
