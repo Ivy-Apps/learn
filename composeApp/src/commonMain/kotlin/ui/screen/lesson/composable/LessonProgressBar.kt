@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
@@ -28,20 +29,23 @@ fun LessonProgressBar(
         val progressPercent by animateFloatAsState(
             targetValue = viewState.done / viewState.total.toFloat(),
         )
-        val shape = RoundedCornerShape(percent = 50)
         // background (total)
-        Spacer(
-            Modifier.height(8.dp)
-                .width(progressBarWidth)
-                .background(Gray, shape)
-        )
+        ProgressBarLine(width = progressBarWidth, color = Gray)
         // foreground (progress)
         val progressWidth = (progressBarWidth * progressPercent).coerceAtMost(progressBarWidth)
-        Spacer(
-            Modifier.height(8.dp)
-                .width(progressWidth)
-                .background(MaterialTheme.colors.primary, shape)
-        )
+        ProgressBarLine(width = progressWidth, color = MaterialTheme.colors.primary)
     }
+}
 
+@Composable
+private fun ProgressBarLine(
+    width: Dp,
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
+    Spacer(
+        modifier.height(8.dp)
+            .width(width)
+            .background(color, RoundedCornerShape(percent = 50))
+    )
 }
