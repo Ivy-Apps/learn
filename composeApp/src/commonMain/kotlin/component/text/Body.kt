@@ -18,7 +18,8 @@ fun BodyBig(
         modifier = modifier,
         text = text,
         style = MaterialTheme.typography.body1.copy(
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            lineHeight = 36.sp,
         ),
         textAlign = textAlign,
     )
