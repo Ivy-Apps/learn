@@ -173,3 +173,26 @@ class TextBuilder : TextBuilderScope {
 @DslMarker
 annotation class TextBuilderDsl
 
+fun codeBuilder(builder: CodeBuilderScope.() -> Unit): String {
+    val scope = CodeBuilder().apply(builder)
+    return scope.build()
+}
+
+interface CodeBuilderScope {
+    @CodeBuilderDsl
+    fun line(text: String)
+}
+
+class CodeBuilder : CodeBuilderScope {
+    private val lines = mutableListOf<String>()
+
+    override fun line(text: String) {
+        lines += text
+    }
+
+    fun build(): String = lines.joinToString("\n")
+}
+
+@DslMarker
+annotation class CodeBuilderDsl
+

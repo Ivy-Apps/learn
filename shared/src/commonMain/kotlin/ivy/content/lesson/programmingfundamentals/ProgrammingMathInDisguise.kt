@@ -1,102 +1,22 @@
 package ivy.content.lesson.programmingfundamentals
 
 import ivy.content.LottieUrls
-import ivy.model.LessonItemId
 import ivy.model.TextStyle
-import ivy.model.dsl.LessonContentScope
-import ivy.model.dsl.lessonContent
-import ivy.model.dsl.printLessonJson
-import ivy.model.dsl.textBuilder
+import ivy.model.dsl.*
 
 const val HarryPlanet = "KX-147"
+const val CoreTemp = 314
 
 fun programmingMathInDisguise() = lessonContent {
-    harryIntroduction()
-    text("chapter_1_title") {
-        text = "Chapter 1: Repairing the spaceship"
-        style = TextStyle.Heading
-    }
-    image("harry_plan_img") {
-        imageUrl = "https://i.ibb.co/gvBWYJ3/harry-spaceship-repair.webp"
-    }
-    text("chater_1_intro") {
-        text = textBuilder {
-            line("Harry planned to use his superior math and science skills.")
-            line("To repair his warp drive, Harry needs exactly pure gold that weights 3141.59 grams.")
-            line("However, it turned out that things on Earth are different from his $HarryPlanet home planet...")
-        }
-        style = TextStyle.BodyMediumSpacing
-    }
-    choice("gravity_choice") {
-        question = "Do you think 3141.59 grams of gold on $HarryPlanet is the same as on Earth?"
-        option(
-            text = "Same weight, gold is gold",
-            next = LessonItemId("same_w1"),
-        )
-        option(
-            text = "Different weight, gravity affects weight",
-            next = LessonItemId("diff_w1"),
-        )
-    }
-    text("same_w1", next = "same_w2") {
-        text = "Harry says \"Nope\""
-        style = TextStyle.Heading
-    }
-    text("same_w2", next = "gravity_question") {
-        text = textBuilder {
-            line("That's very unlikely! Gravity affects weights.")
-            line("weight = mass * gravitational acceleration")
-            line("Assuming the Earth's and my planet's gravity are different, then the gold will weight differently.")
-        }
-        style = TextStyle.Body
-    }
-    text("diff_w1", next = "diff_w2") {
-        text = "Harry says \"That's right!\""
-        style = TextStyle.Heading
-    }
-    text("diff_w2", next = "gravity_question") {
-        text = textBuilder {
-            line("Correct! Gravity affects weights.")
-            line("weight = mass * gravitational acceleration")
-            line("Assuming the Earth's and my planet's gravity are different, then the gold will weight differently.")
-        }
-        style = TextStyle.Body
-    }
-    question("gravity_question") {
-        question = "What is the formula for weight?"
-        clarification = "1C = 274.15K"
-        answer(
-            text = "weight = mass * gravitational acceleration",
-            correct = true,
-            explanation = "The higher the gravity, the more you weight."
-        )
-        answer(
-            text = "weight = mass / gravitational acceleration",
-            explanation = "Gravity pulls you down, not up."
-        )
-        answer(
-            text = "weight = mass + gravitational acceleration",
-            explanation = "Gravity is not added to your mass."
-        )
-        answer(
-            text = "weight = mass - gravitational acceleration",
-            explanation = "Gravity is not subtracted from your mass."
-        )
-    }
-    text("first_program") {
-        text = textBuilder {
-            line("Knowing that let's create our first program!")
-            line("We need a function that will calculate the mass of gold by its weight on Earth.")
-        }
-        style = TextStyle.BodyBigSpacing
-    }
-    text("final") {
-        text = "End of lesson."
-        style = TextStyle.Heading
-    }
+    meetHarry()
+    harryCrash()
+    helpHarry()
+    theCore()
+    questionCoreTempKelvin()
+    questionCoreTempHaskell()
 }
 
-private fun LessonContentScope.harryIntroduction() {
+private fun LessonContentScope.meetHarry() {
     text("meet_harry") {
         text = "Meet Harry!"
         style = TextStyle.Heading
@@ -112,6 +32,9 @@ private fun LessonContentScope.harryIntroduction() {
         }
         style = TextStyle.Body
     }
+}
+
+private fun LessonContentScope.harryCrash() {
     text("harry_experimenting") {
         text = "Harry loves experimenting... a lot!"
         style = TextStyle.Heading
@@ -129,28 +52,98 @@ private fun LessonContentScope.harryIntroduction() {
     }
 }
 
+private fun LessonContentScope.helpHarry() {
+    text("chapter_1_title") {
+        text = "Chapter 1: Repairing the spaceship"
+        style = TextStyle.Heading
+    }
+    image("harry_plan_img") {
+        imageUrl = "https://i.ibb.co/gvBWYJ3/harry-spaceship-repair.webp"
+    }
+    text("chater_1_intro") {
+        text = textBuilder {
+            line("Harry's plan is to use his superior math and science skills.")
+            line("However, he's not very familiar with the Earth and its technologies.")
+            line("Harry only knows math and a little bit of Haskell.")
+        }
+        style = TextStyle.BodyMediumSpacing
+    }
+}
+
+private fun LessonContentScope.theCore() {
+    text("the_core_title") {
+        text = "Fixing the core"
+        style = TextStyle.Heading
+    }
+    image("the_core_img") {
+        imageUrl = "https://i.ibb.co/3NXLNCr/the-core.webp"
+    }
+    text("the_core_msg") {
+        text = textBuilder {
+            line("Harry needs to recalibrate his spaceship's energy core, which requires a precise temperature setting.")
+            line("This temperature is a constant value that Harry knows.")
+            line("The core temperature is exactly $CoreTemp Kelvin.")
+        }
+        style = TextStyle.BodyMediumSpacing
+    }
+}
+
 private fun LessonContentScope.questionCoreTempKelvin() {
-
+    question("coreTempKelvinMath") {
+        question = "What's the mathematical function for the core temperature?"
+        clarification = "The core temperature should be ${CoreTemp}K"
+        val xParam = "\"x\""
+        answer(
+            text = "coreTempK(x) = x + $CoreTemp",
+            explanation = "The expected core temp should not depend on $xParam.",
+        )
+        answer(
+            text = "coreTempK(x) = x",
+            explanation = "The expected core temp should not depend on $xParam.",
+        )
+        answer(
+            text = "coreTempK() = $CoreTemp",
+            explanation = "That's right! The core temperature is constant.",
+            correct = true,
+        )
+        answer(
+            text = "coreTempK(x) = $CoreTemp",
+            explanation = "$xParam is not used, therefore redundant.",
+        )
+    }
 }
 
-private fun LessonContentScope.questionOneParamKelvinToCelsius() {
-
-}
-
-private fun LessonContentScope.questionCelsiusToFahrenheit() {
-
-}
-
-private fun LessonContentScope.questionFunctionCompositionAtoBtoC() {
-
-}
-
-private fun LessonContentScope.questionFinalSolution() {
-
-}
-
-private fun LessonContentScope.functionCompositionRecap() {
-
+private fun LessonContentScope.questionCoreTempHaskell() {
+    question("coreTempHaskellMath") {
+        question = "What's the core temperature function in Haskell?"
+        clarification = "Select the most explicit and appropriate function."
+        answer(
+            text = "coreTempK = $CoreTemp",
+            explanation = "Quite right but we can explicitly specify the types."
+        )
+        answer(
+            text = codeBuilder {
+                line("coreTempK :: Double")
+                line("coreTempK = $CoreTemp")
+            },
+            correct = true,
+            explanation = "This is a constant function with explicitly defined types."
+        )
+        answer(
+            text = codeBuilder {
+                line("coreTempK :: Double -> Double")
+                line("coreTempK x = $CoreTemp")
+            },
+            explanation = "The function should not accept a double parameter."
+        )
+        answer(
+            text = codeBuilder {
+                line("coreTempK :: Double -> Double")
+                line("coreTempK x = x + $CoreTemp")
+            },
+            explanation = "The function should not depend on an input parameter."
+        )
+    }
 }
 
 

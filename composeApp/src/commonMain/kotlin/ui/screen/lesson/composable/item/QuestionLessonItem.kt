@@ -92,14 +92,18 @@ private fun AnswerItem(
     modifier: Modifier = Modifier,
     onCheckedChange: (Boolean) -> Unit
 ) {
+    val correct = viewState.correct.takeIf { questionAnswered }
     Row(
-        modifier = modifier.clickable { onCheckedChange(!viewState.selected) },
+        modifier = modifier.clickable(
+            enabled = correct == null,
+            onClick = { onCheckedChange(!viewState.selected) }
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AnswerCheckbox(
             questionType = questionType,
             selected = viewState.selected,
-            correct = viewState.correct.takeIf { questionAnswered },
+            correct = correct,
             onCheckedChange = onCheckedChange
         )
         Spacer(modifier = Modifier.width(12.dp))
