@@ -15,6 +15,7 @@ import ivy.data.source.TopicsDataSource
 import ivy.di.Di.register
 import ivy.di.Di.singleton
 import ivy.model.*
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -35,11 +36,13 @@ object SharedModule : DiModule {
         register { LottieAnimationLoader(Di.get()) }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun Di.DiScope.json() = singleton {
         Json {
             ignoreUnknownKeys = true
             isLenient = true
             coerceInputValues = true
+            explicitNulls = false
             serializersModule = SerializersModule {
                 polymorphic(LessonItem::class) {
                     subclass(ChoiceItem.serializer())
