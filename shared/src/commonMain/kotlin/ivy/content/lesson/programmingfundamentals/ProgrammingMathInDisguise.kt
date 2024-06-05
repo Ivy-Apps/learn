@@ -87,7 +87,7 @@ private fun LessonContentScope.theCore() {
     text("the_core_msg") {
         text = textBuilder {
             line("Harry needs to recalibrate his spaceship's energy core, which requires a precise temperature setting.")
-            line("This temperature is a constant value that Harry knows.")
+            line("This temperature is a constant value that only Harry knows.")
             line("The core temperature is exactly $CoreTemp Kelvin.")
         }
         style = TextStyle.BodyMediumSpacing
