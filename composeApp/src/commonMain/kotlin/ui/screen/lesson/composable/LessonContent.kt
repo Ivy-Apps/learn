@@ -1,11 +1,13 @@
 package ui.screen.lesson.composable
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -13,7 +15,6 @@ import component.BackButton
 import component.LearnScaffold
 import component.ScreenType.*
 import component.screenType
-import kotlinx.coroutines.delay
 import ui.screen.lesson.*
 import ui.screen.lesson.composable.item.*
 
@@ -74,16 +75,10 @@ private fun LessonItemsLazyColum(
     }
     val listState = rememberLazyListState()
 
-    val itemsCount = viewState.items.size
-    LaunchedEffect(itemsCount) {
-        if (itemsCount >= 2 && !viewState.items[itemsCount - 2].isQuestion()) {
-            // ensure auto scrolls works for images that are loading
-            repeat(4) {
-                listState.animateScrollToItem(viewState.items.lastIndex)
-                delay(200)
-            }
-        }
-    }
+    AutoScrollEffect(
+        listState = listState,
+        items = viewState.items,
+    )
 
     LazyColumn(
         modifier = modifier
@@ -162,20 +157,6 @@ private fun LessonItemsLazyColum(
                 )
             }
         }
-        item("empty_space") {
-            Spacer(
-                Modifier.height(
-                    when (screenType()) {
-                        Mobile, Tablet -> 32.dp
-                        Desktop -> 200.dp
-                    }
-                )
-            )
-        }
+        autoScrollEmptySpace()
     }
-}
-
-private fun LessonItemViewState.isQuestion(): Boolean = when (this) {
-    is QuestionItemViewState, is OpenQuestionItemViewState -> true
-    else -> false
 }
