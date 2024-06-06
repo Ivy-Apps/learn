@@ -17,7 +17,7 @@ fun LottieAnimationLessonItem(
     RemoteLottieAnimation(
         modifier = modifier
             .padding(ItemSpacing)
-            .size(232.dp),
+            .size(304.dp),
         animationUrl = viewState.lottieUrl,
         repeat = true,
     )

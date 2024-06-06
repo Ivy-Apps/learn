@@ -373,45 +373,50 @@ private fun LessonContentScope.functionComposition() {
         style = TextStyle.Heading
     }
     image("functionComposition_img") {
-        imageUrl = "https://i.ibb.co/s50K93W/2024-06-06-17-08-46.jpg"
+        imageUrl = "https://i.ibb.co/yqwLrq1/func-comp.jpg"
     }
     text("functionComposition") {
         text = textBuilder {
             line("Great work! We now have all the parts to repair Harry's spaceship core.")
             line("Before we proceed, let's understand a crucial mathematical concept that will help us in this process: function composition.")
-            line("In math, if we have a function f: A → B and another function g: B → C, we can combine them to form a new function h: A → C.")
-            line("This means we can apply f first, and then apply g to the result of f. Let's explore this concept further.")
         }
         style = TextStyle.BodySpacingMedium
     }
-
+    text("functionComposition2") {
+        text = textBuilder {
+            line("In math, if we have a function f: A -> B and another function g: B -> C, we can combine them to form a new function h: A -> C.")
+            line("This means we can apply f first, and then apply g to the result of f. Let's explore this concept further.")
+        }
+        style = TextStyle.Body
+    }
 }
 
 private fun LessonContentScope.questionFunctionCompositionMath() {
     question("questionFunctionCompositionMath") {
         question = "Which two functions can be composed such that g(f(x)) is valid?"
-        clarification = "Remember, function composition g(f(x)) requires the return type of f(x)" +
-                " to match the input type of g(x)."
+        clarification =
+            "Remember, function composition g(f(x)) requires the return type of f(x) to match the input type of g(x)."
         answer(
-            text = "f: ℝ → ℝ, g: ℝ → ℝ",
+            text = "f: R -> R, g: R -> R",
             explanation = "That's right! The return type of f(x) matches the input type of g(x).",
             correct = true,
         )
         answer(
-            text = "f: ℕ → ℝ, g: ℝ → ℕ",
+            text = "f: N -> R, g: R -> N",
             explanation = "That's right! The return type of f(x) matches the input type of g(x).",
             correct = true,
         )
         answer(
-            text = "f: ℝ → ℕ, g: ℕ → ℝ",
+            text = "f: R -> N, g: N -> R",
+            explanation = "That's right! The return type of f(x) matches the input type of g(x).",
+            correct = true,
+        )
+        answer(
+            text = "f: R -> N, g: R -> R",
             explanation = "Incorrect. The return type of f(x) does not match the input type of g(x).",
         )
         answer(
-            text = "f: ℝ → ℕ, g: ℝ → ℝ",
-            explanation = "Incorrect. The return type of f(x) does not match the input type of g(x).",
-        )
-        answer(
-            text = "f: ℕ → ℕ, g: ℝ → ℕ",
+            text = "f: N -> N, g: R -> N",
             explanation = "Incorrect. The return type of f(x) does not match the input type of g(x).",
         )
     }
@@ -434,8 +439,8 @@ private fun LessonContentScope.functionCompositionOperator() {
 
 private fun LessonContentScope.questionFunctionCompositionOperatorMath() {
     question("questionFunctionCompositionOperatorMath") {
-        question = "Given three functions f: A → B, g: B → C, and h: C → D, what is the composition h(g(f(x)))?"
-        clarification = "Select the correct composition sequence using the '.' operator."
+        question = "Given three functions f: A -> B, g: B -> C, and h: C -> D, which composition is correct?"
+        clarification = "Remember the '.' composition operator reads as \"after\"."
         answer(
             text = "h . g . f",
             explanation = "That's right! The composition h(g(f(x))) is written as h . g . f.",
@@ -467,12 +472,14 @@ private fun LessonContentScope.finalSolution() {
     text("final_solution") {
         text = textBuilder {
             line("Harry is almost ready to fix the spaceship's core!")
-            line("So far, we've helped Harry define the necessary Haskell functions to manage the temperature conversions.")
             line("Here's a summary of what we have so far:")
             bullet("coreTempK :: Double")
             bullet("kelvinToCelsius :: Double -> Double")
             bullet("celsiusToFahrenheit :: Double -> Double")
-            newLine()
+        }
+    }
+    text("final_solution2") {
+        text = textBuilder {
             line("In the final question, we'll need to help Harry compose these functions together to power-up the core.")
         }
     }
@@ -535,11 +542,14 @@ private fun LessonContentScope.storyConclusion() {
             line("With your help, Harry has successfully repaired the spaceship's core!")
             line("The core is now running perfectly at the right temperature, thanks to the correct function compositions.")
             line("Harry is extremely grateful for your assistance and is excited to continue his journey on Earth.")
-            newLine()
+        }
+        style = TextStyle.BodySpacingMedium
+    }
+    text("story_conclusion2") {
+        text = textBuilder {
             line("In the next lesson, Harry will help us take our skills to the next level by building our own programming language.")
             line("Get ready for more exciting adventures with Harry as he shares his advanced knowledge and explores the wonders of Earth with us!")
         }
-        style = TextStyle.BodySpacingMedium
     }
 }
 
@@ -554,8 +564,6 @@ private fun LessonContentScope.lessonSummary() {
             bullet("The 1:1 correspondence between mathematical functions and programming functions.")
             bullet("Function composition, allowing us to combine multiple functions into one.")
             bullet("The function composition operator (.), read as 'after', and its use in sequencing functions.")
-            newLine()
-            line("These concepts illustrate how mathematical thinking can enhance programming, making solutions more elegant and efficient.")
         }
     }
 }
