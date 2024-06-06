@@ -72,7 +72,11 @@ private fun LessonContentScope.meetHarry() {
             line("Harry is a gifted scientist who can solve complex problems in a simple and elegant way.")
             line("He's also quite impatient and tends to test his ideas at Friday on production.")
         }
-        style = TextStyle.Body
+    }
+    text("harry_hi2") {
+        text = textBuilder {
+            line("He's also quite impatient and tends to test his ideas at Friday on production.")
+        }
     }
 }
 
@@ -579,4 +583,5 @@ private fun LessonContentScope.lessonSummary() {
 fun main() {
     val lesson = programmingMathInDisguise()
     printLessonJson(lesson)
+    println(story(lesson))
 }

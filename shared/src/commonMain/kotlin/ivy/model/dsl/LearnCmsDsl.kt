@@ -18,6 +18,33 @@ fun printLessonJson(lesson: LessonContent) {
     println(Json.encodeToString(lesson))
 }
 
+fun story(
+    lesson: LessonContent,
+    choices: Map<LessonItemId, ChoiceOptionId> = emptyMap(),
+    currentItemId: LessonItemId? = lesson.rootItem,
+): String = if (currentItemId != null) {
+    when (val item = lesson.items[currentItemId]!!) {
+        is TextItem -> {
+            when (item.style) {
+                TextStyle.Heading -> "\n# ${item.text}\n\n"
+                else -> item.text
+            } + story(lesson, choices, item.next)
+        }
+
+        is ChoiceItem -> {
+            val option = item.options.firstOrNull {
+                choices[currentItemId] == it.id
+            } ?: item.options.first()
+            story(lesson, choices, option.next)
+        }
+
+        is LinearItem -> story(lesson, choices, item.next)
+        else -> ""
+    }
+} else {
+    ""
+}
+
 private fun validateIdsExistence(lesson: LessonContent) {
     allItemsIds(
         currentId = lesson.rootItem,
@@ -186,13 +213,11 @@ class TextBuilder : TextBuilderScope {
     }
 
     fun build(): String = buildString {
-        for ((index, item) in items.withIndex()) {
+        for (item in items) {
             when (item) {
                 is Item.Line -> {
                     append(item.text + "\n")
-                    if (items.getOrNull(index + 1) !is Item.Bullet) {
-                        append("\n")
-                    }
+                    append("\n")
                 }
 
                 is Item.NewLine -> append("\n")
