@@ -388,7 +388,7 @@ private fun LessonContentScope.functionComposition() {
 }
 
 private fun LessonContentScope.questionFunctionCompositionMath() {
-    question("functionComposition") {
+    question("questionFunctionCompositionMath") {
         question = "Which two functions can be composed such that g(f(x)) is valid?"
         clarification = "Remember, function composition g(f(x)) requires the return type of f(x)" +
                 " to match the input type of g(x)."
@@ -522,11 +522,42 @@ private fun LessonContentScope.questionFinalSolutionHaskell() {
 }
 
 private fun LessonContentScope.storyConclusion() {
-    // TODO: Implement
+    text("story_conclusion_title") {
+        text = "Chapter 4: Mission Accomplished!"
+        style = TextStyle.Heading
+    }
+    image("story_conclusion_img") {
+        imageUrl =
+            "https://i.ibb.co/C2v3ZcB/DALL-E-2024-06-06-17-42-49-An-illustration-of-Harry-the-quirky-alien-celebrating-the-successful-repa.webp"
+    }
+    text("story_conclusion") {
+        text = textBuilder {
+            line("With your help, Harry has successfully repaired the spaceship's core!")
+            line("The core is now running perfectly at the right temperature, thanks to the correct function compositions.")
+            line("Harry is extremely grateful for your assistance and is excited to continue his journey on Earth.")
+            newLine()
+            line("In the next lesson, Harry will help us take our skills to the next level by building our own programming language.")
+            line("Get ready for more exciting adventures with Harry as he shares his advanced knowledge and explores the wonders of Earth with us!")
+        }
+        style = TextStyle.BodySpacingMedium
+    }
 }
 
 private fun LessonContentScope.lessonSummary() {
-    // TODO: Implement
+    text("lesson_summary_title") {
+        text = "Lesson Summary"
+        style = TextStyle.Heading
+    }
+    text("lesson_summary") {
+        text = textBuilder {
+            line("In this lesson, we learned:")
+            bullet("The 1:1 correspondence between mathematical functions and programming functions.")
+            bullet("Function composition, allowing us to combine multiple functions into one.")
+            bullet("The function composition operator (.), read as 'after', and its use in sequencing functions.")
+            newLine()
+            line("These concepts illustrate how mathematical thinking can enhance programming, making solutions more elegant and efficient.")
+        }
+    }
 }
 
 fun main() {
