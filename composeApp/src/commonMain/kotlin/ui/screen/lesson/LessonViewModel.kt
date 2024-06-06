@@ -73,16 +73,18 @@ class LessonViewModel(
 
     @optics
     data class LocalState(
-        val answers: Map<LessonItemId, Set<AnswerId>>,
-        val openAnswers: Map<LessonItemId, String>,
+        val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
+        val openAnswersInput: Map<LessonItemId, String>,
+        val chosen: Map<LessonItemId, ChoiceOptionId>,
+        val answered: Set<LessonItemId>,
         val completed: Set<LessonItemId>,
-        val choices: Map<LessonItemId, ChoiceOptionId>,
     ) {
         companion object {
             val Initial = LocalState(
-                answers = emptyMap(),
-                openAnswers = emptyMap(),
-                choices = emptyMap(),
+                selectedAnswers = emptyMap(),
+                openAnswersInput = emptyMap(),
+                chosen = emptyMap(),
+                answered = emptySet(),
                 completed = emptySet(),
             )
         }

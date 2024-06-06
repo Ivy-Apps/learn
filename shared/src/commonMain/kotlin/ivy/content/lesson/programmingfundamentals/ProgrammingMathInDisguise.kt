@@ -69,16 +69,20 @@ private fun LessonContentScope.meetHarry() {
     text("harry_hi") {
         text = textBuilder {
             line("Harry is a shape-shifting alien from the $HarryPlanet planet.")
-            line("Harry is a gifted scientist who can solve complex problems in a simple and elegant way.")
-            line("He's also quite impatient and tends to test his ideas at Friday on production.")
+            line("He is a gifted scientist who can solve complex problems in a simple and elegant way.")
         }
-        style = TextStyle.Body
+    }
+    text("harry_hi2") {
+        text = textBuilder {
+            line("Harry is also quite impatient and tends to test his ideas at Friday, directly on production.")
+            line("Why Harry!? Why?")
+        }
     }
 }
 
 private fun LessonContentScope.harryCrashed() {
     text("harry_experimenting") {
-        text = "Harry loves experimenting... a lot!"
+        text = "Harry also loves experimenting... a lot!"
         style = TextStyle.Heading
     }
     lottie("harry_crash_anim") {
@@ -87,6 +91,10 @@ private fun LessonContentScope.harryCrashed() {
     text("harry_crash") {
         text = textBuilder {
             line("Unfortunately, during one of his time-traveling experiments... ")
+        }
+    }
+    text("harry_crash2") {
+        text = textBuilder {
             line("Harry crashed his spaceship on Earth. (Oops!)")
             line("Now he needs your help to fix it and get back home.")
             line("But don't worry, Harry has a plan!")
@@ -158,13 +166,17 @@ private fun LessonContentScope.questionCoreTempKelvin() {
 private fun LessonContentScope.coreTempMathToHaskell() {
     text("core_temp_transition") {
         text = textBuilder {
-            line("Harry has successfully recalibrated the spaceship's energy core to $CoreTemp Kelvin.")
+            line("Harry has can now recalibrate the spaceship's energy core to $CoreTemp Kelvin.")
             line("But there's a catch! Harry's spaceship operates on an sophisticated Haskell-based system.")
-            line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
         }
         style = TextStyle.BodySpacingLarge
     }
     text("core_temp_transition2") {
+        text = textBuilder {
+            line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
+        }
+    }
+    text("core_temp_transition3") {
         text = textBuilder {
             line("Why Haskell? Here are a few reasons:")
             bullet("Type Safety: Helps prevent errors before they cause problems.")
@@ -210,9 +222,9 @@ private fun LessonContentScope.questionCoreTempHaskell() {
 private fun LessonContentScope.contentKelvinToCelsiusMath() {
     text("core_temp_to_kelvin_conversion") {
         text = textBuilder {
-            line("Now that Harry has defined the core temperature function in Haskell, he needs to convert this temperature to Celsius.")
-            line("This will allow Harry to double-check the temperature with an Earth thermometer.")
-            line("Let's help Harry by defining the mathematical function to convert Kelvin to Celsius.")
+            line("Now that Harry has defined the core temperature function in Haskell.")
+            line("Next, he needs to convert this temperature to Celsius to double-check it with an Earth thermometer.")
+            line("Let's assist Harry by defining the mathematical function for converting Kelvin to Celsius.")
         }
         style = TextStyle.BodySpacingLarge
     }
@@ -221,22 +233,22 @@ private fun LessonContentScope.contentKelvinToCelsiusMath() {
 private fun LessonContentScope.questionKelvinToCelsiusMath() {
     question("kelvinToCelsiusMath") {
         question = "What's the mathematical function to convert Kelvin to Celsius?"
-        clarification = "1°C = 274.15K (tip: do the math!)"
+        clarification = "1°C = 274.15K; 2°C = 275.15K; (tip: do the math!)"
         answer(
             text = "kelvinToCelsius(k) = k + 273.15",
-            explanation = "kelvinToCelsius(274.15) = 274.16 + 273.15 = 547.31°C. Incorrect.",
+            explanation = "Incorrect. 274.15 + 273.15 = 547.30°C, which is too high."
         )
         answer(
             text = "kelvinToCelsius(k) = k - 274.15",
-            explanation = "kelvinToCelsius(274.15) = 274.15 - 274.15 = 0°C. Incorrect.",
+            explanation = "Incorrect. 274.15 - 274.15 = 0°C, which is not the correct conversion."
         )
         answer(
             text = "kelvinToCelsius(k) = k * 274.15",
-            explanation = "kelvinToCelsius(10) = 10 * 274.15 = 2,741.5°C. Incorrect.",
+            explanation = "Incorrect. 10 * 274.15 = 2,741.5°C, which is far too high."
         )
         answer(
             text = "kelvinToCelsius(k) = k - 273.15",
-            explanation = "That's correct! kelvinToCelsius(274.15) = 274.4 - 273.15 = 1°C",
+            explanation = "Correct! 274.15 - 273.15 = 1°C, the proper conversion.",
             correct = true,
         )
     }
@@ -245,7 +257,7 @@ private fun LessonContentScope.questionKelvinToCelsiusMath() {
 private fun LessonContentScope.contentKelvinToCelsiusHaskell() {
     text("kelvin_to_celsius_haskell") {
         text = textBuilder {
-            line("Harry needs to convert the Celsius conversion formula from math to Haskell to use it in his spaceship's system.")
+            line("Harry also needs to implement the formula in Haskell so he can use it in his spaceship's system.")
         }
         style = TextStyle.BodySpacingLarge
     }
@@ -260,7 +272,7 @@ private fun LessonContentScope.questionKelvinToCelsiusHaskell() {
                 line("kelvinToCelsius :: Double -> Double")
                 line("kelvinToCelsius k = k - 273.15")
             },
-            explanation = "The function accepts a Double parameter named \"k\" and returns Double",
+            explanation = "Correct. The function accepts a Double parameter named \"k\" and returns a Double.",
             correct = true,
         )
         answer(
@@ -268,23 +280,24 @@ private fun LessonContentScope.questionKelvinToCelsiusHaskell() {
                 line("kelvinToCelsius :: Double")
                 line("kelvinToCelsius k = k - 273.15")
             },
-            explanation = "Compilation error. This function should accept a Double parameter.",
+            explanation = "Incorrect. Compilation error. This function should accept a Double parameter.",
         )
         answer(
             text = codeBuilder {
                 line("kelvinToCelsius :: Double -> Double")
                 line("kelvinToCelsius = k - 273.15")
             },
-            explanation = "Compilation error. Variable not in scope: k",
+            explanation = "Incorrect. Compilation error. Variable not in scope: k.",
         )
         answer(
             text = codeBuilder {
                 line("kelvinToCelsius k = k - 273.15")
             },
-            explanation = "It compiles but let's specify types explicitly.",
+            explanation = "Incorrect. It compiles, but types should be specified explicitly.",
         )
     }
 }
+
 
 private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
     text("contentKelvinToCelsiusToFahrenheitMath") {
@@ -294,11 +307,15 @@ private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
         }
         style = TextStyle.BodySpacingLarge
     }
+    image("android_studio_heater_img") {
+        imageUrl = "https://i.ibb.co/KKHNMPF/android-studio-heater.webp"
+    }
     text("contentKelvinToCelsiusToFahrenheitMath2") {
         text = textBuilder {
             line("He landed in a quirky town where the only available heater device is an old laptop running Android Studio, which only displays temperatures in Fahrenheit.")
             line("Let's help Harry convert the Celsius temperature to Fahrenheit mathematically so he can use the laptop to heat the core.")
         }
+        style = TextStyle.BodySpacingMedium
     }
 }
 
@@ -376,9 +393,6 @@ private fun LessonContentScope.functionComposition() {
         text = "Chapter 2: Function Composition"
         style = TextStyle.Heading
     }
-    image("functionComposition_img") {
-        imageUrl = "https://i.ibb.co/yqwLrq1/func-comp.jpg"
-    }
     text("functionComposition") {
         text = textBuilder {
             line("Great work! We now have all the parts to repair Harry's spaceship core.")
@@ -386,12 +400,14 @@ private fun LessonContentScope.functionComposition() {
         }
         style = TextStyle.BodySpacingMedium
     }
+    image("functionComposition_img") {
+        imageUrl = "https://i.ibb.co/yqwLrq1/func-comp.jpg"
+    }
     text("functionComposition2") {
         text = textBuilder {
             line("In math, if we have a function f: A -> B and another function g: B -> C, we can combine them to form a new function h: A -> C.")
             line("This means we can apply f first, and then apply g to the result of f. Let's explore this concept further.")
         }
-        style = TextStyle.Body
     }
 }
 
@@ -431,15 +447,19 @@ private fun LessonContentScope.functionCompositionOperator() {
         text = textBuilder {
             line("In mathematics, the function composition operator (.) is used to combine two or more functions.")
             line("This operator is read as 'after'. For example, the expression g . f means 'g after f'.")
-            line("When you see h(g(f(x))), it means you first apply f to x, then apply g to the result, and finally apply h to that result.")
         }
         style = TextStyle.BodySpacingLarge
     }
     text("function_composition_operator2") {
         text = textBuilder {
-
-            line("Here's a tip: When reading function compositions, read the functions from right to left. This helps to understand the order in which the functions are applied.")
-            line("Now, let's see how this works in practice with the following question.")
+            line("When you see h(g(f(x))), it means you first apply f to x, then apply g to the result, and finally apply h to that result.")
+            line("This can also be written as (h . g . f)(x), which highlights the composition of multiple functions.")
+        }
+    }
+    text("function_composition_operator3") {
+        text = textBuilder {
+            line("Pro-tip: When reading function compositions, read the functions from right to left. This helps understand the order in which the functions are applied.")
+            line("Let's see how this works in practice with the next question.")
         }
     }
 }
@@ -489,6 +509,7 @@ private fun LessonContentScope.finalSolution() {
         text = textBuilder {
             line("In the final question, we'll need to help Harry compose these functions together to power-up the core.")
         }
+        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -579,4 +600,5 @@ private fun LessonContentScope.lessonSummary() {
 fun main() {
     val lesson = programmingMathInDisguise()
     printLessonJson(lesson)
+    println(story(lesson))
 }

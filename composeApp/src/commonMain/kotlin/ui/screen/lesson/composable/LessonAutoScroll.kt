@@ -10,20 +10,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.ScreenType.*
 import component.screenType
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.delay
 import ui.screen.lesson.LessonItemViewState
+import ui.screen.lesson.LessonViewState
 import ui.screen.lesson.OpenQuestionItemViewState
 import ui.screen.lesson.QuestionItemViewState
 
 @Composable
 fun AutoScrollEffect(
     listState: LazyListState,
-    items: ImmutableList<LessonItemViewState>,
+    viewState: LessonViewState,
 ) {
+    val items = viewState.items
     val itemsCount = items.size
-    LaunchedEffect(itemsCount) {
-        if (itemsCount >= 2 && !items[itemsCount - 2].isQuestion()) {
+    LaunchedEffect(itemsCount, viewState.cta) {
+        if (itemsCount >= 2) {
             // ensure auto scrolls works for images that are loading
             repeat(4) {
                 listState.animateScrollToItem(items.lastIndex)

@@ -12,7 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
-import component.platformHorizontalPadding
+import component.ScreenType.*
+import component.screenType
 import ui.screen.course.CourseItemViewState
 import ui.screen.course.CourseViewEvent
 import ui.screen.course.CourseViewState
@@ -28,7 +29,11 @@ fun CourseContent(
         }),
         title = viewState.name
     ) { contentPadding ->
-        val horizontalPadding = platformHorizontalPadding()
+        val horizontalPadding = when (screenType()) {
+            Mobile -> 8.dp
+            Tablet -> 16.dp
+            Desktop -> 16.dp
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
