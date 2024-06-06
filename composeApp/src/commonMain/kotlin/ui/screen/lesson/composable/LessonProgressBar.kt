@@ -33,7 +33,7 @@ fun LessonProgressBar(
         ProgressBarLine(width = progressBarWidth, color = Gray)
         // foreground (progress)
         val progressWidth = (progressBarWidth * progressPercent).coerceAtMost(progressBarWidth)
-        ProgressBarLine(width = progressWidth, color = MaterialTheme.colors.primary)
+        ProgressBarLine(width = progressWidth, color = MaterialTheme.colors.secondary)
     }
 }
 
