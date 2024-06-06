@@ -23,7 +23,7 @@ fun AutoScrollEffect(
 ) {
     val itemsCount = items.size
     LaunchedEffect(itemsCount) {
-        if (itemsCount >= 2 && !items[itemsCount - 2].isQuestion()) {
+        if (itemsCount >= 2) {
             // ensure auto scrolls works for images that are loading
             repeat(4) {
                 listState.animateScrollToItem(items.lastIndex)

@@ -25,20 +25,30 @@ class LessonViewStateMapper(
                 it.toViewState(localState, content.items)
             }.toImmutableList(),
             cta = when (val currentItem = lessonItems.lastOrNull()) {
-                null, is QuestionItem, is OpenQuestionItem,
+                null, is OpenQuestionItem,
                 is ChoiceItem -> null
 
-                else -> {
-                    platform.log(LogLevel.Debug, "Current item: $currentItem")
-                    if (currentItem is LinearItem && currentItem.next == null) {
-                        CtaViewState.Finish(currentItem.id.toViewState())
+                is QuestionItem -> {
+                    if (currentItem.id in localState.answered) {
+                        ctaViewState(currentItem)
                     } else {
-                        CtaViewState.Continue(currentItem.id.toViewState())
+                        null
                     }
                 }
+
+                else -> ctaViewState(currentItem)
             },
             progress = toProgressViewState(lessonItems)
         )
+    }
+
+    private fun ctaViewState(currentItem: LessonItem): CtaViewState {
+        platform.log(LogLevel.Debug, "Current item: $currentItem")
+        return if (currentItem is LinearItem && currentItem.next == null) {
+            CtaViewState.Finish(currentItem.id.toViewState())
+        } else {
+            CtaViewState.Continue(currentItem.id.toViewState())
+        }
     }
 
     private fun Lesson.toProgressViewState(
@@ -119,7 +129,7 @@ class LessonViewStateMapper(
     ): OpenQuestionItemViewState = OpenQuestionItemViewState(
         id = id.toViewState(),
         question = question,
-        answer = localState.openAnswers[id],
+        answer = localState.openAnswersInput[id],
         correctAnswer = correctAnswer,
         answered = id in localState.completed,
     )
@@ -133,7 +143,7 @@ class LessonViewStateMapper(
         type = if (correct.size == 1) QuestionTypeViewState.SingleChoice else QuestionTypeViewState.MultipleChoice,
         answers = answers.map { it.toViewState(this, localState) }
             .toImmutableList(),
-        answered = id in localState.completed,
+        answered = id in localState.answered,
     )
 
     private fun Answer.toViewState(
@@ -144,7 +154,7 @@ class LessonViewStateMapper(
         text = text,
         explanation = explanation,
         correct = id in question.correct,
-        selected = id in localState.answers.getOrElse(question.id) { emptySet() },
+        selected = id in localState.selectedAnswers.getOrElse(question.id) { emptySet() },
     )
 
     private fun TextItem.toViewState(): TextItemViewState = TextItemViewState(

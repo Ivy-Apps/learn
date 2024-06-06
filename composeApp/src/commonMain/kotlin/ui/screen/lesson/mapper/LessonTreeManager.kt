@@ -58,7 +58,7 @@ class LessonTreeManager {
         localState: LessonViewModel.LocalState
     ): LessonItemId? = when (this) {
         is LinearItem -> next
-        is ChoiceItem -> localState.choices[id]?.let { choiceId ->
+        is ChoiceItem -> localState.chosen[id]?.let { choiceId ->
             options.firstOrNull { it.id == choiceId }?.next
         }
 

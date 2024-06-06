@@ -11,9 +11,9 @@ import ui.screen.lesson.LessonVmContext
 import ui.screen.lesson.QuestionTypeViewState.MultipleChoice
 import ui.screen.lesson.QuestionTypeViewState.SingleChoice
 import ui.screen.lesson.QuestionViewEvent
-import ui.screen.lesson.answers
-import ui.screen.lesson.completed
+import ui.screen.lesson.answered
 import ui.screen.lesson.mapper.toDomain
+import ui.screen.lesson.selectedAnswers
 
 class QuestionViewEventHandler(
     private val platform: Platform,
@@ -37,9 +37,9 @@ class QuestionViewEventHandler(
         modifyState { state ->
             val questionId = event.questionId.toDomain()
             val answerId = AnswerId(event.answerId)
-            if (questionId in state.answers) {
+            if (questionId in state.selectedAnswers) {
                 // Already answered, modify the existing answer
-                LocalState.answers.index(Index.map(), questionId).modify(state) {
+                LocalState.selectedAnswers.index(Index.map(), questionId).modify(state) {
                     when (event.questionType) {
                         SingleChoice -> if (event.checked) {
                             setOf(answerId)
@@ -57,7 +57,7 @@ class QuestionViewEventHandler(
                 }
             } else {
                 // Never answered
-                LocalState.answers.modify(state) { answers ->
+                LocalState.selectedAnswers.modify(state) { answers ->
                     if (event.checked) {
                         answers + Pair(questionId, setOf(answerId))
                     } else {
@@ -70,7 +70,7 @@ class QuestionViewEventHandler(
 
     private fun LessonVmContext.handleCheckClick(event: QuestionViewEvent.OnCheckClick) {
         modifyState { state ->
-            LocalState.completed.modify(state) { completed ->
+            LocalState.answered.modify(state) { completed ->
                 completed + event.questionId.toDomain()
             }
         }
