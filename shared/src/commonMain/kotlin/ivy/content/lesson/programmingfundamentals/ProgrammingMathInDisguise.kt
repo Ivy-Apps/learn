@@ -8,21 +8,23 @@ const val HarryPlanet = "KX-147"
 const val CoreTemp = 314
 
 fun programmingMathInDisguise() = lessonContent {
-    meetHarry()
-    harryCrash()
-    helpHarry()
+    contentMeetHarry()
+    contentHarryCrash()
+    contentHelpHarry()
     theCore()
     questionCoreTempKelvin()
+    contentCoreTempTransition()
     questionCoreTempHaskell()
     questionKelvinToCelsiusMath()
     questionKelvinToCelsiusHaskell()
     questionCelsiusToFahrenheitMath()
     questionCelsiusToFahrenheitHaskell()
-    buildingFinalSolution()
+    questionFunctionComposition()
+    questionFunctionCompositionThree()
     conclusion()
 }
 
-private fun LessonContentScope.meetHarry() {
+private fun LessonContentScope.contentMeetHarry() {
     text("meet_harry") {
         text = "Meet Harry!"
         style = TextStyle.Heading
@@ -40,7 +42,7 @@ private fun LessonContentScope.meetHarry() {
     }
 }
 
-private fun LessonContentScope.harryCrash() {
+private fun LessonContentScope.contentHarryCrash() {
     text("harry_experimenting") {
         text = "Harry loves experimenting... a lot!"
         style = TextStyle.Heading
@@ -58,7 +60,7 @@ private fun LessonContentScope.harryCrash() {
     }
 }
 
-private fun LessonContentScope.helpHarry() {
+private fun LessonContentScope.contentHelpHarry() {
     text("chapter_1_title") {
         text = "Chapter 1: Repairing the spaceship"
         style = TextStyle.Heading
@@ -116,6 +118,25 @@ private fun LessonContentScope.questionCoreTempKelvin() {
             text = "coreTempK(x) = $CoreTemp",
             explanation = "$xParam is not used, therefore redundant.",
         )
+    }
+}
+
+private fun LessonContentScope.contentCoreTempTransition() {
+    text("core_temp_transition") {
+        text = textBuilder {
+            line("Harry has successfully recalibrated the spaceship's energy core to $CoreTemp Kelvin.")
+            line("But there's a catch! Harry's spaceship operates on an advanced Haskell-based system.")
+            line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
+            newLine()
+            line("To keep the core temperature steady, Harry needs to translate the mathematical function into Haskell.")
+            line("This translation is vital to ensure the spaceship's computer can execute it correctly and maintain the required temperature.")
+            newLine()
+            line("Why Haskell? Here are a few reasons:")
+            bullet("Type Safety: Helps prevent errors before they cause problems.")
+            bullet("Immutability: Ensures data remains unchanged, reducing unexpected behaviors.")
+            bullet("Pure Functions: Guarantees the same output for the same input, every time.")
+        }
+        style = TextStyle.BodyBigSpacing
     }
 }
 
@@ -271,20 +292,57 @@ private fun LessonContentScope.questionCelsiusToFahrenheitHaskell() {
     }
 }
 
-private fun LessonContentScope.buildingFinalSolution() {
-    text("building_final_solution") {
-        text = "Building the final solution"
-        style = TextStyle.Heading
+private fun LessonContentScope.questionFunctionComposition() {
+    question("functionComposition") {
+        question = "Which two functions can be composed such that g(f(x)) is valid?"
+        clarification = "Remember, function composition g(f(x)) requires the return type of f(x)" +
+                " to match the input type of g(x)."
+        answer(
+            text = "f: ℝ → ℝ, g: ℝ → ℝ",
+            explanation = "That's right! The return type of f(x) matches the input type of g(x).",
+            correct = true,
+        )
+        answer(
+            text = "f: ℕ → ℝ, g: ℝ → ℕ",
+            explanation = "That's right! The return type of f(x) matches the input type of g(x).",
+            correct = true,
+        )
+        answer(
+            text = "f: ℝ → ℕ, g: ℕ → ℝ",
+            explanation = "Incorrect. The return type of f(x) does not match the input type of g(x).",
+        )
+        answer(
+            text = "f: ℝ → ℕ, g: ℝ → ℝ",
+            explanation = "Incorrect. The return type of f(x) does not match the input type of g(x).",
+        )
+        answer(
+            text = "f: ℕ → ℕ, g: ℝ → ℕ",
+            explanation = "Incorrect. The return type of f(x) does not match the input type of g(x).",
+        )
     }
-    text("final_solution_text") {
-        text = textBuilder {
-            line("Harry has all the functions he needs to fix his spaceship.")
-            line("He needs to compose them to get the final solution.")
-            line("Harry needs to convert the core temperature from Kelvin to Celsius.")
-            line("Then he needs to convert the Celsius temperature to Fahrenheit.")
-            line("Finally, he needs to set the spaceship's core temperature.")
-        }
-        style = TextStyle.Body
+}
+
+private fun LessonContentScope.questionFunctionCompositionThree() {
+    question("functionCompositionThree") {
+        question = "Given three functions f: A → B, g: B → C, and h: C → D, what is the composition h(g(f(x)))?"
+        clarification = "Select the correct composition sequence using the '.' operator."
+        answer(
+            text = "h . g . f",
+            explanation = "That's right! The composition h(g(f(x))) is written as h . g . f.",
+            correct = true,
+        )
+        answer(
+            text = "f . g . h",
+            explanation = "Incorrect. The correct composition is h(g(f(x))), not f(g(h(x))).",
+        )
+        answer(
+            text = "g . f . h",
+            explanation = "Incorrect. The correct composition is h(g(f(x))), not g(f(h(x))).",
+        )
+        answer(
+            text = "h . f . g",
+            explanation = "Incorrect. The correct composition is h(g(f(x))), not h(f(g(x))).",
+        )
     }
 }
 

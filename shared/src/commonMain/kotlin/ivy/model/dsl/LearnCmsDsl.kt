@@ -152,22 +152,41 @@ interface TextBuilderScope {
     @TextBuilderDsl
     fun line(text: String)
 
+    @TextBuilderDsl
+    fun bullet(text: String)
+
+    @TextBuilderDsl
     fun newLine()
 }
 
 class TextBuilder : TextBuilderScope {
-    private val lines = mutableListOf<String>()
+    private val items = mutableListOf<Item>()
 
     override fun line(text: String) {
-        lines += text + "\n"
+        items += Item.Line(text)
     }
 
     override fun newLine() {
-        lines += ""
+        items += Item.NewLine
     }
 
-    fun build(): String = lines.joinToString("\n")
-        .dropLast(1) // the last new-line isn't needed
+    override fun bullet(text: String) {
+        items += Item.Bullet(text)
+    }
+
+    fun build(): String = items.joinToString(separator = "") {
+        when (it) {
+            is Item.Line -> it.text + "\n\n"
+            is Item.NewLine -> "\n"
+            is Item.Bullet -> "• ${it.text}\n"
+        }
+    }.dropLast(1) // the last new-line isn't needed
+
+    sealed interface Item {
+        data class Line(val text: String) : Item
+        data object NewLine : Item
+        data class Bullet(val text: String) : Item
+    }
 }
 
 @DslMarker
