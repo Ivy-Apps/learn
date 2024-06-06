@@ -8,23 +8,57 @@ const val HarryPlanet = "KX-147"
 const val CoreTemp = 314
 
 fun programmingMathInDisguise() = lessonContent {
-    contentMeetHarry()
-    contentHarryCrash()
-    contentHelpHarry()
-    theCore()
-    questionCoreTempKelvin()
-    contentCoreTempTransition()
-    questionCoreTempHaskell()
-    questionKelvinToCelsiusMath()
-    questionKelvinToCelsiusHaskell()
-    questionCelsiusToFahrenheitMath()
-    questionCelsiusToFahrenheitHaskell()
-    questionFunctionComposition()
-    questionFunctionCompositionThree()
-    conclusion()
+    intro()
+    partCoreTempKelvin() // zero param function
+    partKelvinToCelsius() // one param function
+    partKelvinToCelsiusToFahrenheit() // one param function
+    partFunctionComposition()
+    summary()
 }
 
-private fun LessonContentScope.contentMeetHarry() {
+private fun LessonContentScope.intro() {
+    meetHarry()
+    harryCrashed()
+    helpHarry()
+    fixTheCore()
+}
+
+private fun LessonContentScope.partCoreTempKelvin() {
+    questionCoreTempKelvin()
+    coreTempMathToHaskell()
+    questionCoreTempHaskell()
+}
+
+private fun LessonContentScope.partKelvinToCelsius() {
+    contentKelvinToCelsiusMath()
+    questionKelvinToCelsiusMath()
+    contentKelvinToCelsiusHaskell()
+    questionKelvinToCelsiusHaskell()
+}
+
+private fun LessonContentScope.partKelvinToCelsiusToFahrenheit() {
+    contentKelvinToCelsiusToFahrenheitMath()
+    questionCelsiusToFahrenheitMath()
+    contentKelvinToCelsiusToFahrenheitHaskell()
+    questionCelsiusToFahrenheitHaskell()
+}
+
+private fun LessonContentScope.partFunctionComposition() {
+    functionComposition()
+    questionFunctionCompositionMath()
+    functionCompositionOperator()
+    questionFunctionCompositionOperatorMath()
+    finalSolution()
+    questionFinalSolutionHaskell()
+}
+
+private fun LessonContentScope.summary() {
+    storyConclusion()
+    lessonSummary()
+}
+
+
+private fun LessonContentScope.meetHarry() {
     text("meet_harry") {
         text = "Meet Harry!"
         style = TextStyle.Heading
@@ -42,7 +76,7 @@ private fun LessonContentScope.contentMeetHarry() {
     }
 }
 
-private fun LessonContentScope.contentHarryCrash() {
+private fun LessonContentScope.harryCrashed() {
     text("harry_experimenting") {
         text = "Harry loves experimenting... a lot!"
         style = TextStyle.Heading
@@ -60,7 +94,7 @@ private fun LessonContentScope.contentHarryCrash() {
     }
 }
 
-private fun LessonContentScope.contentHelpHarry() {
+private fun LessonContentScope.helpHarry() {
     text("chapter_1_title") {
         text = "Chapter 1: Repairing the spaceship"
         style = TextStyle.Heading
@@ -78,7 +112,7 @@ private fun LessonContentScope.contentHelpHarry() {
     }
 }
 
-private fun LessonContentScope.theCore() {
+private fun LessonContentScope.fixTheCore() {
     text("the_core_title") {
         text = "Fixing the core"
         style = TextStyle.Heading
@@ -121,11 +155,11 @@ private fun LessonContentScope.questionCoreTempKelvin() {
     }
 }
 
-private fun LessonContentScope.contentCoreTempTransition() {
+private fun LessonContentScope.coreTempMathToHaskell() {
     text("core_temp_transition") {
         text = textBuilder {
             line("Harry has successfully recalibrated the spaceship's energy core to $CoreTemp Kelvin.")
-            line("But there's a catch! Harry's spaceship operates on an advanced Haskell-based system.")
+            line("But there's a catch! Harry's spaceship operates on an sophisticated Haskell-based system.")
             line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
             newLine()
             line("To keep the core temperature steady, Harry needs to translate the mathematical function into Haskell.")
@@ -173,6 +207,17 @@ private fun LessonContentScope.questionCoreTempHaskell() {
     }
 }
 
+private fun LessonContentScope.contentKelvinToCelsiusMath() {
+    text("core_temp_to_kelvin_conversion") {
+        text = textBuilder {
+            line("Now that Harry has defined the core temperature function in Haskell, he needs to convert this temperature to Celsius.")
+            line("This will allow Harry to double-check the temperature with an Earth thermometer.")
+            line("Let's help Harry by defining the mathematical function to convert Kelvin to Celsius.")
+        }
+        style = TextStyle.BodyBigSpacing
+    }
+}
+
 private fun LessonContentScope.questionKelvinToCelsiusMath() {
     question("kelvinToCelsiusMath") {
         question = "What's the mathematical function to convert Kelvin to Celsius?"
@@ -194,6 +239,15 @@ private fun LessonContentScope.questionKelvinToCelsiusMath() {
             explanation = "That's correct! kelvinToCelsius(274.15) = 274.4 - 273.15 = 1°C",
             correct = true,
         )
+    }
+}
+
+private fun LessonContentScope.contentKelvinToCelsiusHaskell() {
+    text("kelvin_to_celsius_haskell") {
+        text = textBuilder {
+            line("Harry needs to convert the Celsius conversion formula from math to Haskell to use it in his spaceship's system.")
+        }
+        style = TextStyle.BodyBigSpacing
     }
 }
 
@@ -232,6 +286,18 @@ private fun LessonContentScope.questionKelvinToCelsiusHaskell() {
     }
 }
 
+private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
+    text("contentKelvinToCelsiusToFahrenheitMath") {
+        text = textBuilder {
+            line("Harry needs to kick-start the spaceship's core by setting it to exactly the right temperature.")
+            line("He has already converted the temperature from Kelvin to Celsius.")
+            line("However, he landed in a quirky town where the only available heater device is an old laptop running Android Studio, which only displays temperatures in Fahrenheit.")
+            line("Let's help Harry convert the Celsius temperature to Fahrenheit mathematically so he can use the laptop to heat the core.")
+        }
+        style = TextStyle.BodyBigSpacing
+    }
+}
+
 private fun LessonContentScope.questionCelsiusToFahrenheitMath() {
     question("celsiusToFahrenheitMath") {
         question = "What's the mathematical function to convert Celsius to Fahrenheit?"
@@ -253,6 +319,15 @@ private fun LessonContentScope.questionCelsiusToFahrenheitMath() {
             text = "celsiusToFahrenheit(c) = c + (9/5 * 32)",
             explanation = "That's not the correct formula.",
         )
+    }
+}
+
+private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitHaskell() {
+    text("contentKelvinToCelsiusToFahrenheitHaskell") {
+        text = textBuilder {
+            line("As always, Harry will also need this function in Haskell so he can automate the process.")
+        }
+        style = TextStyle.BodyBigSpacing
     }
 }
 
@@ -292,7 +367,11 @@ private fun LessonContentScope.questionCelsiusToFahrenheitHaskell() {
     }
 }
 
-private fun LessonContentScope.questionFunctionComposition() {
+private fun LessonContentScope.functionComposition() {
+    // TODO: Implement
+}
+
+private fun LessonContentScope.questionFunctionCompositionMath() {
     question("functionComposition") {
         question = "Which two functions can be composed such that g(f(x)) is valid?"
         clarification = "Remember, function composition g(f(x)) requires the return type of f(x)" +
@@ -322,8 +401,12 @@ private fun LessonContentScope.questionFunctionComposition() {
     }
 }
 
-private fun LessonContentScope.questionFunctionCompositionThree() {
-    question("functionCompositionThree") {
+private fun LessonContentScope.functionCompositionOperator() {
+    // TODO: Implement
+}
+
+private fun LessonContentScope.questionFunctionCompositionOperatorMath() {
+    question("questionFunctionCompositionOperatorMath") {
         question = "Given three functions f: A → B, g: B → C, and h: C → D, what is the composition h(g(f(x)))?"
         clarification = "Select the correct composition sequence using the '.' operator."
         answer(
@@ -346,25 +429,20 @@ private fun LessonContentScope.questionFunctionCompositionThree() {
     }
 }
 
-private fun LessonContentScope.conclusion() {
-    text("summary") {
-        text = "To Recap:"
-        style = TextStyle.Heading
-    }
-    text("recap_text") {
-        text = textBuilder {
-            line("You've met your new green friend Harry.")
-            line("You've learned to create simple mathematical functions.")
-            line("You saw that there is 1:1 correspondence of those functions in Haskell.")
-            line("You learned to compose functions. g(f(x)).")
-            line("You learned the function composition operator: h(x) = f ◦ g.")
-            line("You've helped Harry fix his spaceship.")
-        }
-        style = TextStyle.Body
-    }
-    lottie("harry_bye_anim") {
-        jsonUrl = LottieUrls.SpaceshipFixed
-    }
+private fun LessonContentScope.finalSolution() {
+    // TODO: Implement
+}
+
+private fun LessonContentScope.questionFinalSolutionHaskell() {
+    // TODO: Implement
+}
+
+private fun LessonContentScope.storyConclusion() {
+    // TODO: Implement
+}
+
+private fun LessonContentScope.lessonSummary() {
+    // TODO: Implement
 }
 
 fun main() {

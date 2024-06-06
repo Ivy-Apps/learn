@@ -13,11 +13,12 @@ fun lessonContent(
 }
 
 fun printLessonJson(lesson: LessonContent) {
-    validateIds(lesson)
+    validateIdsExistence(lesson)
+    validateIdsUniqueness(lesson)
     println(Json.encodeToString(lesson))
 }
 
-private fun validateIds(lesson: LessonContent) {
+private fun validateIdsExistence(lesson: LessonContent) {
     allItemsIds(
         currentId = lesson.rootItem,
         lesson = lesson,
@@ -25,6 +26,16 @@ private fun validateIds(lesson: LessonContent) {
         if (itemId !in lesson.items) {
             error("Item with id $itemId is not defined in the lesson")
         }
+    }
+}
+
+private fun validateIdsUniqueness(lesson: LessonContent) {
+    val processedIds = mutableSetOf<LessonItemId>()
+    lesson.items.values.forEach { item ->
+        if (item.id in processedIds) {
+            error("Item with id '${item.id}' is defined more than once")
+        }
+        processedIds += item.id
     }
 }
 
