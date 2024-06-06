@@ -495,6 +495,7 @@ private fun LessonContentScope.finalSolution() {
 private fun LessonContentScope.questionFinalSolutionHaskell() {
     question("questionFinalSolutionHaskell") {
         question = "What's the correct Haskell function composition to power-up the spaceship's core?"
+        clarification = "Note: There are exactly 2 correct answers."
         answer(
             text = codeBuilder {
                 line("coreFix :: Double")
