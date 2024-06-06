@@ -185,11 +185,19 @@ class TextBuilder : TextBuilderScope {
         items += Item.Bullet(text)
     }
 
-    fun build(): String = items.joinToString(separator = "") {
-        when (it) {
-            is Item.Line -> it.text + "\n\n"
-            is Item.NewLine -> "\n"
-            is Item.Bullet -> "• ${it.text}\n"
+    fun build(): String = buildString {
+        for ((index, item) in items.withIndex()) {
+            when (item) {
+                is Item.Line -> {
+                    append(item.text + "\n")
+                    if (items.getOrNull(index + 1) !is Item.Bullet) {
+                        append("\n")
+                    }
+                }
+
+                is Item.NewLine -> append("\n")
+                is Item.Bullet -> append("• ${item.text}\n")
+            }
         }
     }.dropLast(1) // the last new-line isn't needed
 

@@ -161,16 +161,16 @@ private fun LessonContentScope.coreTempMathToHaskell() {
             line("Harry has successfully recalibrated the spaceship's energy core to $CoreTemp Kelvin.")
             line("But there's a catch! Harry's spaceship operates on an sophisticated Haskell-based system.")
             line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
-            newLine()
-            line("To keep the core temperature steady, Harry needs to translate the mathematical function into Haskell.")
-            line("This translation is vital to ensure the spaceship's computer can execute it correctly and maintain the required temperature.")
-            newLine()
+        }
+        style = TextStyle.BodySpacingLarge
+    }
+    text("core_temp_transition2") {
+        text = textBuilder {
             line("Why Haskell? Here are a few reasons:")
             bullet("Type Safety: Helps prevent errors before they cause problems.")
             bullet("Immutability: Ensures data remains unchanged, reducing unexpected behaviors.")
             bullet("Pure Functions: Guarantees the same output for the same input, every time.")
         }
-        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -290,11 +290,15 @@ private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
     text("contentKelvinToCelsiusToFahrenheitMath") {
         text = textBuilder {
             line("Harry needs to kick-start the spaceship's core by setting it to exactly the right temperature.")
-            line("He has already converted the temperature from Kelvin to Celsius.")
-            line("However, he landed in a quirky town where the only available heater device is an old laptop running Android Studio, which only displays temperatures in Fahrenheit.")
-            line("Let's help Harry convert the Celsius temperature to Fahrenheit mathematically so he can use the laptop to heat the core.")
+            line("He has already converted the temperature from Kelvin to Celsius. However...")
         }
         style = TextStyle.BodySpacingLarge
+    }
+    text("contentKelvinToCelsiusToFahrenheitMath2") {
+        text = textBuilder {
+            line("He landed in a quirky town where the only available heater device is an old laptop running Android Studio, which only displays temperatures in Fahrenheit.")
+            line("Let's help Harry convert the Celsius temperature to Fahrenheit mathematically so he can use the laptop to heat the core.")
+        }
     }
 }
 
@@ -428,12 +432,15 @@ private fun LessonContentScope.functionCompositionOperator() {
             line("In mathematics, the function composition operator (.) is used to combine two or more functions.")
             line("This operator is read as 'after'. For example, the expression g . f means 'g after f'.")
             line("When you see h(g(f(x))), it means you first apply f to x, then apply g to the result, and finally apply h to that result.")
-            newLine()
-            line("Here's a tip: When reading function compositions, read the functions from right to left. This helps to understand the order in which the functions are applied.")
-            newLine()
-            line("Now, let's see how this works in practice with the following question.")
         }
         style = TextStyle.BodySpacingLarge
+    }
+    text("function_composition_operator2") {
+        text = textBuilder {
+
+            line("Here's a tip: When reading function compositions, read the functions from right to left. This helps to understand the order in which the functions are applied.")
+            line("Now, let's see how this works in practice with the following question.")
+        }
     }
 }
 
