@@ -397,9 +397,6 @@ private fun LessonContentScope.functionComposition() {
         text = "Chapter 2: Function Composition"
         style = TextStyle.Heading
     }
-    image("functionComposition_img") {
-        imageUrl = "https://i.ibb.co/yqwLrq1/func-comp.jpg"
-    }
     text("functionComposition") {
         text = textBuilder {
             line("Great work! We now have all the parts to repair Harry's spaceship core.")
@@ -407,12 +404,14 @@ private fun LessonContentScope.functionComposition() {
         }
         style = TextStyle.BodySpacingMedium
     }
+    image("functionComposition_img") {
+        imageUrl = "https://i.ibb.co/yqwLrq1/func-comp.jpg"
+    }
     text("functionComposition2") {
         text = textBuilder {
             line("In math, if we have a function f: A -> B and another function g: B -> C, we can combine them to form a new function h: A -> C.")
             line("This means we can apply f first, and then apply g to the result of f. Let's explore this concept further.")
         }
-        style = TextStyle.Body
     }
 }
 
@@ -452,15 +451,19 @@ private fun LessonContentScope.functionCompositionOperator() {
         text = textBuilder {
             line("In mathematics, the function composition operator (.) is used to combine two or more functions.")
             line("This operator is read as 'after'. For example, the expression g . f means 'g after f'.")
-            line("When you see h(g(f(x))), it means you first apply f to x, then apply g to the result, and finally apply h to that result.")
         }
         style = TextStyle.BodySpacingLarge
     }
     text("function_composition_operator2") {
         text = textBuilder {
-
-            line("Here's a tip: When reading function compositions, read the functions from right to left. This helps to understand the order in which the functions are applied.")
-            line("Now, let's see how this works in practice with the following question.")
+            line("When you see h(g(f(x))), it means you first apply f to x, then apply g to the result, and finally apply h to that result.")
+            line("This can also be written as (h . g . f)(x), which highlights the composition of multiple functions.")
+        }
+    }
+    text("function_composition_operator3") {
+        text = textBuilder {
+            line("Pro-tip: When reading function compositions, read the functions from right to left. This helps understand the order in which the functions are applied.")
+            line("Let's see how this works in practice with the next question.")
         }
     }
 }
@@ -510,6 +513,7 @@ private fun LessonContentScope.finalSolution() {
         text = textBuilder {
             line("In the final question, we'll need to help Harry compose these functions together to power-up the core.")
         }
+        style = TextStyle.BodySpacingLarge
     }
 }
 
