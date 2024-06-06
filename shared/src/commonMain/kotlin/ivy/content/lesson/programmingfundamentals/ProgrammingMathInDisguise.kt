@@ -174,13 +174,17 @@ private fun LessonContentScope.questionCoreTempKelvin() {
 private fun LessonContentScope.coreTempMathToHaskell() {
     text("core_temp_transition") {
         text = textBuilder {
-            line("Harry has successfully recalibrated the spaceship's energy core to $CoreTemp Kelvin.")
+            line("Harry has can now recalibrate the spaceship's energy core to $CoreTemp Kelvin.")
             line("But there's a catch! Harry's spaceship operates on an sophisticated Haskell-based system.")
-            line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
         }
         style = TextStyle.BodySpacingLarge
     }
     text("core_temp_transition2") {
+        text = textBuilder {
+            line("Haskell is renowned for its ability to create type-safe and reliable programs, which is crucial for Harry's mission.")
+        }
+    }
+    text("core_temp_transition3") {
         text = textBuilder {
             line("Why Haskell? Here are a few reasons:")
             bullet("Type Safety: Helps prevent errors before they cause problems.")
@@ -226,9 +230,9 @@ private fun LessonContentScope.questionCoreTempHaskell() {
 private fun LessonContentScope.contentKelvinToCelsiusMath() {
     text("core_temp_to_kelvin_conversion") {
         text = textBuilder {
-            line("Now that Harry has defined the core temperature function in Haskell, he needs to convert this temperature to Celsius.")
-            line("This will allow Harry to double-check the temperature with an Earth thermometer.")
-            line("Let's help Harry by defining the mathematical function to convert Kelvin to Celsius.")
+            line("Now that Harry has defined the core temperature function in Haskell.")
+            line("Next, he needs to convert this temperature to Celsius to double-check it with an Earth thermometer.")
+            line("Let's assist Harry by defining the mathematical function for converting Kelvin to Celsius.")
         }
         style = TextStyle.BodySpacingLarge
     }
@@ -237,22 +241,22 @@ private fun LessonContentScope.contentKelvinToCelsiusMath() {
 private fun LessonContentScope.questionKelvinToCelsiusMath() {
     question("kelvinToCelsiusMath") {
         question = "What's the mathematical function to convert Kelvin to Celsius?"
-        clarification = "1°C = 274.15K (tip: do the math!)"
+        clarification = "1°C = 274.15K; 2°C = 275.15K; (tip: do the math!)"
         answer(
             text = "kelvinToCelsius(k) = k + 273.15",
-            explanation = "kelvinToCelsius(274.15) = 274.16 + 273.15 = 547.31°C. Incorrect.",
+            explanation = "Incorrect. 274.15 + 273.15 = 547.30°C, which is too high."
         )
         answer(
             text = "kelvinToCelsius(k) = k - 274.15",
-            explanation = "kelvinToCelsius(274.15) = 274.15 - 274.15 = 0°C. Incorrect.",
+            explanation = "Incorrect. 274.15 - 274.15 = 0°C, which is not the correct conversion."
         )
         answer(
             text = "kelvinToCelsius(k) = k * 274.15",
-            explanation = "kelvinToCelsius(10) = 10 * 274.15 = 2,741.5°C. Incorrect.",
+            explanation = "Incorrect. 10 * 274.15 = 2,741.5°C, which is far too high."
         )
         answer(
             text = "kelvinToCelsius(k) = k - 273.15",
-            explanation = "That's correct! kelvinToCelsius(274.15) = 274.4 - 273.15 = 1°C",
+            explanation = "Correct! 274.15 - 273.15 = 1°C, the proper conversion.",
             correct = true,
         )
     }
@@ -261,7 +265,7 @@ private fun LessonContentScope.questionKelvinToCelsiusMath() {
 private fun LessonContentScope.contentKelvinToCelsiusHaskell() {
     text("kelvin_to_celsius_haskell") {
         text = textBuilder {
-            line("Harry needs to convert the Celsius conversion formula from math to Haskell to use it in his spaceship's system.")
+            line("Harry also needs to implement the formula in Haskell so he can use it in his spaceship's system.")
         }
         style = TextStyle.BodySpacingLarge
     }
@@ -276,7 +280,7 @@ private fun LessonContentScope.questionKelvinToCelsiusHaskell() {
                 line("kelvinToCelsius :: Double -> Double")
                 line("kelvinToCelsius k = k - 273.15")
             },
-            explanation = "The function accepts a Double parameter named \"k\" and returns Double",
+            explanation = "Correct. The function accepts a Double parameter named \"k\" and returns a Double.",
             correct = true,
         )
         answer(
@@ -284,23 +288,24 @@ private fun LessonContentScope.questionKelvinToCelsiusHaskell() {
                 line("kelvinToCelsius :: Double")
                 line("kelvinToCelsius k = k - 273.15")
             },
-            explanation = "Compilation error. This function should accept a Double parameter.",
+            explanation = "Incorrect. Compilation error. This function should accept a Double parameter.",
         )
         answer(
             text = codeBuilder {
                 line("kelvinToCelsius :: Double -> Double")
                 line("kelvinToCelsius = k - 273.15")
             },
-            explanation = "Compilation error. Variable not in scope: k",
+            explanation = "Incorrect. Compilation error. Variable not in scope: k.",
         )
         answer(
             text = codeBuilder {
                 line("kelvinToCelsius k = k - 273.15")
             },
-            explanation = "It compiles but let's specify types explicitly.",
+            explanation = "Incorrect. It compiles, but types should be specified explicitly.",
         )
     }
 }
+
 
 private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
     text("contentKelvinToCelsiusToFahrenheitMath") {
