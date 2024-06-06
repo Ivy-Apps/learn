@@ -108,7 +108,7 @@ private fun LessonContentScope.helpHarry() {
             line("However, he's not very familiar with the Earth and its technologies.")
             line("Harry only knows math and a little bit of Haskell.")
         }
-        style = TextStyle.BodyMediumSpacing
+        style = TextStyle.BodySpacingMedium
     }
 }
 
@@ -126,7 +126,7 @@ private fun LessonContentScope.fixTheCore() {
             line("This temperature is a constant value that only Harry knows.")
             line("The core temperature is exactly $CoreTemp Kelvin.")
         }
-        style = TextStyle.BodyMediumSpacing
+        style = TextStyle.BodySpacingMedium
     }
 }
 
@@ -170,7 +170,7 @@ private fun LessonContentScope.coreTempMathToHaskell() {
             bullet("Immutability: Ensures data remains unchanged, reducing unexpected behaviors.")
             bullet("Pure Functions: Guarantees the same output for the same input, every time.")
         }
-        style = TextStyle.BodyBigSpacing
+        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -214,7 +214,7 @@ private fun LessonContentScope.contentKelvinToCelsiusMath() {
             line("This will allow Harry to double-check the temperature with an Earth thermometer.")
             line("Let's help Harry by defining the mathematical function to convert Kelvin to Celsius.")
         }
-        style = TextStyle.BodyBigSpacing
+        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -247,7 +247,7 @@ private fun LessonContentScope.contentKelvinToCelsiusHaskell() {
         text = textBuilder {
             line("Harry needs to convert the Celsius conversion formula from math to Haskell to use it in his spaceship's system.")
         }
-        style = TextStyle.BodyBigSpacing
+        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -294,7 +294,7 @@ private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
             line("However, he landed in a quirky town where the only available heater device is an old laptop running Android Studio, which only displays temperatures in Fahrenheit.")
             line("Let's help Harry convert the Celsius temperature to Fahrenheit mathematically so he can use the laptop to heat the core.")
         }
-        style = TextStyle.BodyBigSpacing
+        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -327,7 +327,7 @@ private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitHaskell() {
         text = textBuilder {
             line("As always, Harry will also need this function in Haskell so he can automate the process.")
         }
-        style = TextStyle.BodyBigSpacing
+        style = TextStyle.BodySpacingLarge
     }
 }
 
@@ -368,7 +368,23 @@ private fun LessonContentScope.questionCelsiusToFahrenheitHaskell() {
 }
 
 private fun LessonContentScope.functionComposition() {
-    // TODO: Implement
+    text("functionComposition_title") {
+        text = "Chapter 2: Function Composition"
+        style = TextStyle.Heading
+    }
+    image("functionComposition_img") {
+        imageUrl = "https://i.ibb.co/s50K93W/2024-06-06-17-08-46.jpg"
+    }
+    text("functionComposition") {
+        text = textBuilder {
+            line("Great work! We now have all the parts to repair Harry's spaceship core.")
+            line("Before we proceed, let's understand a crucial mathematical concept that will help us in this process: function composition.")
+            line("In math, if we have a function f: A → B and another function g: B → C, we can combine them to form a new function h: A → C.")
+            line("This means we can apply f first, and then apply g to the result of f. Let's explore this concept further.")
+        }
+        style = TextStyle.BodySpacingMedium
+    }
+
 }
 
 private fun LessonContentScope.questionFunctionCompositionMath() {
@@ -402,7 +418,18 @@ private fun LessonContentScope.questionFunctionCompositionMath() {
 }
 
 private fun LessonContentScope.functionCompositionOperator() {
-    // TODO: Implement
+    text("function_composition_operator") {
+        text = textBuilder {
+            line("In mathematics, the function composition operator (.) is used to combine two or more functions.")
+            line("This operator is read as 'after'. For example, the expression g . f means 'g after f'.")
+            line("When you see h(g(f(x))), it means you first apply f to x, then apply g to the result, and finally apply h to that result.")
+            newLine()
+            line("Here's a tip: When reading function compositions, read the functions from right to left. This helps to understand the order in which the functions are applied.")
+            newLine()
+            line("Now, let's see how this works in practice with the following question.")
+        }
+        style = TextStyle.BodySpacingLarge
+    }
 }
 
 private fun LessonContentScope.questionFunctionCompositionOperatorMath() {
@@ -430,11 +457,68 @@ private fun LessonContentScope.questionFunctionCompositionOperatorMath() {
 }
 
 private fun LessonContentScope.finalSolution() {
-    // TODO: Implement
+    text("finalSolution_title") {
+        text = "Chapter 3: Fitting things together"
+        style = TextStyle.Heading
+    }
+    image("finalSolution_img") {
+        imageUrl = "https://i.ibb.co/p4Fz2p1/wiring-core-together.webp"
+    }
+    text("final_solution") {
+        text = textBuilder {
+            line("Harry is almost ready to fix the spaceship's core!")
+            line("So far, we've helped Harry define the necessary Haskell functions to manage the temperature conversions.")
+            line("Here's a summary of what we have so far:")
+            bullet("coreTempK :: Double")
+            bullet("kelvinToCelsius :: Double -> Double")
+            bullet("celsiusToFahrenheit :: Double -> Double")
+            newLine()
+            line("In the final question, we'll need to help Harry compose these functions together to power-up the core.")
+        }
+    }
 }
 
 private fun LessonContentScope.questionFinalSolutionHaskell() {
-    // TODO: Implement
+    question("questionFinalSolutionHaskell") {
+        question = "What's the correct Haskell function composition to power-up the spaceship's core?"
+        answer(
+            text = codeBuilder {
+                line("coreFix :: Double")
+                line("coreFix = celsiusToFahrenheit . kelvinToCelsius . coreTempK")
+            },
+            explanation = "That's right! This composition correctly applies the functions in sequence.",
+            correct = true,
+        )
+        answer(
+            text = codeBuilder {
+                line("coreFix :: Double")
+                line("coreFix = kelvinToCelsius . celsiusToFahrenheit . coreTempK")
+            },
+            explanation = "Incorrect. The order of function composition is wrong.",
+        )
+        answer(
+            text = codeBuilder {
+                line("coreFix :: Double")
+                line("coreFix = celsiusToFahrenheit(kelvinToCelsius(coreTempK()))")
+            },
+            explanation = "Correct! This alternative notation also correctly composes the functions.",
+            correct = true,
+        )
+        answer(
+            text = codeBuilder {
+                line("coreFix :: Double")
+                line("coreFix = coreTempK . kelvinToCelsius . celsiusToFahrenheit")
+            },
+            explanation = "Incorrect. The functions are not composed in the correct order.",
+        )
+        answer(
+            text = codeBuilder {
+                line("coreFix :: Double")
+                line("coreFix = celsiusToFahrenheit(coreTempK . kelvinToCelsius)")
+            },
+            explanation = "Incorrect. The functions need to be composed in the correct sequence.",
+        )
+    }
 }
 
 private fun LessonContentScope.storyConclusion() {
