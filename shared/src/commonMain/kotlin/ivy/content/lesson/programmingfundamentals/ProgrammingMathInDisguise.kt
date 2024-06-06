@@ -69,13 +69,17 @@ private fun LessonContentScope.meetHarry() {
     text("harry_hi") {
         text = textBuilder {
             line("Harry is a shape-shifting alien from the $HarryPlanet planet.")
-            line("Harry is a gifted scientist who can solve complex problems in a simple and elegant way.")
-            line("He's also quite impatient and tends to test his ideas at Friday on production.")
+            line("He is a gifted scientist who can solve complex problems in a simple and elegant way.")
         }
     }
     text("harry_hi2") {
         text = textBuilder {
-            line("He's also quite impatient and tends to test his ideas at Friday on production.")
+            line("Harry is also quite impatient and tends to test his ideas at Friday, directly on production.")
+        }
+    }
+    text("harry_hi3") {
+        text = textBuilder {
+            line("Why Harry!?")
         }
     }
 }
@@ -91,7 +95,15 @@ private fun LessonContentScope.harryCrashed() {
     text("harry_crash") {
         text = textBuilder {
             line("Unfortunately, during one of his time-traveling experiments... ")
+        }
+    }
+    text("harry_crash2") {
+        text = textBuilder {
             line("Harry crashed his spaceship on Earth. (Oops!)")
+        }
+    }
+    text("harry_crash3") {
+        text = textBuilder {
             line("Now he needs your help to fix it and get back home.")
             line("But don't worry, Harry has a plan!")
         }
