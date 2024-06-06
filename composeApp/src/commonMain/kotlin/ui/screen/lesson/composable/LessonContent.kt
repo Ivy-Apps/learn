@@ -77,7 +77,7 @@ private fun LessonItemsLazyColum(
 
     AutoScrollEffect(
         listState = listState,
-        items = viewState.items,
+        viewState = viewState,
     )
 
     LazyColumn(

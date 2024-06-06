@@ -75,18 +75,14 @@ private fun LessonContentScope.meetHarry() {
     text("harry_hi2") {
         text = textBuilder {
             line("Harry is also quite impatient and tends to test his ideas at Friday, directly on production.")
-        }
-    }
-    text("harry_hi3") {
-        text = textBuilder {
-            line("Why Harry!?")
+            line("Why Harry!? Why?")
         }
     }
 }
 
 private fun LessonContentScope.harryCrashed() {
     text("harry_experimenting") {
-        text = "Harry loves experimenting... a lot!"
+        text = "Harry also loves experimenting... a lot!"
         style = TextStyle.Heading
     }
     lottie("harry_crash_anim") {
@@ -100,10 +96,6 @@ private fun LessonContentScope.harryCrashed() {
     text("harry_crash2") {
         text = textBuilder {
             line("Harry crashed his spaceship on Earth. (Oops!)")
-        }
-    }
-    text("harry_crash3") {
-        text = textBuilder {
             line("Now he needs your help to fix it and get back home.")
             line("But don't worry, Harry has a plan!")
         }
