@@ -10,7 +10,7 @@ object ProgrammingFundamentals : CourseDsl({
     lesson(
         name = "Programming: Math in disguise",
         tagline = "Mathematical functions can do much more than you think." +
-                " Function Composition.",
+                " Function composition.",
         imageUrl = LessonImage
     )
 })

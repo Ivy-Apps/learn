@@ -9,12 +9,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import component.ScreenType.*
 import component.isLargeScreen
+import component.screenType
 import component.text.SubTitle
 import component.text.Title
 import io.kamel.image.KamelImage
@@ -58,11 +62,11 @@ fun LessonCard(
             Column(
                 modifier = Modifier
                     .onSizeChanged {
-                        height = minOf(with(density) { it.height.toDp() }, height)
+                        height = maxOf(with(density) { it.height.toDp() }, height)
                     }
                     .defaultMinSize(minHeight = height)
                     .padding(
-                        start = if (isLargeScreen()) 24.dp else 20.dp,
+                        start = if (isLargeScreen()) 24.dp else 16.dp,
                         end = if (isLargeScreen()) 16.dp else 12.dp
                     )
                     .padding(vertical = 16.dp),
@@ -72,8 +76,12 @@ fun LessonCard(
                     text = lesson.name,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(Modifier.height(4.dp))
-                SubTitle(text = lesson.tagline)
+                Spacer(Modifier.height(8.dp))
+                SubTitle(
+                    text = lesson.tagline,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
         }
     }
@@ -86,10 +94,17 @@ private fun LessonImage(
 ) {
     KamelImage(
         modifier = modifier
-            .aspectRatio(1f),
-        contentScale = ContentScale.Crop,
+            .aspectRatio(
+                when (screenType()) {
+                    Mobile -> 0.6f
+                    Tablet -> 1f
+                    Desktop -> 1f
+                }
+            )
+            .clip(RoundedCornerShape(topStart = 24.dp, bottomStart = 24.dp)),
+        contentScale = ContentScale.FillHeight,
         contentAlignment = Alignment.CenterStart,
         resource = asyncPainterResource(imageUrl),
-        contentDescription = null
+        contentDescription = null,
     )
 }
