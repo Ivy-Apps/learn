@@ -13,11 +13,12 @@ fun lessonContent(
 }
 
 fun printLessonJson(lesson: LessonContent) {
-    validateIds(lesson)
+    validateIdsExistence(lesson)
+    validateIdsUniqueness(lesson)
     println(Json.encodeToString(lesson))
 }
 
-private fun validateIds(lesson: LessonContent) {
+private fun validateIdsExistence(lesson: LessonContent) {
     allItemsIds(
         currentId = lesson.rootItem,
         lesson = lesson,
@@ -25,6 +26,16 @@ private fun validateIds(lesson: LessonContent) {
         if (itemId !in lesson.items) {
             error("Item with id $itemId is not defined in the lesson")
         }
+    }
+}
+
+private fun validateIdsUniqueness(lesson: LessonContent) {
+    val processedIds = mutableSetOf<LessonItemId>()
+    lesson.items.values.forEach { item ->
+        if (item.id in processedIds) {
+            error("Item with id '${item.id}' is defined more than once")
+        }
+        processedIds += item.id
     }
 }
 
@@ -152,22 +163,49 @@ interface TextBuilderScope {
     @TextBuilderDsl
     fun line(text: String)
 
+    @TextBuilderDsl
+    fun bullet(text: String)
+
+    @TextBuilderDsl
     fun newLine()
 }
 
 class TextBuilder : TextBuilderScope {
-    private val lines = mutableListOf<String>()
+    private val items = mutableListOf<Item>()
 
     override fun line(text: String) {
-        lines += text + "\n"
+        items += Item.Line(text)
     }
 
     override fun newLine() {
-        lines += ""
+        items += Item.NewLine
     }
 
-    fun build(): String = lines.joinToString("\n")
-        .dropLast(1) // the last new-line isn't needed
+    override fun bullet(text: String) {
+        items += Item.Bullet(text)
+    }
+
+    fun build(): String = buildString {
+        for ((index, item) in items.withIndex()) {
+            when (item) {
+                is Item.Line -> {
+                    append(item.text + "\n")
+                    if (items.getOrNull(index + 1) !is Item.Bullet) {
+                        append("\n")
+                    }
+                }
+
+                is Item.NewLine -> append("\n")
+                is Item.Bullet -> append("• ${item.text}\n")
+            }
+        }
+    }.dropLast(1) // the last new-line isn't needed
+
+    sealed interface Item {
+        data class Line(val text: String) : Item
+        data object NewLine : Item
+        data class Bullet(val text: String) : Item
+    }
 }
 
 @DslMarker

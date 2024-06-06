@@ -137,6 +137,7 @@ class LessonContentScopeImpl : LessonContentScope {
 
     private fun chain(id: String): LessonItemId {
         val lessonItemId = LessonItemId(id)
+        ensureIdUnique(lessonItemId)
         if (rootItem == null) {
             rootItem = lessonItemId
         } else {
@@ -170,6 +171,10 @@ class LessonContentScopeImpl : LessonContentScope {
             is LinearItem -> next
             else -> null
         }
+    }
+
+    private fun ensureIdUnique(id: LessonItemId) {
+        require(id !in items.keys) { "Duplicated: $id" }
     }
 }
 

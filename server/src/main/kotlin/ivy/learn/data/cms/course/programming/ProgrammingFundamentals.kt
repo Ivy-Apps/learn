@@ -9,8 +9,8 @@ object ProgrammingFundamentals : CourseDsl({
     imageUrl = "https://i.ibb.co/PTXn42F/fundamentals.webp"
     lesson(
         name = "Programming: Math in disguise",
-        tagline = "Mathematical functions and your calculator can do much more than you think." +
-                " Goal: learn to create and compose pure math functions.",
+        tagline = "Mathematical functions can do much more than you think." +
+                " Function Composition.",
         imageUrl = LessonImage
     )
 })

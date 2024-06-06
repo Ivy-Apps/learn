@@ -46,7 +46,9 @@ fun LessonCard(
         ),
         onClick = onLessonClick
     ) {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             var height by remember { mutableStateOf(132.dp) }
             LessonImage(
                 modifier = Modifier.height(height),
