@@ -315,11 +315,15 @@ private fun LessonContentScope.contentKelvinToCelsiusToFahrenheitMath() {
         }
         style = TextStyle.BodySpacingLarge
     }
+    image("android_studio_heater_img") {
+        imageUrl = "https://i.ibb.co/KKHNMPF/android-studio-heater.webp"
+    }
     text("contentKelvinToCelsiusToFahrenheitMath2") {
         text = textBuilder {
             line("He landed in a quirky town where the only available heater device is an old laptop running Android Studio, which only displays temperatures in Fahrenheit.")
             line("Let's help Harry convert the Celsius temperature to Fahrenheit mathematically so he can use the laptop to heat the core.")
         }
+        style = TextStyle.BodySpacingMedium
     }
 }
 
