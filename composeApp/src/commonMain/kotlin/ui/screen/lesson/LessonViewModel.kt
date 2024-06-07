@@ -54,6 +54,7 @@ class LessonViewModel(
                 items = persistentListOf(),
                 cta = null,
                 progress = LessonProgressViewState(0, 1),
+                itemsLoadedDiff = 0,
             )
         }
     }

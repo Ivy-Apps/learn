@@ -10,6 +10,7 @@ data class LessonViewState(
     val items: ImmutableList<LessonItemViewState>,
     val cta: CtaViewState?,
     val progress: LessonProgressViewState,
+    val itemsLoadedDiff: Int,
 )
 
 @Immutable
@@ -72,6 +73,7 @@ data class OpenQuestionItemViewState(
     val answered: Boolean,
 ) : LessonItemViewState
 
+@Immutable
 sealed interface CtaViewState {
     val currentItemId: LessonItemIdViewState
 

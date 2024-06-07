@@ -11,6 +11,8 @@ class LessonViewStateMapper(
     private val lessonTreeManager: LessonTreeManager,
     private val platform: Platform,
 ) {
+    private var prevItemsCount = 0
+
     fun Lesson.toViewState(
         localState: LessonViewModel.LocalState,
     ): LessonViewState {
@@ -38,8 +40,11 @@ class LessonViewStateMapper(
 
                 else -> ctaViewState(currentItem)
             },
-            progress = toProgressViewState(lessonItems)
-        )
+            progress = toProgressViewState(lessonItems),
+            itemsLoadedDiff = lessonItems.size - prevItemsCount,
+        ).also {
+            prevItemsCount = lessonItems.size
+        }
     }
 
     private fun ctaViewState(currentItem: LessonItem): CtaViewState {
