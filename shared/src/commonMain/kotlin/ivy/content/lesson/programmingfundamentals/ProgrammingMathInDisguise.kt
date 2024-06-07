@@ -20,6 +20,7 @@ private fun LessonContentScope.intro() {
     meetHarry()
     harryCrashed()
     helpHarry()
+    questionWhatMathCanDo()
     fixTheCore()
 }
 
@@ -96,8 +97,7 @@ private fun LessonContentScope.harryCrashed() {
     text("harry_crash2") {
         text = textBuilder {
             line("Harry crashed his spaceship on Earth. (Oops!)")
-            line("Now he needs your help to fix it and get back home.")
-            line("But don't worry, Harry has a plan!")
+            line("Now he needs your help to fix it and get back home. But don't worry, Harry has a plan!")
         }
     }
 }
@@ -114,9 +114,36 @@ private fun LessonContentScope.helpHarry() {
         text = textBuilder {
             line("Harry's plan is to use his superior math and science skills.")
             line("However, he's not very familiar with the Earth and its technologies.")
-            line("Harry only knows math and a little bit of Haskell.")
+            line("Harry only knows math and a little bit of Haskell. Do you think that will be enough?")
         }
         style = TextStyle.BodySpacingMedium
+    }
+}
+
+private fun LessonContentScope.questionWhatMathCanDo() {
+    question("questionWhatMathCanDo") {
+        question = "What can you accomplish with just pure math?"
+        clarification = "Do not underestimate the power of math!"
+        answer(
+            text = "Program with functions",
+            explanation = "Yup, math supports pure functions and you can compose them together.",
+            correct = true,
+        )
+        answer(
+            text = "Write 'if' and 'when' statements",
+            explanation = "Yes - case analysis + pattern matching on ADTs. (more in Lesson 2).",
+            correct = true,
+        )
+        answer(
+            text = "Create 'for' loops",
+            explanation = "Easy. You can use recursion (more in Lesson 3).",
+            correct = true,
+        )
+        answer(
+            text = "Data structures and collections",
+            explanation = "Totally! There are Sets, recursive ADTs and in the next lessons.",
+            correct = true,
+        )
     }
 }
 
@@ -166,7 +193,7 @@ private fun LessonContentScope.questionCoreTempKelvin() {
 private fun LessonContentScope.coreTempMathToHaskell() {
     text("core_temp_transition") {
         text = textBuilder {
-            line("Harry has can now recalibrate the spaceship's energy core to $CoreTemp Kelvin.")
+            line("Harry can now recalibrate the spaceship's energy core to $CoreTemp Kelvin.")
             line("But there's a catch! Harry's spaceship operates on an sophisticated Haskell-based system.")
         }
         style = TextStyle.BodySpacingLarge
