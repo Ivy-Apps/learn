@@ -21,43 +21,68 @@ fun TextLessonItem(
     viewState: TextItemViewState,
     modifier: Modifier = Modifier
 ) {
-    val baseModifier = modifier
-        .then(
-            when (screenType()) {
-                Desktop, Tablet -> Modifier.sizeIn(maxWidth = 500.dp)
-                Mobile -> Modifier
-            }
-        )
+
     when (viewState.style) {
-        TextStyleViewState.Heading -> HeadlineSmall(
-            modifier = baseModifier.padding(top = ItemSpacingBig),
+        TextStyleViewState.Heading -> LessonHeadlineText(
+            modifier = modifier.padding(top = ItemSpacingBig),
             text = viewState.text
         )
 
-        TextStyleViewState.Body -> BodyText(
-            modifier = baseModifier.padding(top = ItemSpacing),
+        TextStyleViewState.Body -> LessonBodyText(
+            modifier = modifier.padding(top = ItemSpacing),
             text = viewState.text,
         )
 
-        TextStyleViewState.BodyMediumSpacing -> BodyText(
-            modifier = baseModifier.padding(top = ItemSpacingMedium),
+        TextStyleViewState.BodyMediumSpacing -> LessonBodyText(
+            modifier = modifier.padding(top = ItemSpacingMedium),
             text = viewState.text,
         )
 
-        TextStyleViewState.BodyBigSpacing -> BodyText(
-            modifier = baseModifier.padding(top = ItemSpacingBig),
+        TextStyleViewState.BodyBigSpacing -> LessonBodyText(
+            modifier = modifier.padding(top = ItemSpacingBig),
             text = viewState.text,
         )
     }
 }
 
 @Composable
-private fun BodyText(
+private fun LessonHeadlineText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    HeadlineSmall(
+        modifier = modifier
+            .then(
+                when (screenType()) {
+                    Desktop, Tablet -> Modifier.sizeIn(
+                        maxWidth = 500.dp
+                    )
+
+                    Mobile -> Modifier
+                }
+            ),
+        text = text
+    )
+}
+
+@Composable
+private fun LessonBodyText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
     BodyBig(
-        modifier = modifier,
+        modifier = modifier.then(
+            when (screenType()) {
+                Desktop, Tablet -> Modifier.sizeIn(
+                    minWidth = 500.dp,
+                    maxWidth = 500.dp
+                )
+
+                Mobile -> Modifier.sizeIn(
+                    minWidth = 500.dp,
+                )
+            }
+        ),
         text = text,
         textAlign = TextAlign.Start,
     )
