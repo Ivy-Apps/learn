@@ -1,9 +1,13 @@
 package ui.screen.lesson.composable.item
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import component.ScreenType.*
+import component.screenType
 import component.text.BodyBig
 import component.text.HeadlineSmall
 import ui.screen.lesson.TextItemViewState
@@ -17,24 +21,31 @@ fun TextLessonItem(
     viewState: TextItemViewState,
     modifier: Modifier = Modifier
 ) {
+    val baseModifier = modifier
+        .then(
+            when (screenType()) {
+                Desktop, Tablet -> Modifier.sizeIn(maxWidth = 500.dp)
+                Mobile -> Modifier
+            }
+        )
     when (viewState.style) {
         TextStyleViewState.Heading -> HeadlineSmall(
-            modifier = modifier.padding(top = ItemSpacingBig),
+            modifier = baseModifier.padding(top = ItemSpacingBig),
             text = viewState.text
         )
 
         TextStyleViewState.Body -> BodyText(
-            modifier = modifier.padding(top = ItemSpacing),
+            modifier = baseModifier.padding(top = ItemSpacing),
             text = viewState.text,
         )
 
         TextStyleViewState.BodyMediumSpacing -> BodyText(
-            modifier = modifier.padding(top = ItemSpacingMedium),
+            modifier = baseModifier.padding(top = ItemSpacingMedium),
             text = viewState.text,
         )
 
         TextStyleViewState.BodyBigSpacing -> BodyText(
-            modifier = modifier.padding(top = ItemSpacingBig),
+            modifier = baseModifier.padding(top = ItemSpacingBig),
             text = viewState.text,
         )
     }
