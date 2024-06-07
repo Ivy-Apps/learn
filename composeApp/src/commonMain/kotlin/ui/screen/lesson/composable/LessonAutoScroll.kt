@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import component.ScreenType.*
 import component.screenType
@@ -23,11 +24,22 @@ fun AutoScrollEffect(
 ) {
     val items = viewState.items
     val itemsCount = items.size
-    LaunchedEffect(itemsCount, viewState.cta) {
-        if (itemsCount >= 2) {
+    val density = LocalDensity.current
+    LaunchedEffect(
+        itemsCount,
+        viewState.itemsLoadedDiff,
+        viewState.cta != null
+    ) {
+        val scrollToIndex = itemsCount - viewState.itemsLoadedDiff
+        if (itemsCount > 0 &&
+            scrollToIndex in items.indices
+        ) {
             // ensure auto scrolls works for images that are loading
             repeat(4) {
-                listState.animateScrollToItem(items.lastIndex)
+                listState.animateScrollToItem(
+                    index = scrollToIndex,
+                    scrollOffset = with(density) { 32.dp.toPx().toInt() }
+                )
                 delay(200)
             }
         }
