@@ -1,26 +1,26 @@
 [versions]
-agp = "8.2.0"
+agp = "8.5.0"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
 androidx-activityCompose = "1.9.0"
-androidx-appcompat = "1.6.1"
+androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.13.0"
-androidx-espresso-core = "3.5.1"
-androidx-material = "1.11.0"
-androidx-test-junit = "1.1.5"
-compose = "1.6.6"
+androidx-core-ktx = "1.13.1"
+androidx-espresso-core = "3.6.1"
+androidx-material = "1.12.0"
+androidx-test-junit = "1.2.1"
+compose = "1.6.8"
 arrow = "1.2.4"
-compose-plugin = "1.6.10-dev1608"
+compose-plugin = "1.7.0-dev1707"
 junit = "4.13.2"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 ktor = "2.3.10"
-ktor-client = "2.3.10"
+ktor-client = "2.3.12"
 logback = "1.5.6"
-kotest = "5.8.1"
-kotlin-coroutines = "1.8.0"
-jebrains-exposed = "0.49.0"
+kotest = "5.9.1"
+kotlin-coroutines = "1.8.1"
+jebrains-exposed = "0.52.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -50,7 +50,7 @@ kotest-property-arrow = { module = "io.kotest.extensions:kotest-property-arrow",
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.7" }
-kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.3" }
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.1" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client" }
@@ -69,7 +69,7 @@ ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "k
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-mockk = { module = "io.mockk:mockk", version = "1.13.10" }
+mockk = { module = "io.mockk:mockk", version = "1.13.11" }
 plugin-androidApplication = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
 plugin-androidLibrary = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
 plugin-jetbrainsCompose = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-plugin" }
@@ -79,8 +79,8 @@ plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serializati
 plugin-ktor = { module = "io.ktor.plugin:plugin", version.ref = "ktor" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.3" }
 thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
-thirdparty-kamel = { module = "media.kamel:kamel-image", version = "0.9.4" }
-plugin-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version = "1.9.23-1.0.20" }
+thirdparty-kamel = { module = "media.kamel:kamel-image", version = "0.9.5-wasm" }
+plugin-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version = "2.0.0-1.0.22" }
 
 [bundles]
 arrow = [
