@@ -23,6 +23,7 @@ kotlin-coroutines = "1.8.0"
 jebrains-exposed = "0.49.0"
 
 [libraries]
+ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.3" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }

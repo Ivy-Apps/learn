@@ -18,7 +18,7 @@ class LessonScreen(
 ) : Screen() {
     override val path: String = "lesson"
 
-    override fun onDi(): Di.ScreenScope.() -> Unit = {
+    override fun onDi(): Di.Scope.() -> Unit = {
         register { LessonTreeManager() }
         register { LessonViewStateMapper(Di.get(), Di.get()) }
         register { OnBackClickEventHandler(Di.get()) }

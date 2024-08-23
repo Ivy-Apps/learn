@@ -10,7 +10,7 @@ import ui.screen.home.mapper.HomeViewStateMapper
 class HomeScreen : Screen() {
     override val path: String = "home"
 
-    override fun onDi(): Di.ScreenScope.() -> Unit = {
+    override fun onDi(): Di.Scope.() -> Unit = {
         register { HomeViewStateMapper() }
         register { HomeViewModel(Di.get(), Di.get(), Di.get()) }
     }

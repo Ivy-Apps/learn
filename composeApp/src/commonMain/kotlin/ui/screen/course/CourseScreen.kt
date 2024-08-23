@@ -14,7 +14,7 @@ class CourseScreen(
 ) : Screen() {
     override val path: String = "course"
 
-    override fun onDi(): Di.ScreenScope.() -> Unit = {
+    override fun onDi(): Di.Scope.() -> Unit = {
         register { CourseViewStateMapper() }
         register {
             CourseViewModel(

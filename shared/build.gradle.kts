@@ -24,6 +24,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation(libs.bundles.arrow)
+            api(libs.ivyApps.di)
         }
     }
 }

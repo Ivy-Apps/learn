@@ -23,7 +23,7 @@ import kotlinx.serialization.modules.subclass
 import platform
 import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 
-object SharedModule : DiModule {
+object SharedModule : Di.Module {
 
     override fun init() = Di.appScope {
         singleton<Platform> { platform() }
@@ -37,7 +37,7 @@ object SharedModule : DiModule {
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    private fun Di.DiScope.json() = singleton {
+    private fun Di.Scope.json() = singleton {
         Json {
             ignoreUnknownKeys = true
             isLenient = true
@@ -59,7 +59,7 @@ object SharedModule : DiModule {
         }
     }
 
-    private fun Di.DiScope.ktorClient() = singleton {
+    private fun Di.Scope.ktorClient() = singleton {
         val platform = Di.get<Platform>()
         platform.httpClient {
             install(ContentNegotiation) {
