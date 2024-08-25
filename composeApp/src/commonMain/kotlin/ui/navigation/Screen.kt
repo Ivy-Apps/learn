@@ -25,7 +25,7 @@ abstract class Screen {
 
     fun destroy() {
         job.cancel()
-        Di.clearInstances(FeatureScope)
+        Di.clear(FeatureScope)
     }
 
 
