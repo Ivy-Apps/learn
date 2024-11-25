@@ -17,7 +17,7 @@ import component.screenType
 import ui.screen.settings.SettingsViewEvent
 
 @Composable
-fun settingsContent(
+fun SettingsContent(
     onEvent: (SettingsViewEvent) -> Unit
 ) {
     LearnScaffold(
