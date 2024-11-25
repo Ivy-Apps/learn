@@ -12,7 +12,7 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose = "1.7.5"
 arrow = "1.2.4"
-compose-plugin = "1.8.0-dev1920"
+compose-plugin = "2.0.21"
 junit = "4.13.2"
 kotlin = "2.0.21"
 ktor = "2.3.10"
@@ -73,7 +73,7 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 mockk = { module = "io.mockk:mockk", version = "1.13.13" }
 plugin-androidApplication = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
 plugin-androidLibrary = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
-plugin-jetbrainsCompose = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-plugin" }
+plugin-jetbrainsCompose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "compose-plugin" }
 plugin-kotlinJvm = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlinMultiplatform = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
