@@ -1,7 +1,7 @@
 package ivy.learn.api
 
 import io.ktor.server.routing.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import ivy.data.source.model.TopicsResponse
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.endpoint

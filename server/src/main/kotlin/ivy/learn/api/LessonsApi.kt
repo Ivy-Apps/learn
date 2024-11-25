@@ -2,7 +2,7 @@ package ivy.learn.api
 
 import arrow.core.raise.ensureNotNull
 import io.ktor.server.routing.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.endpoint
 import ivy.learn.api.common.model.ServerError
