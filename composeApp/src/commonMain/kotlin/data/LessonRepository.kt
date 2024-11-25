@@ -1,36 +1,29 @@
 package data
 
 import arrow.core.Either
-import arrow.core.right
-import ivy.content.lesson.programmingfundamentals.programmingMathInDisguise
 import ivy.data.source.LessonDataSource
 import ivy.model.CourseId
-import ivy.model.ImageUrl
 import ivy.model.Lesson
 import ivy.model.LessonId
 import kotlinx.coroutines.withContext
 import util.DispatchersProvider
 
-class LessonRepository(
+class LessonRepositoryImpl(
     private val dispatchers: DispatchersProvider,
     private val datasource: LessonDataSource,
-) {
-    private val fakeLessonEnabled = true
+) : LessonRepository {
 
-    suspend fun fetchLesson(
+    override suspend fun fetchLesson(
         course: CourseId,
         lesson: LessonId
     ): Either<String, Lesson> = withContext(dispatchers.io) {
-        fakeLesson()?.right() ?: datasource.fetchLesson(course, lesson)
+        datasource.fetchLesson(course, lesson)
     }
+}
 
-    private fun fakeLesson(): Lesson? = if (fakeLessonEnabled) {
-        Lesson(
-            id = LessonId("fake"),
-            name = "Programming: Math in disguise",
-            tagline = "",
-            image = ImageUrl(""),
-            content = programmingMathInDisguise(),
-        )
-    } else null
+interface LessonRepository {
+    suspend fun fetchLesson(
+        course: CourseId,
+        lesson: LessonId
+    ): Either<String, Lesson>
 }
