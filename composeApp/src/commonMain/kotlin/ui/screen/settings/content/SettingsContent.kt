@@ -15,11 +15,9 @@ import component.ScreenType.*
 import component.button.PrimaryButton
 import component.screenType
 import ui.screen.settings.SettingsViewEvent
-import ui.screen.settings.SettingsViewState
 
 @Composable
 fun settingsContent(
-    viewState: SettingsViewState,
     onEvent: (SettingsViewEvent) -> Unit
 ) {
     LearnScaffold(
