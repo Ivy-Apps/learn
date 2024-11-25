@@ -14,8 +14,6 @@ import component.LearnScaffold
 import component.ScreenType.*
 import component.button.PrimaryButton
 import component.screenType
-import ui.screen.course.CourseViewEvent
-import ui.screen.course.CourseViewState
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
 
