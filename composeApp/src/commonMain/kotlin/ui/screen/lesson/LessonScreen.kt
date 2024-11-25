@@ -3,6 +3,7 @@ package ui.screen.lesson
 import androidx.compose.runtime.Composable
 import ivy.di.Di
 import ivy.di.Di.register
+import ivy.di.autowire.autoWire
 import ivy.model.CourseId
 import ivy.model.LessonId
 import ui.navigation.Screen
@@ -19,14 +20,14 @@ class LessonScreen(
     override val path: String = "lesson"
 
     override fun onDi(): Di.Scope.() -> Unit = {
-        register { LessonTreeManager() }
-        register { LessonViewStateMapper(Di.get(), Di.get()) }
-        register { OnBackClickEventHandler(Di.get()) }
-        register { OnContinueClickEventHandler(Di.get()) }
-        register { QuestionViewEventHandler(Di.get()) }
-        register { OnSoundClickEventHandler(Di.get()) }
-        register { OnFinishClickEventHandler(Di.get(), Di.get()) }
-        register { OnChoiceClickEventHandler(Di.get()) }
+        autoWire(::LessonTreeManager)
+        autoWire(::LessonViewStateMapper)
+        autoWire(::OnBackClickEventHandler)
+        autoWire(::OnContinueClickEventHandler)
+        autoWire(::QuestionViewEventHandler)
+        autoWire(::OnSoundClickEventHandler)
+        autoWire(::OnFinishClickEventHandler)
+        autoWire(::OnChoiceClickEventHandler)
         register {
             LessonViewModel(
                 courseId = courseId,

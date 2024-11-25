@@ -3,6 +3,7 @@ package ui.screen.course
 import androidx.compose.runtime.Composable
 import ivy.di.Di
 import ivy.di.Di.register
+import ivy.di.autowire.autoWire
 import ivy.model.CourseId
 import ui.navigation.Screen
 import ui.screen.course.composable.CourseContent
@@ -15,7 +16,7 @@ class CourseScreen(
     override val path: String = "course"
 
     override fun onDi(): Di.Scope.() -> Unit = {
-        register { CourseViewStateMapper() }
+        autoWire(::CourseViewStateMapper)
         register {
             CourseViewModel(
                 courseId = courseId,
