@@ -23,5 +23,16 @@ object DataModule : Di.Module {
                 Di.get<LessonRepositoryImpl>()
             }
         }
+        bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
+    }
+}
+
+inline fun <reified Base : Any, reified Impl : Base, reified Fake : Base> Di.Scope.bindWithFake() {
+    register<Base> {
+        if (Di.get<AppConfiguration>().fakesEnabled) {
+            Di.get<Fake>()
+        } else {
+            Di.get<Impl>()
+        }
     }
 }

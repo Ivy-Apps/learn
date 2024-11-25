@@ -2,7 +2,7 @@ package di
 
 import ivy.di.Di
 import ivy.di.Di.register
-import ivy.di.Di.singleton
+import ivy.di.autowire.autoWireSingleton
 import systemNavigation
 import ui.navigation.Navigation
 import util.DispatchersProvider
@@ -13,7 +13,7 @@ object AppModule : Di.Module {
     override fun init() {
         Di.appScope {
             register { systemNavigation() }
-            singleton { Navigation(Di.get()) }
+            autoWireSingleton(::Navigation)
             register<DispatchersProvider> { DispatchersProviderImpl() }
         }
     }

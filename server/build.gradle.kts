@@ -1,9 +1,9 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm")
-    id("io.ktor.plugin")
-    id("org.jetbrains.kotlin.plugin.serialization")
+    alias(libs.plugins.kotlinJvm)
+    alias(libs.plugins.ktor)
+    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.ksp)
     application
-    id("com.google.devtools.ksp")
 }
 
 group = "ivy.learn"
@@ -41,7 +41,7 @@ dependencies {
     implementation(libs.ktor.serialization.json)
     implementation(libs.bundles.ktor.client.common)
     implementation(libs.ktor.client.java)
-    testImplementation(libs.ktor.server.tests)
+
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.bundles.test)
