@@ -52,3 +52,5 @@ common/build/
 
 # Ignore local.properties file typically used for Android SDK path
 local.properties
+
+.kotlin
