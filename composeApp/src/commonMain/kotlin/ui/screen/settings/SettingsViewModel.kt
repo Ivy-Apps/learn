@@ -27,7 +27,12 @@ class SettingsViewModel(
     override fun onEvent(event: SettingsViewEvent) {
         when (event) {
             SettingsViewEvent.OnBackClick -> handleBackClick()
+            SettingsViewEvent.OnPremiumClick -> handlePremiumClick()
             is SettingsViewEvent.OnSoundsEnabledChange -> handleSoundsEnabledChange(event)
+            SettingsViewEvent.OnPrivacyClick -> handlePrivacyClick()
+            SettingsViewEvent.OnDeleteAccountClick -> handleDeleteAccountClick()
+            SettingsViewEvent.OnTermsOfUseClick -> handleTermsOfUseClick()
+            SettingsViewEvent.OnPrivacyPolicyClick -> handlePrivacyPolicyClick()
         }
     }
 
@@ -35,7 +40,27 @@ class SettingsViewModel(
         navigation.back()
     }
 
+    private fun handlePremiumClick() {
+        // TODO - handle event
+    }
+
     private fun handleSoundsEnabledChange(event: SettingsViewEvent.OnSoundsEnabledChange) {
         soundsEnabled = event.enabled
+    }
+
+    private fun handlePrivacyClick() {
+        // TODO - handle event
+    }
+
+    private fun handleDeleteAccountClick() {
+        // TODO - handle event
+    }
+
+    private fun handleTermsOfUseClick() {
+        // TODO - handle event
+    }
+
+    private fun handlePrivacyPolicyClick() {
+        // TODO - handle event
     }
 }
