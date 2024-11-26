@@ -51,7 +51,9 @@ fun SettingsContent(
                 PrimaryButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Premium",
-                    onClick = {}
+                    onClick = {
+                        onEvent(SettingsViewEvent.OnPremiumClick)
+                    }
                 )
                 Spacer(Modifier.height(16.dp))
             }
@@ -83,7 +85,9 @@ fun SettingsContent(
                 PrimaryButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Privacy",
-                    onClick = {}
+                    onClick = {
+                        onEvent(SettingsViewEvent.OnPrivacyClick)
+                    }
                 )
                 Spacer(Modifier.height(16.dp))
             }
@@ -91,7 +95,9 @@ fun SettingsContent(
                 DeleteAccountButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Delete account",
-                    onClick = {}
+                    onClick = {
+                        onEvent(SettingsViewEvent.OnDeleteAccountClick)
+                    }
                 )
                 Spacer(Modifier.height(16.dp))
             }
@@ -100,13 +106,17 @@ fun SettingsContent(
                     PrimaryButton(
                         modifier = Modifier.fillMaxWidth(),
                         text = "Terms of use",
-                        onClick = {}
+                        onClick = {
+                            onEvent(SettingsViewEvent.OnTermsOfUseClick)
+                        }
                     )
                     Spacer(Modifier.weight(1f))
                     PrimaryButton(
                         modifier = Modifier.fillMaxWidth(),
                         text = "Privacy policy",
-                        onClick = {}
+                        onClick = {
+                            onEvent(SettingsViewEvent.OnPrivacyPolicyClick)
+                        }
                     )
                 }
             }
