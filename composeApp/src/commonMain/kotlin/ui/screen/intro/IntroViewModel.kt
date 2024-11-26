@@ -1,12 +1,11 @@
 package ui.screen.intro
 
 import androidx.compose.runtime.Composable
+import domain.GoogleAuthenticationUseCase
 import ui.ComposeViewModel
-import ui.navigation.Navigation
-import ui.screen.home.HomeScreen
 
 class IntroViewModel(
-    private val navigation: Navigation
+    private val googleAuthenticationUseCase: GoogleAuthenticationUseCase,
 ) : ComposeViewModel<IntroViewState, IntroViewEvent> {
     @Composable
     override fun viewState(): IntroViewState {
@@ -20,6 +19,6 @@ class IntroViewModel(
     }
 
     private fun handleContinueClick() {
-        navigation.navigate(HomeScreen())
+        googleAuthenticationUseCase.loginWithGoogle()
     }
 }

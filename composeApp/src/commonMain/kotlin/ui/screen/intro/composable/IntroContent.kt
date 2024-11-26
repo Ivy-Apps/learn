@@ -54,7 +54,7 @@ private fun ContinueButton(
 ) {
     CtaButton(
         modifier = modifier,
-        text = "LET'S GO!",
+        text = "Continue with Google",
         onClick = onClick
     )
 }
