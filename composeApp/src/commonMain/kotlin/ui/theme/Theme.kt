@@ -31,21 +31,18 @@ val MaterialTheme.colorsExt: ExtendedColors
     get() = if (MaterialTheme.colors.isLight) {
         ExtendedColors(
             backgroundVariant = Dark,
-            onBackgroundVariant = Color.White,
-            error = Red
+            onBackgroundVariant = Color.White
         )
     } else {
         ExtendedColors(
             backgroundVariant = Light,
-            onBackgroundVariant = Color.Black,
-            error = Red
+            onBackgroundVariant = Color.Black
         )
     }
 
 data class ExtendedColors(
     val backgroundVariant: Color,
-    val onBackgroundVariant: Color,
-    val error: Color
+    val onBackgroundVariant: Color
 )
 
 private val DarkColorScheme = darkColors(

@@ -154,8 +154,8 @@ private fun DeleteAccountButton(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colorsExt.error,
-            contentColor = MaterialTheme.colorsExt.error
+            backgroundColor = MaterialTheme.colors.error,
+            contentColor = MaterialTheme.colors.error
         )
     ) {
         Text(text)
