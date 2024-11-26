@@ -17,6 +17,9 @@ class SettingsScreen : Screen() {
 
     @Composable
     override fun Content() {
-        SettingsContent(onEvent = viewModel::onEvent)
+        SettingsContent(
+            viewState = viewModel.viewState(),
+            onEvent = viewModel::onEvent
+        )
     }
 }
