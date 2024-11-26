@@ -1,10 +1,8 @@
 package ui.screen.settings.content
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,10 +12,14 @@ import component.LearnScaffold
 import component.ScreenType.*
 import component.button.PrimaryButton
 import component.screenType
+import component.text.SubTitle
+import component.text.Title
 import ui.screen.settings.SettingsViewEvent
+import ui.screen.settings.SettingsViewState
 
 @Composable
 fun SettingsContent(
+    viewState: SettingsViewState,
     onEvent: (SettingsViewEvent) -> Unit
 ) {
     LearnScaffold(
@@ -44,7 +46,31 @@ fun SettingsContent(
                 end = horizontalPadding,
             )
         ) {
-            PrimaryButton(text = "Test", onClick = {})
+            item(key = "premium") {
+                PrimaryButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Premium",
+                    onClick = {}
+                )
+                Spacer(Modifier.height(16.dp))
+            }
+            item(key = "app") {
+                Title("App")
+                Spacer(Modifier.height(12.dp))
+                Row {
+                    SubTitle(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "Sounds",
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Switch(
+                        checked = viewState.soundsEnabled,
+                        onCheckedChange = {
+                            onEvent(SettingsViewEvent.OnSoundsEnabledChange(it))
+                        },
+                    )
+                }
+            }
         }
     }
 }
