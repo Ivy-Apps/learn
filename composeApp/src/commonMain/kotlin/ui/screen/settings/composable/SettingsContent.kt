@@ -1,8 +1,9 @@
 package ui.screen.settings.content
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Switch
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,10 +13,10 @@ import component.LearnScaffold
 import component.ScreenType.*
 import component.button.PrimaryButton
 import component.screenType
-import component.text.SubTitle
 import component.text.Title
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
+import ui.theme.colorsExt
 
 @Composable
 fun SettingsContent(
@@ -58,19 +59,95 @@ fun SettingsContent(
                 Title("App")
                 Spacer(Modifier.height(12.dp))
                 Row {
-                    SubTitle(
+                    NeutralButton(
+                        modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
+                        onClick = {
+                            onEvent(SettingsViewEvent.OnSoundsEnabledChange(!viewState.soundsEnabled))
+                        },
+                        content = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("Sounds")
+                                Spacer(Modifier.weight(1f))
+                                Switch(
+                                    checked = viewState.soundsEnabled,
+                                    onCheckedChange = {
+                                        onEvent(SettingsViewEvent.OnSoundsEnabledChange(it))
+                                    },
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+            item(key = "privacy") {
+                PrimaryButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Privacy",
+                    onClick = {}
+                )
+                Spacer(Modifier.height(16.dp))
+            }
+            item(key = "delete-account") {
+                DeleteAccountButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Delete account",
+                    onClick = {}
+                )
+                Spacer(Modifier.height(16.dp))
+            }
+            item(key = "terms-privacy") {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    PrimaryButton(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "Sounds",
+                        text = "Terms of use",
+                        onClick = {}
                     )
                     Spacer(Modifier.weight(1f))
-                    Switch(
-                        checked = viewState.soundsEnabled,
-                        onCheckedChange = {
-                            onEvent(SettingsViewEvent.OnSoundsEnabledChange(it))
-                        },
+                    PrimaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "Privacy policy",
+                        onClick = {}
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun NeutralButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    Button(
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colorsExt.backgroundVariant,
+            contentColor = MaterialTheme.colorsExt.onBackgroundVariant
+        )
+    ) {
+        content()
+    }
+}
+
+@Composable
+private fun DeleteAccountButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Button(
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colorsExt.error,
+            contentColor = MaterialTheme.colorsExt.error
+        )
+    ) {
+        Text(text)
     }
 }
