@@ -9,6 +9,7 @@ import navigation.Navigation
 import ui.ComposeViewModel
 import ui.screen.course.CourseScreen
 import ui.screen.home.mapper.HomeViewStateMapper
+import ui.screen.settings.SettingsScreen
 
 class HomeViewModel(
     private val navigation: Navigation,
@@ -36,11 +37,16 @@ class HomeViewModel(
         when (event) {
             HomeViewEvent.OnBackClick -> handleBackClick()
             is HomeViewEvent.OnCourseClick -> handleCourseClick(event)
+            HomeViewEvent.OnSettingsClick -> handleSettingsClick()
         }
     }
 
     private fun handleBackClick() {
         navigation.navigateBack()
+    }
+
+    private fun handleSettingsClick() {
+        navigation.navigate(SettingsScreen())
     }
 
     private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {

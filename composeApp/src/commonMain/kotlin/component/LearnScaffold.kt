@@ -27,6 +27,7 @@ fun LearnScaffold(
     backButton: BackButton?,
     title: String,
     modifier: Modifier = Modifier,
+    actions: @Composable (Modifier) -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     topBarCenterContent: (@Composable () -> Unit)? = null,
@@ -39,6 +40,7 @@ fun LearnScaffold(
                 backButton = backButton,
                 title = title,
                 centerContent = topBarCenterContent,
+                actions = actions
             )
         },
         bottomBar = bottomBar,

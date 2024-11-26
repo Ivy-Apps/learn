@@ -26,4 +26,6 @@ sealed interface HomeViewEvent {
         val id: CourseId,
         val name: String,
     ) : HomeViewEvent
+
+    data object OnSettingsClick : HomeViewEvent
 }

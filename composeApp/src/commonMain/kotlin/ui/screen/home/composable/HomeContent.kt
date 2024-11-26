@@ -7,10 +7,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.*
+import component.button.SecondaryButton
 import ivy.model.CourseId
 import ui.screen.home.HomeItemViewState
 import ui.screen.home.HomeViewEvent
@@ -27,7 +30,17 @@ fun HomeContent(
                 onEvent(HomeViewEvent.OnBackClick)
             }
         ),
-        title = "Learn"
+        title = "Learn",
+        actions = {
+            // TODO - update button
+            SecondaryButton(
+                text = "",
+                icon = Icons.Filled.Settings,
+                onClick = {
+                    onEvent(HomeViewEvent.OnSettingsClick)
+                }
+            )
+        }
     ) { contentPadding ->
         val columnsCount = when (screenType()) {
             ScreenType.Mobile -> 1
