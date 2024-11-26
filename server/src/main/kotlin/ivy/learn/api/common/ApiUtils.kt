@@ -30,5 +30,25 @@ inline fun <reified T : Any> Routing.getEndpoint(
     }
 }
 
+@IvyServerDsl
+inline fun Routing.getEndpointBase(
+    path: String,
+    crossinline handler: suspend Raise<ServerError>.(RoutingCall) -> Unit
+) {
+    get(path) {
+        either {
+            handler(call)
+        }.onLeft { error ->
+            call.respond(
+                status = when (error) {
+                    is ServerError.BadRequest -> HttpStatusCode.BadRequest
+                    is ServerError.Unknown -> HttpStatusCode.InternalServerError
+                },
+                message = ServerErrorResponse(error.msg)
+            )
+        }
+    }
+}
+
 @DslMarker
 annotation class IvyServerDsl

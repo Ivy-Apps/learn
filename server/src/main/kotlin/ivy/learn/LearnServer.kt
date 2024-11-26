@@ -10,7 +10,9 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
 import ivy.di.Di
 import ivy.di.Di.register
+import ivy.di.autowire.autoWire
 import ivy.learn.api.*
+import ivy.learn.api.common.Api
 import ivy.learn.data.database.Database
 import kotlinx.serialization.json.Json
 
@@ -18,22 +20,24 @@ class LearnServer(
     private val database: Database,
     private val configurationProvider: ServerConfigurationProvider,
 ) {
-    private val apis by lazy {
+    private val apis: Set<Api> by lazy {
         setOf(
             Di.get<AnalyticsApi>(),
             Di.get<LessonsApi>(),
             Di.get<StatusApi>(),
             Di.get<CoursesApi>(),
             Di.get<TopicsApi>(),
+            Di.get<GoogleAuthenticationApi>(),
         )
     }
 
     private fun injectDependencies() = Di.appScope {
-        register { AnalyticsApi() }
-        register { LessonsApi(Di.get()) }
-        register { StatusApi() }
-        register { TopicsApi(Di.get(), Di.get()) }
-        register { CoursesApi(Di.get(), Di.get()) }
+        autoWire(::AnalyticsApi)
+        autoWire(::LessonsApi)
+        autoWire(::StatusApi)
+        autoWire(::TopicsApi)
+        autoWire(::CoursesApi)
+        autoWire(::GoogleAuthenticationApi)
     }
 
     fun init(ktorApp: Application): Either<String, Unit> = either {
