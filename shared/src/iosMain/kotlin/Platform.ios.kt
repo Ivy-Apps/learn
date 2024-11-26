@@ -18,6 +18,10 @@ class IOSPlatform : Platform {
     override fun playSound(soundUrl: String) {
         // TODO: Implement
     }
+
+    override fun getUrlParam(key: String): String? {
+        return null
+    }
 }
 
 

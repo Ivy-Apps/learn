@@ -5,6 +5,7 @@ interface Platform {
     fun log(level: LogLevel, msg: String)
     fun httpClient(config: HttpClientConfig<*>.() -> Unit = {}): HttpClient
     fun playSound(soundUrl: String)
+    fun getUrlParam(key: String): String?
 }
 
 enum class LogLevel {

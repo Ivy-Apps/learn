@@ -27,7 +27,8 @@ class GoogleAuthenticationApi : Api {
             // TODO: 1. Validate authorization code
             // TODO: 2. Created session token
             val sessionToken = UUID.randomUUID().toString()
-            call.respondRedirect("${IvyUrls.frontEnd}?sessionToken=$sessionToken")
+            val frontEndUrl = IvyUrls.debugFrontEnd
+            call.respondRedirect("${frontEndUrl}?${IvyConstants.SessionTokenParam}=$sessionToken")
         }
     }
 

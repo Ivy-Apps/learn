@@ -17,6 +17,10 @@ class JVMPlatform: Platform {
     override fun playSound(soundUrl: String) {
         // TODO: Implement
     }
+
+    override fun getUrlParam(key: String): String? {
+        return null
+    }
 }
 
 actual fun platform(): Platform = JVMPlatform()
