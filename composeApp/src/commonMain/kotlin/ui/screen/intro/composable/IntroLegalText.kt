@@ -9,6 +9,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import ivy.IvyUrls
 
 @Composable
 fun IntroLegalText(
@@ -19,8 +20,10 @@ fun IntroLegalText(
         withStyle(SpanStyle(MaterialTheme.colors.onBackground)) {
             append("By continuing, you agree to our ")
         }
-        // TODO: Update the URL to the correct terms of use URL
-        pushStringAnnotation(tag = "URL", annotation = "https://www.example.com/terms")
+        pushStringAnnotation(
+            tag = "URL",
+            annotation = IvyUrls.tos
+        )
         withStyle(
             style = SpanStyle(
                 textDecoration = TextDecoration.Underline,
@@ -33,8 +36,10 @@ fun IntroLegalText(
         withStyle(SpanStyle(MaterialTheme.colors.onBackground)) {
             append(" and ")
         }
-        // TODO: Update the URL to the correct privacy policy URL
-        pushStringAnnotation(tag = "URL", annotation = "https://www.example.com/privacy")
+        pushStringAnnotation(
+            tag = "URL",
+            annotation = IvyUrls.privacy
+        )
         withStyle(
             style = SpanStyle(
                 textDecoration = TextDecoration.Underline,
