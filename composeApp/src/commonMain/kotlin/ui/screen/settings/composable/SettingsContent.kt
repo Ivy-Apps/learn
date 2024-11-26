@@ -1,6 +1,7 @@
 package ui.screen.settings.content
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -60,26 +61,24 @@ fun SettingsContent(
             item(key = "app") {
                 Title("App")
                 Spacer(Modifier.height(12.dp))
-                Row {
-                    NeutralButton(
-                        modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
-                        onClick = {
-                            onEvent(SettingsViewEvent.OnSoundsEnabledChange(!viewState.soundsEnabled))
-                        },
-                        content = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("Sounds")
-                                Spacer(Modifier.weight(1f))
-                                Switch(
-                                    checked = viewState.soundsEnabled,
-                                    onCheckedChange = {
-                                        onEvent(SettingsViewEvent.OnSoundsEnabledChange(it))
-                                    },
-                                )
-                            }
+                NeutralButton(
+                    modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
+                    onClick = {
+                        onEvent(SettingsViewEvent.OnSoundsEnabledChange(!viewState.soundsEnabled))
+                    },
+                    content = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("Sounds")
+                            Spacer(Modifier.weight(1f))
+                            Switch(
+                                checked = viewState.soundsEnabled,
+                                onCheckedChange = {
+                                    onEvent(SettingsViewEvent.OnSoundsEnabledChange(it))
+                                },
+                            )
                         }
-                    )
-                }
+                    }
+                )
             }
             item(key = "privacy") {
                 PrimaryButton(
@@ -103,20 +102,18 @@ fun SettingsContent(
             }
             item(key = "terms-privacy") {
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    PrimaryButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "Terms of use",
-                        onClick = {
+                    Text(
+                        modifier = Modifier.clickable {
                             onEvent(SettingsViewEvent.OnTermsOfUseClick)
-                        }
+                        },
+                        text = "Terms of use",
                     )
                     Spacer(Modifier.weight(1f))
-                    PrimaryButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "Privacy policy",
-                        onClick = {
+                    Text(
+                        modifier = Modifier.clickable {
                             onEvent(SettingsViewEvent.OnPrivacyPolicyClick)
-                        }
+                        },
+                        text = "Privacy policy",
                     )
                 }
             }
@@ -155,7 +152,7 @@ private fun DeleteAccountButton(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.error,
-            contentColor = MaterialTheme.colors.error
+            contentColor = MaterialTheme.colors.onError
         )
     ) {
         Text(text)
