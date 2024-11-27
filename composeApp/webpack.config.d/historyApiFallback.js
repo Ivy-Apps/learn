@@ -1,1 +1,3 @@
-config.devServer.historyApiFallback = true;
+if (config.devServer) {
+    config.devServer.historyApiFallback = true;
+}
