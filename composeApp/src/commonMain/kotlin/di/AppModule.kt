@@ -7,8 +7,8 @@ import ivy.data.ServerUrlProvider
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.autowire.autoWireSingleton
-import systemNavigation
-import ui.navigation.Navigation
+import navigation.Navigation
+import navigation.systemNavigation
 import util.DispatchersProvider
 import util.DispatchersProviderImpl
 

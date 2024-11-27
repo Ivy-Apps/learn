@@ -5,8 +5,8 @@ import Platform
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import domain.GoogleAuthenticationUseCase
+import navigation.Navigation
 import ui.ComposeViewModel
-import ui.navigation.Navigation
 import ui.screen.home.HomeScreen
 
 class IntroViewModel(
@@ -19,7 +19,7 @@ class IntroViewModel(
         LaunchedEffect(Unit) {
             platform.getUrlParam(IvyConstants.SessionTokenParam)
                 ?.let { sessionToken ->
-                    navigation.navigate(HomeScreen())
+                    navigation.navigateTo(HomeScreen())
                 }
         }
         return IntroViewState()

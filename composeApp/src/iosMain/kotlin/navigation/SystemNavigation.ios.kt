@@ -1,4 +1,4 @@
-import ui.navigation.Screen
+package navigation
 
 class IOSSystemNavigation : SystemNavigation {
     override fun navigateTo(screen: Screen) {}

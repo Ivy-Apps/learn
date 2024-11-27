@@ -10,8 +10,9 @@ import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.SharedModule
 import kotlinx.coroutines.flow.collectLatest
+import navigation.Navigation
+import navigation.SystemNavigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ui.navigation.Navigation
 import ui.theme.LearnTheme
 
 @Composable
@@ -46,8 +47,8 @@ fun App() {
 private fun NavGraph() {
     val navigation = remember { Di.get<Navigation>() }
     LaunchedEffect(Unit) {
-        Di.get<SystemNavigation>().routeChange.collectLatest {
-            Di.get<Platform>().log(LogLevel.Info, "Route: ${it.route} with ${it.params}")
+        Di.get<SystemNavigation>().currentRoute.collectLatest {
+            Di.get<Platform>().log(LogLevel.Info, "Route: ${it.path} with ${it.params}")
         }
     }
 

@@ -1,23 +1,55 @@
 package ui.screen.lesson
 
 import androidx.compose.runtime.Composable
+import arrow.core.Option
+import arrow.core.raise.option
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.autowire.autoWire
 import ivy.model.CourseId
 import ivy.model.LessonId
-import ui.navigation.Screen
+import navigation.Route
+import navigation.Router
+import navigation.Screen
 import ui.screen.lesson.composable.LessonContent
 import ui.screen.lesson.handler.*
 import ui.screen.lesson.mapper.LessonTreeManager
 import ui.screen.lesson.mapper.LessonViewStateMapper
 
+object LessonRouter : Router<LessonScreen> {
+    const val PATH = "lesson"
+    const val COURSE_ID = "courseId"
+    const val LESSON_ID = "lessonId"
+    const val LESSON_NAME = "lessonName"
+
+    override fun fromRoute(route: Route): Option<LessonScreen> = option {
+        ensure(route.path == PATH)
+        LessonScreen(
+            courseId = route[COURSE_ID].bind().let(::CourseId),
+            lessonId = route[LESSON_ID].bind().let(::LessonId),
+            lessonName = route[LESSON_NAME].bind()
+        )
+    }
+
+    override fun toRoute(screen: LessonScreen): Route {
+        return Route(
+            path = PATH,
+            params = mapOf(
+                COURSE_ID to screen.courseId.value,
+                LESSON_ID to screen.lessonId.value,
+                LESSON_NAME to screen.lessonName,
+            )
+        )
+    }
+
+}
+
 class LessonScreen(
-    private val courseId: CourseId,
-    private val lessonId: LessonId,
-    private val lessonName: String
+    val courseId: CourseId,
+    val lessonId: LessonId,
+    val lessonName: String
 ) : Screen() {
-    override val path: String = "lesson"
+    override fun toRoute(): Route = LessonRouter.toRoute(this)
 
     override fun onDi(): Di.Scope.() -> Unit = {
         autoWire(::LessonTreeManager)
