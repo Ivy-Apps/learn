@@ -50,7 +50,10 @@ jobs:
       
       - name: Build Web distribution
         run: ./gradlew :composeApp:jsBrowserDistribution
-      
+
+      - name: Copy index.html to 404.html
+        run: cp composeApp/build/dist/js/productionExecutable/index.html composeApp/build/dist/js/productionExecutable/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
