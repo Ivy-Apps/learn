@@ -15,6 +15,8 @@ abstract class Screen {
     private lateinit var job: CompletableJob
     protected lateinit var screenScope: CoroutineScope
 
+    fun toRoute() = "hello"
+
     protected abstract fun onDi(): Di.Scope.() -> Unit
 
     fun initialize() {

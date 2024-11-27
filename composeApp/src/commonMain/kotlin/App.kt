@@ -9,6 +9,7 @@ import domain.di.DomainModule
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.SharedModule
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.navigation.Navigation
 import ui.screen.intro.IntroScreen
@@ -48,6 +49,11 @@ private fun NavGraph() {
     LaunchedEffect(navigation) {
         // navigate to the initial screen
         navigation.navigate(IntroScreen())
+    }
+    LaunchedEffect(Unit) {
+        Di.get<SystemNavigation>().routeChange.collectLatest {
+            Di.get<Platform>().log(LogLevel.Info, "Route: ${it.route} with ${it.params}")
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
