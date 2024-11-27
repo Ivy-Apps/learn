@@ -24,6 +24,10 @@ class Navigation(
         systemNavigation.navigateTo(screen)
     }
 
+    fun replaceWith(screen: Screen) {
+        systemNavigation.replaceWith(screen)
+    }
+
     fun navigateBack() {
         systemNavigation.navigateBack()
     }

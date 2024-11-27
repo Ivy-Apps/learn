@@ -14,32 +14,38 @@ class WebSystemNavigation : SystemNavigation {
         setupRouteChangeListener()
     }
 
-    override fun navigateTo(screen: Screen) {
-        val route = screen.toRoute()
-        val params = buildString {
-            for ((key, value) in route.params) {
-                append(if (isEmpty()) '?' else '&')
-                append("$key=$value")
-            }
-        }
-        val fullPath = "${route.path}$params"
-
-        window.history.pushState(js("({})"), "", fullPath)
-        emitCurrentRoute() // Update the route immediately
-    }
-
-    override fun navigateBack() {
-        window.history.back() // Let the browser handle back navigation
-        // No need to call emitCurrentRoute() here; the listener will handle it
-    }
 
     private fun setupRouteChangeListener() {
         // Listen for back/forward navigation using addEventListener
         window.addEventListener("popstate", {
             emitCurrentRoute()
         })
-
         // Emit the initial route on startup is already handled by initializing _routeChange
+    }
+
+    override fun navigateTo(screen: Screen) {
+        window.history.pushState(js("({})"), "", screen.toFullPath())
+        emitCurrentRoute() // Update the route immediately
+    }
+
+    override fun replaceWith(screen: Screen) {
+        window.history.replaceState(js("({})"), "", screen.toFullPath())
+    }
+
+    private fun Screen.toFullPath(): String {
+        val route = toRoute()
+        val params = buildString {
+            for ((key, value) in route.params) {
+                append(if (isEmpty()) '?' else '&')
+                append("$key=$value")
+            }
+        }
+        return "${route.path}$params"
+    }
+
+    override fun navigateBack() {
+        window.history.back() // Let the browser handle back navigation
+        // No need to call emitCurrentRoute() here; the listener will handle it
     }
 
     private fun emitCurrentRoute() {
