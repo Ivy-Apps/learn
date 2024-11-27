@@ -5,8 +5,8 @@ import arrow.core.identity
 import data.TopicsRepository
 import ivy.data.source.model.TopicsResponse
 import kotlinx.collections.immutable.persistentListOf
+import navigation.Navigation
 import ui.ComposeViewModel
-import ui.navigation.Navigation
 import ui.screen.course.CourseScreen
 import ui.screen.home.mapper.HomeViewStateMapper
 
@@ -40,10 +40,10 @@ class HomeViewModel(
     }
 
     private fun handleBackClick() {
-        navigation.back()
+        navigation.navigateBack()
     }
 
     private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {
-        navigation.navigate(CourseScreen(courseId = event.id, courseName = event.name))
+        navigation.navigateTo(CourseScreen(courseId = event.id, courseName = event.name))
     }
 }

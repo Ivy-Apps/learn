@@ -19,7 +19,7 @@ fi
 PORT=8081
 
 # Use lsof to check if the port is in use
-PID=$(sudo lsof -ti:$PORT)
+PID=$(lsof -ti:$PORT)
 
 # If a PID exists, kill the process
 if [ ! -z "$PID" ]; then

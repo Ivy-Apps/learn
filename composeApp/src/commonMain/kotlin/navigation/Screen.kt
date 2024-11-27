@@ -1,4 +1,4 @@
-package ui.navigation
+package navigation
 
 import androidx.compose.runtime.Composable
 import ivy.di.Di
@@ -10,22 +10,28 @@ import kotlinx.coroutines.SupervisorJob
 
 abstract class Screen {
 
-    abstract val path: String
-
     private lateinit var job: CompletableJob
     protected lateinit var screenScope: CoroutineScope
 
-    protected abstract fun onDi(): Di.Scope.() -> Unit
+    private var initialized = false
+
+    abstract fun toRoute(): Route
+
+    protected abstract fun Di.Scope.onDi()
 
     fun initialize() {
+        if (initialized) return
+
         job = SupervisorJob()
         screenScope = CoroutineScope(Dispatchers.Main + job)
-        onDi().invoke(FeatureScope)
+        FeatureScope.onDi()
+        initialized = true
     }
 
     fun destroy() {
         job.cancel()
         Di.clear(FeatureScope)
+        initialized = false
     }
 
 

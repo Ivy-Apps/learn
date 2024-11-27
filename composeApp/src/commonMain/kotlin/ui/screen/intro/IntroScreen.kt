@@ -1,15 +1,32 @@
 package ui.screen.intro
 
 import androidx.compose.runtime.Composable
+import arrow.core.Option
+import arrow.core.raise.option
 import ivy.di.Di
 import ivy.di.autowire.autoWire
-import ui.navigation.Screen
+import navigation.Route
+import navigation.Router
+import navigation.Screen
 import ui.screen.intro.composable.IntroContent
 
-class IntroScreen : Screen() {
-    override val path: String = "intro"
+object IntroRouter : Router<IntroScreen> {
+    const val PATH = ""
 
-    override fun onDi(): Di.Scope.() -> Unit = {
+    override fun fromRoute(route: Route): Option<IntroScreen> = option {
+        ensure(route.path == PATH)
+        IntroScreen()
+    }
+
+    override fun toRoute(screen: IntroScreen): Route {
+        return Route(PATH)
+    }
+}
+
+class IntroScreen : Screen() {
+    override fun toRoute(): Route = IntroRouter.toRoute(this)
+
+    override fun Di.Scope.onDi() {
         autoWire(::IntroViewModel)
     }
 

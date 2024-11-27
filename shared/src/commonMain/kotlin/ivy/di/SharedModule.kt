@@ -7,13 +7,14 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import ivy.data.HerokuServerUrlProvider
+import ivy.data.LocalServerUrlProvider
 import ivy.data.LottieAnimationLoader
-import ivy.data.ServerUrlProvider
 import ivy.data.source.CoursesDataSource
 import ivy.data.source.LessonDataSource
 import ivy.data.source.TopicsDataSource
 import ivy.di.Di.register
 import ivy.di.Di.singleton
+import ivy.di.autowire.autoWire
 import ivy.model.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -29,7 +30,8 @@ object SharedModule : Di.Module {
         singleton<Platform> { platform() }
         json()
         ktorClient()
-        register<ServerUrlProvider> { HerokuServerUrlProvider() }
+        autoWire(::HerokuServerUrlProvider)
+        autoWire(::LocalServerUrlProvider)
         register { LessonDataSource(Di.get(), Di.get()) }
         register { TopicsDataSource(Di.get(), Di.get()) }
         register { CoursesDataSource(Di.get(), Di.get()) }

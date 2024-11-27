@@ -6,6 +6,7 @@ import data.LessonRepository
 import data.LessonRepositoryImpl
 import data.TopicsRepository
 import data.fake.FakeLessonRepository
+import di.bindWithFake
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.autowire.autoWire
@@ -24,15 +25,5 @@ object DataModule : Di.Module {
             }
         }
         bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
-    }
-}
-
-inline fun <reified Base : Any, reified Impl : Base, reified Fake : Base> Di.Scope.bindWithFake() {
-    register<Base> {
-        if (Di.get<AppConfiguration>().fakesEnabled) {
-            Di.get<Fake>()
-        } else {
-            Di.get<Impl>()
-        }
     }
 }

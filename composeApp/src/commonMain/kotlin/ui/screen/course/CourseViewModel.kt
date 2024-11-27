@@ -7,8 +7,8 @@ import ivy.data.source.model.CourseResponse
 import ivy.model.CourseId
 import ivy.model.LessonId
 import kotlinx.collections.immutable.persistentListOf
+import navigation.Navigation
 import ui.ComposeViewModel
-import ui.navigation.Navigation
 import ui.screen.course.mapper.CourseViewStateMapper
 import ui.screen.lesson.LessonScreen
 
@@ -45,11 +45,11 @@ class CourseViewModel(
     }
 
     private fun handleBackClick() {
-        navigation.back()
+        navigation.navigateBack()
     }
 
     private fun handleLessonClick(lesson: CourseItemViewState.Lesson) {
-        navigation.navigate(
+        navigation.navigateTo(
             LessonScreen(
                 courseId = courseId,
                 lessonId = LessonId(lesson.id),
