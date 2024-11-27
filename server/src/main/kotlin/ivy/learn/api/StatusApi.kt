@@ -1,15 +1,18 @@
 package ivy.learn.api
 
 import io.ktor.server.routing.*
+import ivy.learn.ServerMode
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpoint
 import kotlinx.serialization.Serializable
 
-class StatusApi : Api {
+class StatusApi(
+    private val serverMode: ServerMode
+) : Api {
     override fun Routing.endpoints() {
-        getEndpoint("/hello") {
+        getEndpoint("/status") {
             HelloResponse(
-                message = "Hello, world!",
+                message = "Hello, world! (devMode = ${serverMode.devMode})",
                 time = System.currentTimeMillis(),
             )
         }

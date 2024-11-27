@@ -3,7 +3,7 @@ package ivy.learn.data.database
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.raise.either
-import ivy.learn.DatabaseConfig
+import ivy.learn.config.DatabaseConfig
 import ivy.learn.data.database.tables.AnalyticsEvents
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

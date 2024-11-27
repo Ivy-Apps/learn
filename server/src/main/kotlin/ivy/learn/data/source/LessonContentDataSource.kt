@@ -6,7 +6,7 @@ import arrow.core.right
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import ivy.learn.ServerConfiguration
+import ivy.learn.config.ServerConfiguration
 import ivy.model.CourseId
 import ivy.model.LessonContent
 import ivy.model.LessonId

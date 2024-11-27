@@ -14,6 +14,9 @@ fun main(args: Array<String>) {
 
     val port = System.getenv("PORT")?.toInt() ?: 8081
     println("Starting server on port $port...")
+    if (devMode) {
+        println("[WARNING][DEV MODE] Server running in dev mode!")
+    }
     embeddedServer(
         Netty,
         port = port,
@@ -35,5 +38,8 @@ fun initDi(devMode: Boolean) {
         )
     )
 }
+
+@JvmInline
+value class ServerMode(val devMode: Boolean)
 
 class ServerInitializationException(reason: String) : Exception("Server initialization failed: $reason")

@@ -13,6 +13,7 @@ import ivy.di.Di.register
 import ivy.di.autowire.autoWire
 import ivy.learn.api.*
 import ivy.learn.api.common.Api
+import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.data.database.Database
 import kotlinx.serialization.json.Json
 
