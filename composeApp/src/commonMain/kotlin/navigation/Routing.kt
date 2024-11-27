@@ -1,6 +1,7 @@
 package navigation
 
 import arrow.core.Option
+import ui.screen.course.CourseRouter
 import ui.screen.home.HomeRouter
 import ui.screen.intro.IntroRouter
 import ui.screen.lesson.LessonRouter
@@ -10,6 +11,7 @@ object Routing {
         IntroRouter,
         HomeRouter,
         LessonRouter,
+        CourseRouter,
     )
 
     fun resolve(route: Route): Screen? {
