@@ -1,12 +1,15 @@
 package navigation
 
+import Platform
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import ui.screen.NotFoundPage
 
 class Navigation(
-    private val systemNavigation: SystemNavigation
+    private val systemNavigation: SystemNavigation,
+    private val platform: Platform,
 ) {
     @Composable
     fun NavHost() {
@@ -14,7 +17,7 @@ class Navigation(
         val screen = remember(currentRoute) {
             Routing.resolve(currentRoute)?.also(Screen::initialize)
         }
-        screen?.Content()
+        screen?.Content() ?: NotFoundPage(currentRoute)
     }
 
     fun navigateTo(screen: Screen) {

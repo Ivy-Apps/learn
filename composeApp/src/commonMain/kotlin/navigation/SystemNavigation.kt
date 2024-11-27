@@ -1,5 +1,6 @@
 package navigation
 
+import androidx.compose.runtime.Immutable
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.some
@@ -11,6 +12,7 @@ interface SystemNavigation {
     fun navigateBack()
 }
 
+@Immutable
 data class Route(
     val path: String,
     val params: Map<String, String> = emptyMap(),

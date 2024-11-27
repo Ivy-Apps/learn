@@ -16,14 +16,13 @@ class WebSystemNavigation : SystemNavigation {
 
     override fun navigateTo(screen: Screen) {
         val route = screen.toRoute()
-        val fullPath = buildString {
-            append('/')
-            append(route.path)
+        val params = buildString {
             for ((key, value) in route.params) {
                 append(if (isEmpty()) '?' else '&')
                 append("$key=$value")
             }
         }
+        val fullPath = "${route.path}$params"
 
         window.history.pushState(js("({})"), "", fullPath)
         emitCurrentRoute() // Update the route immediately
