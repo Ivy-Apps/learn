@@ -22,7 +22,6 @@ object HomeRouter : Router<HomeScreen> {
     override fun toRoute(screen: HomeScreen): Route {
         return Route(path = PATH)
     }
-
 }
 
 class HomeScreen : Screen() {
