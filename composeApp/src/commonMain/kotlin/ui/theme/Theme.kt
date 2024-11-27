@@ -30,19 +30,25 @@ val MaterialTheme.colorsExt: ExtendedColors
     @ReadOnlyComposable
     get() = if (MaterialTheme.colors.isLight) {
         ExtendedColors(
+            success = Green,
+            onSuccess = Color.White,
             backgroundVariant = Dark,
-            onBackgroundVariant = Color.White
+            onBackgroundVariant = Color.White,
         )
     } else {
         ExtendedColors(
+            success = Green,
+            onSuccess = Color.White,
             backgroundVariant = Light,
-            onBackgroundVariant = Color.Black
+            onBackgroundVariant = Color.Black,
         )
     }
 
 data class ExtendedColors(
     val backgroundVariant: Color,
-    val onBackgroundVariant: Color
+    val onBackgroundVariant: Color,
+    val success: Color,
+    val onSuccess: Color
 )
 
 private val DarkColorScheme = darkColors(
