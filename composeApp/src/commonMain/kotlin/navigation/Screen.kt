@@ -17,14 +17,14 @@ abstract class Screen {
 
     abstract fun toRoute(): Route
 
-    protected abstract fun onDi(): Di.Scope.() -> Unit
+    protected abstract fun Di.Scope.onDi()
 
     fun initialize() {
         if (initialized) return
 
         job = SupervisorJob()
         screenScope = CoroutineScope(Dispatchers.Main + job)
-        onDi().invoke(FeatureScope)
+        FeatureScope.onDi()
         initialized = true
     }
 

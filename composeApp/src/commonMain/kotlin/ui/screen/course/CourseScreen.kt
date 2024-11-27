@@ -15,8 +15,8 @@ import ui.screen.course.mapper.CourseViewStateMapper
 
 object CourseRouter : Router<CourseScreen> {
     const val PATH = "course"
-    const val COURSE_ID = "courseId"
-    const val COURSE_NAME = "courseName"
+    const val COURSE_ID = "course_id"
+    const val COURSE_NAME = "course_name"
 
     override fun fromRoute(route: Route): Option<CourseScreen> = option {
         ensure(route.path == PATH)
@@ -43,7 +43,7 @@ class CourseScreen(
 ) : Screen() {
     override fun toRoute(): Route = CourseRouter.toRoute(this)
 
-    override fun onDi(): Di.Scope.() -> Unit = {
+    override fun Di.Scope.onDi() {
         autoWire(::CourseViewStateMapper)
         register {
             CourseViewModel(

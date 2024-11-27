@@ -18,9 +18,9 @@ import ui.screen.lesson.mapper.LessonViewStateMapper
 
 object LessonRouter : Router<LessonScreen> {
     const val PATH = "lesson"
-    const val COURSE_ID = "courseId"
-    const val LESSON_ID = "lessonId"
-    const val LESSON_NAME = "lessonName"
+    const val COURSE_ID = "course_id"
+    const val LESSON_ID = "lesson_id"
+    const val LESSON_NAME = "lesson_name"
 
     override fun fromRoute(route: Route): Option<LessonScreen> = option {
         ensure(route.path == PATH)
@@ -51,7 +51,7 @@ class LessonScreen(
 ) : Screen() {
     override fun toRoute(): Route = LessonRouter.toRoute(this)
 
-    override fun onDi(): Di.Scope.() -> Unit = {
+    override fun Di.Scope.onDi() {
         autoWire(::LessonTreeManager)
         autoWire(::LessonViewStateMapper)
         autoWire(::OnBackClickEventHandler)

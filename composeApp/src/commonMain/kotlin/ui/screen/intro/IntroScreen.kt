@@ -26,7 +26,7 @@ object IntroRouter : Router<IntroScreen> {
 class IntroScreen : Screen() {
     override fun toRoute(): Route = IntroRouter.toRoute(this)
 
-    override fun onDi(): Di.Scope.() -> Unit = {
+    override fun Di.Scope.onDi() {
         autoWire(::IntroViewModel)
     }
 

@@ -28,7 +28,7 @@ object HomeRouter : Router<HomeScreen> {
 class HomeScreen : Screen() {
     override fun toRoute(): Route = HomeRouter.toRoute(this)
 
-    override fun onDi(): Di.Scope.() -> Unit = {
+    override fun Di.Scope.onDi() {
         autoWire(::HomeViewStateMapper)
         autoWire(::HomeViewModel)
     }
