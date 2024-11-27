@@ -27,13 +27,19 @@ object CourseRouter : Router<CourseScreen> {
     }
 
     override fun toRoute(screen: CourseScreen): Route {
-        TODO("Not yet implemented")
+        return Route(
+            path = PATH,
+            params = mapOf(
+                COURSE_ID to screen.courseId.value,
+                COURSE_NAME to screen.courseName,
+            )
+        )
     }
 }
 
 class CourseScreen(
-    private val courseId: CourseId,
-    private val courseName: String,
+    val courseId: CourseId,
+    val courseName: String,
 ) : Screen() {
     override fun toRoute(): Route = CourseRouter.toRoute(this)
 

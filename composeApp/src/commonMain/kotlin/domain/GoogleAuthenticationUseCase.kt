@@ -4,11 +4,11 @@ import IvyConstants
 import androidx.compose.ui.platform.UriHandler
 import ivy.data.ServerUrlProvider
 
-class GoogleAuthenticationUseCase(
+class GoogleAuthenticationUseCaseImpl(
     private val uriHandler: UriHandler,
     private val serverUrlProvider: ServerUrlProvider,
-) {
-    fun loginWithGoogle() {
+) : GoogleAuthenticationUseCase {
+    override fun loginWithGoogle() {
         val clientId = IvyConstants.GoogleClientId
         val redirectUri = "${serverUrlProvider.serverUrl}${IvyConstants.GoogleAuthCallbackEndpoint}"
 
@@ -22,4 +22,8 @@ class GoogleAuthenticationUseCase(
 
         uriHandler.openUri(authUrl)
     }
+}
+
+interface GoogleAuthenticationUseCase {
+    fun loginWithGoogle()
 }
