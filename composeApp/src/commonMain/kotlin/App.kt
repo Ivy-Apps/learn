@@ -12,7 +12,6 @@ import ivy.di.SharedModule
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.navigation.Navigation
-import ui.screen.intro.IntroScreen
 import ui.theme.LearnTheme
 
 @Composable
@@ -46,10 +45,6 @@ fun App() {
 @Composable
 private fun NavGraph() {
     val navigation = remember { Di.get<Navigation>() }
-    LaunchedEffect(navigation) {
-        // navigate to the initial screen
-        navigation.navigate(IntroScreen())
-    }
     LaunchedEffect(Unit) {
         Di.get<SystemNavigation>().routeChange.collectLatest {
             Di.get<Platform>().log(LogLevel.Info, "Route: ${it.route} with ${it.params}")

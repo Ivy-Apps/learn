@@ -1,16 +1,13 @@
 import kotlinx.browser.window
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import ui.navigation.Screen
 
 class WebSystemNavigation : SystemNavigation {
 
-    private val _routeChange = MutableSharedFlow<RouteInfo>(replay = 1)
-    override val routeChange: SharedFlow<RouteInfo> = _routeChange
-
-    private val scope = MainScope() // Coroutine scope for emitting Flow updates
+    // Initialize with the current route
+    private val _routeChange = MutableStateFlow(getCurrentRouteInfo())
+    override val routeChange: StateFlow<RouteInfo> = _routeChange
 
     init {
         setupUrlChangeListener()
@@ -22,31 +19,32 @@ class WebSystemNavigation : SystemNavigation {
         val fullPath = "$path$params"
 
         window.history.pushState(js("({})"), "", fullPath)
-        emitCurrentRoute() // Emit route change for immediate updates
+        emitCurrentRoute() // Update the route immediately
     }
 
     override fun navigateBack() {
         window.history.back() // Let the browser handle back navigation
+        // No need to call emitCurrentRoute() here; the listener will handle it
     }
 
     private fun setupUrlChangeListener() {
-        // Listen for back/forward navigation
-        window.onpopstate = {
+        // Listen for back/forward navigation using addEventListener
+        window.addEventListener("popstate", {
             emitCurrentRoute()
-        }
+        })
 
-        // Emit the initial route on startup
-        emitCurrentRoute()
+        // Emit the initial route on startup is already handled by initializing _routeChange
     }
 
     private fun emitCurrentRoute() {
+        val routeInfo = getCurrentRouteInfo()
+        _routeChange.value = routeInfo // Update the StateFlow with the new route
+    }
+
+    private fun getCurrentRouteInfo(): RouteInfo {
         val route = window.location.pathname.trimStart('/')
         val params = parseParams(window.location.search)
-
-        val routeInfo = RouteInfo(route, params)
-        scope.launch {
-            _routeChange.emit(routeInfo) // Emit the current route info to the Flow
-        }
+        return RouteInfo(route, params)
     }
 
     private fun parseParams(query: String): Map<String, String> {
