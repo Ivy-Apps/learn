@@ -19,9 +19,6 @@ class GoogleAuthenticationApi(
     }
 
     private fun Routing.googleAuthCallback() {
-        get(IvyConstants.GoogleAuthCallbackEndpoint) {
-            call.parameters[""]
-        }
         getEndpointBase(IvyConstants.GoogleAuthCallbackEndpoint) { call ->
             val googleAuthCode = call.parameters["code"]?.let(::GoogleAuthorizationCode)
             ensureNotNull(googleAuthCode) {

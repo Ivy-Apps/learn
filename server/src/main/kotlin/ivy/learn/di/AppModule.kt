@@ -1,6 +1,7 @@
 package ivy.learn.di
 
 import ivy.di.Di
+import ivy.di.Di.bind
 import ivy.di.Di.register
 import ivy.di.autowire.autoWire
 import ivy.di.autowire.autoWireSingleton
@@ -13,7 +14,8 @@ import ivy.learn.config.ServerConfigurationProvider
 class AppModule(private val devMode: Boolean) : Di.Module {
     override fun init() = Di.appScope {
         register { ServerMode(devMode) }
-        register<Environment> { EnvironmentImpl() }
+        autoWire(::EnvironmentImpl)
+        bind<Environment, EnvironmentImpl>()
         autoWire(::ServerConfigurationProvider)
         autoWireSingleton(::LearnServer)
     }
