@@ -6,6 +6,7 @@ import ivy.di.Di
 import ivy.di.SharedModule
 import ivy.learn.data.di.DataModule
 import ivy.learn.di.AppModule
+import ivy.learn.domain.di.DomainModule
 
 fun main(args: Array<String>) {
     val devMode = "dev" in args
@@ -34,7 +35,8 @@ fun initDi(devMode: Boolean) {
         modules = setOf(
             SharedModule,
             DataModule,
-            AppModule(devMode = devMode)
+            AppModule(devMode = devMode),
+            DomainModule,
         )
     )
 }

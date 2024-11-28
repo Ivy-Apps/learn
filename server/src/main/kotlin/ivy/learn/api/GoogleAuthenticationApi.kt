@@ -8,12 +8,14 @@ import ivy.IvyUrls
 import ivy.learn.ServerMode
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointBase
+import ivy.learn.api.common.model.ServerError
 import ivy.learn.api.common.model.ServerError.BadRequest
+import ivy.learn.domain.auth.AuthenticationService
 import ivy.learn.domain.auth.GoogleAuthorizationCode
-import java.util.*
 
 class GoogleAuthenticationApi(
     private val serverMode: ServerMode,
+    private val authService: AuthenticationService,
 ) : Api {
     override fun Routing.endpoints() {
         googleAuthCallback()
@@ -25,9 +27,10 @@ class GoogleAuthenticationApi(
             ensureNotNull(googleAuthCode) {
                 BadRequest("Google authorization code is required as 'code' parameter.")
             }
-            // TODO: 1. Validate authorization code
-            // TODO: 2. Created session token
-            val sessionToken = UUID.randomUUID().toString()
+            val auth = authService.authenticate(googleAuthCode)
+                .mapLeft(ServerError::Unknown)
+                .bind()
+            val sessionToken = auth.session.token
             val frontEndUrl = if (serverMode.devMode) {
                 IvyUrls.devFrontEnd
             } else {
