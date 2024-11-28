@@ -36,6 +36,4 @@ class GoogleAuthenticationApi(
         }
     }
 
-    @JvmInline
-    value class GoogleAuthorizationCode(val value: String)
 }

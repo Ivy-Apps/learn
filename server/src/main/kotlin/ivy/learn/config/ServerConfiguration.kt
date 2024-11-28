@@ -11,7 +11,7 @@ data class DatabaseConfig(
     val password: String
 )
 
-data class GoogleOAuth(
+data class GoogleOAuthConfig(
     val clientId: String,
     val clientSecret: String,
 )
@@ -19,7 +19,7 @@ data class GoogleOAuth(
 data class ServerConfiguration(
     val database: DatabaseConfig,
     val privateContentGitHubPat: String,
-    val googleOAuth: GoogleOAuth,
+    val googleOAuth: GoogleOAuthConfig,
 )
 
 class ServerConfigurationProvider(
@@ -35,7 +35,7 @@ class ServerConfigurationProvider(
                 password = environment.getVariable("IVY_LEARN_DB_PASSWORD").bind()
             ),
             privateContentGitHubPat = environment.getVariable("IVY_LEARN_GITHUB_PAT").bind(),
-            googleOAuth = GoogleOAuth(
+            googleOAuth = GoogleOAuthConfig(
                 clientId = environment.getVariable("IVY_GOOGLE_OAUTH_CLIENT_ID").bind(),
                 clientSecret = environment.getVariable("IVY_GOOGLE_OAUTH_CLIENT_SECRET").bind(),
             )
