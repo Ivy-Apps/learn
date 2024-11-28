@@ -20,10 +20,10 @@ sealed interface ButtonAppearance {
     data class Text(override val style: ButtonStyle) : ButtonAppearance
 }
 
-enum class ButtonStyle {
-    Primary,
-    Secondary,
-    Neutral
+sealed interface ButtonStyle {
+    data object Primary : ButtonStyle
+    data object Secondary : ButtonStyle
+    data object Neutral : ButtonStyle
 }
 
 @Composable
@@ -63,7 +63,7 @@ fun IvyButton(
 }
 
 @Composable
-fun ButtonWrapper(
+private fun ButtonWrapper(
     appearance: ButtonAppearance,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -113,35 +113,66 @@ fun ButtonWrapper(
     }
 }
 
-fun ButtonAppearance.buttonColors(): ButtonColors {
+private fun ButtonAppearance.buttonColors(): ButtonColors {
     return when (this) {
-        is ButtonAppearance.Filled -> {
-            when (this.style) {
-                ButtonStyle.Primary -> ButtonDefaults.buttonColors()
-                ButtonStyle.Secondary -> ButtonDefaults.buttonColors()
-                ButtonStyle.Neutral -> ButtonDefaults.buttonColors()
-            }
-        }
-
-        is ButtonAppearance.Outlined -> {
-            when (this.style) {
-                ButtonStyle.Primary -> ButtonDefaults.outlinedButtonColors()
-                ButtonStyle.Secondary -> ButtonDefaults.outlinedButtonColors()
-                ButtonStyle.Neutral -> ButtonDefaults.outlinedButtonColors()
-            }
-        }
-
-        is ButtonAppearance.Text -> {
-            when (this.style) {
-                ButtonStyle.Primary -> ButtonDefaults.textButtonColors()
-                ButtonStyle.Secondary -> ButtonDefaults.textButtonColors()
-                ButtonStyle.Neutral -> ButtonDefaults.textButtonColors()
-            }
-        }
+        is ButtonAppearance.Filled -> this.colors()
+        is ButtonAppearance.Outlined -> this.colors()
+        is ButtonAppearance.Text -> this.colors()
     }
 }
 
-fun ButtonStyle.borderColor(): Color {
+private fun ButtonAppearance.Filled.colors(): ButtonColors {
+    return when (this.style) {
+        ButtonStyle.Primary -> ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary
+        )
+        ButtonStyle.Secondary -> ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary
+        )
+        ButtonStyle.Neutral -> ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colorsExt.backgroundVariant,
+            contentColor = MaterialTheme.colorsExt.onBackgroundVariant
+        )
+    }
+}
+
+private fun ButtonAppearance.Outlined.colors(): ButtonColors {
+    return when (this.style) {
+        ButtonStyle.Primary -> ButtonDefaults.outlinedButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colors.primary
+        )
+        ButtonStyle.Secondary -> ButtonDefaults.outlinedButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colors.secondary
+        )
+        ButtonStyle.Neutral -> ButtonDefaults.outlinedButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colorsExt.backgroundVariant
+        )
+    }
+}
+
+private fun ButtonAppearance.Text.colors(): ButtonColors {
+    return when (this.style) {
+        ButtonStyle.Primary -> ButtonDefaults.textButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colors.primary
+        )
+        ButtonStyle.Secondary -> ButtonDefaults.textButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colors.secondary
+        )
+        ButtonStyle.Neutral -> ButtonDefaults.textButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colorsExt.backgroundVariant
+        )
+    }
+}
+
+private fun ButtonStyle.borderColor(): Color {
     return when (this) {
         ButtonStyle.Primary -> MaterialTheme.colors.primary
         ButtonStyle.Secondary -> MaterialTheme.colors.secondary
