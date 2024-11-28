@@ -8,6 +8,7 @@ class SettingsViewModel(
     private val navigation: Navigation,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundsEnabled by mutableStateOf(true)
+    private var deleteDialogVisible by mutableStateOf(false)
 
     @Composable
     override fun viewState(): SettingsViewState {
@@ -15,13 +16,19 @@ class SettingsViewModel(
             // TODO - fetch soundsEnabled from dataStore and update state
         }
         return SettingsViewState(
-            soundsEnabled = getSoundsEnabled()
+            soundsEnabled = getSoundsEnabled(),
+            deleteDialogVisible = getDeleteDialogVisible()
         )
     }
 
     @Composable
     private fun getSoundsEnabled(): Boolean {
         return soundsEnabled
+    }
+
+    @Composable
+    private fun getDeleteDialogVisible(): Boolean {
+        return deleteDialogVisible
     }
 
     override fun onEvent(event: SettingsViewEvent) {
@@ -33,6 +40,8 @@ class SettingsViewModel(
             SettingsViewEvent.OnDeleteAccountClick -> handleDeleteAccountClick()
             SettingsViewEvent.OnTermsOfUseClick -> handleTermsOfUseClick()
             SettingsViewEvent.OnPrivacyPolicyClick -> handlePrivacyPolicyClick()
+            SettingsViewEvent.OnCancelDeleteAccountClick -> handleConfirmDeleteAccountClick()
+            SettingsViewEvent.OnConfirmDeleteAccountClick -> handleCancelDeleteAccountClick()
         }
     }
 
@@ -53,7 +62,7 @@ class SettingsViewModel(
     }
 
     private fun handleDeleteAccountClick() {
-        // TODO - handle event
+        deleteDialogVisible = true
     }
 
     private fun handleTermsOfUseClick() {
@@ -61,6 +70,14 @@ class SettingsViewModel(
     }
 
     private fun handlePrivacyPolicyClick() {
+        // TODO - handle event
+    }
+
+    private fun handleConfirmDeleteAccountClick() {
+        // TODO - handle event
+    }
+
+    private fun handleCancelDeleteAccountClick() {
         // TODO - handle event
     }
 }
