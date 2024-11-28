@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.kotlin.serialization)
     implementation(libs.ktor.server.contentNegotiation)
     implementation(libs.ktor.server.cors)
+    implementation(libs.ktor.server.logging)
     implementation(libs.ktor.serialization.json)
     implementation(libs.bundles.ktor.client.common)
     implementation(libs.ktor.client.java)

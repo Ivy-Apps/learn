@@ -1,4 +1,4 @@
-package ivy.learn
+package ivy.learn.config
 
 import arrow.core.Either
 import arrow.core.raise.either
@@ -11,9 +11,15 @@ data class DatabaseConfig(
     val password: String
 )
 
+data class GoogleOAuthConfig(
+    val clientId: String,
+    val clientSecret: String,
+)
+
 data class ServerConfiguration(
     val database: DatabaseConfig,
-    val privateContentGitHubPat: String
+    val privateContentGitHubPat: String,
+    val googleOAuth: GoogleOAuthConfig,
 )
 
 class ServerConfigurationProvider(
@@ -28,7 +34,11 @@ class ServerConfigurationProvider(
                 port = environment.getVariable("IVY_LEARN_DB_PORT").bind(),
                 password = environment.getVariable("IVY_LEARN_DB_PASSWORD").bind()
             ),
-            privateContentGitHubPat = environment.getVariable("IVY_LEARN_GITHUB_PAT").bind()
+            privateContentGitHubPat = environment.getVariable("IVY_LEARN_GITHUB_PAT").bind(),
+            googleOAuth = GoogleOAuthConfig(
+                clientId = environment.getVariable("IVY_GOOGLE_OAUTH_CLIENT_ID").bind(),
+                clientSecret = environment.getVariable("IVY_GOOGLE_OAUTH_CLIENT_SECRET").bind(),
+            )
         )
     }
 }

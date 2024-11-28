@@ -6,6 +6,7 @@ import ivy.di.Di
 import ivy.di.SharedModule
 import ivy.learn.data.di.DataModule
 import ivy.learn.di.AppModule
+import ivy.learn.domain.di.DomainModule
 
 fun main(args: Array<String>) {
     val devMode = "dev" in args
@@ -14,6 +15,9 @@ fun main(args: Array<String>) {
 
     val port = System.getenv("PORT")?.toInt() ?: 8081
     println("Starting server on port $port...")
+    if (devMode) {
+        println("[WARNING][DEV MODE] Server running in dev mode!")
+    }
     embeddedServer(
         Netty,
         port = port,
@@ -31,9 +35,13 @@ fun initDi(devMode: Boolean) {
         modules = setOf(
             SharedModule,
             DataModule,
-            AppModule(devMode = devMode)
+            AppModule(devMode = devMode),
+            DomainModule,
         )
     )
 }
+
+@JvmInline
+value class ServerMode(val devMode: Boolean)
 
 class ServerInitializationException(reason: String) : Exception("Server initialization failed: $reason")

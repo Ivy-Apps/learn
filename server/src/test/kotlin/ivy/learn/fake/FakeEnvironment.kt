@@ -2,7 +2,7 @@ package ivy.learn.fake
 
 import arrow.core.Either
 import arrow.core.right
-import ivy.learn.Environment
+import ivy.learn.config.Environment
 
 class FakeEnvironment : Environment {
     private val variables = mutableMapOf<String, String>()
