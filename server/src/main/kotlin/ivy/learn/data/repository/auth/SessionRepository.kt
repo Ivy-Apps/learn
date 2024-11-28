@@ -22,7 +22,7 @@ class SessionRepository {
         }
         Either.Right(Unit)
     }) { e ->
-        Either.Left("Failed to insert session: $e")
+        Either.Left("Failed to insert session because $e")
     }
 
     suspend fun delete(token: SessionToken): Either<String, Unit> = catch({
@@ -31,6 +31,6 @@ class SessionRepository {
         }
         Either.Right(Unit)
     }) { e ->
-        Either.Left("Failed to delete session: $e")
+        Either.Left("Failed to delete session because $e")
     }
 }
