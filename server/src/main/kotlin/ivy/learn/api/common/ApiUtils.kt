@@ -13,20 +13,9 @@ inline fun <reified T : Any> Routing.getEndpoint(
     path: String,
     crossinline handler: suspend Raise<ServerError>.(Parameters) -> T
 ) {
-    get(path) {
-        either {
-            handler(call.parameters)
-        }.onLeft { error ->
-            call.respond(
-                status = when (error) {
-                    is ServerError.BadRequest -> HttpStatusCode.BadRequest
-                    is ServerError.Unknown -> HttpStatusCode.InternalServerError
-                },
-                message = ServerErrorResponse(error.msg)
-            )
-        }.onRight { response ->
-            call.respond(HttpStatusCode.OK, response)
-        }
+    getEndpointBase(path) { call ->
+        val response = handler(call.parameters)
+        call.respond(HttpStatusCode.OK, response)
     }
 }
 
@@ -39,15 +28,20 @@ inline fun Routing.getEndpointBase(
         either {
             handler(call)
         }.onLeft { error ->
-            call.respond(
-                status = when (error) {
-                    is ServerError.BadRequest -> HttpStatusCode.BadRequest
-                    is ServerError.Unknown -> HttpStatusCode.InternalServerError
-                },
-                message = ServerErrorResponse(error.msg)
-            )
+            respondError(error)
         }
     }
+}
+
+@IvyServerDsl
+suspend fun RoutingContext.respondError(error: ServerError) {
+    call.respond(
+        status = when (error) {
+            is ServerError.BadRequest -> HttpStatusCode.BadRequest
+            is ServerError.Unknown -> HttpStatusCode.InternalServerError
+        },
+        message = ServerErrorResponse(error.msg)
+    )
 }
 
 @DslMarker
