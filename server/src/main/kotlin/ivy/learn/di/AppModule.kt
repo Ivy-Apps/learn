@@ -10,6 +10,7 @@ import ivy.learn.ServerMode
 import ivy.learn.config.Environment
 import ivy.learn.config.EnvironmentImpl
 import ivy.learn.config.ServerConfigurationProvider
+import ivy.learn.util.Crypto
 
 class AppModule(private val devMode: Boolean) : Di.Module {
     override fun init() = Di.appScope {
@@ -18,5 +19,6 @@ class AppModule(private val devMode: Boolean) : Di.Module {
         bind<Environment, EnvironmentImpl>()
         autoWire(::ServerConfigurationProvider)
         autoWireSingleton(::LearnServer)
+        autoWire(::Crypto)
     }
 }
