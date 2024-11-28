@@ -47,14 +47,14 @@ val MaterialTheme.colorsExt: ExtendedColors
         ExtendedColors(
             success = Green,
             onSuccess = Color.White,
-            backgroundVariant = Dark,
+            backgroundVariant = LightGray,
             onBackgroundVariant = Color.White,
         )
     } else {
         ExtendedColors(
             success = Green,
             onSuccess = Color.White,
-            backgroundVariant = Light,
+            backgroundVariant = DarkGray,
             onBackgroundVariant = Color.Black,
         )
     }

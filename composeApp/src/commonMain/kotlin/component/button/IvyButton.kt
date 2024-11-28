@@ -6,24 +6,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-sealed interface ButtonStyle {
-    data class FilledButton(val state: ButtonState) : ButtonStyle
-    data class OutlinedButton(val state: ButtonState) : ButtonStyle
+sealed interface ButtonAppearance {
+    val style: ButtonStyle
+
+    data class Filled(override val style: ButtonStyle): ButtonAppearance
+    data class Outlined(override val style: ButtonStyle): ButtonAppearance
+    data class Text(override val style: ButtonStyle): ButtonAppearance
 }
 
-enum class ButtonState {
-    PrimaryVariant,
-    SecondaryVariant,
-    Success,
-    Error
+enum class ButtonStyle {
+    Primary,
+    Secondary,
+    Neutral
 }
 
 @Composable
 fun IvyButton(
-    style: ButtonStyle,
+    appearance: ButtonAppearance,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    text: String? = null,
+    text: @Composable (() -> Unit)? = null,
     icon: @Composable (() -> Unit)? = null,
     iconRight: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
