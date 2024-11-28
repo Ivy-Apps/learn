@@ -12,10 +12,12 @@ import ivy.learn.api.common.model.ServerError
 import ivy.learn.api.common.model.ServerError.BadRequest
 import ivy.learn.domain.auth.AuthenticationService
 import ivy.learn.domain.auth.GoogleAuthorizationCode
+import org.slf4j.Logger
 
 class GoogleAuthenticationApi(
     private val serverMode: ServerMode,
     private val authService: AuthenticationService,
+    private val logger: Logger,
 ) : Api {
     override fun Routing.endpoints() {
         googleAuthCallback()
@@ -36,6 +38,7 @@ class GoogleAuthenticationApi(
             } else {
                 IvyUrls.frontEnd
             }
+            logger.info("User '${auth.user.email}' logged on $frontEndUrl.")
             call.respondRedirect("${frontEndUrl}?${IvyConstants.SessionTokenParam}=$sessionToken")
         }
     }
