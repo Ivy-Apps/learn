@@ -1,15 +1,33 @@
 package ui.screen.settings
 
 import androidx.compose.runtime.Composable
+import arrow.core.Option
+import arrow.core.raise.option
 import ivy.di.Di
 import ivy.di.autowire.autoWire
-import ui.navigation.Screen
+import navigation.Route
+import navigation.Router
+import navigation.Screen
+import ui.screen.home.HomeRouter
 import ui.screen.settings.content.SettingsContent
 
-class SettingsScreen : Screen() {
-    override val path: String = "settings"
+object SettingsRouter : Router<SettingsScreen> {
+    const val PATH = "settings"
 
-    override fun onDi(): Di.Scope.() -> Unit = {
+    override fun fromRoute(route: Route): Option<SettingsScreen> = option {
+        ensure(route.path == PATH)
+        SettingsScreen()
+    }
+
+    override fun toRoute(screen: SettingsScreen): Route {
+        return Route(path = PATH)
+    }
+}
+
+class SettingsScreen : Screen() {
+    override fun toRoute(): Route = SettingsRouter.toRoute(this)
+
+    override fun Di.Scope.onDi() {
         autoWire(::SettingsViewModel)
     }
 

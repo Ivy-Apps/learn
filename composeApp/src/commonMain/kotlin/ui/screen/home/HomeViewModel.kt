@@ -46,7 +46,7 @@ class HomeViewModel(
     }
 
     private fun handleSettingsClick() {
-        navigation.navigate(SettingsScreen())
+        navigation.navigateTo(SettingsScreen())
     }
 
     private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {

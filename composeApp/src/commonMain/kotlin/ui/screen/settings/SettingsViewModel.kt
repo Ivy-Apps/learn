@@ -1,8 +1,8 @@
 package ui.screen.settings
 
 import androidx.compose.runtime.*
+import navigation.Navigation
 import ui.ComposeViewModel
-import ui.navigation.Navigation
 
 class SettingsViewModel(
     private val navigation: Navigation,
@@ -37,7 +37,7 @@ class SettingsViewModel(
     }
 
     private fun handleBackClick() {
-        navigation.back()
+        navigation.navigateBack()
     }
 
     private fun handlePremiumClick() {
