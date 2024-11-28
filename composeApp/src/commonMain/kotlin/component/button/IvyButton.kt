@@ -1,11 +1,16 @@
 package component.button
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import ui.theme.colorsExt
 
 sealed interface ButtonAppearance {
     val style: ButtonStyle
@@ -39,15 +44,19 @@ fun IvyButton(
     ) {
         when {
             icon != null && text != null -> {
-
+                icon()
+                Spacer(Modifier.width(8.dp))
+                text()
             }
 
             text != null && iconRight != null -> {
-
+                text()
+                Spacer(Modifier.width(8.dp))
+                iconRight()
             }
 
             icon != null -> {
-
+                icon()
             }
         }
     }
@@ -59,7 +68,7 @@ fun ButtonWrapper(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit,
-    content: @Composable() (RowScope.() -> Unit)
+    content: @Composable (RowScope.() -> Unit)
 ) {
     val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     val colors = appearance.buttonColors()
@@ -82,10 +91,15 @@ fun ButtonWrapper(
                 enabled = enabled,
                 contentPadding = contentPadding,
                 colors = colors,
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = appearance.style.borderColor()
+                ),
                 onClick = onClick,
                 content = content
             )
         }
+
         is ButtonAppearance.Text -> {
             TextButton(
                 modifier = modifier,
@@ -124,5 +138,13 @@ fun ButtonAppearance.buttonColors(): ButtonColors {
                 ButtonStyle.Neutral -> ButtonDefaults.textButtonColors()
             }
         }
+    }
+}
+
+fun ButtonStyle.borderColor(): Color {
+    return when (this) {
+        ButtonStyle.Primary -> MaterialTheme.colors.primary
+        ButtonStyle.Secondary -> MaterialTheme.colors.secondary
+        ButtonStyle.Neutral -> MaterialTheme.colorsExt.backgroundVariant
     }
 }
