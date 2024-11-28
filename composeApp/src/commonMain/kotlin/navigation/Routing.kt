@@ -5,6 +5,7 @@ import ui.screen.course.CourseRouter
 import ui.screen.home.HomeRouter
 import ui.screen.intro.IntroRouter
 import ui.screen.lesson.LessonRouter
+import ui.screen.settings.SettingsRouter
 
 object Routing {
     private val routers = setOf<Router<*>>(
@@ -12,6 +13,7 @@ object Routing {
         HomeRouter,
         LessonRouter,
         CourseRouter,
+        SettingsRouter
     )
 
     fun resolve(route: Route): Screen? {

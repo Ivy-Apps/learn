@@ -7,6 +7,7 @@ import androidx.compose.material.Shapes
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 
 private val LightColorScheme = lightColors(
@@ -37,6 +38,32 @@ private val DarkColorScheme = darkColors(
     onBackground = Color.White,
     onSurface = Color.White,
     onError = Color.White
+)
+
+val MaterialTheme.colorsExt: ExtendedColors
+    @Composable
+    @ReadOnlyComposable
+    get() = if (MaterialTheme.colors.isLight) {
+        ExtendedColors(
+            success = Green,
+            onSuccess = Color.White,
+            backgroundVariant = Light,
+            onBackgroundVariant = Color.Black
+        )
+    } else {
+        ExtendedColors(
+            success = Green,
+            onSuccess = Color.White,
+            backgroundVariant = Dark,
+            onBackgroundVariant = Color.White
+        )
+    }
+
+data class ExtendedColors(
+    val backgroundVariant: Color,
+    val onBackgroundVariant: Color,
+    val success: Color,
+    val onSuccess: Color
 )
 
 @Composable
