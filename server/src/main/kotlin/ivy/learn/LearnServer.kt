@@ -12,12 +12,15 @@ import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import ivy.di.Di
 import ivy.di.Di.register
+import ivy.di.Di.singleton
 import ivy.di.autowire.autoWire
 import ivy.learn.api.*
 import ivy.learn.api.common.Api
 import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.data.database.Database
 import kotlinx.serialization.json.Json
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 
 class LearnServer(
@@ -36,6 +39,7 @@ class LearnServer(
     }
 
     private fun injectDependencies() = Di.appScope {
+        singleton<Logger> { LoggerFactory.getLogger("Application") }
         autoWire(::AnalyticsApi)
         autoWire(::LessonsApi)
         autoWire(::StatusApi)
