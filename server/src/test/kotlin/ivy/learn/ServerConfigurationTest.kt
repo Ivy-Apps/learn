@@ -6,6 +6,7 @@ import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import ivy.learn.config.DatabaseConfig
+import ivy.learn.config.GoogleOAuth
 import ivy.learn.config.ServerConfiguration
 import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.fake.FakeEnvironment
@@ -43,7 +44,11 @@ class ServerConfigurationTest {
                 port = "5432",
                 password = "password"
             ),
-            privateContentGitHubPat = "pat"
+            privateContentGitHubPat = "pat",
+            googleOAuth = GoogleOAuth(
+                clientId = "googleClientId",
+                clientSecret = "googleClientSecret",
+            )
         )
     }
 
@@ -55,7 +60,9 @@ class ServerConfigurationTest {
         USER("IVY_LEARN_DB_USER"),
         DB_PORT("IVY_LEARN_DB_PORT"),
         PASSWORD("IVY_LEARN_DB_PASSWORD"),
-        GITHUB_PAT("IVY_LEARN_GITHUB_PAT")
+        GITHUB_PAT("IVY_LEARN_GITHUB_PAT"),
+        GOOGLE_CLIENT_ID("IVY_GOOGLE_OAUTH_CLIENT_ID"),
+        GOOGLE_CLIENT_SECRET("IVY_GOOGLE_OAUTH_CLIENT_SECRET"),
     }
 
     @Test
@@ -80,5 +87,7 @@ class ServerConfigurationTest {
         environment.setVariable("IVY_LEARN_DB_PORT", "5432")
         environment.setVariable("IVY_LEARN_DB_PASSWORD", "password")
         environment.setVariable("IVY_LEARN_GITHUB_PAT", "pat")
+        environment.setVariable("IVY_GOOGLE_OAUTH_CLIENT_ID", "googleClientId")
+        environment.setVariable("IVY_GOOGLE_OAUTH_CLIENT_SECRET", "googleClientSecret")
     }
 }

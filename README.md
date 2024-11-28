@@ -34,6 +34,9 @@ export IVY_LEARN_DB_USER="postgres"
 export IVY_LEARN_DB_PORT="5432"
 export IVY_LEARN_DB_PASSWORD="password"
 export IVY_LEARN_GITHUB_PAT="your_github_personal_access_token"
+
+export IVY_GOOGLE_OAUTH_CLIENT_ID="your-client-id"
+export IVY_GOOGLE_OAUTH_CLIENT_SECRET="your-client-secret"
 ```
 
 **To run the sever:**

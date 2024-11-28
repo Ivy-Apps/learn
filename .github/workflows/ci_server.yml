@@ -25,6 +25,8 @@ jobs:
       IVY_LEARN_DB_PORT: 5432
       IVY_LEARN_DB_PASSWORD: password
       IVY_LEARN_GITHUB_PAT: ${{ secrets.IVY_LEARN_GITHUB_PAT }}
+      IVY_GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.IVY_GOOGLE_OAUTH_CLIENT_ID }}
+      IVY_GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.IVY_GOOGLE_OAUTH_CLIENT_SECRET }}
     steps:
       - name: Checkout GIT
         uses: actions/checkout@v4
