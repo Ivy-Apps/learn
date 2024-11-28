@@ -5,8 +5,10 @@ import arrow.core.raise.either
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import ivy.di.Di
 import ivy.di.Di.register
@@ -16,6 +18,7 @@ import ivy.learn.api.common.Api
 import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.data.database.Database
 import kotlinx.serialization.json.Json
+import org.slf4j.event.Level
 
 class LearnServer(
     private val database: Database,
@@ -45,6 +48,7 @@ class LearnServer(
         with(ktorApp) {
             configureCORS()
             configureContentNegotiation()
+            configureLogging()
         }
         val config = configurationProvider.fromEnvironment().bind()
         Di.appScope { register { config } }
@@ -76,6 +80,18 @@ class LearnServer(
             allowHeader(HttpHeaders.AccessControlAllowHeaders)
             allowHeader(HttpHeaders.AccessControlAllowMethods)
             anyHost()
+        }
+    }
+
+    private fun Application.configureLogging() {
+        install(CallLogging) {
+            level = Level.INFO // Log INFO-level messages
+            format { call ->
+                val status = call.response.status()?.value ?: "Unknown"
+                val method = call.request.httpMethod.value
+                val uri = call.request.uri
+                "HTTP $method $uri -> $status"
+            }
         }
     }
 }
