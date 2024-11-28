@@ -114,6 +114,7 @@ private fun ButtonWrapper(
     }
 }
 
+@Composable
 private fun ButtonAppearance.buttonColors(): ButtonColors {
     return when (this) {
         is ButtonAppearance.Filled -> this.colors()
@@ -122,6 +123,7 @@ private fun ButtonAppearance.buttonColors(): ButtonColors {
     }
 }
 
+@Composable
 private fun ButtonAppearance.Filled.colors(): ButtonColors {
     return when (this.style) {
         ButtonStyle.Primary -> ButtonDefaults.buttonColors(
@@ -146,6 +148,7 @@ private fun ButtonAppearance.Filled.colors(): ButtonColors {
     }
 }
 
+@Composable
 private fun ButtonAppearance.Outlined.colors(): ButtonColors {
     return when (this.style) {
         ButtonStyle.Primary -> ButtonDefaults.outlinedButtonColors(
@@ -170,6 +173,7 @@ private fun ButtonAppearance.Outlined.colors(): ButtonColors {
     }
 }
 
+@Composable
 private fun ButtonAppearance.Text.colors(): ButtonColors {
     return when (this.style) {
         ButtonStyle.Primary -> ButtonDefaults.textButtonColors(
@@ -194,6 +198,7 @@ private fun ButtonAppearance.Text.colors(): ButtonColors {
     }
 }
 
+@Composable
 private fun ButtonStyle.borderColor(): Color {
     return when (this) {
         ButtonStyle.Primary -> MaterialTheme.colors.primary
