@@ -1,11 +1,12 @@
 package ui.screen.settings.composable
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +16,6 @@ import component.LearnScaffold
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
-import component.button.PrimaryButton
 import component.platformHorizontalPadding
 import component.text.Title
 import ui.screen.settings.SettingsViewEvent
@@ -62,45 +62,42 @@ fun SettingsContent(
                         onEvent(SettingsViewEvent.OnSoundEnabledChange(it))
                     }
                 )
-                item(key = "privacy") {
-                    PrimaryButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "Privacy",
-                        onClick = {
-                            onEvent(SettingsViewEvent.OnPrivacyClick)
-                        }
-                    )
-                    Spacer(Modifier.height(16.dp))
-                }
-                item(key = "delete-account") {
-                    DeleteAccountButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "Delete account",
-                        onClick = {
-                            onEvent(SettingsViewEvent.OnDeleteAccountClick)
-                        }
-                    )
-                    Spacer(Modifier.height(16.dp))
-                }
-                item(key = "terms-privacy") {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            modifier = Modifier.clickable {
-                                onEvent(SettingsViewEvent.OnTermsOfUseClick)
-                            },
-                            text = "Terms of use",
-                        )
-                        Spacer(Modifier.weight(1f))
-                        Text(
-                            modifier = Modifier.clickable {
-                                onEvent(SettingsViewEvent.OnPrivacyPolicyClick)
-                            },
-                            text = "Privacy policy",
-                        )
+                privacyButton(
+                    onPrivacyClick = {
+                        onEvent(SettingsViewEvent.OnPrivacyClick)
                     }
-                }
+                )
+                deleteAccountButton(
+                    onDeleteAccountClick = {
+                        onEvent(SettingsViewEvent.OnDeleteAccountClick)
+                    }
+                )
+                legalFooter(
+                    onTermsOfUseClick = {
+                        onEvent(SettingsViewEvent.OnTermsOfUseClick)
+                    },
+                    onPrivacyPolicyClick = {
+                        onEvent(SettingsViewEvent.OnPrivacyPolicyClick)
+                    }
+                )
             }
         }
+    }
+}
+
+private fun LazyListScope.premiumButton(
+    onPremiumClick: () -> Unit
+) {
+    item(key = "premium") {
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+            text = {
+                Text("Premium")
+            },
+            onClick = onPremiumClick
+        )
+        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -126,9 +123,6 @@ private fun SoundSwitch(
     IvyButton(
         modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
         appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
-        onClick = {
-            onSoundEnabledChange(!soundEnabled)
-        },
         text = {
             Text("Sounds")
             Spacer(Modifier.weight(1f))
@@ -138,60 +132,69 @@ private fun SoundSwitch(
                     onSoundEnabledChange(it)
                 },
             )
-        }
+        },
+        onClick = {
+            onSoundEnabledChange(!soundEnabled)
+        },
     )
 }
 
-private fun LazyListScope.premiumButton(
-    onPremiumClick: () -> Unit
+private fun LazyListScope.privacyButton(
+    onPrivacyClick: () -> Unit
 ) {
-    item(key = "premium") {
+    item(key = "privacy") {
         IvyButton(
             modifier = Modifier.fillMaxWidth(),
-            appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+            appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
             text = {
-                Text("Premium")
+                Text("Privacy")
             },
-            onClick = onPremiumClick
+            onClick = onPrivacyClick
         )
         Spacer(Modifier.height(16.dp))
     }
 }
 
-@Composable
-private fun NeutralButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    content: @Composable () -> Unit,
+private fun LazyListScope.deleteAccountButton(
+    onDeleteAccountClick: () -> Unit
 ) {
-    Button(
-        modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colorsExt.backgroundVariant,
-            contentColor = MaterialTheme.colorsExt.onBackgroundVariant
+    item(key = "delete-account") {
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Filled(style = ButtonStyle.Destructive),
+            text = {
+                Text("Delete account")
+            },
+            onClick = onDeleteAccountClick
         )
-    ) {
-        content()
+        Spacer(Modifier.height(16.dp))
     }
 }
 
-@Composable
-private fun DeleteAccountButton(
-    text: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+private fun LazyListScope.legalFooter(
+    onTermsOfUseClick: () -> Unit,
+    onPrivacyPolicyClick: () -> Unit
 ) {
-    Button(
-        modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.error,
-            contentColor = MaterialTheme.colors.onError
-        )
-    ) {
-        Text(text)
+    item(key = "legal-footer") {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IvyButton(
+                appearance = ButtonAppearance.Text(style = ButtonStyle.Secondary),
+                text = {
+                    Text("Terms of use")
+                },
+                onClick = onTermsOfUseClick,
+            )
+            Spacer(Modifier.weight(1f))
+            IvyButton(
+                appearance = ButtonAppearance.Text(style = ButtonStyle.Secondary),
+                text = {
+                    Text("Privacy policy")
+                },
+                onClick = onPrivacyPolicyClick,
+            )
+        }
     }
 }
