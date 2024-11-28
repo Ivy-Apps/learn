@@ -59,6 +59,10 @@ fun IvyButton(
             icon != null -> {
                 icon()
             }
+
+            text != null -> {
+                text()
+            }
         }
     }
 }
