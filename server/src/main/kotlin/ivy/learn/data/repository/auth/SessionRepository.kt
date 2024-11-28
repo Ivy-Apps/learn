@@ -35,7 +35,7 @@ class SessionRepository {
         )
     }
 
-    suspend fun create(session: Session): Either<String, Unit> = catch({
+    suspend fun create(session: Session): Either<String, Session> = catch({
         transaction {
             Sessions.insert {
                 it[userId] = session.userId.value
@@ -44,7 +44,7 @@ class SessionRepository {
                 it[expiresAt] = session.expiresAt
             }
         }
-        Either.Right(Unit)
+        Either.Right(session)
     }) { e ->
         Either.Left("Failed to insert session because $e")
     }

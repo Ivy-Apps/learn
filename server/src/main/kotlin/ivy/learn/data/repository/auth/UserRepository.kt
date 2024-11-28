@@ -45,7 +45,7 @@ class UserRepository {
         )
     }
 
-    suspend fun create(user: User): Either<String, Unit> = catch({
+    suspend fun create(user: User): Either<String, User> = catch({
         transaction {
             Users.insert {
                 it[id] = user.id.value
@@ -54,7 +54,7 @@ class UserRepository {
                 it[profilePictureUrl] = user.profilePicture
             }
         }
-        Either.Right(Unit)
+        Either.Right(user)
     }) { e ->
         Either.Left("Failed to insert user $user because $e")
     }
