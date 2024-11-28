@@ -5,13 +5,49 @@ import arrow.core.raise.catch
 import ivy.learn.data.database.tables.Users
 import ivy.learn.domain.model.User
 import ivy.learn.domain.model.UserId
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 
 class UserRepository {
+    suspend fun findUserById(id: UserId): Either<String, User?> = catch({
+        transaction {
+            Users.selectAll()
+                .where { Users.id eq id.value }
+                .limit(1)
+                .map(::rowToUser)
+                .singleOrNull()
+        }.let { user ->
+            Either.Right(user)
+        }
+    }) { e ->
+        Either.Left("Failed to find user by ID $id because $e")
+    }
+
+    // Find user by Email
+    suspend fun findUserByEmail(email: String): Either<String, User?> = catch({
+        transaction {
+            Users.selectAll()
+                .where { Users.email eq email }
+                .limit(1)
+                .map(::rowToUser)
+                .singleOrNull()
+        }.let { user ->
+            Either.Right(user)
+        }
+    }) { e ->
+        Either.Left("Failed to find user by email $email because $e")
+    }
+
+    private fun rowToUser(row: ResultRow): User {
+        return User(
+            id = UserId(row[Users.id].value),
+            email = row[Users.email],
+            names = row[Users.names],
+            profilePicture = row[Users.profilePictureUrl]
+        )
+    }
+
     suspend fun create(user: User): Either<String, Unit> = catch({
         transaction {
             Users.insert {

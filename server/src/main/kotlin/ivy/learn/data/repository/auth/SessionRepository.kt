@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class SessionRepository {
+
     suspend fun create(session: Session): Either<String, Unit> = catch({
         transaction {
             Sessions.insert {
