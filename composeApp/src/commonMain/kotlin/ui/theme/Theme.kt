@@ -25,6 +25,21 @@ private val LightColorScheme = lightColors(
     onError = Color.White
 )
 
+private val DarkColorScheme = darkColors(
+    primary = Blue,
+    primaryVariant = BlueVariant,
+    secondary = Orange,
+    secondaryVariant = OrangeVariant,
+    background = Color.Black,
+    surface = Color.Black,
+    error = Red,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onError = Color.White
+)
+
 val MaterialTheme.colorsExt: ExtendedColors
     @Composable
     @ReadOnlyComposable
@@ -49,21 +64,6 @@ data class ExtendedColors(
     val onBackgroundVariant: Color,
     val success: Color,
     val onSuccess: Color
-)
-
-private val DarkColorScheme = darkColors(
-    primary = Blue,
-    primaryVariant = BlueVariant,
-    secondary = Orange,
-    secondaryVariant = OrangeVariant,
-    background = Color.Black,
-    surface = Color.Black,
-    error = Red,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White,
-    onError = Color.White
 )
 
 @Composable
