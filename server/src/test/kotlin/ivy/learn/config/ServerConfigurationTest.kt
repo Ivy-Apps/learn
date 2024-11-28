@@ -1,14 +1,10 @@
-package ivy.learn
+package ivy.learn.config
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
-import ivy.learn.config.DatabaseConfig
-import ivy.learn.config.GoogleOAuthConfig
-import ivy.learn.config.ServerConfiguration
-import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.fake.FakeEnvironment
 import org.junit.Before
 import org.junit.Test
