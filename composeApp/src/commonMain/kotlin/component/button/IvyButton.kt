@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import ui.theme.Gray
 import ui.theme.colorsExt
 
 sealed interface ButtonAppearance {
@@ -98,7 +99,7 @@ private fun ButtonWrapper(
                 colors = colors,
                 border = BorderStroke(
                     width = 1.dp,
-                    color = appearance.style.borderColor()
+                    color = appearance.style.outlinedBorderColor()
                 ),
                 onClick = onClick,
                 content = content
@@ -167,7 +168,7 @@ private fun ButtonAppearance.Outlined.colors(): ButtonColors {
 
         ButtonStyle.Neutral -> ButtonDefaults.outlinedButtonColors(
             backgroundColor = Color.Transparent,
-            contentColor = MaterialTheme.colorsExt.backgroundVariant
+            contentColor = Gray
         )
 
         ButtonStyle.Destructive -> ButtonDefaults.outlinedButtonColors(
@@ -192,7 +193,7 @@ private fun ButtonAppearance.Text.colors(): ButtonColors {
 
         ButtonStyle.Neutral -> ButtonDefaults.textButtonColors(
             backgroundColor = Color.Transparent,
-            contentColor = MaterialTheme.colorsExt.backgroundVariant
+            contentColor = Gray
         )
 
         ButtonStyle.Destructive -> ButtonDefaults.textButtonColors(
@@ -203,11 +204,11 @@ private fun ButtonAppearance.Text.colors(): ButtonColors {
 }
 
 @Composable
-private fun ButtonStyle.borderColor(): Color {
+private fun ButtonStyle.outlinedBorderColor(): Color {
     return when (this) {
         ButtonStyle.Primary -> MaterialTheme.colors.primary
         ButtonStyle.Secondary -> MaterialTheme.colors.secondary
-        ButtonStyle.Neutral -> MaterialTheme.colorsExt.backgroundVariant
+        ButtonStyle.Neutral -> Gray
         ButtonStyle.Destructive -> MaterialTheme.colors.error
     }
 }

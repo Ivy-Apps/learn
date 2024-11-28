@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
@@ -38,15 +39,9 @@ fun SettingsContent(
         ) {
             val horizontalPadding = platformHorizontalPadding()
             LazyColumn(
-                modifier = Modifier.widthIn(max = 800.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.widthIn(max = 500.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(
-                    top = 32.dp,
-                    bottom = 48.dp,
-                    start = horizontalPadding,
-                    end = horizontalPadding,
-                )
+                contentPadding = PaddingValues(horizontal = horizontalPadding)
             ) {
                 premiumButton(
                     onPremiumClick = {
@@ -86,15 +81,17 @@ private fun LazyListScope.premiumButton(
     onPremiumClick: () -> Unit
 ) {
     item(key = "premium") {
-        IvyButton(
-            modifier = Modifier.fillMaxWidth(),
-            appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
-            text = {
-                Text("Premium")
-            },
-            onClick = onPremiumClick
-        )
-        Spacer(Modifier.height(16.dp))
+        Column {
+            Title("App")
+            IvyButton(
+                modifier = Modifier.fillMaxWidth(),
+                appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+                text = {
+                    Text("Premium")
+                },
+                onClick = onPremiumClick
+            )
+        }
     }
 }
 
@@ -103,12 +100,14 @@ private fun LazyListScope.appSettingsSection(
     onSoundEnabledChange: (Boolean) -> Unit,
 ) {
     item(key = "app") {
-        Title("App")
-        Spacer(Modifier.height(12.dp))
-        SoundSwitch(
-            soundEnabled = soundEnabled,
-            onSoundEnabledChange = onSoundEnabledChange
-        )
+        Column {
+            Title("App")
+            Spacer(Modifier.height(12.dp))
+            SoundSwitch(
+                soundEnabled = soundEnabled,
+                onSoundEnabledChange = onSoundEnabledChange
+            )
+        }
     }
 }
 
@@ -125,6 +124,7 @@ private fun SoundSwitch(
             Text("Sounds")
             Spacer(Modifier.weight(1f))
             Switch(
+                modifier = Modifier.defaultMinSize(minHeight = 0.dp),
                 checked = soundEnabled,
                 onCheckedChange = {
                     onSoundEnabledChange(it)
@@ -143,13 +143,12 @@ private fun LazyListScope.privacyButton(
     item(key = "privacy") {
         IvyButton(
             modifier = Modifier.fillMaxWidth(),
-            appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
+            appearance = ButtonAppearance.Outlined(ButtonStyle.Neutral),
             text = {
                 Text("Privacy")
             },
             onClick = onPrivacyClick
         )
-        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -159,13 +158,12 @@ private fun LazyListScope.deleteAccountButton(
     item(key = "delete-account") {
         IvyButton(
             modifier = Modifier.fillMaxWidth(),
-            appearance = ButtonAppearance.Filled(style = ButtonStyle.Destructive),
+            appearance = ButtonAppearance.Outlined(style = ButtonStyle.Destructive),
             text = {
                 Text("Delete account")
             },
             onClick = onDeleteAccountClick
         )
-        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -176,23 +174,29 @@ private fun LazyListScope.legalFooter(
     item(key = "legal-footer") {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             IvyButton(
-                appearance = ButtonAppearance.Text(style = ButtonStyle.Secondary),
+                appearance = ButtonAppearance.Text(style = ButtonStyle.Neutral),
                 text = {
                     Text("Terms of use")
                 },
                 onClick = onTermsOfUseClick,
             )
-            Spacer(Modifier.weight(1f))
             IvyButton(
-                appearance = ButtonAppearance.Text(style = ButtonStyle.Secondary),
+                appearance = ButtonAppearance.Text(style = ButtonStyle.Neutral),
                 text = {
                     Text("Privacy policy")
                 },
                 onClick = onPrivacyPolicyClick,
             )
         }
+    }
+}
+
+private fun LazyListScope.spacerItem(key: String, height: Dp) {
+    item(key) {
+        Spacer(Modifier.height(height))
     }
 }
