@@ -1,9 +1,10 @@
-package ui.screen.settings.content
+package ui.screen.settings.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,10 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BackButton
 import component.LearnScaffold
-import component.ScreenType.*
+import component.button.ButtonAppearance
+import component.button.ButtonStyle
+import component.button.IvyButton
 import component.button.PrimaryButton
 import component.platformHorizontalPadding
-import component.screenType
 import component.text.Title
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
@@ -49,38 +51,17 @@ fun SettingsContent(
                     end = horizontalPadding,
                 )
             ) {
-                item(key = "premium") {
-                    PrimaryButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "Premium",
-                        onClick = {
-                            onEvent(SettingsViewEvent.OnPremiumClick)
-                        }
-                    )
-                    Spacer(Modifier.height(16.dp))
-                }
-                item(key = "app") {
-                    Title("App")
-                    Spacer(Modifier.height(12.dp))
-                    NeutralButton(
-                        modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
-                        onClick = {
-                            onEvent(SettingsViewEvent.OnSoundsEnabledChange(!viewState.soundsEnabled))
-                        },
-                        content = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("Sounds")
-                                Spacer(Modifier.weight(1f))
-                                Switch(
-                                    checked = viewState.soundsEnabled,
-                                    onCheckedChange = {
-                                        onEvent(SettingsViewEvent.OnSoundsEnabledChange(it))
-                                    },
-                                )
-                            }
-                        }
-                    )
-                }
+                premiumButton(
+                    onPremiumClick = {
+                        onEvent(SettingsViewEvent.OnPremiumClick)
+                    }
+                )
+                appSettingsSection(
+                    soundEnabled = viewState.soundEnabled,
+                    onSoundEnabledChange = {
+                        onEvent(SettingsViewEvent.OnSoundEnabledChange(it))
+                    }
+                )
                 item(key = "privacy") {
                     PrimaryButton(
                         modifier = Modifier.fillMaxWidth(),
@@ -120,6 +101,60 @@ fun SettingsContent(
                 }
             }
         }
+    }
+}
+
+private fun LazyListScope.appSettingsSection(
+    soundEnabled: Boolean,
+    onSoundEnabledChange: (Boolean) -> Unit,
+) {
+    item(key = "app") {
+        Title("App")
+        Spacer(Modifier.height(12.dp))
+        SoundSwitch(
+            soundEnabled = soundEnabled,
+            onSoundEnabledChange = onSoundEnabledChange
+        )
+    }
+}
+
+@Composable
+private fun SoundSwitch(
+    soundEnabled: Boolean,
+    onSoundEnabledChange: (Boolean) -> Unit,
+) {
+    IvyButton(
+        modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
+        appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
+        onClick = {
+            onSoundEnabledChange(!soundEnabled)
+        },
+        text = {
+            Text("Sounds")
+            Spacer(Modifier.weight(1f))
+            Switch(
+                checked = soundEnabled,
+                onCheckedChange = {
+                    onSoundEnabledChange(it)
+                },
+            )
+        }
+    )
+}
+
+private fun LazyListScope.premiumButton(
+    onPremiumClick: () -> Unit
+) {
+    item(key = "premium") {
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+            text = {
+                Text("Premium")
+            },
+            onClick = onPremiumClick
+        )
+        Spacer(Modifier.height(16.dp))
     }
 }
 

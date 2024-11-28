@@ -24,6 +24,7 @@ sealed interface ButtonStyle {
     data object Primary : ButtonStyle
     data object Secondary : ButtonStyle
     data object Neutral : ButtonStyle
+    data object Destructive : ButtonStyle
 }
 
 @Composable
@@ -31,9 +32,9 @@ fun IvyButton(
     appearance: ButtonAppearance,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    text: @Composable (() -> Unit)? = null,
-    icon: @Composable (() -> Unit)? = null,
-    iconRight: @Composable (() -> Unit)? = null,
+    text: @Composable (RowScope.() -> Unit)? = null,
+    icon: @Composable (RowScope.() -> Unit)? = null,
+    iconRight: @Composable (RowScope.() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
     ButtonWrapper(
@@ -127,13 +128,20 @@ private fun ButtonAppearance.Filled.colors(): ButtonColors {
             backgroundColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary
         )
+
         ButtonStyle.Secondary -> ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.secondary,
             contentColor = MaterialTheme.colors.onSecondary
         )
+
         ButtonStyle.Neutral -> ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colorsExt.backgroundVariant,
             contentColor = MaterialTheme.colorsExt.onBackgroundVariant
+        )
+
+        ButtonStyle.Destructive -> ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.error,
+            contentColor = MaterialTheme.colors.onError
         )
     }
 }
@@ -144,13 +152,20 @@ private fun ButtonAppearance.Outlined.colors(): ButtonColors {
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colors.primary
         )
+
         ButtonStyle.Secondary -> ButtonDefaults.outlinedButtonColors(
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colors.secondary
         )
+
         ButtonStyle.Neutral -> ButtonDefaults.outlinedButtonColors(
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colorsExt.backgroundVariant
+        )
+
+        ButtonStyle.Destructive -> ButtonDefaults.outlinedButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colors.error
         )
     }
 }
@@ -161,13 +176,20 @@ private fun ButtonAppearance.Text.colors(): ButtonColors {
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colors.primary
         )
+
         ButtonStyle.Secondary -> ButtonDefaults.textButtonColors(
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colors.secondary
         )
+
         ButtonStyle.Neutral -> ButtonDefaults.textButtonColors(
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colorsExt.backgroundVariant
+        )
+
+        ButtonStyle.Destructive -> ButtonDefaults.textButtonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = MaterialTheme.colors.error
         )
     }
 }
@@ -177,5 +199,6 @@ private fun ButtonStyle.borderColor(): Color {
         ButtonStyle.Primary -> MaterialTheme.colors.primary
         ButtonStyle.Secondary -> MaterialTheme.colors.secondary
         ButtonStyle.Neutral -> MaterialTheme.colorsExt.backgroundVariant
+        ButtonStyle.Destructive -> MaterialTheme.colors.error
     }
 }

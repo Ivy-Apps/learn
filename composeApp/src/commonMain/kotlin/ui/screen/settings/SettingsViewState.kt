@@ -4,14 +4,14 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class SettingsViewState(
-    val soundsEnabled: Boolean,
+    val soundEnabled: Boolean,
     val deleteDialogVisible: Boolean,
 )
 
 sealed interface SettingsViewEvent {
     data object OnBackClick : SettingsViewEvent
     data object OnPremiumClick : SettingsViewEvent
-    data class OnSoundsEnabledChange(val enabled: Boolean) : SettingsViewEvent
+    data class OnSoundEnabledChange(val enabled: Boolean) : SettingsViewEvent
     data object OnPrivacyClick : SettingsViewEvent
     data object OnDeleteAccountClick : SettingsViewEvent
     data object OnTermsOfUseClick : SettingsViewEvent

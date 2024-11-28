@@ -8,8 +8,7 @@ import ivy.di.autowire.autoWire
 import navigation.Route
 import navigation.Router
 import navigation.Screen
-import ui.screen.home.HomeRouter
-import ui.screen.settings.content.SettingsContent
+import ui.screen.settings.composable.SettingsContent
 
 object SettingsRouter : Router<SettingsScreen> {
     const val PATH = "settings"
