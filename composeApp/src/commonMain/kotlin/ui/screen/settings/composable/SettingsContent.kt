@@ -1,10 +1,8 @@
 package ui.screen.settings.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +18,6 @@ import component.platformHorizontalPadding
 import component.text.Title
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
-import ui.theme.colorsExt
 
 @Composable
 fun SettingsContent(
@@ -118,10 +115,11 @@ private fun LazyListScope.appSettingsSection(
 @Composable
 private fun SoundSwitch(
     soundEnabled: Boolean,
+    modifier: Modifier = Modifier,
     onSoundEnabledChange: (Boolean) -> Unit,
 ) {
     IvyButton(
-        modifier = Modifier.background(color = MaterialTheme.colorsExt.backgroundVariant),
+        modifier = modifier,
         appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
         text = {
             Text("Sounds")
