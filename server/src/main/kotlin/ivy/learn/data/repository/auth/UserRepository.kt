@@ -2,6 +2,7 @@ package ivy.learn.data.repository.auth
 
 import arrow.core.Either
 import arrow.core.raise.catch
+import arrow.core.right
 import ivy.learn.data.database.tables.Users
 import ivy.learn.domain.model.User
 import ivy.learn.domain.model.UserId
@@ -17,9 +18,7 @@ class UserRepository {
                 .limit(1)
                 .map(::rowToUser)
                 .singleOrNull()
-        }.let { user ->
-            Either.Right(user)
-        }
+        }.right()
     }) { e ->
         Either.Left("Failed to find user by ID $id because $e")
     }
@@ -32,9 +31,7 @@ class UserRepository {
                 .limit(1)
                 .map(::rowToUser)
                 .singleOrNull()
-        }.let { user ->
-            Either.Right(user)
-        }
+        }.right()
     }) { e ->
         Either.Left("Failed to find user by email $email because $e")
     }
