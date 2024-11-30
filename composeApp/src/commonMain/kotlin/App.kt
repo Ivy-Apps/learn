@@ -9,6 +9,7 @@ import domain.di.DomainModule
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.SharedModule
+import ivy.di.autowire.autoWire
 import navigation.Navigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.theme.LearnTheme
@@ -30,6 +31,7 @@ fun App() {
         )
         Di.appScope {
             register { uriHandler }
+            autoWire(::AppViewModel)
         }
         initialized = true
     }
@@ -43,6 +45,9 @@ fun App() {
 
 @Composable
 private fun NavGraph() {
+    val appViewModel = remember { Di.get<AppViewModel>() }
+    appViewModel.Init()
+
     val navigation = remember { Di.get<Navigation>() }
     Box(modifier = Modifier.fillMaxSize()) {
         navigation.NavHost()

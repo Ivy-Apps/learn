@@ -20,7 +20,13 @@ object AppModule : Di.Module {
             autoWireSingleton(::Navigation)
             autoWireSingleton(::AppConfiguration)
             register<DispatchersProvider> { DispatchersProviderImpl() }
-            bindWithFake<ServerUrlProvider, HerokuServerUrlProvider, LocalServerUrlProvider>()
+            register<ServerUrlProvider> {
+                if (Di.get<AppConfiguration>().useLocalServer) {
+                    Di.get<LocalServerUrlProvider>()
+                } else {
+                    Di.get<HerokuServerUrlProvider>()
+                }
+            }
         }
     }
 }

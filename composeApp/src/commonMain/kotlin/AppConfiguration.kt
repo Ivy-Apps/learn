@@ -1,3 +1,4 @@
 class AppConfiguration {
-    val fakesEnabled = true
+    val fakesEnabled = false
+    val useLocalServer = true
 }

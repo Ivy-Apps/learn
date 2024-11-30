@@ -5,8 +5,8 @@ import arrow.core.raise.catch
 import arrow.core.right
 import ivy.learn.data.database.tables.Sessions
 import ivy.learn.domain.model.Session
-import ivy.learn.domain.model.SessionToken
 import ivy.learn.domain.model.UserId
+import ivy.model.auth.SessionToken
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
