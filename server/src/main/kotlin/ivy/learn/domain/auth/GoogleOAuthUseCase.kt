@@ -47,7 +47,7 @@ class GoogleOAuthUseCase(
                         "code" to code.value,
                         "client_id" to config.googleOAuth.clientId,
                         "client_secret" to config.googleOAuth.clientSecret,
-                        "redirect_uri" to "urn:ietf:wg:oauth:2.0:oob",
+                        "redirect_uri" to "http://localhost:8080/auth/google/callback",
                         "grant_type" to "authorization_code"
                     )
                 )
