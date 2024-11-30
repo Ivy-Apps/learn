@@ -8,6 +8,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import ivy.learn.ServerMode
 import ivy.learn.config.ServerConfiguration
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,6 +18,7 @@ class GoogleOAuthUseCase(
     private val config: ServerConfiguration,
     private val httpClient: HttpClient,
     private val logger: Logger,
+    private val serverMode: ServerMode,
 ) {
 
     suspend fun verify(
@@ -53,7 +55,11 @@ class GoogleOAuthUseCase(
                         "code" to code.value,
                         "client_id" to config.googleOAuth.clientId,
                         "client_secret" to config.googleOAuth.clientSecret,
-                        "redirect_uri" to "http://localhost:8081/auth/google/callback",
+                        "redirect_uri" to if (serverMode.devMode) {
+                            "http://localhost:8081/auth/google/callback"
+                        } else {
+                            "https://api.ivylearn.app/auth/google/callback"
+                        },
                         "grant_type" to "authorization_code"
                     )
                 )
