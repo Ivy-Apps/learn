@@ -241,14 +241,14 @@ private fun LazyListScope.legalFooter(
             IvyButton(
                 appearance = ButtonAppearance.Text(style = ButtonStyle.Neutral),
                 text = {
-                    Text("Terms of use")
+                    Text("Terms of Service")
                 },
                 onClick = onTermsOfUseClick,
             )
             IvyButton(
                 appearance = ButtonAppearance.Text(style = ButtonStyle.Neutral),
                 text = {
-                    Text("Privacy policy")
+                    Text("Privacy Policy")
                 },
                 onClick = onPrivacyPolicyClick,
             )
