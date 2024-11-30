@@ -10,6 +10,7 @@ import ivy.learn.ServerMode
 import ivy.learn.config.Environment
 import ivy.learn.config.EnvironmentImpl
 import ivy.learn.config.ServerConfigurationProvider
+import ivy.learn.util.Base64Util
 import ivy.learn.util.Crypto
 import ivy.learn.util.TimeProvider
 
@@ -22,5 +23,6 @@ class AppModule(private val devMode: Boolean) : Di.Module {
         autoWireSingleton(::LearnServer)
         autoWire(::Crypto)
         autoWire(::TimeProvider)
+        autoWire(::Base64Util)
     }
 }

@@ -11,10 +11,10 @@ import navigation.Screen
 import ui.screen.intro.composable.IntroContent
 
 object IntroRouter : Router<IntroScreen> {
-    const val PATH = ""
+    const val PATH = "intro"
 
     override fun fromRoute(route: Route): Option<IntroScreen> = option {
-        ensure(route.path == PATH)
+        ensure(route.path == PATH || route.path == "")
         IntroScreen()
     }
 

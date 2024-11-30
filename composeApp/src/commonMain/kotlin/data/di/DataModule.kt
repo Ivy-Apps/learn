@@ -6,6 +6,8 @@ import data.LessonRepository
 import data.LessonRepositoryImpl
 import data.TopicsRepository
 import data.fake.FakeLessonRepository
+import data.storage.LocalStorage
+import data.storage.localStorage
 import di.bindWithFake
 import ivy.di.Di
 import ivy.di.Di.register
@@ -25,5 +27,6 @@ object DataModule : Di.Module {
             }
         }
         bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
+        register<LocalStorage> { localStorage() }
     }
 }

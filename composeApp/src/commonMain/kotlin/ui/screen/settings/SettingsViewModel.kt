@@ -2,13 +2,19 @@ package ui.screen.settings
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.UriHandler
+import domain.SessionManager
 import ivy.IvyUrls
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import navigation.Navigation
 import ui.ComposeViewModel
+import ui.screen.intro.IntroScreen
 
 class SettingsViewModel(
     private val navigation: Navigation,
-    private val uriHandler: UriHandler
+    private val uriHandler: UriHandler,
+    private val sessionManager: SessionManager,
+    private val scope: CoroutineScope,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -40,7 +46,7 @@ class SettingsViewModel(
             SettingsViewEvent.OnPremiumClick -> handlePremiumClick()
             is SettingsViewEvent.OnSoundEnabledChange -> handleSoundEnabledChange(event)
             SettingsViewEvent.OnPrivacyClick -> handlePrivacyClick()
-            SettingsViewEvent.OnLogOutClick -> handleLogOutClick()
+            SettingsViewEvent.OnLogoutClick -> handleLogoutClick()
             SettingsViewEvent.OnDeleteAccountClick -> handleDeleteAccountClick()
             SettingsViewEvent.OnTermsOfUseClick -> handleTermsOfUseClick()
             SettingsViewEvent.OnPrivacyPolicyClick -> handlePrivacyPolicyClick()
@@ -65,8 +71,12 @@ class SettingsViewModel(
         // TODO - handle event
     }
 
-    private fun handleLogOutClick() {
-        // TODO - handle event
+    private fun handleLogoutClick() {
+        println("On logout click")
+        scope.launch {
+            sessionManager.logout()
+            navigation.replaceWith(IntroScreen())
+        }
     }
 
     private fun handleTermsOfUseClick() {

@@ -1,5 +1,6 @@
 package ivy.learn.domain.model
 
+import ivy.model.auth.SessionToken
 import kotlinx.datetime.Instant
 
 data class Session(
@@ -8,6 +9,3 @@ data class Session(
     val createdAt: Instant,
     val expiresAt: Instant,
 )
-
-@JvmInline
-value class SessionToken(val value: String)

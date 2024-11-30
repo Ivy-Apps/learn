@@ -70,9 +70,9 @@ fun SettingsContent(
                     key = "spacer 1",
                     height = 8.dp
                 )
-                logOutButton(
+                logoutButton(
                     onLogOutClick = {
-                        onEvent(SettingsViewEvent.OnLogOutClick)
+                        onEvent(SettingsViewEvent.OnLogoutClick)
                     }
                 )
                 spacerItem(
@@ -192,7 +192,7 @@ private fun LazyListScope.privacyButton(
     }
 }
 
-private fun LazyListScope.logOutButton(
+private fun LazyListScope.logoutButton(
     onLogOutClick: () -> Unit
 ) {
     item(key = "log-out") {

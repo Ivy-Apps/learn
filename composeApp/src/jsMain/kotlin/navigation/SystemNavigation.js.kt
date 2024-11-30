@@ -30,6 +30,7 @@ class WebSystemNavigation : SystemNavigation {
 
     override fun replaceWith(screen: Screen) {
         window.history.replaceState(js("({})"), "", screen.toFullPath())
+        emitCurrentRoute()
     }
 
     private fun Screen.toFullPath(): String {

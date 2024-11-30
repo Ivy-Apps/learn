@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
 object Sessions : Table() {
     val token = varchar("token", length = 128).uniqueIndex()
-    val userId = Analytics.reference(
+    val userId = reference(
         name = "user_id",
         refColumn = Users.id,
         onDelete = ReferenceOption.CASCADE,
