@@ -1,11 +1,14 @@
 package ui.screen.settings
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.UriHandler
+import ivy.IvyUrls
 import navigation.Navigation
 import ui.ComposeViewModel
 
 class SettingsViewModel(
     private val navigation: Navigation,
+    private val uriHandler: UriHandler
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialogVisible by mutableStateOf(false)
@@ -66,11 +69,11 @@ class SettingsViewModel(
     }
 
     private fun handleTermsOfUseClick() {
-        // TODO - handle event
+        uriHandler.openUri(IvyUrls.tos)
     }
 
     private fun handlePrivacyPolicyClick() {
-        // TODO - handle event
+        uriHandler.openUri(IvyUrls.privacy)
     }
 
     private fun handleConfirmDeleteAccountClick() {
