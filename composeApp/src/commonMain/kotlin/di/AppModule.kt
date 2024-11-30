@@ -6,7 +6,11 @@ import ivy.data.LocalServerUrlProvider
 import ivy.data.ServerUrlProvider
 import ivy.di.Di
 import ivy.di.Di.register
+import ivy.di.Di.singleton
 import ivy.di.autowire.autoWireSingleton
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import navigation.Navigation
 import navigation.systemNavigation
 import util.DispatchersProvider
@@ -27,6 +31,7 @@ object AppModule : Di.Module {
                     Di.get<HerokuServerUrlProvider>()
                 }
             }
+            singleton { CoroutineScope(Dispatchers.Main + CoroutineName("App")) }
         }
     }
 }
