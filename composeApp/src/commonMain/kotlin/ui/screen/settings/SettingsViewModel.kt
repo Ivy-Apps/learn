@@ -44,8 +44,8 @@ class SettingsViewModel(
             SettingsViewEvent.OnDeleteAccountClick -> handleDeleteAccountClick()
             SettingsViewEvent.OnTermsOfUseClick -> handleTermsOfUseClick()
             SettingsViewEvent.OnPrivacyPolicyClick -> handlePrivacyPolicyClick()
-            SettingsViewEvent.OnCancelDeleteAccountClick -> handleConfirmDeleteAccountClick()
-            SettingsViewEvent.OnConfirmDeleteAccountClick -> handleCancelDeleteAccountClick()
+            SettingsViewEvent.OnCancelDeleteAccountClick -> handleCancelDeleteAccountClick()
+            SettingsViewEvent.OnConfirmDeleteAccountClick -> handleConfirmDeleteAccountClick()
         }
     }
 
