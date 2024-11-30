@@ -3,6 +3,7 @@ package ui.screen.settings.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import component.platformHorizontalPadding
 import component.text.Title
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
+import ui.theme.colorsExt
 
 @Composable
 fun SettingsContent(
@@ -124,7 +126,11 @@ private fun SoundSwitch(
             onSoundEnabledChange(!soundEnabled)
         },
         text = {
-            Text("Sounds")
+            Text(
+                text = "Sounds",
+                style = MaterialTheme.typography.button,
+                color = MaterialTheme.colorsExt.onBackgroundVariant
+            )
         }
     )
 }
