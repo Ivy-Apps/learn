@@ -9,6 +9,10 @@ interface LocalStorage {
     suspend fun getDouble(key: String): Double?
     suspend fun putBoolean(key: String, value: Boolean)
     suspend fun getBoolean(key: String): Boolean?
+
+    suspend fun remove(key: String)
+    suspend fun removeAll()
+    suspend fun keys(): List<String>
 }
 
 expect fun localStorage(): LocalStorage

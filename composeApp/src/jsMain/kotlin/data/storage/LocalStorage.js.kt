@@ -50,6 +50,21 @@ class WebLocalLocalStorage : LocalStorage {
     override suspend fun getBoolean(key: String): Boolean? = withContext(Dispatchers.Default) {
         window.localStorage[key]?.toBooleanStrictOrNull()
     }
+
+    override suspend fun remove(key: String) {
+        window.localStorage.removeItem(key)
+    }
+
+    override suspend fun removeAll() {
+        window.localStorage.clear()
+    }
+
+    override suspend fun keys(): List<String> {
+        return (0..window.localStorage.length)
+            .mapNotNull {
+                window.localStorage.key(it)
+            }
+    }
 }
 
 actual fun localStorage(): LocalStorage = WebLocalLocalStorage()

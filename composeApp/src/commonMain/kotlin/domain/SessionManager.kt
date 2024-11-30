@@ -21,6 +21,11 @@ class SessionManager(
             }
     }
 
+    suspend fun logout() {
+        sessionToken = null
+        localStorage.remove(SESSION_TOKEN_KEY)
+    }
+
     companion object {
         const val SESSION_TOKEN_KEY = "sessionToken"
     }
