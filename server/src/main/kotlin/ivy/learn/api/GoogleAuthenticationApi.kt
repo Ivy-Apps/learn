@@ -32,7 +32,7 @@ class GoogleAuthenticationApi(
             val auth = authService.authenticate(googleAuthCode)
                 .mapLeft(ServerError::Unknown)
                 .bind()
-            val sessionToken = auth.session.token
+            val sessionToken = auth.session.token.value
             val frontEndUrl = if (serverMode.devMode) {
                 IvyUrls.devFrontEnd
             } else {

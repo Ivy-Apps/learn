@@ -14,11 +14,11 @@ class AppViewModel(
     @Composable
     fun Init() {
         LaunchedEffect(Unit) {
-            initialize()
+            redirectLoggedUsers()
         }
     }
 
-    private suspend fun initialize() {
+    private suspend fun redirectLoggedUsers() {
         if (sessionManager.getSession() != null) {
             // already logged
             navigation.replaceWith(HomeScreen())

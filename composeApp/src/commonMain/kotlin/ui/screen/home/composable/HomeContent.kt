@@ -28,11 +28,7 @@ fun HomeContent(
     onEvent: (HomeViewEvent) -> Unit
 ) {
     LearnScaffold(
-        backButton = BackButton(
-            onBackClick = {
-                onEvent(HomeViewEvent.OnBackClick)
-            }
-        ),
+        backButton = null,
         title = "Learn",
         actions = {
             SettingsButton(

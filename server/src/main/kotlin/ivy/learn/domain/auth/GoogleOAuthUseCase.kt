@@ -32,7 +32,7 @@ class GoogleOAuthUseCase(
             names = userInfoResponse.name,
             profilePictureUrl = userInfoResponse.picture,
         ).also {
-            logger.info("Google verification succeeded for $it")
+            logger.debug("Google verification succeeded for {}", it)
         }
     }
 
