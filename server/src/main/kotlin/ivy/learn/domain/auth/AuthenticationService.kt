@@ -5,11 +5,11 @@ import arrow.core.raise.either
 import ivy.learn.data.repository.auth.SessionRepository
 import ivy.learn.data.repository.auth.UserRepository
 import ivy.learn.domain.model.Session
-import ivy.learn.domain.model.SessionToken
 import ivy.learn.domain.model.User
 import ivy.learn.domain.model.UserId
 import ivy.learn.util.Crypto
 import ivy.learn.util.TimeProvider
+import ivy.model.auth.SessionToken
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
