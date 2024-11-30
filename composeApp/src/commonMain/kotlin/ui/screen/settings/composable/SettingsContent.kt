@@ -3,13 +3,12 @@ package ui.screen.settings.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -100,6 +99,17 @@ fun SettingsContent(
                 )
             }
         }
+    }
+
+    if (viewState.deleteDialogVisible) {
+        DeleteAccountConfirmationDialog(
+            onConfirmDeleteAccountClick = {
+                onEvent(SettingsViewEvent.OnConfirmDeleteAccountClick)
+            },
+            onCancelDeleteAccountClick = {
+                onEvent(SettingsViewEvent.OnCancelDeleteAccountClick)
+            }
+        )
     }
 }
 
