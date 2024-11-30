@@ -100,8 +100,9 @@ fun SettingsContent(
         }
     }
 
-    if (viewState.deleteDialogVisible) {
+    if (viewState.deleteDialog != null) {
         DeleteAccountConfirmationDialog(
+            viewState = viewState.deleteDialog,
             onConfirmDeleteAccountClick = {
                 onEvent(SettingsViewEvent.OnConfirmDeleteAccountClick)
             },

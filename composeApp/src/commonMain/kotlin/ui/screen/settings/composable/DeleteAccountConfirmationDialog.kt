@@ -10,10 +10,12 @@ import androidx.compose.ui.unit.dp
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
+import ui.screen.settings.DeleteDialogViewState
 import ui.theme.colorsExt
 
 @Composable
 fun DeleteAccountConfirmationDialog(
+    viewState: DeleteDialogViewState,
     modifier: Modifier = Modifier,
     onConfirmDeleteAccountClick: () -> Unit,
     onCancelDeleteAccountClick: () -> Unit
@@ -38,6 +40,7 @@ fun DeleteAccountConfirmationDialog(
         confirmButton = {
             IvyButton(
                 appearance = ButtonAppearance.Filled(ButtonStyle.Destructive),
+                loading = viewState.ctaLoading,
                 onClick = onConfirmDeleteAccountClick,
                 text = {
                     Text(text = "DELETE ACCOUNT")

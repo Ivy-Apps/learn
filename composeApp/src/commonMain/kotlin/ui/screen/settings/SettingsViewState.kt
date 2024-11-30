@@ -5,7 +5,12 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class SettingsViewState(
     val soundEnabled: Boolean,
-    val deleteDialogVisible: Boolean,
+    val deleteDialog: DeleteDialogViewState?
+)
+
+@Immutable
+data class DeleteDialogViewState(
+    val ctaLoading: Boolean
 )
 
 sealed interface SettingsViewEvent {

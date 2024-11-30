@@ -1,10 +1,7 @@
 package component.button
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,6 +29,7 @@ sealed interface ButtonStyle {
 fun IvyButton(
     appearance: ButtonAppearance,
     modifier: Modifier = Modifier,
+    loading: Boolean = false,
     enabled: Boolean = true,
     text: @Composable (RowScope.() -> Unit)? = null,
     icon: @Composable (RowScope.() -> Unit)? = null,
@@ -51,10 +49,17 @@ fun IvyButton(
         modifier = modifier,
         appearance = appearance,
         contentPadding = contentPadding,
-        enabled = enabled,
+        enabled = enabled && !loading,
         onClick = onClick
     ) {
         when {
+            loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = LocalContentColor.current
+                )
+            }
+
             icon != null && text != null -> {
                 icon()
                 Spacer(Modifier.width(8.dp))
