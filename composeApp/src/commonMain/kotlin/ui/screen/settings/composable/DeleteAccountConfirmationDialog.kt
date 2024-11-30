@@ -1,10 +1,12 @@
 package ui.screen.settings.composable
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
@@ -36,16 +38,23 @@ fun DeleteAccountConfirmationDialog(
         confirmButton = {
             IvyButton(
                 appearance = ButtonAppearance.Filled(ButtonStyle.Destructive),
-                onClick = onConfirmDeleteAccountClick
+                onClick = onConfirmDeleteAccountClick,
+                text = {
+                    Text(text = "DELETE ACCOUNT")
+                }
             )
         },
         dismissButton = {
             IvyButton(
                 appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
-                onClick = onCancelDeleteAccountClick
+                onClick = onCancelDeleteAccountClick,
+                text = {
+                    Text(text = "Cancel")
+                }
             )
         },
         backgroundColor = MaterialTheme.colorsExt.backgroundVariant,
-        contentColor = MaterialTheme.colorsExt.onBackgroundVariant
+        contentColor = MaterialTheme.colorsExt.onBackgroundVariant,
+        shape = RoundedCornerShape(8.dp)
     )
 }

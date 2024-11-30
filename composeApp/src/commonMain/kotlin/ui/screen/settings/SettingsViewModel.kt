@@ -86,6 +86,6 @@ class SettingsViewModel(
     }
 
     private fun handleCancelDeleteAccountClick() {
-        // TODO - handle event
+        deleteDialogVisible = false
     }
 }
