@@ -17,9 +17,9 @@ import component.button.ButtonStyle
 import component.button.IvyButton
 import component.button.IvySwitch
 import component.platformHorizontalPadding
-import component.text.Title
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
+import ui.theme.Gray
 import ui.theme.colorsExt
 
 @Composable
@@ -42,29 +42,39 @@ fun SettingsContent(
             val horizontalPadding = platformHorizontalPadding()
             LazyColumn(
                 modifier = Modifier.widthIn(max = 500.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = PaddingValues(horizontal = horizontalPadding)
             ) {
+                sectionDivider(text = "Premium")
                 premiumButton(
                     onPremiumClick = {
                         onEvent(SettingsViewEvent.OnPremiumClick)
                     }
                 )
+                sectionDivider("App")
                 appSettingsSection(
                     soundEnabled = viewState.soundEnabled,
                     onSoundEnabledChange = {
                         onEvent(SettingsViewEvent.OnSoundEnabledChange(it))
                     }
                 )
+                sectionDivider("Legal")
                 privacyButton(
                     onPrivacyClick = {
                         onEvent(SettingsViewEvent.OnPrivacyClick)
                     }
                 )
+                spacerItem(
+                    key = "spacer 1",
+                    height = 12.dp
+                )
                 deleteAccountButton(
                     onDeleteAccountClick = {
                         onEvent(SettingsViewEvent.OnDeleteAccountClick)
                     }
+                )
+                spacerItem(
+                    key = "spacer 2",
+                    height = 12.dp
                 )
                 legalFooter(
                     onTermsOfUseClick = {
@@ -79,21 +89,33 @@ fun SettingsContent(
     }
 }
 
+private fun LazyListScope.sectionDivider(text: String) {
+    item(key = text) {
+        Text(
+            modifier = Modifier.padding(
+                start = 24.dp,
+                top = 24.dp,
+                bottom = 8.dp
+            ),
+            text = text,
+            style = MaterialTheme.typography.subtitle1,
+            color = Gray
+        )
+    }
+}
+
 private fun LazyListScope.premiumButton(
     onPremiumClick: () -> Unit
 ) {
     item(key = "premium") {
-        Column {
-            Title("App")
-            IvyButton(
-                modifier = Modifier.fillMaxWidth(),
-                appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
-                text = {
-                    Text("Premium")
-                },
-                onClick = onPremiumClick
-            )
-        }
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+            text = {
+                Text("Upgrade to Premium")
+            },
+            onClick = onPremiumClick
+        )
     }
 }
 
@@ -102,14 +124,10 @@ private fun LazyListScope.appSettingsSection(
     onSoundEnabledChange: (Boolean) -> Unit,
 ) {
     item(key = "app") {
-        Column {
-            Title("App")
-            Spacer(Modifier.height(12.dp))
-            SoundSwitch(
-                soundEnabled = soundEnabled,
-                onSoundEnabledChange = onSoundEnabledChange
-            )
-        }
+        SoundSwitch(
+            soundEnabled = soundEnabled,
+            onSoundEnabledChange = onSoundEnabledChange
+        )
     }
 }
 
