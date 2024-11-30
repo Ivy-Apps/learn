@@ -40,6 +40,7 @@ class SettingsViewModel(
             SettingsViewEvent.OnPremiumClick -> handlePremiumClick()
             is SettingsViewEvent.OnSoundEnabledChange -> handleSoundEnabledChange(event)
             SettingsViewEvent.OnPrivacyClick -> handlePrivacyClick()
+            SettingsViewEvent.OnLogOutClick -> handleLogOutClick()
             SettingsViewEvent.OnDeleteAccountClick -> handleDeleteAccountClick()
             SettingsViewEvent.OnTermsOfUseClick -> handleTermsOfUseClick()
             SettingsViewEvent.OnPrivacyPolicyClick -> handlePrivacyPolicyClick()
@@ -61,6 +62,10 @@ class SettingsViewModel(
     }
 
     private fun handlePrivacyClick() {
+        // TODO - handle event
+    }
+
+    private fun handleLogOutClick() {
         // TODO - handle event
     }
 

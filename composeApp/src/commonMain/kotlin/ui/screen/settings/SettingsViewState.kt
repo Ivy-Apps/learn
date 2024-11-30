@@ -13,6 +13,7 @@ sealed interface SettingsViewEvent {
     data object OnPremiumClick : SettingsViewEvent
     data class OnSoundEnabledChange(val enabled: Boolean) : SettingsViewEvent
     data object OnPrivacyClick : SettingsViewEvent
+    data object OnLogOutClick : SettingsViewEvent
     data object OnDeleteAccountClick : SettingsViewEvent
     data object OnTermsOfUseClick : SettingsViewEvent
     data object OnPrivacyPolicyClick : SettingsViewEvent

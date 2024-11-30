@@ -3,8 +3,13 @@ package ui.screen.settings.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +62,7 @@ fun SettingsContent(
                         onEvent(SettingsViewEvent.OnSoundEnabledChange(it))
                     }
                 )
-                sectionDivider("Legal")
+                sectionDivider("Account")
                 privacyButton(
                     onPrivacyClick = {
                         onEvent(SettingsViewEvent.OnPrivacyClick)
@@ -65,7 +70,16 @@ fun SettingsContent(
                 )
                 spacerItem(
                     key = "spacer 1",
-                    height = 12.dp
+                    height = 8.dp
+                )
+                logOutButton(
+                    onLogOutClick = {
+                        onEvent(SettingsViewEvent.OnLogOutClick)
+                    }
+                )
+                spacerItem(
+                    key = "spacer 2",
+                    height = 8.dp
                 )
                 deleteAccountButton(
                     onDeleteAccountClick = {
@@ -73,8 +87,8 @@ fun SettingsContent(
                     }
                 )
                 spacerItem(
-                    key = "spacer 2",
-                    height = 12.dp
+                    key = "spacer 3",
+                    height = 8.dp
                 )
                 legalFooter(
                     onTermsOfUseClick = {
@@ -164,6 +178,27 @@ private fun LazyListScope.privacyButton(
                 Text("Privacy")
             },
             onClick = onPrivacyClick
+        )
+    }
+}
+
+private fun LazyListScope.logOutButton(
+    onLogOutClick: () -> Unit
+) {
+    item(key = "log-out") {
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Outlined(ButtonStyle.Neutral),
+            icon = {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                    contentDescription = null
+                )
+            },
+            text = {
+                Text("Log out")
+            },
+            onClick = onLogOutClick
         )
     }
 }

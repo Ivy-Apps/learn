@@ -38,9 +38,19 @@ fun IvyButton(
     iconRight: @Composable (RowScope.() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
+    val contentPadding = if (text == null) {
+        PaddingValues(all = 8.dp)
+    } else {
+        PaddingValues(
+            horizontal = 16.dp,
+            vertical = 8.dp
+        )
+    }
+
     ButtonWrapper(
-        appearance = appearance,
         modifier = modifier,
+        appearance = appearance,
+        contentPadding = contentPadding,
         enabled = enabled,
         onClick = onClick
     ) {
@@ -71,12 +81,12 @@ fun IvyButton(
 @Composable
 private fun ButtonWrapper(
     appearance: ButtonAppearance,
+    contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable (RowScope.() -> Unit)
 ) {
-    val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     val colors = appearance.buttonColors()
 
     when (appearance) {
