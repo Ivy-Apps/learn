@@ -3,7 +3,6 @@ package ui.screen.settings.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,6 +14,7 @@ import component.LearnScaffold
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
+import component.button.IvySwitch
 import component.platformHorizontalPadding
 import component.text.Title
 import ui.screen.settings.SettingsViewEvent
@@ -117,23 +117,15 @@ private fun SoundSwitch(
     modifier: Modifier = Modifier,
     onSoundEnabledChange: (Boolean) -> Unit,
 ) {
-    IvyButton(
+    IvySwitch(
         modifier = modifier,
-        appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
-        text = {
-            Text("Sounds")
-            Spacer(Modifier.weight(1f))
-            Switch(
-                modifier = Modifier.defaultMinSize(minHeight = 0.dp),
-                checked = soundEnabled,
-                onCheckedChange = {
-                    onSoundEnabledChange(it)
-                },
-            )
-        },
-        onClick = {
+        checked = soundEnabled,
+        onCheckedChange = {
             onSoundEnabledChange(!soundEnabled)
         },
+        text = {
+            Text("Sounds")
+        }
     )
 }
 
