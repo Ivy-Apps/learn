@@ -1,26 +1,20 @@
 package ivy.learn.domain.auth
 
 import arrow.core.Either
-import arrow.core.left
 import arrow.core.raise.catch
 import arrow.core.raise.either
 import arrow.core.raise.ensure
-import arrow.core.raise.ensureNotNull
-import arrow.core.right
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import ivy.learn.config.ServerConfiguration
-import ivy.learn.util.Base64Util
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 class GoogleOAuthUseCase(
     private val config: ServerConfiguration,
     private val httpClient: HttpClient,
-    private val base64: Base64Util,
 ) {
 
     suspend fun verify(
@@ -30,7 +24,12 @@ class GoogleOAuthUseCase(
             "Google authorization code is blank!"
         }
         val tokenResponse = exchangeAuthCodeForTokens(authCode).bind()
-        extractPublicProfile(tokenResponse.idToken).bind()
+        val userInfoResponse = fetchUserInfo(accessToken = tokenResponse.accessToken).bind()
+        GooglePublicProfile(
+            email = userInfoResponse.email,
+            names = userInfoResponse.name,
+            profilePictureUrl = userInfoResponse.picture,
+        )
     }
 
     /*
@@ -56,7 +55,7 @@ class GoogleOAuthUseCase(
                 )
             }
             ensure(response.status.isSuccess()) {
-                "Failed to verify Google authorization code: status - ${response.status}"
+                "Verify Google authorization code: status - ${response.status}"
             }
             response.body<GoogleTokenResponse>()
         }
@@ -64,54 +63,33 @@ class GoogleOAuthUseCase(
         Either.Left("Failed to verify Google authorization code: ${code.value}")
     }
 
-    private fun extractPublicProfile(idToken: String): Either<String, GooglePublicProfile> = either {
-        val idTokenPayload = decodeIdTokenPayload(idToken)
-            .mapLeft { errMsg ->
-                "Google ID token decode: $errMsg; idToken = $idToken"
+    private suspend fun fetchUserInfo(
+        accessToken: String
+    ): Either<String, GoogleUserInfoResponse> = catch({
+        either {
+            val response = httpClient.get("https://www.googleapis.com/oauth2/v3/userinfo") {
+                header(HttpHeaders.Authorization, "Bearer $accessToken")
             }
-            .bind()
-        val audience = idTokenPayload["aud"]
-        ensure(audience != config.googleOAuth.clientId) {
-            "Google ID token is not intended for our client"
+            ensure(response.status.isSuccess()) {
+                "Fetch Google user info status code: ${response.status}"
+            }
+            response.body<GoogleUserInfoResponse>()
         }
-
-        val email = idTokenPayload["email"]
-        ensureNotNull(email) {
-            "Google ID token Email is null"
-        }
-        val name = idTokenPayload["name"]
-        val picture = idTokenPayload["picture"]
-
-
-        GooglePublicProfile(
-            email = email,
-            names = name,
-            profilePictureUrl = picture
-        )
+    }) { e ->
+        Either.Left("Fetch Google user info because $e")
     }
 
-    private fun decodeIdTokenPayload(
-        idToken: String
-    ): Either<String, Map<String, String>> = either {
-        val payloadBase64 = catch({
-            idToken.split(".")[1].right()
-        }) { e ->
-            "Split on '.' for \"$idToken\" because $e".left()
-        }.bind()
-        val payloadText = base64.decode(payloadBase64).bind()
-        val payload = catch({
-            Json.decodeFromString<Map<String, String>>(payloadText).right()
-        }) { e ->
-            "JSON decode of '$payloadText' because $e".left()
-        }.bind()
-        payload
-    }
-
+    @Serializable
+    data class GoogleUserInfoResponse(
+        val email: String,
+        val name: String?,
+        val picture: String?,
+    )
 
     @Serializable
     data class GoogleTokenResponse(
-        @SerialName("id_token")
-        val idToken: String,
+        @SerialName("access_token")
+        val accessToken: String,
     )
 }
 
