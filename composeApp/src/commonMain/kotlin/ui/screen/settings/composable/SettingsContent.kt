@@ -3,8 +3,11 @@ package ui.screen.settings.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.Switch
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,10 +18,12 @@ import component.LearnScaffold
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
+import component.button.IvySwitch
 import component.platformHorizontalPadding
-import component.text.Title
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
+import ui.theme.Gray
+import ui.theme.colorsExt
 
 @Composable
 fun SettingsContent(
@@ -40,29 +45,48 @@ fun SettingsContent(
             val horizontalPadding = platformHorizontalPadding()
             LazyColumn(
                 modifier = Modifier.widthIn(max = 500.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = PaddingValues(horizontal = horizontalPadding)
             ) {
+                sectionDivider(text = "Premium")
                 premiumButton(
                     onPremiumClick = {
                         onEvent(SettingsViewEvent.OnPremiumClick)
                     }
                 )
+                sectionDivider("App")
                 appSettingsSection(
                     soundEnabled = viewState.soundEnabled,
                     onSoundEnabledChange = {
                         onEvent(SettingsViewEvent.OnSoundEnabledChange(it))
                     }
                 )
+                sectionDivider("Account")
                 privacyButton(
                     onPrivacyClick = {
                         onEvent(SettingsViewEvent.OnPrivacyClick)
                     }
                 )
+                spacerItem(
+                    key = "spacer 1",
+                    height = 8.dp
+                )
+                logOutButton(
+                    onLogOutClick = {
+                        onEvent(SettingsViewEvent.OnLogOutClick)
+                    }
+                )
+                spacerItem(
+                    key = "spacer 2",
+                    height = 8.dp
+                )
                 deleteAccountButton(
                     onDeleteAccountClick = {
                         onEvent(SettingsViewEvent.OnDeleteAccountClick)
                     }
+                )
+                spacerItem(
+                    key = "spacer 3",
+                    height = 8.dp
                 )
                 legalFooter(
                     onTermsOfUseClick = {
@@ -75,23 +99,47 @@ fun SettingsContent(
             }
         }
     }
+
+    if (viewState.deleteDialog != null) {
+        DeleteAccountConfirmationDialog(
+            viewState = viewState.deleteDialog,
+            onConfirmDeleteAccountClick = {
+                onEvent(SettingsViewEvent.OnConfirmDeleteAccountClick)
+            },
+            onCancelDeleteAccountClick = {
+                onEvent(SettingsViewEvent.OnCancelDeleteAccountClick)
+            }
+        )
+    }
+}
+
+private fun LazyListScope.sectionDivider(text: String) {
+    item(key = text) {
+        Text(
+            modifier = Modifier.padding(
+                start = 24.dp,
+                top = 24.dp,
+                bottom = 8.dp
+            ),
+            text = text,
+            style = MaterialTheme.typography.subtitle1,
+            color = Gray
+        )
+    }
 }
 
 private fun LazyListScope.premiumButton(
     onPremiumClick: () -> Unit
 ) {
     item(key = "premium") {
-        Column {
-            Title("App")
-            IvyButton(
-                modifier = Modifier.fillMaxWidth(),
-                appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
-                text = {
-                    Text("Premium")
-                },
-                onClick = onPremiumClick
-            )
-        }
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+            text = {
+                Text("Upgrade to Premium")
+            },
+            onClick = onPremiumClick
+        )
     }
 }
 
@@ -100,14 +148,10 @@ private fun LazyListScope.appSettingsSection(
     onSoundEnabledChange: (Boolean) -> Unit,
 ) {
     item(key = "app") {
-        Column {
-            Title("App")
-            Spacer(Modifier.height(12.dp))
-            SoundSwitch(
-                soundEnabled = soundEnabled,
-                onSoundEnabledChange = onSoundEnabledChange
-            )
-        }
+        SoundSwitch(
+            soundEnabled = soundEnabled,
+            onSoundEnabledChange = onSoundEnabledChange
+        )
     }
 }
 
@@ -117,23 +161,19 @@ private fun SoundSwitch(
     modifier: Modifier = Modifier,
     onSoundEnabledChange: (Boolean) -> Unit,
 ) {
-    IvyButton(
+    IvySwitch(
         modifier = modifier,
-        appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
-        text = {
-            Text("Sounds")
-            Spacer(Modifier.weight(1f))
-            Switch(
-                modifier = Modifier.defaultMinSize(minHeight = 0.dp),
-                checked = soundEnabled,
-                onCheckedChange = {
-                    onSoundEnabledChange(it)
-                },
-            )
-        },
-        onClick = {
+        checked = soundEnabled,
+        onCheckedChange = {
             onSoundEnabledChange(!soundEnabled)
         },
+        text = {
+            Text(
+                text = "Sounds",
+                style = MaterialTheme.typography.button,
+                color = MaterialTheme.colorsExt.onBackgroundVariant
+            )
+        }
     )
 }
 
@@ -148,6 +188,27 @@ private fun LazyListScope.privacyButton(
                 Text("Privacy")
             },
             onClick = onPrivacyClick
+        )
+    }
+}
+
+private fun LazyListScope.logOutButton(
+    onLogOutClick: () -> Unit
+) {
+    item(key = "log-out") {
+        IvyButton(
+            modifier = Modifier.fillMaxWidth(),
+            appearance = ButtonAppearance.Outlined(ButtonStyle.Neutral),
+            icon = {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                    contentDescription = null
+                )
+            },
+            text = {
+                Text("Log out")
+            },
+            onClick = onLogOutClick
         )
     }
 }
@@ -180,14 +241,14 @@ private fun LazyListScope.legalFooter(
             IvyButton(
                 appearance = ButtonAppearance.Text(style = ButtonStyle.Neutral),
                 text = {
-                    Text("Terms of use")
+                    Text("Terms of Service")
                 },
                 onClick = onTermsOfUseClick,
             )
             IvyButton(
                 appearance = ButtonAppearance.Text(style = ButtonStyle.Neutral),
                 text = {
-                    Text("Privacy policy")
+                    Text("Privacy Policy")
                 },
                 onClick = onPrivacyPolicyClick,
             )

@@ -1,10 +1,7 @@
 package component.button
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,19 +29,37 @@ sealed interface ButtonStyle {
 fun IvyButton(
     appearance: ButtonAppearance,
     modifier: Modifier = Modifier,
+    loading: Boolean = false,
     enabled: Boolean = true,
     text: @Composable (RowScope.() -> Unit)? = null,
     icon: @Composable (RowScope.() -> Unit)? = null,
     iconRight: @Composable (RowScope.() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
+    val contentPadding = if (text == null) {
+        PaddingValues(all = 8.dp)
+    } else {
+        PaddingValues(
+            horizontal = 16.dp,
+            vertical = 8.dp
+        )
+    }
+
     ButtonWrapper(
-        appearance = appearance,
         modifier = modifier,
-        enabled = enabled,
+        appearance = appearance,
+        contentPadding = contentPadding,
+        enabled = enabled && !loading,
         onClick = onClick
     ) {
         when {
+            loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = LocalContentColor.current
+                )
+            }
+
             icon != null && text != null -> {
                 icon()
                 Spacer(Modifier.width(8.dp))
@@ -71,12 +86,12 @@ fun IvyButton(
 @Composable
 private fun ButtonWrapper(
     appearance: ButtonAppearance,
+    contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable (RowScope.() -> Unit)
 ) {
-    val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     val colors = appearance.buttonColors()
 
     when (appearance) {

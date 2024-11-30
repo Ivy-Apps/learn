@@ -7,13 +7,16 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.*
-import component.button.SecondaryButton
+import component.button.ButtonAppearance
+import component.button.ButtonStyle
+import component.button.IvyButton
 import ivy.model.CourseId
 import ui.screen.home.HomeItemViewState
 import ui.screen.home.HomeViewEvent
@@ -32,11 +35,8 @@ fun HomeContent(
         ),
         title = "Learn",
         actions = {
-            // TODO - update button
-            SecondaryButton(
-                text = "",
-                icon = Icons.Filled.Settings,
-                onClick = {
+            SettingsButton(
+                onSettingsClick = {
                     onEvent(HomeViewEvent.OnSettingsClick)
                 }
             )
@@ -101,4 +101,18 @@ fun HomeContent(
             }
         }
     }
+}
+
+@Composable
+private fun SettingsButton(onSettingsClick: () -> Unit) {
+    IvyButton(
+        appearance = ButtonAppearance.Filled(style = ButtonStyle.Secondary),
+        icon = {
+            Icon(
+                imageVector = Icons.Filled.Settings,
+                contentDescription = null
+            )
+        },
+        onClick = onSettingsClick
+    )
 }

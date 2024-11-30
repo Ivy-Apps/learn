@@ -1,14 +1,17 @@
 package ui.screen.settings
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.UriHandler
+import ivy.IvyUrls
 import navigation.Navigation
 import ui.ComposeViewModel
 
 class SettingsViewModel(
     private val navigation: Navigation,
+    private val uriHandler: UriHandler
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
-    private var deleteDialogVisible by mutableStateOf(false)
+    private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
 
     @Composable
     override fun viewState(): SettingsViewState {
@@ -17,7 +20,7 @@ class SettingsViewModel(
         }
         return SettingsViewState(
             soundEnabled = getSoundEnabled(),
-            deleteDialogVisible = getDeleteDialogVisible()
+            deleteDialog = getDeleteDialogState()
         )
     }
 
@@ -27,8 +30,8 @@ class SettingsViewModel(
     }
 
     @Composable
-    private fun getDeleteDialogVisible(): Boolean {
-        return deleteDialogVisible
+    private fun getDeleteDialogState(): DeleteDialogViewState? {
+        return deleteDialog
     }
 
     override fun onEvent(event: SettingsViewEvent) {
@@ -37,11 +40,12 @@ class SettingsViewModel(
             SettingsViewEvent.OnPremiumClick -> handlePremiumClick()
             is SettingsViewEvent.OnSoundEnabledChange -> handleSoundEnabledChange(event)
             SettingsViewEvent.OnPrivacyClick -> handlePrivacyClick()
+            SettingsViewEvent.OnLogOutClick -> handleLogOutClick()
             SettingsViewEvent.OnDeleteAccountClick -> handleDeleteAccountClick()
             SettingsViewEvent.OnTermsOfUseClick -> handleTermsOfUseClick()
             SettingsViewEvent.OnPrivacyPolicyClick -> handlePrivacyPolicyClick()
-            SettingsViewEvent.OnCancelDeleteAccountClick -> handleConfirmDeleteAccountClick()
-            SettingsViewEvent.OnConfirmDeleteAccountClick -> handleCancelDeleteAccountClick()
+            SettingsViewEvent.OnCancelDeleteAccountClick -> handleCancelDeleteAccountClick()
+            SettingsViewEvent.OnConfirmDeleteAccountClick -> handleConfirmDeleteAccountClick()
         }
     }
 
@@ -61,23 +65,28 @@ class SettingsViewModel(
         // TODO - handle event
     }
 
-    private fun handleDeleteAccountClick() {
-        deleteDialogVisible = true
+    private fun handleLogOutClick() {
+        // TODO - handle event
     }
 
     private fun handleTermsOfUseClick() {
-        // TODO - handle event
+        uriHandler.openUri(IvyUrls.tos)
     }
 
     private fun handlePrivacyPolicyClick() {
-        // TODO - handle event
+        uriHandler.openUri(IvyUrls.privacy)
+    }
+
+    private fun handleDeleteAccountClick() {
+        deleteDialog = DeleteDialogViewState(ctaLoading = false)
     }
 
     private fun handleConfirmDeleteAccountClick() {
+        deleteDialog = DeleteDialogViewState(ctaLoading = true)
         // TODO - handle event
     }
 
     private fun handleCancelDeleteAccountClick() {
-        // TODO - handle event
+        deleteDialog = null
     }
 }
