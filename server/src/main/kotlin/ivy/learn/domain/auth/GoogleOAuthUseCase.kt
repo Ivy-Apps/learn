@@ -1,23 +1,26 @@
 package ivy.learn.domain.auth
 
 import arrow.core.Either
+import arrow.core.left
 import arrow.core.raise.catch
 import arrow.core.raise.either
 import arrow.core.raise.ensure
 import arrow.core.raise.ensureNotNull
+import arrow.core.right
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import ivy.learn.config.ServerConfiguration
+import ivy.learn.util.Base64Util
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.util.*
 
 class GoogleOAuthUseCase(
     private val config: ServerConfiguration,
     private val httpClient: HttpClient,
+    private val base64: Base64Util,
 ) {
 
     suspend fun verify(
@@ -62,9 +65,11 @@ class GoogleOAuthUseCase(
     }
 
     private fun extractPublicProfile(idToken: String): Either<String, GooglePublicProfile> = either {
-        val idTokenPayload = catch({ decodeJwt(idToken) }) { e ->
-            raise("Failed to decode Google JWT idToken '$idToken': $e")
-        }
+        val idTokenPayload = decodeIdTokenPayload(idToken)
+            .mapLeft { errMsg ->
+                "Google ID token decode: $errMsg; idToken = $idToken"
+            }
+            .bind()
         val audience = idTokenPayload["aud"]
         ensure(audience != config.googleOAuth.clientId) {
             "Google ID token is not intended for our client"
@@ -85,10 +90,21 @@ class GoogleOAuthUseCase(
         )
     }
 
-    private fun decodeJwt(jwt: String): Map<String, String> {
-        val payload = jwt.split(".")[1]
-        val decodedBytes = Base64.getUrlDecoder().decode(payload)
-        return Json.decodeFromString(decodedBytes.decodeToString())
+    private fun decodeIdTokenPayload(
+        idToken: String
+    ): Either<String, Map<String, String>> = either {
+        val payloadBase64 = catch({
+            idToken.split(".")[1].right()
+        }) { e ->
+            "Split on '.' for \"$idToken\" because $e".left()
+        }.bind()
+        val payloadText = base64.decode(payloadBase64).bind()
+        val payload = catch({
+            Json.decodeFromString<Map<String, String>>(payloadText).right()
+        }) { e ->
+            "JSON decode of '$payloadText' because $e".left()
+        }.bind()
+        payload
     }
 
 
@@ -98,7 +114,6 @@ class GoogleOAuthUseCase(
         val idToken: String,
     )
 }
-
 
 data class GooglePublicProfile(
     val email: String,
