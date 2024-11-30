@@ -11,10 +11,12 @@ import io.ktor.http.*
 import ivy.learn.config.ServerConfiguration
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.slf4j.Logger
 
 class GoogleOAuthUseCase(
     private val config: ServerConfiguration,
     private val httpClient: HttpClient,
+    private val logger: Logger,
 ) {
 
     suspend fun verify(
@@ -29,7 +31,9 @@ class GoogleOAuthUseCase(
             email = userInfoResponse.email,
             names = userInfoResponse.name,
             profilePictureUrl = userInfoResponse.picture,
-        )
+        ).also {
+
+        }
     }
 
     /*

@@ -18,11 +18,19 @@ Learn programming by thinking.
 
 You need to have a PostgreSQL database.
 
-```
+```zshrc
 brew install postgresql
 brew services start postgresql@14
+psql -U postgres -c "CREATE DATABASE ivy_learn;"
 psql -d ivy_learn -c "CREATE USER postgres WITH PASSWORD 'password';"
 psql -d ivy_learn -c "ALTER USER postgres WITH SUPERUSER;"
+```
+
+**(optional) Drop local database:**
+
+```zshrc
+psql -U postgres -c "DROP DATABASE ivy_learn;"
+psql -U postgres -c "CREATE DATABASE ivy_learn;"
 ```
 
 **Environment Variables**

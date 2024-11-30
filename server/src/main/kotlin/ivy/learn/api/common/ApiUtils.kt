@@ -66,7 +66,7 @@ suspend inline fun RoutingContext.handleRequest(
             handler(call)
         }
     } catch (e: Throwable) {
-        Either.Left(ServerError.Unknown("Unexpected error occurred: $e"))
+        Either.Left(ServerError.Unknown("Unexpected error occurred."))
     }
     result.onLeft { error ->
         respondError(error)

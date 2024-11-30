@@ -5,6 +5,8 @@ import arrow.core.raise.catch
 import arrow.core.raise.either
 import ivy.learn.config.DatabaseConfig
 import ivy.learn.data.database.tables.Analytics
+import ivy.learn.data.database.tables.Sessions
+import ivy.learn.data.database.tables.Users
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -30,7 +32,11 @@ class Database {
 
     private fun createDbSchema(database: Database): Either<Throwable, Database> = catch({
         transaction {
-            SchemaUtils.create(Analytics)
+            SchemaUtils.create(
+                Users,
+                Sessions,
+                Analytics,
+            )
         }
         Either.Right(database)
     }) {
