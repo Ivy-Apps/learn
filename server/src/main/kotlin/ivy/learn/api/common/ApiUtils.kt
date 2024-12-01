@@ -16,12 +16,15 @@ import ivy.model.auth.SessionToken
 
 
 @IvyServerDsl
-inline fun Routing.deleteEndpointAuthenticated(
+inline fun <reified Response : Any> Routing.deleteEndpointAuthenticated(
     path: String,
-    crossinline handler: suspend Raise<ServerError>.(RoutingCall, SessionToken) -> Unit
+    crossinline handler: suspend Raise<ServerError>.(RoutingCall, SessionToken) -> Response
 ) {
     delete(path) {
-        handleAuthenticatedRequest(handler)
+        handleAuthenticatedRequest { call, sessionToken ->
+            val response = handler(call, sessionToken)
+            call.respond(HttpStatusCode.OK, response)
+        }
     }
 }
 
