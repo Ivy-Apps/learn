@@ -17,7 +17,7 @@ class IntroViewModel(
     @Composable
     override fun viewState(): IntroViewState {
         LaunchedEffect(Unit) {
-            platform.getUrlParam(IvyConstants.SessionTokenParam)
+            platform.getUrlParam(IvyConstants.PARAM_SESSION_TOKEN)
                 ?.let { sessionToken ->
                     navigation.navigateTo(HomeScreen())
                 }

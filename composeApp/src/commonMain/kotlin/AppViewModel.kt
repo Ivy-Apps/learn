@@ -25,7 +25,7 @@ class AppViewModel(
             return
         }
 
-        val sessionTokenParam = platform.getUrlParam(IvyConstants.SessionTokenParam)
+        val sessionTokenParam = platform.getUrlParam(IvyConstants.PARAM_SESSION_TOKEN)
         if (sessionTokenParam != null) {
             sessionManager.authenticate(SessionToken(sessionTokenParam))
             navigation.replaceWith(HomeScreen())

@@ -2,6 +2,9 @@ package ivy.learn.domain.auth
 
 import arrow.core.Either
 import arrow.core.raise.either
+import arrow.core.raise.ensure
+import arrow.core.raise.ensureNotNull
+import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.auth.SessionRepository
 import ivy.learn.data.repository.auth.UserRepository
 import ivy.learn.domain.model.Session
@@ -23,7 +26,7 @@ class AuthenticationService(
     private val timeProvider: TimeProvider,
 ) {
     companion object {
-        const val SESSION_EXPIRATION_DAYS = 30
+        const val SESSION_EXPIRATION_DAYS = 90
     }
 
     suspend fun authenticate(
@@ -58,6 +61,28 @@ class AuthenticationService(
             user = user,
             session = session,
         )
+    }
+
+    suspend fun getUser(
+        sessionToken: SessionToken
+    ): Either<ServerError, User> = either {
+        val session = sessionRepository.findSessionByToken(sessionToken)
+            .mapLeft { ServerError.Unknown(it) }
+            .bind()
+        ensureNotNull(session) {
+            ServerError.Unauthorized
+        }
+        ensure(session.expiresAt > timeProvider.instantNow()) {
+            ServerError.SessionExpired
+        }
+
+        val user = userRepository.findUserById(session.userId)
+            .mapLeft { ServerError.Unknown(it) }
+            .bind()
+        ensureNotNull(user) {
+            ServerError.Unauthorized
+        }
+        user
     }
 }
 

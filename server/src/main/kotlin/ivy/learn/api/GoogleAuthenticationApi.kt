@@ -39,7 +39,7 @@ class GoogleAuthenticationApi(
                 IvyUrls.frontEnd
             }
             logger.info("User '${auth.user.email}' logged on $frontEndUrl.")
-            call.respondRedirect("${frontEndUrl}?${IvyConstants.SessionTokenParam}=$sessionToken")
+            call.respondRedirect("${frontEndUrl}?${IvyConstants.PARAM_SESSION_TOKEN}=$sessionToken")
         }
     }
 

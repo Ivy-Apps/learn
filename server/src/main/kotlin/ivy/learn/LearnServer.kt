@@ -35,6 +35,7 @@ class LearnServer(
             Di.get<CoursesApi>(),
             Di.get<TopicsApi>(),
             Di.get<GoogleAuthenticationApi>(),
+            Di.get<UsersApi>(),
         )
     }
 
@@ -46,6 +47,7 @@ class LearnServer(
         autoWire(::TopicsApi)
         autoWire(::CoursesApi)
         autoWire(::GoogleAuthenticationApi)
+        autoWire(::UsersApi)
     }
 
     fun init(ktorApp: Application): Either<String, Unit> = either {
