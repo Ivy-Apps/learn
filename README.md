@@ -26,13 +26,6 @@ psql -d ivy_learn -c "CREATE USER postgres WITH PASSWORD 'password';"
 psql -d ivy_learn -c "ALTER USER postgres WITH SUPERUSER;"
 ```
 
-**(optional) Drop local database:**
-
-```zshrc
-psql -U postgres -c "DROP DATABASE ivy_learn;"
-psql -U postgres -c "CREATE DATABASE ivy_learn;"
-```
-
 **Environment Variables**
 
 ```zshrc
@@ -51,4 +44,25 @@ export IVY_GOOGLE_OAUTH_CLIENT_SECRET="your-client-secret"
 
 ```
 ./scripts/runServer.sh
+```
+
+**(optional) Drop local database:**
+
+```zshrc
+psql -U postgres -c "DROP DATABASE ivy_learn;"
+psql -U postgres -c "CREATE DATABASE ivy_learn;"
+```
+
+### Heroku commands
+
+**Connect to DB**
+
+```zshrc
+heroku pg:psql --app your-app
+```
+
+**Logs**
+
+```zshrc
+heroku logs --app your-app --tail
 ```
