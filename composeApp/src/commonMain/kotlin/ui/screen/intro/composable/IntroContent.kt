@@ -55,7 +55,7 @@ fun IntroContent(
             Spacer(modifier = Modifier.height(12.dp))
             Title(text = "Learn programming by thinking.")
             Spacer(modifier = Modifier.height(24.dp))
-            GoogleButton(
+            GoogleSignInButton(
                 onClick = {
                     onEvent(IntroViewEvent.OnContinueWithGoogleClick)
                 }
@@ -67,7 +67,7 @@ fun IntroContent(
 }
 
 @Composable
-private fun GoogleButton(
+private fun GoogleSignInButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
