@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import component.LocalLottieAnimation
@@ -74,7 +75,6 @@ private fun GoogleButton(
     val isLight = MaterialTheme.colors.isLight
     Row(
         modifier = modifier
-            .height(40.dp)
             .clip(shape)
             .clickable(onClick = onClick)
             .border(
@@ -95,7 +95,8 @@ private fun GoogleButton(
                 shape = shape,
             )
             .padding(
-                horizontal = 12.dp
+                horizontal = 12.dp,
+                vertical = 10.dp,
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -113,8 +114,10 @@ private fun GoogleButton(
                 Color(0xFFE3E3E3)
             },
             fontSize = 14.sp,
+            lineHeight = 14.sp,
             fontWeight = FontWeight.Medium,
             fontFamily = RobotoFontFamily,
+            textAlign = TextAlign.Center,
         )
     }
 }
