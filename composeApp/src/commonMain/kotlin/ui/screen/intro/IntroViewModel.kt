@@ -27,7 +27,7 @@ class IntroViewModel(
 
     override fun onEvent(event: IntroViewEvent) {
         when (event) {
-            IntroViewEvent.OnContinueClick -> handleContinueClick()
+            IntroViewEvent.OnContinueWithGoogleClick -> handleContinueClick()
         }
     }
 
