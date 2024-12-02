@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import navigation.Navigation
 import ui.ComposeViewModel
 import ui.screen.intro.IntroScreen
+import util.Logger
 
 class SettingsViewModel(
     private val navigation: Navigation,
@@ -17,6 +18,7 @@ class SettingsViewModel(
     private val sessionManager: SessionManager,
     private val scope: CoroutineScope,
     private val deleteUserDataUseCase: DeleteUserDataUseCase,
+    private val logger: Logger,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -95,6 +97,7 @@ class SettingsViewModel(
 
     private fun handleConfirmDeleteAccountClick() {
         scope.launch {
+            logger.debug("VM: Initiating user data deletion...")
             deleteDialog = DeleteDialogViewState(ctaLoading = true)
             deleteUserDataUseCase.execute()
             deleteDialog = DeleteDialogViewState(ctaLoading = false)
