@@ -1,5 +1,6 @@
 package ivy.learn
 
+import IvyConstants
 import arrow.core.Either
 import arrow.core.raise.either
 import io.ktor.http.*
@@ -26,6 +27,7 @@ import org.slf4j.event.Level
 class LearnServer(
     private val database: Database,
     private val configurationProvider: ServerConfigurationProvider,
+    private val serverMode: ServerMode,
 ) {
     private val apis: Set<Api> by lazy {
         setOf(
@@ -76,16 +78,32 @@ class LearnServer(
 
     private fun Application.configureCORS() {
         install(CORS) {
+            // Allow only necessary HTTP methods
             allowMethod(HttpMethod.Options)
+            allowMethod(HttpMethod.Get)
+            allowMethod(HttpMethod.Post)
             allowMethod(HttpMethod.Put)
             allowMethod(HttpMethod.Delete)
             allowMethod(HttpMethod.Patch)
-            allowHeader(HttpHeaders.Authorization)
+
+            // Allow only essential headers
             allowHeader(HttpHeaders.ContentType)
-            allowHeader(HttpHeaders.AccessControlAllowOrigin)
-            allowHeader(HttpHeaders.AccessControlAllowHeaders)
-            allowHeader(HttpHeaders.AccessControlAllowMethods)
-            anyHost()
+            allowHeader(IvyConstants.HEADER_SESSION_TOKEN)
+
+            // Environment-specific origin restrictions
+            if (serverMode.devMode) {
+                // Development: Allow all origins for flexibility
+                anyHost()
+            } else {
+                // Production: Allow only your frontend origin
+                allowHost("https://ivylearn.app")
+            }
+
+            // Disable credentials (not needed for token-based auth)
+            allowCredentials = false
+
+            // Optional: Cache preflight requests for better performance
+            maxAgeInSeconds = 3600L
         }
     }
 
