@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import navigation.Navigation
 import navigation.systemNavigation
+import ui.Toaster
 import util.DispatchersProvider
 import util.DispatchersProviderImpl
 
@@ -32,6 +33,7 @@ object AppModule : Di.Module {
                 }
             }
             singleton { CoroutineScope(Dispatchers.Main + CoroutineName("App")) }
+            autoWireSingleton(::Toaster)
         }
     }
 }

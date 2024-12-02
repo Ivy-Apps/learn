@@ -12,11 +12,10 @@ import ivy.data.LottieAnimationLoader
 import ivy.data.source.CoursesDataSource
 import ivy.data.source.LessonDataSource
 import ivy.data.source.TopicsDataSource
-import ivy.di.Di.register
+import ivy.data.source.UserDataSource
 import ivy.di.Di.singleton
 import ivy.di.autowire.autoWire
 import ivy.model.*
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -32,13 +31,13 @@ object SharedModule : Di.Module {
         ktorClient()
         autoWire(::HerokuServerUrlProvider)
         autoWire(::LocalServerUrlProvider)
-        register { LessonDataSource(Di.get(), Di.get()) }
-        register { TopicsDataSource(Di.get(), Di.get()) }
-        register { CoursesDataSource(Di.get(), Di.get()) }
-        register { LottieAnimationLoader(Di.get()) }
+        autoWire(::LessonDataSource)
+        autoWire(::TopicsDataSource)
+        autoWire(::CoursesDataSource)
+        autoWire(::LottieAnimationLoader)
+        autoWire(::UserDataSource)
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private fun Di.Scope.json() = singleton {
         Json {
             ignoreUnknownKeys = true
