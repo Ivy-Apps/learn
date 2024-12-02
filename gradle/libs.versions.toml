@@ -19,7 +19,7 @@ logback = "1.5.12"
 kotest = "5.9.1"
 kotlin-coroutines = "1.9.0"
 jebrains-exposed = "0.56.0"
-compose-multiplatform = "1.8.0+dev1953"
+compose-multiplatform = "1.7.1"
 
 [libraries]
 ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.5" }
