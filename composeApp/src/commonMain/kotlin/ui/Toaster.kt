@@ -28,7 +28,7 @@ class Toaster(
 
     fun showToast(
         msg: String,
-        durationMs: Int = 1_000,
+        durationMs: Int = 2_000,
     ) {
         appScope.launch {
             val toast = ToastViewState(
@@ -65,11 +65,11 @@ fun Toast(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorsExt.backgroundVariant,
                 shape = RoundedCornerShape(percent = 50)
             )
             .background(
-                color = MaterialTheme.colorsExt.backgroundVariant,
+                color = MaterialTheme.colorsExt.onBackgroundVariant,
                 shape = RoundedCornerShape(percent = 50),
             )
             .padding(
@@ -78,7 +78,7 @@ fun Toast(
             ),
         text = viewState.msg,
         style = MaterialTheme.typography.body1,
-        color = MaterialTheme.colorsExt.onBackgroundVariant,
+        color = MaterialTheme.colorsExt.backgroundVariant,
     )
 }
 
