@@ -15,16 +15,18 @@ class StatusApi(
         getEndpoint("/status") {
             val time = System.currentTimeMillis()
             logger.debug("Requesting status at $time")
-            HelloResponse(
+            StatusResponse(
                 message = "Hello, world! (devMode = ${serverMode.devMode})",
                 time = time,
+                version = "02.12.2024"
             )
         }
     }
 }
 
 @Serializable
-data class HelloResponse(
+data class StatusResponse(
     val message: String,
     val time: Long,
+    val version: String,
 )
