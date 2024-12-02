@@ -7,14 +7,17 @@ import ivy.data.ServerUrlProvider
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.Di.singleton
+import ivy.di.autowire.autoWire
 import ivy.di.autowire.autoWireSingleton
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import navigation.Navigation
 import navigation.systemNavigation
+import ui.Toaster
 import util.DispatchersProvider
 import util.DispatchersProviderImpl
+import util.Logger
 
 object AppModule : Di.Module {
 
@@ -32,6 +35,8 @@ object AppModule : Di.Module {
                 }
             }
             singleton { CoroutineScope(Dispatchers.Main + CoroutineName("App")) }
+            autoWireSingleton(::Toaster)
+            autoWire(::Logger)
         }
     }
 }

@@ -2,6 +2,7 @@ package ui.screen.settings
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.UriHandler
+import domain.DeleteUserDataUseCase
 import domain.SessionManager
 import ivy.IvyUrls
 import kotlinx.coroutines.CoroutineScope
@@ -9,12 +10,15 @@ import kotlinx.coroutines.launch
 import navigation.Navigation
 import ui.ComposeViewModel
 import ui.screen.intro.IntroScreen
+import util.Logger
 
 class SettingsViewModel(
     private val navigation: Navigation,
     private val uriHandler: UriHandler,
     private val sessionManager: SessionManager,
     private val scope: CoroutineScope,
+    private val deleteUserDataUseCase: DeleteUserDataUseCase,
+    private val logger: Logger,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -92,8 +96,12 @@ class SettingsViewModel(
     }
 
     private fun handleConfirmDeleteAccountClick() {
-        deleteDialog = DeleteDialogViewState(ctaLoading = true)
-        // TODO - handle event
+        scope.launch {
+            logger.debug("VM: Initiating user data deletion...")
+            deleteDialog = DeleteDialogViewState(ctaLoading = true)
+            deleteUserDataUseCase.execute()
+            deleteDialog = DeleteDialogViewState(ctaLoading = false)
+        }
     }
 
     private fun handleCancelDeleteAccountClick() {

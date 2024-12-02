@@ -1,6 +1,7 @@
 package domain.di
 
 import di.bindWithFake
+import domain.DeleteUserDataUseCase
 import domain.GoogleAuthenticationUseCase
 import domain.GoogleAuthenticationUseCaseImpl
 import domain.SessionManager
@@ -15,5 +16,6 @@ object DomainModule : Di.Module {
         autoWire(::FakeGoogleAuthenticationUseCase)
         bindWithFake<GoogleAuthenticationUseCase, GoogleAuthenticationUseCaseImpl, FakeGoogleAuthenticationUseCase>()
         autoWireSingleton(::SessionManager)
+        autoWire(::DeleteUserDataUseCase)
     }
 }

@@ -12,6 +12,7 @@ import ivy.di.SharedModule
 import ivy.di.autowire.autoWire
 import navigation.Navigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.ToastHost
 import ui.theme.LearnTheme
 
 @Composable
@@ -51,5 +52,6 @@ private fun NavGraph() {
     val navigation = remember { Di.get<Navigation>() }
     Box(modifier = Modifier.fillMaxSize()) {
         navigation.NavHost()
+        ToastHost()
     }
 }
