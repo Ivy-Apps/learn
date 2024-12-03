@@ -11,6 +11,6 @@ object Analytics : UUIDTable() {
         onDelete = ReferenceOption.CASCADE,
         onUpdate = ReferenceOption.CASCADE,
     )
-    val name = varchar("name", 320)
+    val event = varchar("event", 320)
     val time = timestamp("time")
 }
