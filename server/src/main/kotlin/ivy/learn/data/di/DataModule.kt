@@ -4,6 +4,7 @@ import ivy.di.Di
 import ivy.di.autowire.autoWire
 import ivy.di.autowire.autoWireSingleton
 import ivy.learn.data.database.Database
+import ivy.learn.data.repository.AnalyticsRepository
 import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.LessonsRepository
 import ivy.learn.data.repository.TopicsRepository
@@ -20,5 +21,6 @@ object DataModule : Di.Module {
         autoWire(::TopicsRepository)
         autoWire(::SessionRepository)
         autoWire(::UserRepository)
+        autoWire(::AnalyticsRepository)
     }
 }

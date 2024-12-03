@@ -29,20 +29,41 @@ inline fun <reified Response : Any> Routing.deleteEndpointAuthenticated(
 }
 
 @IvyServerDsl
+inline fun <reified Body : Any, reified Response : Any> Routing.postEndpointAuthenticated(
+    path: String,
+    crossinline handler: suspend Raise<ServerError>.(Body, SessionToken) -> Response
+) {
+    delete(path) {
+        handleAuthenticatedRequest { call, sessionToken ->
+            val body = extractBody<Body>(call)
+            val response = handler(body, sessionToken)
+            call.respond(HttpStatusCode.OK, response)
+        }
+    }
+}
+
+@IvyServerDsl
 inline fun <reified Body : Any, reified Response : Any> Routing.postEndpoint(
     path: String,
     crossinline handler: suspend Raise<ServerError>.(Body, Parameters) -> Response
 ) {
     postEndpointBase(path) { call ->
-        val body = try {
-            call.receive<Body>()
-        } catch (e: Exception) {
-            raise(ServerError.BadRequest("Malformed request body: $e"))
-        }
+        val body = extractBody<Body>(call)
         val response = handler(body, call.parameters)
         call.respond(HttpStatusCode.OK, response)
     }
 }
+
+suspend inline fun <reified Body : Any> Raise<ServerError>.extractBody(
+    call: RoutingCall
+): Body {
+    return try {
+        call.receive<Body>()
+    } catch (e: Exception) {
+        raise(ServerError.BadRequest("Malformed request body: $e"))
+    }
+}
+
 
 @IvyServerDsl
 inline fun <reified Response : Any> Routing.getEndpoint(
