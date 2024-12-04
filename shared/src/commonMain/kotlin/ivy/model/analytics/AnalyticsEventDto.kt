@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AnalyticsEventDto(
-    val name: String,
+    val eventName: String,
     val time: Instant,
+    val params: Map<String, String>?,
 )

@@ -3,6 +3,6 @@ package ivy.model.analytics
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AnalyticsEventsRequest(
+data class LogAnalyticsEventsRequest(
     val events: Set<AnalyticsEventDto>
 )

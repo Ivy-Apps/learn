@@ -5,7 +5,8 @@ import java.util.*
 
 data class AnalyticsEvent(
     val id: UUID,
-    val name: String,
-    val time: Instant,
     val userId: UserId,
+    val eventName: String,
+    val time: Instant,
+    val params: Map<String, String>?,
 )

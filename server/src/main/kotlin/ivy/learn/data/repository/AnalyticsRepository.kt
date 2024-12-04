@@ -9,20 +9,21 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class AnalyticsRepository {
     suspend fun insert(
-        events: Collection<AnalyticsEvent>
-    ): Either<String, Collection<AnalyticsEvent>> = catch({
+        events: Set<AnalyticsEvent>
+    ): Either<String, Set<AnalyticsEvent>> = catch({
         transaction {
             for (event in events) {
                 Analytics.insert {
                     it[Analytics.id] = event.id
                     it[userId] = event.userId.value
-                    it[Analytics.event] = event.name
+                    it[Analytics.event] = event.eventName
                     it[time] = event.time
+                    it[params] = event.params
                 }
             }
         }
         Either.Right(events)
     }) { e ->
-        Either.Left("Failed to inset ${events.joinToString { it.toString() }} because $e")
+        Either.Left("Failed to insert ${events.joinToString { it.toString() }} because $e")
     }
 }

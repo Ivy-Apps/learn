@@ -12,7 +12,7 @@ object Sessions : Table() {
         refColumn = Users.id,
         onDelete = ReferenceOption.CASCADE,
         onUpdate = ReferenceOption.CASCADE,
-    )
+    ).index()
     val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
     val expiresAt = timestamp("expires_at¬")
 

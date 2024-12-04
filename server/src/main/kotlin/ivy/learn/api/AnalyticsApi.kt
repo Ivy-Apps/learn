@@ -5,7 +5,7 @@ import ivy.learn.api.common.Api
 import ivy.learn.api.common.postEndpointAuthenticated
 import ivy.learn.data.repository.AnalyticsRepository
 import ivy.learn.domain.auth.AuthenticationService
-import ivy.model.analytics.AnalyticsEventsRequest
+import ivy.model.analytics.LogAnalyticsEventsRequest
 
 class AnalyticsApi(
     private val analyticsRepository: AnalyticsRepository,
@@ -16,7 +16,7 @@ class AnalyticsApi(
     }
 
     private fun Routing.postEvents() {
-        postEndpointAuthenticated<AnalyticsEventsRequest, Unit>(
+        postEndpointAuthenticated<LogAnalyticsEventsRequest, Unit>(
             "analytics/events"
         ) { request, sessionToken ->
             val user = authService.getUser(sessionToken).bind()
