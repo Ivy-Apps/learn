@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import navigation.Navigation
 import ui.ComposeViewModel
+import ui.Toaster
 import ui.screen.intro.IntroScreen
 import util.Logger
 
@@ -22,6 +23,7 @@ class SettingsViewModel(
     private val deleteUserDataUseCase: DeleteUserDataUseCase,
     private val logger: Logger,
     private val analytics: Analytics,
+    private val toaster: Toaster,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -77,6 +79,16 @@ class SettingsViewModel(
     }
 
     private fun handlePrivacyClick() {
+        scope.launch {
+            if (analytics.enabled) {
+                analytics.disable()
+                toaster.showToast("Analytics disabled")
+            } else {
+                analytics.enable()
+                toaster.showToast("Analytics enabled")
+            }
+        }
+
         // TODO - handle event
     }
 

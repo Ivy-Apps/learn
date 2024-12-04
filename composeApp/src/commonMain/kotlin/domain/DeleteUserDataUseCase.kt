@@ -25,6 +25,6 @@ class DeleteUserDataUseCase(
             logger.info("User data deleted.")
             sessionManager.logout()
             navigation.replaceWith(IntroScreen())
-            toaster.showToast(msg = "Account data deleted.")
+            toaster.showToast(msg = "Account data deleted")
         }
 }
