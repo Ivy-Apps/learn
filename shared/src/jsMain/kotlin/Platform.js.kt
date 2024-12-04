@@ -8,7 +8,7 @@ class JsPlatform : Platform {
     override val name: String = "Web with Kotlin/JS"
 
     override fun log(level: LogLevel, msg: String) {
-        console.log("${level.name}: $msg")
+        console.log("${level.name.uppercase()}: $msg")
     }
 
     override fun httpClient(
