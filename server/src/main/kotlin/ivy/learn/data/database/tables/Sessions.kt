@@ -14,7 +14,7 @@ object Sessions : Table() {
         onUpdate = ReferenceOption.CASCADE,
     ).index()
     val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
-    val expiresAt = timestamp("expires_at¬")
+    val expiresAt = timestamp("expires_at")
 
     override val primaryKey = PrimaryKey(token)
 }
