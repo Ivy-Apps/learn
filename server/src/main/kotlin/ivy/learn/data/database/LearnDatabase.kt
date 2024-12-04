@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class Database {
+class LearnDatabase {
     fun init(config: DatabaseConfig): Either<String, Database> = catch({
         either {
             with(config) {

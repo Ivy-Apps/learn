@@ -3,7 +3,7 @@ package ivy.learn.data.di
 import ivy.di.Di
 import ivy.di.autowire.autoWire
 import ivy.di.autowire.autoWireSingleton
-import ivy.learn.data.database.Database
+import ivy.learn.data.database.LearnDatabase
 import ivy.learn.data.repository.AnalyticsRepository
 import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.LessonsRepository
@@ -14,7 +14,7 @@ import ivy.learn.data.source.LessonContentDataSource
 
 object DataModule : Di.Module {
     override fun init() = Di.appScope {
-        autoWireSingleton(::Database)
+        autoWireSingleton(::LearnDatabase)
         autoWire(::LessonContentDataSource)
         autoWire(::LessonsRepository)
         autoWire(::CoursesRepository)

@@ -25,6 +25,7 @@ class AnalyticsDataSource(
                 "${urlProvider.serverUrl}/analytics/events"
             ) {
                 header(IvyConstants.HEADER_SESSION_TOKEN, sessionToken.value)
+                contentType(ContentType.Application.Json)
                 setBody(request)
             }
             ensure(response.status.isSuccess()) {

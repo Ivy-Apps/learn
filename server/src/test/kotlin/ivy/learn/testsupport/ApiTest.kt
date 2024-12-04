@@ -5,6 +5,9 @@ import ivy.data.LocalServerUrlProvider
 import ivy.data.ServerUrlProvider
 import ivy.di.Di
 import ivy.di.Di.register
+import ivy.learn.config.ServerConfiguration
+import ivy.learn.config.ServerConfigurationProvider
+import ivy.learn.data.database.LearnDatabase
 import ivy.learn.data.database.tables.Users
 import ivy.learn.data.repository.auth.SessionRepository
 import ivy.learn.data.repository.auth.UserRepository
@@ -29,12 +32,16 @@ open class ApiTest {
     fun apiTest(block: suspend ApiTest.() -> Unit) = runTest {
         initDi(devMode = true)
         Di.appScope { register<ServerUrlProvider> { LocalServerUrlProvider() } }
-        resetDb()
+        val serverConfig = Di.get<ServerConfigurationProvider>()
+            .fromEnvironment()
+            .getOrElse(::error)
+        resetDb(serverConfig)
         block()
         Di.reset()
     }
 
-    private fun resetDb() {
+    private fun resetDb(serverConfig: ServerConfiguration) {
+        Di.get<LearnDatabase>().init(serverConfig.database)
         transaction {
             Users.deleteAll()
         }
