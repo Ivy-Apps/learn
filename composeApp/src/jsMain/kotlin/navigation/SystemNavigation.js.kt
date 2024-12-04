@@ -67,9 +67,17 @@ class WebSystemNavigation : SystemNavigation {
             .split("&")
             .mapNotNull {
                 val parts = it.split("=")
-                if (parts.size == 2) parts[0] to parts[1] else null
+                if (parts.size == 2) {
+                    val key = decodeURIComponent(parts[0])
+                    val value = decodeURIComponent(parts[1])
+                    key to value
+                } else null
             }
             .toMap()
+    }
+
+    private fun decodeURIComponent(encoded: String): String {
+        return js("decodeURIComponent")(encoded) as String
     }
 }
 
