@@ -8,6 +8,8 @@ class LoggedOutUserRedirect(
     private val sessionManager: SessionManager,
     private val navigation: Navigation,
 ) : Redirect {
+    override val name = "Logged-out user"
+
     override suspend fun handle(): Boolean {
         if (sessionManager.getSession() == null) {
             navigation.replaceWith(IntroScreen())

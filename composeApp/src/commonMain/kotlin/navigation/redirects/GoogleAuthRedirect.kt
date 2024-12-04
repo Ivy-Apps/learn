@@ -12,6 +12,8 @@ class GoogleAuthRedirect(
     private val sessionManager: SessionManager,
     private val navigation: Navigation,
 ) : Redirect {
+    override val name = "GoogleAuth"
+
     override suspend fun handle(): Boolean {
         val sessionTokenParam = platform.getUrlParam(IvyConstants.PARAM_SESSION_TOKEN)
         if (sessionTokenParam != null) {

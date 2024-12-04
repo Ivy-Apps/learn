@@ -26,7 +26,7 @@ class AppViewModel(
     private suspend fun handleRedirects() {
         redirects.firstOrNull { it.handle() }
             ?.let {
-                logger.debug("Applied '$it' redirect.")
+                logger.debug("Applied '${it.name}' redirect.")
             }
     }
 }
