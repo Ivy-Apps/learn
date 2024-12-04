@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserRepository {
-    suspend fun findUserById(id: UserId): Either<String, User?> = catch({
+    fun findUserById(id: UserId): Either<String, User?> = catch({
         transaction {
             Users.selectAll()
                 .where { Users.id eq id.value }
@@ -24,7 +24,7 @@ class UserRepository {
     }
 
     // Find user by Email
-    suspend fun findUserByEmail(email: String): Either<String, User?> = catch({
+    fun findUserByEmail(email: String): Either<String, User?> = catch({
         transaction {
             Users.selectAll()
                 .where { Users.email eq email }
@@ -45,7 +45,7 @@ class UserRepository {
         )
     }
 
-    suspend fun create(user: User): Either<String, User> = catch({
+    fun create(user: User): Either<String, User> = catch({
         transaction {
             Users.insert {
                 it[id] = user.id.value
@@ -59,7 +59,7 @@ class UserRepository {
         Either.Left("Failed to insert user $user because $e")
     }
 
-    suspend fun update(user: User): Either<String, Unit> = catch({
+    fun update(user: User): Either<String, Unit> = catch({
         transaction {
             val updatedRows = Users.update({ Users.id eq user.id.value }) {
                 it[id] = user.id.value
@@ -76,7 +76,7 @@ class UserRepository {
         Either.Left("Failed to update user $user because $e")
     }
 
-    suspend fun delete(id: UserId): Either<String, Unit> = catch({
+    fun delete(id: UserId): Either<String, Unit> = catch({
         transaction {
             val deletedRows = Users.deleteWhere { Users.id eq id.value }
             if (deletedRows != 1) {
