@@ -3,6 +3,9 @@ package ui.screen.home
 import androidx.compose.runtime.*
 import arrow.core.identity
 import data.TopicsRepository
+import domain.analytics.Analytics
+import domain.analytics.Param
+import domain.analytics.Source
 import ivy.data.source.model.TopicsResponse
 import kotlinx.collections.immutable.persistentListOf
 import navigation.Navigation
@@ -15,6 +18,7 @@ class HomeViewModel(
     private val navigation: Navigation,
     private val repository: TopicsRepository,
     private val mapper: HomeViewStateMapper,
+    private val analytics: Analytics,
 ) : ComposeViewModel<HomeViewState, HomeViewEvent> {
 
     private var topicsResponse by mutableStateOf<TopicsResponse?>(null)
@@ -26,6 +30,7 @@ class HomeViewModel(
                 ifLeft = { null },
                 ifRight = ::identity
             )
+            logEvent("view")
         }
         return HomeViewState(
             items = with(mapper) { topicsResponse?.toViewState() }
@@ -35,14 +40,9 @@ class HomeViewModel(
 
     override fun onEvent(event: HomeViewEvent) {
         when (event) {
-            HomeViewEvent.OnBackClick -> handleBackClick()
             is HomeViewEvent.OnCourseClick -> handleCourseClick(event)
             HomeViewEvent.OnSettingsClick -> handleSettingsClick()
         }
-    }
-
-    private fun handleBackClick() {
-        navigation.navigateBack()
     }
 
     private fun handleSettingsClick() {
@@ -50,6 +50,24 @@ class HomeViewModel(
     }
 
     private fun handleCourseClick(event: HomeViewEvent.OnCourseClick) {
+        logEvent(
+            event = "click_course",
+            params = mapOf(
+                Param.CourseId to event.id.value,
+                Param.CourseName to event.name,
+            )
+        )
         navigation.navigateTo(CourseScreen(courseId = event.id, courseName = event.name))
+    }
+
+    private fun logEvent(
+        event: String,
+        params: Map<String, String> = emptyMap(),
+    ) {
+        analytics.logEvent(
+            source = Source.Home,
+            event = event,
+            params = params,
+        )
     }
 }

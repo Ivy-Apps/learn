@@ -2,8 +2,7 @@ package ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.platformHorizontalPadding
 import ivy.di.Di
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,8 +25,10 @@ import ui.theme.colorsExt
 class Toaster(
     private val appScope: CoroutineScope,
 ) {
-    private val _toasts = MutableSharedFlow<ToastViewState?>()
-    val toasts: SharedFlow<ToastViewState?> = _toasts
+    private val _toasts = MutableSharedFlow<ImmutableList<ToastViewState>>()
+    val toasts: SharedFlow<ImmutableList<ToastViewState>> = _toasts
+
+    private val toastQueue = mutableListOf<ToastViewState>()
 
     fun showToast(
         msg: String,
@@ -35,9 +39,20 @@ class Toaster(
                 msg = msg,
                 durationMs = durationMs,
             )
-            _toasts.emit(toast)
+            // Add the toast to the queue
+            toastQueue.add(toast)
+
+            // Emit the updated queue
+            _toasts.emit(toastQueue.toImmutableList())
+
+            // Wait for the toast's duration
             delay(toast.durationMs.toLong())
-            _toasts.emit(null)
+
+            // Remove the toast from the queue after the duration
+            toastQueue.remove(toast)
+
+            // Emit the updated queue
+            _toasts.emit(toastQueue.toImmutableList())
         }
     }
 }
@@ -45,14 +60,22 @@ class Toaster(
 @Composable
 fun BoxScope.ToastHost() {
     val toaster = remember { Di.get<Toaster>() }
-    val toast by toaster.toasts.collectAsState(initial = null)
-    toast?.let {
-        Toast(
-            modifier = Modifier.align(Alignment.BottomCenter)
-                .padding(horizontal = platformHorizontalPadding())
-                .padding(bottom = 24.dp),
-            viewState = it
-        )
+    val toasts by toaster.toasts.collectAsState(initial = persistentListOf())
+    val toastsByOrder = remember(toasts) { toasts.reversed().toImmutableList() }
+    Column(
+        modifier = Modifier.align(Alignment.BottomCenter)
+            .padding(horizontal = platformHorizontalPadding())
+            .padding(bottom = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        for ((i, toast) in toastsByOrder.withIndex()) {
+            if (i > 0) {
+                Spacer(Modifier.height(8.dp))
+            }
+            Toast(
+                viewState = toast,
+            )
+        }
     }
 }
 

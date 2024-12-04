@@ -18,14 +18,14 @@ import ivy.di.autowire.autoWire
 import ivy.learn.api.*
 import ivy.learn.api.common.Api
 import ivy.learn.config.ServerConfigurationProvider
-import ivy.learn.data.database.Database
+import ivy.learn.data.database.LearnDatabase
 import kotlinx.serialization.json.Json
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 
 class LearnServer(
-    private val database: Database,
+    private val database: LearnDatabase,
     private val configurationProvider: ServerConfigurationProvider,
     private val serverMode: ServerMode,
 ) {
@@ -114,10 +114,10 @@ class LearnServer(
         install(CallLogging) {
             level = Level.INFO // Log INFO-level messages
             format { call ->
-                val status = call.response.status()?.value ?: "Unknown"
+                val status = call.response.status() ?: "Unknown"
                 val method = call.request.httpMethod.value
                 val uri = call.request.uri
-                "HTTP $method $uri -> $status"
+                "$method $uri -> $status"
             }
         }
     }

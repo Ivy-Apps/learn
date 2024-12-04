@@ -22,11 +22,11 @@ class StatusApi(
             )
         }
     }
-}
 
-@Serializable
-data class StatusResponse(
-    val message: String,
-    val time: Long,
-    val version: String,
-)
+    @Serializable
+    data class StatusResponse(
+        val message: String,
+        val time: Long,
+        val version: String,
+    )
+}

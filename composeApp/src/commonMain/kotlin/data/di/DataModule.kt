@@ -26,5 +26,6 @@ object DataModule : Di.Module {
         bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
         register<LocalStorage> { localStorage() }
         autoWire(::UserRepository)
+        autoWire(::AnalyticsRepository)
     }
 }

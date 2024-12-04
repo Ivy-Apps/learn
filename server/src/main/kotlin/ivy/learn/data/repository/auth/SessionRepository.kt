@@ -15,7 +15,7 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class SessionRepository {
-    suspend fun findSessionByToken(token: SessionToken): Either<String, Session?> = catch({
+    fun findSessionByToken(token: SessionToken): Either<String, Session?> = catch({
         transaction {
             Sessions.selectAll()
                 .where { Sessions.token eq token.value }
@@ -35,7 +35,7 @@ class SessionRepository {
         )
     }
 
-    suspend fun create(session: Session): Either<String, Session> = catch({
+    fun create(session: Session): Either<String, Session> = catch({
         transaction {
             Sessions.insert {
                 it[userId] = session.userId.value
@@ -49,7 +49,7 @@ class SessionRepository {
         Either.Left("Failed to insert session because $e")
     }
 
-    suspend fun delete(token: SessionToken): Either<String, Unit> = catch({
+    fun delete(token: SessionToken): Either<String, Unit> = catch({
         transaction {
             Sessions.deleteWhere { Sessions.token eq token.value }
         }

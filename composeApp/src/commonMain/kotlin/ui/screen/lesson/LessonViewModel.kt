@@ -4,6 +4,9 @@ import androidx.compose.runtime.*
 import arrow.core.Either
 import arrow.optics.optics
 import data.LessonRepository
+import domain.analytics.Analytics
+import domain.analytics.Param
+import domain.analytics.Source
 import ivy.model.*
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +24,8 @@ class LessonViewModel(
     override val screenScope: CoroutineScope,
     private val repository: LessonRepository,
     private val viewStateMapper: LessonViewStateMapper,
-    private val eventHandlers: Set<EventHandler<*, LocalState>>
+    private val eventHandlers: Set<EventHandler<*, LocalState>>,
+    private val analytics: Analytics,
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
 
     private var lessonResponse by mutableStateOf<Either<String, Lesson>?>(null)
@@ -40,6 +44,15 @@ class LessonViewModel(
             lessonResponse = repository.fetchLesson(
                 course = courseId,
                 lesson = lessonId
+            )
+            analytics.logEvent(
+                source = Source.Lesson,
+                event = "view",
+                params = mapOf(
+                    Param.CourseId to courseId.value,
+                    Param.LessonId to lessonId.value,
+                    Param.LessonName to lessonName,
+                )
             )
         }
         return when (val response = lessonResponse) {

@@ -5,6 +5,7 @@ import domain.DeleteUserDataUseCase
 import domain.GoogleAuthenticationUseCase
 import domain.GoogleAuthenticationUseCaseImpl
 import domain.SessionManager
+import domain.analytics.Analytics
 import domain.fake.FakeGoogleAuthenticationUseCase
 import ivy.di.Di
 import ivy.di.autowire.autoWire
@@ -17,5 +18,6 @@ object DomainModule : Di.Module {
         bindWithFake<GoogleAuthenticationUseCase, GoogleAuthenticationUseCaseImpl, FakeGoogleAuthenticationUseCase>()
         autoWireSingleton(::SessionManager)
         autoWire(::DeleteUserDataUseCase)
+        autoWireSingleton(::Analytics)
     }
 }

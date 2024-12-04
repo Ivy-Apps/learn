@@ -3,6 +3,7 @@ package ui.screen.lesson
 import androidx.compose.runtime.Composable
 import arrow.core.Option
 import arrow.core.raise.option
+import domain.analytics.Analytics
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.autowire.autoWire
@@ -75,7 +76,8 @@ class LessonScreen(
                     Di.get<OnSoundClickEventHandler>(),
                     Di.get<OnFinishClickEventHandler>(),
                     Di.get<OnChoiceClickEventHandler>(),
-                )
+                ),
+                analytics = Di.get<Analytics>()
             )
         }
     }
