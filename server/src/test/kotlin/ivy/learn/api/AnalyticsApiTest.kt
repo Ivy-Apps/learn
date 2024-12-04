@@ -172,4 +172,27 @@ class AnalyticsApiTest : ApiTest() {
         // Then
         response.shouldBeLeft()
     }
+
+    @Test
+    fun `does not log events for expired sessions`(
+        @TestParameter testCase: InvalidEventsTestCase
+    ) = apiTest {
+        // Given
+        val auth = registerUser(
+            email = "test@test.com",
+            expiredSession = true,
+        )
+        val datasource = Di.get<AnalyticsDataSource>()
+
+        // When
+        val response = datasource.logEvents(
+            sessionToken = auth.session.token,
+            request = eventsRequest(
+                eventDto("home__view")
+            )
+        )
+
+        // Then
+        response.shouldBeLeft()
+    }
 }

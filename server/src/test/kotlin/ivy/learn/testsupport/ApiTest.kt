@@ -23,6 +23,7 @@ import ivy.model.auth.SessionToken
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -47,7 +48,10 @@ open class ApiTest {
         }
     }
 
-    protected fun registerUser(email: String): Auth {
+    protected fun registerUser(
+        email: String,
+        expiredSession: Boolean = false,
+    ): Auth {
         return transaction {
             val user = Di.get<UserRepository>().create(
                 user = User(
@@ -63,7 +67,11 @@ open class ApiTest {
                     token = SessionToken(Di.get<Crypto>().generateSecureToken()),
                     userId = user.id,
                     createdAt = timeNow,
-                    expiresAt = timeNow.plus(SESSION_EXPIRATION_DAYS, DateTimeUnit.DAY, TimeZone.UTC),
+                    expiresAt = if (expiredSession) {
+                        timeNow.minus(SESSION_EXPIRATION_DAYS, DateTimeUnit.DAY, TimeZone.UTC)
+                    } else {
+                        timeNow.plus(SESSION_EXPIRATION_DAYS, DateTimeUnit.DAY, TimeZone.UTC)
+                    },
                 )
             ).getOrElse(::error)
             Auth(
