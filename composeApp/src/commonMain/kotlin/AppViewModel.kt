@@ -1,34 +1,32 @@
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import domain.SessionManager
-import ivy.model.auth.SessionToken
-import navigation.Navigation
-import ui.screen.home.HomeScreen
+import ivy.di.Di
+import navigation.redirects.GoogleAuthRedirect
+import navigation.redirects.LoggedOutUserRedirect
+import util.Logger
 
 class AppViewModel(
-    private val sessionManager: SessionManager,
-    private val platform: Platform,
-    private val navigation: Navigation,
+    private val logger: Logger,
 ) {
+
+    private val redirects by lazy {
+        listOf(
+            Di.get<GoogleAuthRedirect>(),
+            Di.get<LoggedOutUserRedirect>(),
+        )
+    }
 
     @Composable
     fun Init() {
         LaunchedEffect(Unit) {
-            redirectLoggedUsers()
+            handleRedirects()
         }
     }
 
-    private suspend fun redirectLoggedUsers() {
-        if (sessionManager.getSession() != null) {
-            // already logged
-            navigation.replaceWith(HomeScreen())
-            return
-        }
-
-        val sessionTokenParam = platform.getUrlParam(IvyConstants.PARAM_SESSION_TOKEN)
-        if (sessionTokenParam != null) {
-            sessionManager.authenticate(SessionToken(sessionTokenParam))
-            navigation.replaceWith(HomeScreen())
-        }
+    private suspend fun handleRedirects() {
+        redirects.firstOrNull { it.handle() }
+            ?.let {
+                logger.debug("Applied '${it.name}' redirect.")
+            }
     }
 }
