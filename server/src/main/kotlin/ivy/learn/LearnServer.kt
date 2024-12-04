@@ -114,10 +114,10 @@ class LearnServer(
         install(CallLogging) {
             level = Level.INFO // Log INFO-level messages
             format { call ->
-                val status = call.response.status()?.value ?: "Unknown"
+                val status = call.response.status() ?: "Unknown"
                 val method = call.request.httpMethod.value
                 val uri = call.request.uri
-                "HTTP $method $uri -> $status"
+                "$method $uri -> $status"
             }
         }
     }
