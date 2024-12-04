@@ -45,7 +45,7 @@ class Analytics(
         appScope.launch {
             // TODO: Optimize later by batching events
             val paramsJson = Json.encodeToString(params)
-            logger.info("$TAG Tracking: '$eventName' with $paramsJson params...")
+            logger.info("$TAG Tracking: '$eventName' with $paramsJson params.")
             analyticsRepository.logEvent(
                 setOf(
                     AnalyticsEventDto(
