@@ -53,6 +53,12 @@ psql -U postgres -c "DROP DATABASE ivy_learn;"
 psql -U postgres -c "CREATE DATABASE ivy_learn;"
 ```
 
+**Connect to local database:**
+
+```zshrc
+psql -U postgres -d ivy_learn
+```
+
 ### Heroku commands
 
 **Connect to DB**
