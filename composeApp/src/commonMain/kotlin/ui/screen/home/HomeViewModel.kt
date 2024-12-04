@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import arrow.core.identity
 import data.TopicsRepository
 import domain.analytics.Analytics
+import domain.analytics.Param
 import domain.analytics.Source
 import ivy.data.source.model.TopicsResponse
 import kotlinx.collections.immutable.persistentListOf
@@ -52,8 +53,8 @@ class HomeViewModel(
         logEvent(
             event = "click_course",
             params = mapOf(
-                "courseId" to event.id.value,
-                "courseName" to event.name,
+                Param.CourseId to event.id.value,
+                Param.CourseName to event.name,
             )
         )
         navigation.navigateTo(CourseScreen(courseId = event.id, courseName = event.name))
