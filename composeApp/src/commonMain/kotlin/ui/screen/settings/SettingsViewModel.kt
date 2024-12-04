@@ -4,6 +4,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.UriHandler
 import domain.DeleteUserDataUseCase
 import domain.SessionManager
+import domain.analytics.Analytics
+import domain.analytics.Source
 import ivy.IvyUrls
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -19,6 +21,7 @@ class SettingsViewModel(
     private val scope: CoroutineScope,
     private val deleteUserDataUseCase: DeleteUserDataUseCase,
     private val logger: Logger,
+    private val analytics: Analytics,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -27,6 +30,7 @@ class SettingsViewModel(
     override fun viewState(): SettingsViewState {
         LaunchedEffect(Unit) {
             // TODO - fetch soundEnabled from dataStore and update state
+            logEvent("view")
         }
         return SettingsViewState(
             soundEnabled = getSoundEnabled(),
@@ -64,6 +68,7 @@ class SettingsViewModel(
     }
 
     private fun handlePremiumClick() {
+        logEvent("click_premium")
         // TODO - handle event
     }
 
@@ -76,7 +81,7 @@ class SettingsViewModel(
     }
 
     private fun handleLogoutClick() {
-        println("On logout click")
+        logEvent("click_logout")
         scope.launch {
             sessionManager.logout()
             navigation.replaceWith(IntroScreen())
@@ -84,14 +89,17 @@ class SettingsViewModel(
     }
 
     private fun handleTermsOfUseClick() {
+        logEvent("click_tos")
         uriHandler.openUri(IvyUrls.tos)
     }
 
     private fun handlePrivacyPolicyClick() {
+        logEvent("click_privacy")
         uriHandler.openUri(IvyUrls.privacy)
     }
 
     private fun handleDeleteAccountClick() {
+        logEvent("click_delete_account")
         deleteDialog = DeleteDialogViewState(ctaLoading = false)
     }
 
@@ -106,5 +114,16 @@ class SettingsViewModel(
 
     private fun handleCancelDeleteAccountClick() {
         deleteDialog = null
+    }
+
+    private fun logEvent(
+        event: String,
+        params: Map<String, String> = emptyMap(),
+    ) {
+        analytics.logEvent(
+            source = Source.Settings,
+            event = event,
+            params = params,
+        )
     }
 }
