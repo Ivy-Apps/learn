@@ -14,7 +14,7 @@ object IntroRouter : Router<IntroScreen> {
     const val PATH = "intro"
 
     override fun fromRoute(route: Route): Option<IntroScreen> = option {
-        ensure(route.path == PATH || route.path == "")
+        ensure(route.path == PATH)
         IntroScreen()
     }
 

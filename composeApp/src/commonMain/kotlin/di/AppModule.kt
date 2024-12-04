@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import navigation.Navigation
+import navigation.redirects.GoogleAuthRedirect
+import navigation.redirects.LoggedOutUserRedirect
 import navigation.systemNavigation
 import ui.Toaster
 import util.DispatchersProvider
@@ -37,6 +39,8 @@ object AppModule : Di.Module {
             singleton { CoroutineScope(Dispatchers.Main + CoroutineName("App")) }
             autoWireSingleton(::Toaster)
             autoWire(::Logger)
+            autoWire(::GoogleAuthRedirect)
+            autoWire(::LoggedOutUserRedirect)
         }
     }
 }

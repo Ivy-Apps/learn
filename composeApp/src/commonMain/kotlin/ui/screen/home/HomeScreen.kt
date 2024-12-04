@@ -15,7 +15,7 @@ object HomeRouter : Router<HomeScreen> {
     const val PATH = "home"
 
     override fun fromRoute(route: Route): Option<HomeScreen> = option {
-        ensure(route.path == PATH)
+        ensure(route.path == PATH || route.path == "")
         HomeScreen()
     }
 
