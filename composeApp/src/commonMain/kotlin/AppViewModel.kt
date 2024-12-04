@@ -1,5 +1,6 @@
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import domain.analytics.Analytics
 import ivy.di.Di
 import navigation.redirects.GoogleAuthRedirect
 import navigation.redirects.LoggedOutUserRedirect
@@ -7,6 +8,7 @@ import util.Logger
 
 class AppViewModel(
     private val logger: Logger,
+    private val analytics: Analytics,
 ) {
 
     private val redirects by lazy {
@@ -18,6 +20,9 @@ class AppViewModel(
 
     @Composable
     fun Init() {
+        LaunchedEffect(Unit) {
+            analytics.initialize()
+        }
         LaunchedEffect(Unit) {
             handleRedirects()
         }

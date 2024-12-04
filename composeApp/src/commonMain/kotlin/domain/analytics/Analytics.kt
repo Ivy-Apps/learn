@@ -1,6 +1,7 @@
 package domain.analytics
 
 import data.AnalyticsRepository
+import data.storage.LocalStorage
 import ivy.model.analytics.AnalyticsEventDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -14,7 +15,16 @@ class Analytics(
     private val logger: Logger,
     private val appScope: CoroutineScope,
     private val timeProvider: TimeProvider,
+    private val localStorage: LocalStorage,
 ) {
+    var enabled = true
+        private set
+
+    suspend fun initialize() {
+        enabled = localStorage.getBoolean(ANALYTICS_ENABLED_KEY) ?: true
+        logger.debug("$TAG Initialized as enabled = $enabled")
+    }
+
     fun logEvent(
         source: Source,
         event: String,
@@ -30,6 +40,8 @@ class Analytics(
         eventName: String,
         params: Map<String, String> = emptyMap(),
     ) {
+        if (!enabled) return
+
         appScope.launch {
             // TODO: Optimize later by batching events
             val paramsJson = Json.encodeToString(params)
@@ -50,7 +62,20 @@ class Analytics(
         }
     }
 
+    suspend fun disable() {
+        enabled = false
+        localStorage.putBoolean(ANALYTICS_ENABLED_KEY, false)
+        logger.info("$TAG Analytics disabled.")
+    }
+
+    suspend fun enable() {
+        enabled = true
+        localStorage.putBoolean(ANALYTICS_ENABLED_KEY, true)
+        logger.info("$TAG Analytics enabled.")
+    }
+
     companion object {
         const val TAG = "[Analytics]"
+        const val ANALYTICS_ENABLED_KEY = "analytics.is_enabled"
     }
 }
