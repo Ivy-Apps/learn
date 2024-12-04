@@ -33,7 +33,7 @@ inline fun <reified Body : Any, reified Response : Any> Routing.postEndpointAuth
     path: String,
     crossinline handler: suspend Raise<ServerError>.(Body, SessionToken) -> Response
 ) {
-    delete(path) {
+    post(path) {
         handleAuthenticatedRequest { call, sessionToken ->
             val body = extractBody<Body>(call)
             val response = handler(body, sessionToken)
