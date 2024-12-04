@@ -158,6 +158,7 @@ class AnalyticsApiTest : ApiTest() {
         @TestParameter testCase: InvalidEventsTestCase
     ) = apiTest {
         // Given
+        registerUser("test@test.com")
         val datasource = Di.get<AnalyticsDataSource>()
 
         // When
