@@ -21,5 +21,4 @@ class GoogleAuthRedirect(
         }
         return false
     }
-
 }

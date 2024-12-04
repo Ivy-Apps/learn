@@ -3,8 +3,11 @@ import androidx.compose.runtime.LaunchedEffect
 import ivy.di.Di
 import navigation.redirects.GoogleAuthRedirect
 import navigation.redirects.LoggedOutUserRedirect
+import util.Logger
 
-class AppViewModel {
+class AppViewModel(
+    private val logger: Logger,
+) {
 
     private val redirects by lazy {
         listOf(
@@ -21,11 +24,9 @@ class AppViewModel {
     }
 
     private suspend fun handleRedirects() {
-        for (redirect in redirects) {
-            if (redirect.handle()) {
-                // redirect applied, do nothing
-                return
+        redirects.firstOrNull { it.handle() }
+            ?.let {
+                logger.debug("Applied '$it' redirect.")
             }
-        }
     }
 }
