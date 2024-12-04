@@ -21,7 +21,6 @@ sealed interface HomeItemViewState {
 }
 
 sealed interface HomeViewEvent {
-    data object OnBackClick : HomeViewEvent
     data class OnCourseClick(
         val id: CourseId,
         val name: String,
