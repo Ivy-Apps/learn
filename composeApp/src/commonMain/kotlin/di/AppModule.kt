@@ -20,6 +20,7 @@ import ui.Toaster
 import util.DispatchersProvider
 import util.DispatchersProviderImpl
 import util.Logger
+import util.TimeProvider
 
 object AppModule : Di.Module {
 
@@ -41,6 +42,7 @@ object AppModule : Di.Module {
             autoWire(::Logger)
             autoWire(::GoogleAuthRedirect)
             autoWire(::LoggedOutUserRedirect)
+            autoWire(::TimeProvider)
         }
     }
 }

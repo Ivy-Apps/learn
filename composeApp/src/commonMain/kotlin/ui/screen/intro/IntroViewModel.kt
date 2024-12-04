@@ -1,26 +1,23 @@
 package ui.screen.intro
 
-import IvyConstants
-import Platform
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import domain.GoogleAuthenticationUseCase
-import navigation.Navigation
+import domain.analytics.Analytics
+import domain.analytics.Source
 import ui.ComposeViewModel
-import ui.screen.home.HomeScreen
 
 class IntroViewModel(
-    private val navigation: Navigation,
-    private val platform: Platform,
     private val googleAuthenticationUseCase: GoogleAuthenticationUseCase,
+    private val analytics: Analytics,
 ) : ComposeViewModel<IntroViewState, IntroViewEvent> {
     @Composable
     override fun viewState(): IntroViewState {
         LaunchedEffect(Unit) {
-            platform.getUrlParam(IvyConstants.PARAM_SESSION_TOKEN)
-                ?.let { sessionToken ->
-                    navigation.navigateTo(HomeScreen())
-                }
+            analytics.logEvent(
+                source = Source.Intro,
+                event = "view",
+            )
         }
         return IntroViewState()
     }
