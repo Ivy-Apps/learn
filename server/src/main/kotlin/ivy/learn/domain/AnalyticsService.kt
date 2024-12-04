@@ -40,7 +40,7 @@ class AnalyticsService(
         user: User
     ): Either<String, AnalyticsEvent> = either {
         ensure(eventName.isNotBlank()) { "Blank event name" }
-        ensure(Regex("^[a-z1-9_]+$").matches(eventName)) {
+        ensure(Regex("^[a-z0-9_]+$").matches(eventName)) {
             "Event name: must only contain lowercase letters, numbers, and underscores"
         }
         AnalyticsEvent(
