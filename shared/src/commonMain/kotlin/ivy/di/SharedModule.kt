@@ -9,10 +9,7 @@ import io.ktor.serialization.kotlinx.json.*
 import ivy.data.HerokuServerUrlProvider
 import ivy.data.LocalServerUrlProvider
 import ivy.data.LottieAnimationLoader
-import ivy.data.source.CoursesDataSource
-import ivy.data.source.LessonDataSource
-import ivy.data.source.TopicsDataSource
-import ivy.data.source.UserDataSource
+import ivy.data.source.*
 import ivy.di.Di.singleton
 import ivy.di.autowire.autoWire
 import ivy.model.*
@@ -36,6 +33,7 @@ object SharedModule : Di.Module {
         autoWire(::CoursesDataSource)
         autoWire(::LottieAnimationLoader)
         autoWire(::UserDataSource)
+        autoWire(::AnalyticsDataSource)
     }
 
     private fun Di.Scope.json() = singleton {
