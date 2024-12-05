@@ -33,13 +33,15 @@ class GoogleAuthenticationApi(
                 .mapLeft(ServerError::Unknown)
                 .bind()
             val sessionToken = auth.session.token.value
-            val frontEndUrl = if (serverMode.devMode) {
-                IvyUrls.devFrontEnd
+            val frontendAuthRedirectUrl = if (serverMode.devMode) {
+                IvyUrls.devFrontendAuthRedirect
             } else {
-                IvyUrls.frontEnd
+                IvyUrls.frontendAuthRedirect
             }
-            logger.info("User '${auth.user.email}' logged on $frontEndUrl.")
-            call.respondRedirect("${frontEndUrl}?${IvyConstants.PARAM_SESSION_TOKEN}=$sessionToken")
+            logger.info("User '${auth.user.email}' logged on $frontendAuthRedirectUrl.")
+            call.respondRedirect(
+                "${frontendAuthRedirectUrl}?${IvyConstants.PARAM_SESSION_TOKEN}=$sessionToken"
+            )
         }
     }
 
