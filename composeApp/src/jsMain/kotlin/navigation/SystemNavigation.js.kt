@@ -44,9 +44,12 @@ class WebSystemNavigation : SystemNavigation {
         return "${route.path}$params"
     }
 
-    override fun navigateBack() {
+    override fun navigateBack(): Boolean {
+        if (window.window.length <= 1) return false
+
         window.history.back() // Let the browser handle back navigation
         // No need to call emitCurrentRoute() here; the listener will handle it
+        return true
     }
 
     private fun emitCurrentRoute() {
