@@ -13,6 +13,7 @@ class GoogleAuthRedirect(
     private val platform: Platform,
     private val sessionManager: SessionManager,
     private val analytics: Analytics,
+    private val navigation: Navigation,
 ) : Redirect {
     override val name = "GoogleAuth"
 
@@ -24,6 +25,7 @@ class GoogleAuthRedirect(
                 source = Source.Intro,
                 event = "continue_with_google"
             )
+            navigation.replaceWith(HomeScreen())
             return true
         }
         return false

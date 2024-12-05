@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import ui.screen.NotFoundPage
+import ui.screen.home.HomeScreen
 
 class Navigation(
     private val systemNavigation: SystemNavigation,
@@ -27,6 +28,8 @@ class Navigation(
     }
 
     fun navigateBack() {
-        systemNavigation.navigateBack()
+        if (!systemNavigation.navigateBack()) {
+            navigateTo(HomeScreen())
+        }
     }
 }

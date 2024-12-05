@@ -10,7 +10,7 @@ interface SystemNavigation {
     val currentRoute: StateFlow<Route>
     fun navigateTo(screen: Screen)
     fun replaceWith(screen: Screen)
-    fun navigateBack()
+    fun navigateBack(): Boolean
 }
 
 @Immutable
