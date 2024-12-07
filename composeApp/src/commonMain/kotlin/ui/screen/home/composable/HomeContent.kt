@@ -14,9 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.*
-import component.button.ButtonAppearance
-import component.button.ButtonStyle
-import component.button.IvyButton
+import component.button.IvyIconButton
 import ivy.model.CourseId
 import ui.screen.home.HomeItemViewState
 import ui.screen.home.HomeViewEvent
@@ -32,7 +30,7 @@ fun HomeContent(
         title = "Learn",
         actions = {
             SettingsButton(
-                onSettingsClick = {
+                onClick = {
                     onEvent(HomeViewEvent.OnSettingsClick)
                 }
             )
@@ -100,15 +98,18 @@ fun HomeContent(
 }
 
 @Composable
-private fun SettingsButton(onSettingsClick: () -> Unit) {
-    IvyButton(
-        appearance = ButtonAppearance.Filled(style = ButtonStyle.Secondary),
+private fun SettingsButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    IvyIconButton(
+        modifier = modifier,
         icon = {
             Icon(
                 imageVector = Icons.Filled.Settings,
                 contentDescription = null
             )
         },
-        onClick = onSettingsClick
+        onClick = onClick
     )
 }
