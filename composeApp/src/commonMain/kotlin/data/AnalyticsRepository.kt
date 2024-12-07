@@ -2,7 +2,6 @@ package data
 
 import arrow.core.Either
 import arrow.core.raise.either
-import arrow.core.raise.ensureNotNull
 import domain.SessionManager
 import ivy.data.source.AnalyticsDataSource
 import ivy.model.analytics.AnalyticsEventDto
@@ -19,12 +18,9 @@ class AnalyticsRepository(
         events: Set<AnalyticsEventDto>,
     ): Either<String, Unit> = either {
         withContext(dispatchers.io) {
-            val session = sessionManager.getSession()
-            ensureNotNull(session) {
-                "No session found. Please login"
-            }
+            val session = sessionManager.getSession().bind()
             dataSource.logEvents(
-                sessionToken = session,
+                session = session,
                 request = LogAnalyticsEventsRequest(
                     events = events,
                 )

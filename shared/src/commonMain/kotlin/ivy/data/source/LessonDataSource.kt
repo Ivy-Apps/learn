@@ -1,5 +1,6 @@
 package ivy.data.source
 
+import IvyConstants
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.raise.either
@@ -11,6 +12,7 @@ import io.ktor.http.*
 import ivy.data.ServerUrlProvider
 import ivy.model.CourseId
 import ivy.model.LessonId
+import ivy.model.auth.SessionToken
 import ivy.model.lesson.LessonProgressDto
 import ivy.model.lesson.LessonResponse
 
@@ -19,6 +21,7 @@ class LessonDataSource(
     private val urlProvider: ServerUrlProvider,
 ) {
     suspend fun fetchLesson(
+        session: SessionToken,
         course: CourseId,
         lesson: LessonId
     ): Either<String, LessonResponse> = catch({
@@ -26,6 +29,7 @@ class LessonDataSource(
             val response = httpClient.get(
                 "${urlProvider.serverUrl}/lessons/${course.value}/${lesson.value}"
             ) {
+                header(IvyConstants.HEADER_SESSION_TOKEN, session.value)
                 contentType(ContentType.Application.Json)
             }
             ensure(response.status.isSuccess()) {
@@ -38,6 +42,7 @@ class LessonDataSource(
     }
 
     suspend fun saveProgress(
+        session: SessionToken,
         course: CourseId,
         lesson: LessonId,
         progress: LessonProgressDto,
@@ -46,6 +51,7 @@ class LessonDataSource(
             val response = httpClient.post(
                 "${urlProvider.serverUrl}/lessons/${course.value}/${lesson.value}/progress"
             ) {
+                header(IvyConstants.HEADER_SESSION_TOKEN, session.value)
                 contentType(ContentType.Application.Json)
                 setBody(progress)
             }

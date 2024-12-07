@@ -77,7 +77,7 @@ class AnalyticsApiTest : ApiTest() {
 
         // When
         val response = datasource.logEvents(
-            sessionToken = auth.session.token,
+            session = auth.session.token,
             request = testCase.request
         )
 
@@ -98,7 +98,7 @@ class AnalyticsApiTest : ApiTest() {
         // When
         val responses = auths.map { auth ->
             datasource.logEvents(
-                sessionToken = auth.session.token,
+                session = auth.session.token,
                 request = testCase.request
             )
         }
@@ -145,7 +145,7 @@ class AnalyticsApiTest : ApiTest() {
 
         // When
         val response = datasource.logEvents(
-            sessionToken = auth.session.token,
+            session = auth.session.token,
             request = testCase.request
         )
 
@@ -163,7 +163,7 @@ class AnalyticsApiTest : ApiTest() {
 
         // When
         val response = datasource.logEvents(
-            sessionToken = SessionToken("invalid"),
+            session = SessionToken("invalid"),
             request = eventsRequest(
                 eventDto("home__view")
             )
@@ -186,7 +186,7 @@ class AnalyticsApiTest : ApiTest() {
 
         // When
         val response = datasource.logEvents(
-            sessionToken = auth.session.token,
+            session = auth.session.token,
             request = eventsRequest(
                 eventDto("home__view")
             )
