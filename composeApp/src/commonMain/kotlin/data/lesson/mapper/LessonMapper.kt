@@ -14,7 +14,6 @@ class LessonMapper {
                 chosen = progress?.chosen ?: emptyMap(),
                 answered = progress?.answered ?: emptySet(),
                 completed = progress?.completed ?: emptySet()
-
             )
         )
     }

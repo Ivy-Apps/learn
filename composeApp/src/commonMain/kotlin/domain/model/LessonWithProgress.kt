@@ -1,6 +1,5 @@
 package domain.model
 
-import arrow.optics.optics
 import ivy.model.AnswerId
 import ivy.model.ChoiceOptionId
 import ivy.model.Lesson
@@ -11,7 +10,6 @@ data class LessonWithProgress(
     val progress: LessonProgress,
 )
 
-@optics
 data class LessonProgress(
     val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
     val openAnswersInput: Map<LessonItemId, String>,
