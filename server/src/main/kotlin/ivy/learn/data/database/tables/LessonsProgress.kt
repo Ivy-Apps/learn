@@ -1,6 +1,6 @@
 package ivy.learn.data.database.tables
 
-import ivy.model.LessonProgressDto
+import ivy.model.lesson.LessonProgressDto
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.dao.id.UUIDTable
