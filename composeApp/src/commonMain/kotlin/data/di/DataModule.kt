@@ -1,8 +1,14 @@
 package data.di
 
 import AppConfiguration
-import data.*
+import data.AnalyticsRepository
+import data.CourseRepository
+import data.TopicsRepository
+import data.UserRepository
 import data.fake.FakeLessonRepository
+import data.lesson.LessonRepository
+import data.lesson.LessonRepositoryImpl
+import data.lesson.mapper.LessonMapper
 import data.storage.LocalStorage
 import data.storage.localStorage
 import di.bindWithFake
@@ -27,6 +33,7 @@ object DataModule : Di.Module {
         register<LocalStorage> { localStorage() }
         autoWire(::UserRepository)
         autoWire(::AnalyticsRepository)
+        autoWire(::LessonMapper)
         autoWire(::SoundRepository)
     }
 }

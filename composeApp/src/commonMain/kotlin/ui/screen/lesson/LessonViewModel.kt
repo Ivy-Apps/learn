@@ -3,10 +3,11 @@ package ui.screen.lesson
 import androidx.compose.runtime.*
 import arrow.core.Either
 import arrow.optics.optics
-import data.LessonRepository
+import data.lesson.LessonRepository
 import domain.analytics.Analytics
 import domain.analytics.Param
 import domain.analytics.Source
+import domain.model.LessonWithProgress
 import ivy.model.*
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +29,7 @@ class LessonViewModel(
     private val analytics: Analytics,
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
 
-    private var lessonResponse by mutableStateOf<Either<String, Lesson>?>(null)
+    private var lessonResponse by mutableStateOf<Either<String, LessonWithProgress>?>(null)
     private var localState by mutableStateOf(LocalState.Initial)
 
     override val state: LocalState
@@ -41,10 +42,7 @@ class LessonViewModel(
     @Composable
     override fun viewState(): LessonViewState {
         LaunchedEffect(Unit) {
-            lessonResponse = repository.fetchLesson(
-                course = courseId,
-                lesson = lessonId
-            )
+            loadLesson()
             analytics.logEvent(
                 source = Source.Lesson,
                 event = "view",
@@ -58,7 +56,7 @@ class LessonViewModel(
         return when (val response = lessonResponse) {
             is Either.Right -> remember(localState, lessonResponse) {
                 with(viewStateMapper) {
-                    response.value.toViewState(localState)
+                    response.value.lesson.toViewState(localState)
                 }
             }
 
@@ -68,6 +66,21 @@ class LessonViewModel(
                 cta = null,
                 progress = LessonProgressViewState(0, 1),
                 itemsLoadedDiff = 0,
+            )
+        }
+    }
+
+    private suspend fun loadLesson() {
+        lessonResponse = repository.fetchLesson(
+            course = courseId,
+            lesson = lessonId
+        ).onRight {
+            localState = LocalState(
+                selectedAnswers = it.progress.selectedAnswers,
+                openAnswersInput = it.progress.openAnswersInput,
+                chosen = it.progress.chosen,
+                answered = it.progress.answered,
+                completed = it.progress.completed,
             )
         }
     }

@@ -23,7 +23,7 @@ class LessonsApiTest : ApiTest() {
         )
 
         // Then
-        result.shouldBeRight().id shouldBe LessonId("demo-lesson")
-        result.shouldBeRight().content.items.shouldNotBeEmpty()
+        result.shouldBeRight().lesson.id shouldBe LessonId("demo-lesson")
+        result.shouldBeRight().lesson.content.items.shouldNotBeEmpty()
     }
 }

@@ -4,30 +4,30 @@ import arrow.core.raise.ensureNotNull
 import io.ktor.server.routing.*
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointAuthenticated
-import ivy.learn.api.common.model.ServerError
 import ivy.learn.api.common.model.ServerError.BadRequest
-import ivy.learn.data.repository.LessonsRepository
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.lesson.LessonService
 import ivy.model.CourseId
-import ivy.model.Lesson
 import ivy.model.LessonId
+import ivy.model.lesson.LessonResponse
 
 class LessonsApi(
-    private val repository: LessonsRepository,
-    private val authService: AuthenticationService,
+    private val lessonService: LessonService,
 ) : Api {
     override fun Routing.endpoints() {
-        lessonById()
+        loadLesson()
     }
 
-    private fun Routing.lessonById() {
-        getEndpointAuthenticated<Lesson>("/lessons/{courseId}/{lessonId}") { params, sessionToken ->
+    private fun Routing.loadLesson() {
+        getEndpointAuthenticated<LessonResponse>("/lessons/{courseId}/{lessonId}") { params, sessionToken ->
             val courseId = params["courseId"]?.let(::CourseId)
             val lessonId = params["lessonId"]?.let(::LessonId)
             ensureNotNull(courseId) { BadRequest("Course id is missing!") }
             ensureNotNull(lessonId) { BadRequest("Lesson id is missing!") }
-            repository.fetchLesson(courseId, lessonId)
-                .mapLeft(ServerError::Unknown).bind()
+            lessonService.loadLesson(
+                sessionToken = sessionToken,
+                courseId = courseId,
+                lessonId = lessonId
+            ).bind()
         }
     }
 }

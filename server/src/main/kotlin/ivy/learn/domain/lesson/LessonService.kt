@@ -6,9 +6,11 @@ import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.LessonProgressRepository
 import ivy.learn.data.repository.LessonsRepository
 import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.model.LessonProgress
 import ivy.model.CourseId
 import ivy.model.LessonId
 import ivy.model.auth.SessionToken
+import ivy.model.lesson.LessonProgressDto
 import ivy.model.lesson.LessonResponse
 
 class LessonService(
@@ -34,5 +36,22 @@ class LessonService(
             lesson = lesson,
             progress = progress?.state,
         )
+    }
+
+    suspend fun saveLessonProgress(
+        sessionToken: SessionToken,
+        courseId: CourseId,
+        lessonId: LessonId,
+        dto: LessonProgressDto,
+    ): Either<ServerError, Unit> = either {
+        val user = authService.getUser(sessionToken).bind()
+        progressRepository.insert(
+            progress = LessonProgress(
+                userId = user.id,
+                courseId = courseId,
+                lessonId = lessonId,
+                state = dto,
+            )
+        ).mapLeft(ServerError::Unknown).bind()
     }
 }
