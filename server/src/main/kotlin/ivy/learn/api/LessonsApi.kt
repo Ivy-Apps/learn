@@ -49,6 +49,5 @@ class LessonsApi(
                 dto = body,
             ).bind()
         }
-
     }
 }
