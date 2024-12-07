@@ -1,6 +1,6 @@
 package ui.screen.lesson.handler
 
-import Platform
+import domain.SoundUseCase
 import ivy.content.SoundsUrls
 import ui.EventHandler
 import ui.screen.lesson.LessonViewEvent
@@ -10,9 +10,8 @@ import ui.screen.lesson.completed
 import ui.screen.lesson.mapper.toDomain
 
 class OnContinueClickEventHandler(
-    private val platform: Platform,
-) :
-    EventHandler<LessonViewEvent.OnContinueClick, LocalState> {
+    private val soundUseCase: SoundUseCase
+) : EventHandler<LessonViewEvent.OnContinueClick, LocalState> {
     override val eventTypes = setOf(LessonViewEvent.OnContinueClick::class)
 
     override suspend fun LessonVmContext.handleEvent(
@@ -23,6 +22,6 @@ class OnContinueClickEventHandler(
                 completed + event.currentItemId.toDomain()
             }
         }
-        platform.playSound(SoundsUrls.Complete)
+        soundUseCase.playSound(SoundsUrls.Complete)
     }
 }

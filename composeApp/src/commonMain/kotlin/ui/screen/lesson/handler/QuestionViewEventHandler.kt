@@ -1,8 +1,8 @@
 package ui.screen.lesson.handler
 
-import Platform
 import arrow.optics.dsl.index
 import arrow.optics.typeclasses.Index
+import domain.SoundUseCase
 import ivy.content.SoundsUrls
 import ivy.model.AnswerId
 import ui.EventHandler
@@ -16,9 +16,8 @@ import ui.screen.lesson.mapper.toDomain
 import ui.screen.lesson.selectedAnswers
 
 class QuestionViewEventHandler(
-    private val platform: Platform,
-) :
-    EventHandler<QuestionViewEvent, LocalState> {
+    private val soundUseCase: SoundUseCase
+) : EventHandler<QuestionViewEvent, LocalState> {
     override val eventTypes = setOf(
         QuestionViewEvent.OnAnswerCheckChange::class,
         QuestionViewEvent.OnCheckClick::class,
@@ -68,7 +67,7 @@ class QuestionViewEventHandler(
         }
     }
 
-    private fun LessonVmContext.handleCheckClick(event: QuestionViewEvent.OnCheckClick) {
+    private suspend fun LessonVmContext.handleCheckClick(event: QuestionViewEvent.OnCheckClick) {
         modifyState { state ->
             LocalState.answered.modify(state) { completed ->
                 completed + event.questionId.toDomain()
@@ -77,8 +76,12 @@ class QuestionViewEventHandler(
         val correctAnswer = event.answers.all {
             it.selected == it.correct
         }
-        platform.playSound(
-            if (correctAnswer) SoundsUrls.Success else SoundsUrls.Ups
+        soundUseCase.playSound(
+            sound = if (correctAnswer) {
+                SoundsUrls.Success
+            } else {
+                SoundsUrls.Ups
+            }
         )
     }
 }

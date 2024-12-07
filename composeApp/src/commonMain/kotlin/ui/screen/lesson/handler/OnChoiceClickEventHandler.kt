@@ -1,7 +1,7 @@
 package ui.screen.lesson.handler
 
-import Platform
 import arrow.optics.copy
+import domain.SoundUseCase
 import ivy.content.SoundsUrls
 import ivy.model.ChoiceOptionId
 import ui.EventHandler
@@ -13,7 +13,7 @@ import ui.screen.lesson.completed
 import ui.screen.lesson.mapper.toDomain
 
 class OnChoiceClickEventHandler(
-    private val platform: Platform,
+    private val soundUseCase: SoundUseCase
 ) : EventHandler<LessonViewEvent.OnChoiceClick, LocalState> {
     override val eventTypes = setOf(LessonViewEvent.OnChoiceClick::class)
 
@@ -25,6 +25,6 @@ class OnChoiceClickEventHandler(
                 LocalState.completed transform { it + questionId }
             }
         }
-        platform.playSound(SoundsUrls.Complete)
+        soundUseCase.playSound(sound = SoundsUrls.Complete)
     }
 }

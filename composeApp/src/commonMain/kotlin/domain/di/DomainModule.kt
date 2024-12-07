@@ -1,10 +1,7 @@
 package domain.di
 
 import di.bindWithFake
-import domain.DeleteUserDataUseCase
-import domain.GoogleAuthenticationUseCase
-import domain.GoogleAuthenticationUseCaseImpl
-import domain.SessionManager
+import domain.*
 import domain.analytics.Analytics
 import domain.fake.FakeGoogleAuthenticationUseCase
 import ivy.di.Di
@@ -19,5 +16,6 @@ object DomainModule : Di.Module {
         autoWireSingleton(::SessionManager)
         autoWire(::DeleteUserDataUseCase)
         autoWireSingleton(::Analytics)
+        autoWire(::SoundUseCase)
     }
 }
