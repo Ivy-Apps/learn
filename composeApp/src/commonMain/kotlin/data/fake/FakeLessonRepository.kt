@@ -33,4 +33,12 @@ class FakeLessonRepository : LessonRepository {
             )
         ).right()
     }
+
+    override suspend fun saveLessonProgress(
+        course: CourseId,
+        lesson: LessonId,
+        progress: LessonProgress
+    ): Either<String, Unit> {
+        return Either.Right(Unit)
+    }
 }

@@ -44,12 +44,12 @@ inline fun <reified Response : Any> Routing.getEndpointAuthenticated(
 @IvyServerDsl
 inline fun <reified Body : Any, reified Response : Any> Routing.postEndpointAuthenticated(
     path: String,
-    crossinline handler: suspend Raise<ServerError>.(Body, SessionToken) -> Response
+    crossinline handler: suspend Raise<ServerError>.(Parameters, Body, SessionToken) -> Response
 ) {
     post(path) {
         handleAuthenticatedRequest { call, sessionToken ->
             val body = extractBody<Body>(call)
-            val response = handler(body, sessionToken)
+            val response = handler(call.parameters, body, sessionToken)
             call.respond(HttpStatusCode.OK, response)
         }
     }

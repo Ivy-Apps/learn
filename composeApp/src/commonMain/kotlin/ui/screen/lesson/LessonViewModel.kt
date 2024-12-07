@@ -7,6 +7,7 @@ import data.lesson.LessonRepository
 import domain.analytics.Analytics
 import domain.analytics.Param
 import domain.analytics.Source
+import domain.model.LessonProgress
 import domain.model.LessonWithProgress
 import ivy.model.*
 import kotlinx.collections.immutable.persistentListOf
@@ -16,6 +17,7 @@ import ui.ComposeViewModel
 import ui.EventHandler
 import ui.VmContext
 import ui.screen.lesson.mapper.LessonViewStateMapper
+import util.Logger
 
 
 class LessonViewModel(
@@ -27,6 +29,7 @@ class LessonViewModel(
     private val viewStateMapper: LessonViewStateMapper,
     private val eventHandlers: Set<EventHandler<*, LocalState>>,
     private val analytics: Analytics,
+    private val logger: Logger,
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
 
     private var lessonResponse by mutableStateOf<Either<String, LessonWithProgress>?>(null)
@@ -37,6 +40,25 @@ class LessonViewModel(
 
     override fun modifyState(transformation: (LocalState) -> LocalState) {
         localState = transformation(localState)
+        saveLessonProgress(localState)
+    }
+
+    private fun saveLessonProgress(localState: LocalState) {
+        screenScope.launch {
+            repository.saveLessonProgress(
+                course = courseId,
+                lesson = lessonId,
+                progress = LessonProgress(
+                    selectedAnswers = localState.selectedAnswers,
+                    openAnswersInput = localState.openAnswersInput,
+                    chosen = localState.chosen,
+                    answered = localState.answered,
+                    completed = localState.completed,
+                )
+            ).onLeft { errMsg ->
+                logger.error("Lesson progress: $errMsg")
+            }
+        }
     }
 
     @Composable
