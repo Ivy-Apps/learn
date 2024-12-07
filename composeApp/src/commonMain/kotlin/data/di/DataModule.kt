@@ -27,5 +27,6 @@ object DataModule : Di.Module {
         register<LocalStorage> { localStorage() }
         autoWire(::UserRepository)
         autoWire(::AnalyticsRepository)
+        autoWire(::SoundRepository)
     }
 }

@@ -31,19 +31,15 @@ fun IvyButton(
     modifier: Modifier = Modifier,
     loading: Boolean = false,
     enabled: Boolean = true,
-    text: @Composable (RowScope.() -> Unit)? = null,
+    text: @Composable (RowScope.() -> Unit),
     icon: @Composable (RowScope.() -> Unit)? = null,
     iconRight: @Composable (RowScope.() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
-    val contentPadding = if (text == null) {
-        PaddingValues(all = 8.dp)
-    } else {
-        PaddingValues(
-            horizontal = 16.dp,
-            vertical = 8.dp
-        )
-    }
+    val contentPadding = PaddingValues(
+        horizontal = 16.dp,
+        vertical = 8.dp
+    )
 
     ButtonWrapper(
         modifier = modifier,
@@ -60,23 +56,19 @@ fun IvyButton(
                 )
             }
 
-            icon != null && text != null -> {
+            icon != null -> {
                 icon()
                 Spacer(Modifier.width(8.dp))
                 text()
             }
 
-            text != null && iconRight != null -> {
+            iconRight != null -> {
                 text()
                 Spacer(Modifier.width(8.dp))
                 iconRight()
             }
 
-            icon != null -> {
-                icon()
-            }
-
-            text != null -> {
+            else -> {
                 text()
             }
         }

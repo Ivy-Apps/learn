@@ -42,7 +42,7 @@ fun LessonContent(
             modifier = Modifier.fillMaxSize()
                 .padding(contentPadding)
         ) {
-            LessonItemsLazyColum(
+            LessonItemsLazyColumn(
                 viewState = viewState,
                 onEvent = onEvent,
             )
@@ -63,7 +63,7 @@ fun LessonContent(
 }
 
 @Composable
-private fun LessonItemsLazyColum(
+private fun LessonItemsLazyColumn(
     viewState: LessonViewState,
     onEvent: (LessonViewEvent) -> Unit,
     modifier: Modifier = Modifier,
