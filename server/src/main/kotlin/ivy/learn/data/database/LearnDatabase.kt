@@ -5,6 +5,7 @@ import arrow.core.raise.catch
 import arrow.core.raise.either
 import ivy.learn.config.DatabaseConfig
 import ivy.learn.data.database.tables.Analytics
+import ivy.learn.data.database.tables.LessonsProgress
 import ivy.learn.data.database.tables.Sessions
 import ivy.learn.data.database.tables.Users
 import org.jetbrains.exposed.sql.Database
@@ -36,6 +37,7 @@ class LearnDatabase {
                 Users,
                 Sessions,
                 Analytics,
+                LessonsProgress,
             )
         }
         Either.Right(database)

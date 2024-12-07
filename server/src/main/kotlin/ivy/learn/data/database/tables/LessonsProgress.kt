@@ -1,0 +1,36 @@
+package ivy.learn.data.database.tables
+
+import ivy.model.LessonProgressDto
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import org.jetbrains.exposed.dao.id.UUIDTable
+import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.json.json
+
+/*
+val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
+val openAnswersInput: Map<LessonItemId, String>,
+val chosen: Map<LessonItemId, ChoiceOptionId>,
+val answered: Set<LessonItemId>,
+val completed: Set<LessonItemId>,
+*/
+object LessonsProgress : UUIDTable() {
+    val userId = reference(
+        name = "user_id",
+        refColumn = Users.id,
+        onDelete = ReferenceOption.CASCADE,
+        onUpdate = ReferenceOption.CASCADE,
+    ).index()
+    val courseId = varchar("course_id", length = 120).index()
+    val lessonId = varchar("lesson_id", length = 120).index()
+    val lessonItemId = varchar(name = "lesson_item_id", length = 120)
+    val state = json<LessonProgressDto>(
+        name = "state",
+        serialize = { value ->
+            Json.encodeToString(value)
+        },
+        deserialize = { json ->
+            Json.decodeFromString(json)
+        }
+    )
+}
