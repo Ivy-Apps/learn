@@ -2,6 +2,7 @@ package ui.screen.settings
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.UriHandler
+import data.SoundRepository
 import domain.DeleteUserDataUseCase
 import domain.SessionManager
 import domain.analytics.Analytics
@@ -24,6 +25,7 @@ class SettingsViewModel(
     private val logger: Logger,
     private val analytics: Analytics,
     private val toaster: Toaster,
+    private val soundRepository: SoundRepository
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
     private var soundEnabled by mutableStateOf(true)
     private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -31,7 +33,7 @@ class SettingsViewModel(
     @Composable
     override fun viewState(): SettingsViewState {
         LaunchedEffect(Unit) {
-            // TODO - fetch soundEnabled from dataStore and update state
+            soundEnabled = soundRepository.getSoundEnabled()
             logEvent("view")
         }
         return SettingsViewState(
@@ -75,7 +77,10 @@ class SettingsViewModel(
     }
 
     private fun handleSoundEnabledChange(event: SettingsViewEvent.OnSoundEnabledChange) {
-        soundEnabled = event.enabled
+        scope.launch {
+            soundEnabled = event.enabled
+            soundRepository.setSoundEnabled(event.enabled)
+        }
     }
 
     private fun handlePrivacyClick() {
