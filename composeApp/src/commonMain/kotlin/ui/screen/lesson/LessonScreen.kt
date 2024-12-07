@@ -57,7 +57,7 @@ class LessonScreen(
         autoWire(::LessonViewStateMapper)
         autoWire(::OnBackClickEventHandler)
         autoWire(::OnContinueClickEventHandler)
-        autoWire(::QuestionViewEventHandler)
+        autoWire(::QuestionEventHandler)
         autoWire(::OnSoundClickEventHandler)
         autoWire(::OnFinishClickEventHandler)
         autoWire(::OnChoiceClickEventHandler)
@@ -72,7 +72,7 @@ class LessonScreen(
                 eventHandlers = setOf(
                     Di.get<OnBackClickEventHandler>(),
                     Di.get<OnContinueClickEventHandler>(),
-                    Di.get<QuestionViewEventHandler>(),
+                    Di.get<QuestionEventHandler>(),
                     Di.get<OnSoundClickEventHandler>(),
                     Di.get<OnFinishClickEventHandler>(),
                     Di.get<OnChoiceClickEventHandler>(),
