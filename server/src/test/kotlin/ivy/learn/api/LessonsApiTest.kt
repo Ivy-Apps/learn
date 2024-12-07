@@ -14,16 +14,18 @@ class LessonsApiTest : ApiTest() {
     @Test
     fun `fetches existing lesson`() = apiTest {
         // Given
+        val auth = registerUser("fake@test.com")
         val datasource: LessonDataSource = Di.get()
 
         // When
         val result = datasource.fetchLesson(
+            session = auth.session.token,
             course = CourseId("demo-course"),
             lesson = LessonId("demo-lesson"),
         )
 
         // Then
-        result.shouldBeRight().id shouldBe LessonId("demo-lesson")
-        result.shouldBeRight().content.items.shouldNotBeEmpty()
+        result.shouldBeRight().lesson.id shouldBe LessonId("demo-lesson")
+        result.shouldBeRight().lesson.content.items.shouldNotBeEmpty()
     }
 }

@@ -17,14 +17,14 @@ class AnalyticsDataSource(
     private val urlProvider: ServerUrlProvider,
 ) {
     suspend fun logEvents(
-        sessionToken: SessionToken,
+        session: SessionToken,
         request: LogAnalyticsEventsRequest
     ): Either<String, Unit> = catch({
         either {
             val response = httpClient.post(
                 "${urlProvider.serverUrl}/analytics/events"
             ) {
-                header(IvyConstants.HEADER_SESSION_TOKEN, sessionToken.value)
+                header(IvyConstants.HEADER_SESSION_TOKEN, session.value)
                 contentType(ContentType.Application.Json)
                 setBody(request)
             }

@@ -18,7 +18,7 @@ class AnalyticsApi(
     private fun Routing.postEvents() {
         postEndpointAuthenticated<LogAnalyticsEventsRequest, Unit>(
             "analytics/events"
-        ) { request, sessionToken ->
+        ) { _, request, sessionToken ->
             val user = authService.getUser(sessionToken).bind()
             analyticsService.logEvents(
                 user = user,

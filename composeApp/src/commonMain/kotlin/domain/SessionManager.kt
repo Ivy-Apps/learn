@@ -1,5 +1,8 @@
 package domain
 
+import arrow.core.Either
+import arrow.core.raise.either
+import arrow.core.raise.ensureNotNull
 import data.storage.LocalStorage
 import ivy.model.auth.SessionToken
 
@@ -13,7 +16,15 @@ class SessionManager(
         sessionToken = token
     }
 
-    suspend fun getSession(): SessionToken? {
+    suspend fun getSession(): Either<String, SessionToken> = either {
+        val session = getSessionOrNull()
+        ensureNotNull(session) {
+            "No session found. Please login"
+        }
+        session
+    }
+
+    suspend fun getSessionOrNull(): SessionToken? {
         return sessionToken ?: localStorage.getString(SESSION_TOKEN_KEY)
             ?.let(::SessionToken)
             ?.also {

@@ -11,7 +11,7 @@ class LoggedOutUserRedirect(
     override val name = "Logged-out user"
 
     override suspend fun handle(): Boolean {
-        if (sessionManager.getSession() == null) {
+        if (sessionManager.getSessionOrNull() == null) {
             navigation.replaceWith(IntroScreen())
             return true
         }

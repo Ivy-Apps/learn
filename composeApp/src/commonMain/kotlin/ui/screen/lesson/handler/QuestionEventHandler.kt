@@ -15,7 +15,7 @@ import ui.screen.lesson.answered
 import ui.screen.lesson.mapper.toDomain
 import ui.screen.lesson.selectedAnswers
 
-class QuestionViewEventHandler(
+class QuestionEventHandler(
     private val soundUseCase: SoundUseCase
 ) : EventHandler<QuestionViewEvent, LocalState> {
     override val eventTypes = setOf(

@@ -3,7 +3,6 @@ package ui.screen.lesson
 import androidx.compose.runtime.Composable
 import arrow.core.Option
 import arrow.core.raise.option
-import domain.analytics.Analytics
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.autowire.autoWire
@@ -57,7 +56,7 @@ class LessonScreen(
         autoWire(::LessonViewStateMapper)
         autoWire(::OnBackClickEventHandler)
         autoWire(::OnContinueClickEventHandler)
-        autoWire(::QuestionViewEventHandler)
+        autoWire(::QuestionEventHandler)
         autoWire(::OnSoundClickEventHandler)
         autoWire(::OnFinishClickEventHandler)
         autoWire(::OnChoiceClickEventHandler)
@@ -72,12 +71,13 @@ class LessonScreen(
                 eventHandlers = setOf(
                     Di.get<OnBackClickEventHandler>(),
                     Di.get<OnContinueClickEventHandler>(),
-                    Di.get<QuestionViewEventHandler>(),
+                    Di.get<QuestionEventHandler>(),
                     Di.get<OnSoundClickEventHandler>(),
                     Di.get<OnFinishClickEventHandler>(),
                     Di.get<OnChoiceClickEventHandler>(),
                 ),
-                analytics = Di.get<Analytics>()
+                analytics = Di.get(),
+                logger = Di.get()
             )
         }
     }
