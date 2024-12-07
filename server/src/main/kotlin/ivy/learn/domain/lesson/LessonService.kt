@@ -2,6 +2,7 @@ package ivy.learn.domain.lesson
 
 import arrow.core.Either
 import arrow.core.raise.either
+import io.ktor.util.logging.*
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.LessonProgressRepository
 import ivy.learn.data.repository.LessonsRepository
@@ -17,6 +18,7 @@ class LessonService(
     private val authService: AuthenticationService,
     private val lessonsRepository: LessonsRepository,
     private val progressRepository: LessonProgressRepository,
+    private val logger: Logger,
 ) {
 
     suspend fun loadLesson(
@@ -26,12 +28,20 @@ class LessonService(
     ): Either<ServerError, LessonResponse> = either {
         val user = authService.getUser(sessionToken).bind()
         val lesson = lessonsRepository.fetchLesson(courseId, lessonId)
-            .mapLeft(ServerError::Unknown).bind()
+            .onLeft { errMsg ->
+                logger.error("Failed to fetch lesson: $errMsg")
+            }
+            .mapLeft(ServerError::Unknown)
+            .bind()
         val progress = progressRepository.findBy(
             userId = user.id,
             lessonId = lessonId,
             courseId = courseId
-        ).mapLeft(ServerError::Unknown).bind()
+        ).mapLeft(ServerError::Unknown)
+            .onLeft { errMsg ->
+                logger.error("Failed to load lesson progress: $errMsg")
+            }
+            .bind()
         LessonResponse(
             lesson = lesson,
             progress = progress?.state,
