@@ -1,10 +1,7 @@
 package data.di
 
 import AppConfiguration
-import data.AnalyticsRepository
-import data.CourseRepository
-import data.TopicsRepository
-import data.UserRepository
+import data.*
 import data.fake.FakeLessonRepository
 import data.lesson.LessonRepository
 import data.lesson.LessonRepositoryImpl
