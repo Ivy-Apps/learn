@@ -4,10 +4,7 @@ import ivy.di.Di
 import ivy.di.autowire.autoWire
 import ivy.di.autowire.autoWireSingleton
 import ivy.learn.data.database.LearnDatabase
-import ivy.learn.data.repository.AnalyticsRepository
-import ivy.learn.data.repository.CoursesRepository
-import ivy.learn.data.repository.LessonsRepository
-import ivy.learn.data.repository.TopicsRepository
+import ivy.learn.data.repository.*
 import ivy.learn.data.repository.auth.SessionRepository
 import ivy.learn.data.repository.auth.UserRepository
 import ivy.learn.data.source.LessonContentDataSource
@@ -17,6 +14,7 @@ object DataModule : Di.Module {
         autoWireSingleton(::LearnDatabase)
         autoWire(::LessonContentDataSource)
         autoWire(::LessonsRepository)
+        autoWire(::LessonProgressRepository)
         autoWire(::CoursesRepository)
         autoWire(::TopicsRepository)
         autoWire(::SessionRepository)
