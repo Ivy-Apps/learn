@@ -1,6 +1,5 @@
 package data.di
 
-import AppConfiguration
 import data.*
 import data.fake.FakeLessonRepository
 import data.lesson.LessonRepository
@@ -15,17 +14,10 @@ import ivy.di.autowire.autoWire
 
 object DataModule : Di.Module {
     override fun init() = Di.appScope {
-        register { TopicsRepository(Di.get(), Di.get()) }
-        register { CourseRepository(Di.get(), Di.get()) }
+        autoWire(::TopicsRepository)
+        autoWire(::CourseRepository)
         autoWire(::LessonRepositoryImpl)
         autoWire(::FakeLessonRepository)
-        register<LessonRepository> {
-            if (Di.get<AppConfiguration>().fakesEnabled) {
-                Di.get<FakeLessonRepository>()
-            } else {
-                Di.get<LessonRepositoryImpl>()
-            }
-        }
         bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
         register<LocalStorage> { localStorage() }
         autoWire(::UserRepository)
