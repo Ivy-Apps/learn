@@ -32,7 +32,7 @@ class CourseProgressRepository {
         "Failed to insert $completedLesson because $e".left()
     }
 
-    fun findById(
+    fun findBy(
         userId: UserId,
         courses: List<CourseId>
     ): Either<String, List<CompletedLesson>> = catch({
