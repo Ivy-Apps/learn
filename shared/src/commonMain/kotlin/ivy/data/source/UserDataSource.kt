@@ -1,6 +1,5 @@
 package ivy.data.source
 
-import IvyConstants
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.raise.either
@@ -9,6 +8,7 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import ivy.data.ServerUrlProvider
+import ivy.data.headerSessionToken
 import ivy.model.auth.SessionToken
 
 class UserDataSource(
@@ -16,13 +16,13 @@ class UserDataSource(
     private val urlProvider: ServerUrlProvider,
 ) {
     suspend fun deleteUserData(
-        sessionToken: SessionToken,
+        session: SessionToken,
     ): Either<String, Unit> = catch({
         either {
             val response = httpClient.delete(
                 "${urlProvider.serverUrl}/user/delete-data"
             ) {
-                header(IvyConstants.HEADER_SESSION_TOKEN, sessionToken.value)
+                headerSessionToken(session)
             }
             ensure(response.status.isSuccess()) {
                 "Failed -  ${response.status.value} status"

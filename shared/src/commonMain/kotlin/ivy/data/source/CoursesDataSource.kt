@@ -1,6 +1,5 @@
 package ivy.data.source
 
-import IvyConstants
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.right
@@ -9,6 +8,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import ivy.data.ServerUrlProvider
+import ivy.data.headerSessionToken
 import ivy.data.source.model.CourseResponse
 import ivy.model.CourseId
 import ivy.model.auth.SessionToken
@@ -25,7 +25,7 @@ class CoursesDataSource(
             "${urlProvider.serverUrl}/courses/${courseId.value}"
         ) {
             contentType(ContentType.Application.Json)
-            header(IvyConstants.HEADER_SESSION_TOKEN, session.value)
+            headerSessionToken(session)
         }.body<CourseResponse>().right()
     }) { e ->
         Either.Left("Failed to fetch '${courseId.value}' course: ${e.message}")
