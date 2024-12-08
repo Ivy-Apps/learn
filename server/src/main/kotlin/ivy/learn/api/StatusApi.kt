@@ -12,7 +12,7 @@ class StatusApi(
     private val logger: Logger,
 ) : Api {
     override fun Routing.endpoints() {
-        getEndpoint("/status") {
+        getEndpoint<StatusResponse>("/status") {
             val time = System.currentTimeMillis()
             logger.debug("Requesting status at $time")
             StatusResponse(

@@ -16,7 +16,7 @@ class TopicsApi(
     }
 
     private fun Routing.topics() {
-        getEndpoint("/topics") {
+        getEndpoint<TopicsResponse>("/topics") {
             TopicsResponse(
                 topics = topicsRepository.fetchTopics(),
                 courses = coursesRepository.fetchCourses()
