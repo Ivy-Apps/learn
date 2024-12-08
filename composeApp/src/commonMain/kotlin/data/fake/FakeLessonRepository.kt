@@ -23,6 +23,7 @@ class FakeLessonRepository : LessonRepository {
                 tagline = "",
                 image = ImageUrl(""),
                 content = programmingMathInDisguise(),
+                completed = false,
             ),
             progress = LessonProgress(
                 selectedAnswers = mapOf(),

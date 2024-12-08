@@ -11,6 +11,7 @@ data class Lesson(
     val tagline: String,
     val image: ImageUrl,
     val content: LessonContent,
+    val completed: Boolean,
 ) : Identifiable<LessonId>
 
 @Serializable
