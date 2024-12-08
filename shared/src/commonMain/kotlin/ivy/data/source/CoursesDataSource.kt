@@ -1,5 +1,6 @@
 package ivy.data.source
 
+import IvyConstants
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.right
@@ -10,18 +11,23 @@ import io.ktor.http.*
 import ivy.data.ServerUrlProvider
 import ivy.data.source.model.CourseResponse
 import ivy.model.CourseId
+import ivy.model.auth.SessionToken
 
 class CoursesDataSource(
     private val httpClient: HttpClient,
     private val urlProvider: ServerUrlProvider,
 ) {
-    suspend fun fetchCourseById(id: CourseId): Either<String, CourseResponse> = catch({
+    suspend fun fetchCourseById(
+        session: SessionToken,
+        courseId: CourseId
+    ): Either<String, CourseResponse> = catch({
         httpClient.get(
-            "${urlProvider.serverUrl}/courses/${id.value}"
+            "${urlProvider.serverUrl}/courses/${courseId.value}"
         ) {
             contentType(ContentType.Application.Json)
+            header(IvyConstants.HEADER_SESSION_TOKEN, session.value)
         }.body<CourseResponse>().right()
     }) { e ->
-        Either.Left("Failed to fetch '${id.value}' course: ${e.message}")
+        Either.Left("Failed to fetch '${courseId.value}' course: ${e.message}")
     }
 }

@@ -13,10 +13,14 @@ class CoursesServerTest : ServerTest() {
     @Test
     fun `fetches topics`() = beTest {
         // Given
+        val auth = registerUser()
         val datasource: CoursesDataSource = Di.get()
 
         // When
-        val result = datasource.fetchCourseById(ProgrammingFundamentals.course.id)
+        val result = datasource.fetchCourseById(
+            session = auth.session.token,
+            courseId = ProgrammingFundamentals.course.id
+        )
 
         // Then
         result.shouldBeRight() shouldBe CourseResponse(
