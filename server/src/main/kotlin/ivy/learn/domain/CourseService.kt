@@ -34,7 +34,7 @@ class CourseService(
         val lessons = lessonsRepository.fetchPartialLessons(courseId)
             .mapLeft(ServerError::BadRequest)
             .bind()
-        val lessonsWithProgress = markCompletedLessons(
+        val lessonsWithProgress = lessonWithProgress(
             userId = user.id,
             courseId = course.id,
             lessons = lessons,
@@ -45,7 +45,7 @@ class CourseService(
         )
     }
 
-    private fun Raise<ServerError>.markCompletedLessons(
+    private fun Raise<ServerError>.lessonWithProgress(
         userId: UserId,
         courseId: CourseId,
         lessons: List<Lesson>,
