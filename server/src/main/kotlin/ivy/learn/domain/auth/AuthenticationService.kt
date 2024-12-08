@@ -67,7 +67,7 @@ class AuthenticationService(
         sessionToken: SessionToken
     ): Either<ServerError, User> = either {
         val session = sessionRepository.findSessionByToken(sessionToken)
-            .mapLeft { ServerError.Unknown(it) }
+            .mapLeft(ServerError::Unknown)
             .bind()
         ensureNotNull(session) {
             ServerError.Unauthorized
@@ -77,7 +77,7 @@ class AuthenticationService(
         }
 
         val user = userRepository.findUserById(session.userId)
-            .mapLeft { ServerError.Unknown(it) }
+            .mapLeft(ServerError::Unknown)
             .bind()
         ensureNotNull(user) {
             ServerError.Unauthorized
