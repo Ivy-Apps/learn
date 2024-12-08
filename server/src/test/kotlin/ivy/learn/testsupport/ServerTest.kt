@@ -29,8 +29,8 @@ import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-open class ApiTest {
-    fun apiTest(block: suspend ApiTest.() -> Unit) = runTest {
+open class ServerTest {
+    fun beTest(block: suspend ServerTest.() -> Unit) = runTest {
         initDi(devMode = true)
         Di.appScope { register<ServerUrlProvider> { LocalServerUrlProvider() } }
         val serverConfig = Di.get<ServerConfigurationProvider>()
@@ -49,7 +49,7 @@ open class ApiTest {
     }
 
     protected fun registerUser(
-        email: String,
+        email: String = "test-user${UUID.randomUUID()}@test.com",
         expiredSession: Boolean = false,
     ): Auth {
         return transaction {

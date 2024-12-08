@@ -1,4 +1,4 @@
-package ivy.learn.domain.lesson
+package ivy.learn.domain
 
 import arrow.core.Either
 import arrow.core.raise.either
@@ -55,7 +55,7 @@ class LessonService(
         dto: LessonProgressDto,
     ): Either<ServerError, Unit> = either {
         val user = authService.getUser(sessionToken).bind()
-        progressRepository.insert(
+        progressRepository.upsert(
             progress = LessonProgress(
                 userId = user.id,
                 courseId = courseId,

@@ -61,7 +61,8 @@ class CourseScopeImpl : CourseScope {
                 name = name,
                 tagline = tagline,
                 image = ImageUrl(imageUrl),
-                content = EmptyContent
+                content = EmptyContent,
+                completed = false,
             )
         )
     }

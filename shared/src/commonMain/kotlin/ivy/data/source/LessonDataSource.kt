@@ -10,6 +10,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import ivy.data.ServerUrlProvider
+import ivy.data.headerSessionToken
 import ivy.model.CourseId
 import ivy.model.LessonId
 import ivy.model.auth.SessionToken
@@ -29,7 +30,7 @@ class LessonDataSource(
             val response = httpClient.get(
                 "${urlProvider.serverUrl}/lessons/${course.value}/${lesson.value}"
             ) {
-                header(IvyConstants.HEADER_SESSION_TOKEN, session.value)
+                headerSessionToken(session)
                 contentType(ContentType.Application.Json)
             }
             ensure(response.status.isSuccess()) {

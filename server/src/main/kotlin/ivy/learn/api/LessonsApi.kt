@@ -6,7 +6,7 @@ import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointAuthenticated
 import ivy.learn.api.common.model.ServerError.BadRequest
 import ivy.learn.api.common.postEndpointAuthenticated
-import ivy.learn.domain.lesson.LessonService
+import ivy.learn.domain.LessonService
 import ivy.model.CourseId
 import ivy.model.LessonId
 import ivy.model.lesson.LessonProgressDto
@@ -17,7 +17,7 @@ class LessonsApi(
 ) : Api {
     override fun Routing.endpoints() {
         loadLesson()
-        saveProgress()
+        saveLessonProgress()
     }
 
     private fun Routing.loadLesson() {
@@ -34,7 +34,7 @@ class LessonsApi(
         }
     }
 
-    private fun Routing.saveProgress() {
+    private fun Routing.saveLessonProgress() {
         postEndpointAuthenticated<LessonProgressDto, Unit>(
             "/lessons/{courseId}/{lessonId}/progress"
         ) { params, body, sessionToken ->

@@ -5,27 +5,68 @@ import io.kotest.matchers.maps.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import ivy.data.source.LessonDataSource
 import ivy.di.Di
-import ivy.learn.testsupport.ApiTest
+import ivy.learn.testsupport.ServerTest
+import ivy.learn.testsupport.data.repository.LessonProgressFixtures
 import ivy.model.CourseId
 import ivy.model.LessonId
+import ivy.model.LessonItemId
 import org.junit.Test
 
-class LessonsApiTest : ApiTest() {
+class LessonsApiTest : ServerTest() {
     @Test
-    fun `fetches existing lesson`() = apiTest {
+    fun `fetch existing lesson`() = beTest {
         // Given
-        val auth = registerUser("fake@test.com")
-        val datasource: LessonDataSource = Di.get()
+        val auth = registerUser()
+        val datasource = Di.get<LessonDataSource>()
+        val courseId = CourseId("demo-course")
+        val lessonId = LessonId("demo-lesson")
+
 
         // When
-        val result = datasource.fetchLesson(
+        val response = datasource.fetchLesson(
             session = auth.session.token,
-            course = CourseId("demo-course"),
-            lesson = LessonId("demo-lesson"),
+            course = courseId,
+            lesson = lessonId,
         )
 
         // Then
-        result.shouldBeRight().lesson.id shouldBe LessonId("demo-lesson")
-        result.shouldBeRight().lesson.content.items.shouldNotBeEmpty()
+        val successResponse = response.shouldBeRight()
+        successResponse.lesson.id shouldBe lessonId
+        successResponse.lesson.content.items.shouldNotBeEmpty()
+    }
+
+    @Test
+    fun `saves lesson progress`() = beTest {
+        // Given
+        val auth = registerUser()
+        val datasource = Di.get<LessonDataSource>()
+        val courseId = CourseId("demo-course")
+        val lessonId = LessonId("demo-lesson")
+
+        // When
+        val response1 = datasource.saveProgress(
+            session = auth.session.token,
+            course = courseId,
+            lesson = lessonId,
+            progress = LessonProgressFixtures.state(
+                openAnswersInput = mapOf(
+                    LessonItemId("1") to "42"
+                )
+            )
+        )
+        val response2 = datasource.saveProgress(
+            session = auth.session.token,
+            course = courseId,
+            lesson = lessonId,
+            progress = LessonProgressFixtures.state(
+                openAnswersInput = mapOf(
+                    LessonItemId("1") to "3.14"
+                )
+            )
+        )
+
+        // Then
+        response1.shouldBeRight()
+        response2.shouldBeRight()
     }
 }

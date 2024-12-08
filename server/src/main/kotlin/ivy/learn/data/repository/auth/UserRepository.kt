@@ -61,7 +61,9 @@ class UserRepository {
 
     fun update(user: User): Either<String, Unit> = catch({
         transaction {
-            val updatedRows = Users.update({ Users.id eq user.id.value }) {
+            val updatedRows = Users.update(
+                where = { Users.id eq user.id.value }
+            ) {
                 it[id] = user.id.value
                 it[email] = user.email
                 it[names] = user.names

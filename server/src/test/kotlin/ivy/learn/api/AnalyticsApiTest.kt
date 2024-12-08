@@ -6,7 +6,7 @@ import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import ivy.data.source.AnalyticsDataSource
 import ivy.di.Di
-import ivy.learn.testsupport.ApiTest
+import ivy.learn.testsupport.ServerTest
 import ivy.learn.testsupport.analytics.AnalyticsFixtures.eventDto
 import ivy.learn.testsupport.analytics.AnalyticsFixtures.eventsRequest
 import ivy.learn.testsupport.timeNow
@@ -18,7 +18,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class AnalyticsApiTest : ApiTest() {
+class AnalyticsApiTest : ServerTest() {
     enum class ValidEventsTestCase(
         val request: LogAnalyticsEventsRequest
     ) {
@@ -70,7 +70,7 @@ class AnalyticsApiTest : ApiTest() {
     @Test
     fun `logs valid events for single user`(
         @TestParameter testCase: ValidEventsTestCase
-    ) = apiTest {
+    ) = beTest {
         // Given
         val auth = registerUser("test@email.com")
         val datasource = Di.get<AnalyticsDataSource>()
@@ -88,7 +88,7 @@ class AnalyticsApiTest : ApiTest() {
     @Test
     fun `logs valid events for multiple users`(
         @TestParameter testCase: ValidEventsTestCase
-    ) = apiTest {
+    ) = beTest {
         // Given
         val auths = (1..10).map { index ->
             registerUser("test_user$index$@email.com")
@@ -137,7 +137,7 @@ class AnalyticsApiTest : ApiTest() {
     @Test
     fun `does not log invalid events`(
         @TestParameter testCase: InvalidEventsTestCase
-    ) = apiTest {
+    ) = beTest {
         // Given
         val auth = registerUser("test@email.com")
         val datasource = Di.get<AnalyticsDataSource>()
@@ -156,7 +156,7 @@ class AnalyticsApiTest : ApiTest() {
     @Test
     fun `does not log events for invalid sessions`(
         @TestParameter testCase: InvalidEventsTestCase
-    ) = apiTest {
+    ) = beTest {
         // Given
         registerUser("test@test.com")
         val datasource = Di.get<AnalyticsDataSource>()
@@ -176,7 +176,7 @@ class AnalyticsApiTest : ApiTest() {
     @Test
     fun `does not log events for expired sessions`(
         @TestParameter testCase: InvalidEventsTestCase
-    ) = apiTest {
+    ) = beTest {
         // Given
         val auth = registerUser(
             email = "test@test.com",

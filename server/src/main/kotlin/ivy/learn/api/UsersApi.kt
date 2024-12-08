@@ -18,7 +18,7 @@ class UsersApi(
     }
 
     private fun Routing.deleteUserData() {
-        deleteEndpointAuthenticated("/user/delete-data") { _, sessionToken ->
+        deleteEndpointAuthenticated<Unit>("/user/delete-data") { _, sessionToken ->
             val user = authService.getUser(sessionToken).bind()
             logger.info("User '{}' is requesting account deletion...", user.email)
             userRepository.delete(user.id)

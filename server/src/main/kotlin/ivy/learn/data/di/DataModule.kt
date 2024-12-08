@@ -16,6 +16,7 @@ object DataModule : Di.Module {
         autoWire(::LessonsRepository)
         autoWire(::LessonProgressRepository)
         autoWire(::CoursesRepository)
+        autoWire(::CourseProgressRepository)
         autoWire(::TopicsRepository)
         autoWire(::SessionRepository)
         autoWire(::UserRepository)
