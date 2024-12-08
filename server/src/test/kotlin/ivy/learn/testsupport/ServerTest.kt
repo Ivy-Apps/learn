@@ -49,7 +49,7 @@ open class ServerTest {
     }
 
     protected fun registerUser(
-        email: String = "test-user${timeNow()}@test.com",
+        email: String = "test-user${UUID.randomUUID()}@test.com",
         expiredSession: Boolean = false,
     ): Auth {
         return transaction {
