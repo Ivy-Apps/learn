@@ -3,11 +3,11 @@ package ivy.learn.data.database.tables
 import ivy.model.lesson.LessonProgressDto
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.json.json
 
-object LessonsProgress : UUIDTable() {
+object LessonsProgress : Table("lessons_progress") {
     val userId = reference(
         name = "user_id",
         refColumn = Users.id,
@@ -24,5 +24,8 @@ object LessonsProgress : UUIDTable() {
         deserialize = { json ->
             Json.decodeFromString(json)
         }
+    )
+    override val primaryKey = PrimaryKey(
+        columns = arrayOf(userId, courseId, lessonId)
     )
 }

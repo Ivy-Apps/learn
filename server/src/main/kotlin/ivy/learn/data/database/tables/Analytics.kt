@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.json.json
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
-object Analytics : UUIDTable() {
+object Analytics : UUIDTable(name = "analytics") {
     val userId = reference(
         name = "user_id",
         refColumn = Users.id,
