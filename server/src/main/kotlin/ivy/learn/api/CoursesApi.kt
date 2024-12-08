@@ -13,10 +13,10 @@ class CoursesApi(
     private val courseService: CourseService,
 ) : Api {
     override fun Routing.endpoints() {
-        courseBy()
+        loadCourse()
     }
 
-    private fun Routing.courseBy() {
+    private fun Routing.loadCourse() {
         getEndpointAuthenticated<CourseResponse>("/courses/{id}") { params, sessionToken ->
             val courseId = params["id"]?.let(::CourseId)
             ensureNotNull(courseId) { BadRequest("Course id is required.") }

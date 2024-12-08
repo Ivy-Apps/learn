@@ -10,6 +10,7 @@ import ivy.learn.data.repository.CourseProgressRepository
 import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.LessonsRepository
 import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.model.CompletedLesson
 import ivy.learn.domain.model.UserId
 import ivy.model.CourseId
 import ivy.model.Lesson
@@ -54,7 +55,7 @@ class CourseService(
             courses = listOf(courseId)
         ).mapLeft(ServerError::Unknown)
             .bind()
-            .map { it.lessonId }
+            .map(CompletedLesson::lessonId)
             .toSet()
         return lessons.map { lesson ->
             lesson.copy(
