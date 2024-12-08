@@ -12,8 +12,10 @@ import ivy.learn.data.repository.LessonsRepository
 import ivy.learn.domain.auth.AuthenticationService
 import ivy.learn.domain.model.CompletedLesson
 import ivy.learn.domain.model.UserId
+import ivy.learn.util.TimeProvider
 import ivy.model.CourseId
 import ivy.model.Lesson
+import ivy.model.LessonId
 import ivy.model.auth.SessionToken
 
 class CourseService(
@@ -21,6 +23,7 @@ class CourseService(
     private val coursesRepository: CoursesRepository,
     private val lessonsRepository: LessonsRepository,
     private val courseProgressRepository: CourseProgressRepository,
+    private val timeProvider: TimeProvider,
 ) {
     suspend fun loadCourse(
         sessionToken: SessionToken,
@@ -62,5 +65,22 @@ class CourseService(
                 completed = lesson.id in completedLessons,
             )
         }
+    }
+
+    suspend fun saveCourseProgress(
+        sessionToken: SessionToken,
+        courseId: CourseId,
+        lessonId: LessonId,
+    ): Either<ServerError, Unit> = either {
+        val user = authService.getUser(sessionToken).bind()
+        courseProgressRepository.insert(
+            completedLesson = CompletedLesson(
+                userId = user.id,
+                courseId = courseId,
+                lessonId = lessonId,
+                time = timeProvider.instantNow(),
+            )
+        ).mapLeft(ServerError::Unknown)
+            .bind()
     }
 }

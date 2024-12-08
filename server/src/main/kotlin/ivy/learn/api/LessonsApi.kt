@@ -17,7 +17,7 @@ class LessonsApi(
 ) : Api {
     override fun Routing.endpoints() {
         loadLesson()
-        saveProgress()
+        saveLessonProgress()
     }
 
     private fun Routing.loadLesson() {
@@ -34,7 +34,7 @@ class LessonsApi(
         }
     }
 
-    private fun Routing.saveProgress() {
+    private fun Routing.saveLessonProgress() {
         postEndpointAuthenticated<LessonProgressDto, Unit>(
             "/lessons/{courseId}/{lessonId}/progress"
         ) { params, body, sessionToken ->
