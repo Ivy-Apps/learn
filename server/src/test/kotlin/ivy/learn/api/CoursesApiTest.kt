@@ -9,7 +9,7 @@ import ivy.learn.data.cms.course.programming.ProgrammingFundamentals
 import ivy.learn.testsupport.ServerTest
 import org.junit.Test
 
-class CoursesServerTest : ServerTest() {
+class CoursesApiTest : ServerTest() {
     @Test
     fun `fetches topics`() = beTest {
         // Given

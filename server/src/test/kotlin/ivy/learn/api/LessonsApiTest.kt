@@ -10,7 +10,7 @@ import ivy.model.CourseId
 import ivy.model.LessonId
 import org.junit.Test
 
-class LessonsServerTest : ServerTest() {
+class LessonsApiTest : ServerTest() {
     @Test
     fun `fetches existing lesson`() = beTest {
         // Given
