@@ -1,4 +1,4 @@
-package ivy.learn.domain.lesson
+package ivy.learn.domain
 
 import arrow.core.Either
 import arrow.core.raise.either

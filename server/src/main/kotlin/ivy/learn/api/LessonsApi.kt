@@ -6,7 +6,7 @@ import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointAuthenticated
 import ivy.learn.api.common.model.ServerError.BadRequest
 import ivy.learn.api.common.postEndpointAuthenticated
-import ivy.learn.domain.lesson.LessonService
+import ivy.learn.domain.LessonService
 import ivy.model.CourseId
 import ivy.model.LessonId
 import ivy.model.lesson.LessonProgressDto
