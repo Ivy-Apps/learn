@@ -7,12 +7,12 @@ import ivy.data.source.model.TopicsResponse
 import ivy.di.Di
 import ivy.learn.data.cms.TopicsContent
 import ivy.learn.data.cms.course.CoursesContent
-import ivy.learn.testsupport.ApiTest
+import ivy.learn.testsupport.ServerTest
 import org.junit.Test
 
-class TopicsApiTest : ApiTest() {
+class TopicsServerTest : ServerTest() {
     @Test
-    fun `fetches topics`() = apiTest {
+    fun `fetches topics`() = beTest {
         // Given
         val datasource: TopicsDataSource = Di.get()
 

@@ -92,7 +92,7 @@ class LessonProgressRepository {
     private fun rowToLessonProgress(row: ResultRow): LessonProgress {
         return LessonProgress(
             userId = UserId(row[LessonsProgress.userId].value),
-            courseId = CourseId(row[LessonsProgress.lessonId]),
+            courseId = CourseId(row[LessonsProgress.courseId]),
             lessonId = LessonId(row[LessonsProgress.lessonId]),
             state = row[LessonsProgress.state],
         )
