@@ -16,18 +16,17 @@ import kotlinx.coroutines.launch
 import ui.ComposeViewModel
 import ui.EventHandler
 import ui.VmContext
+import ui.screen.lesson.LessonViewModel.LocalState
 import ui.screen.lesson.mapper.LessonViewStateMapper
 import util.Logger
 
 
 class LessonViewModel(
-    private val courseId: CourseId,
-    private val lessonId: LessonId,
-    private val lessonName: String,
+    override val args: Args,
     override val screenScope: CoroutineScope,
     private val repository: LessonRepository,
     private val viewStateMapper: LessonViewStateMapper,
-    private val eventHandlers: Set<EventHandler<*, LocalState>>,
+    private val eventHandlers: Set<LessonEventHandler<*>>,
     private val analytics: Analytics,
     private val logger: Logger,
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
@@ -46,8 +45,8 @@ class LessonViewModel(
     private fun saveLessonProgress(localState: LocalState) {
         screenScope.launch {
             repository.saveLessonProgress(
-                course = courseId,
-                lesson = lessonId,
+                course = args.courseId,
+                lesson = args.lessonId,
                 progress = LessonProgress(
                     selectedAnswers = localState.selectedAnswers,
                     openAnswersInput = localState.openAnswersInput,
@@ -69,9 +68,9 @@ class LessonViewModel(
                 source = Source.Lesson,
                 event = "view",
                 params = mapOf(
-                    Param.CourseId to courseId.value,
-                    Param.LessonId to lessonId.value,
-                    Param.LessonName to lessonName,
+                    Param.CourseId to args.courseId.value,
+                    Param.LessonId to args.lessonId.value,
+                    Param.LessonName to args.lessonName,
                 )
             )
         }
@@ -83,7 +82,7 @@ class LessonViewModel(
             }
 
             null, is Either.Left -> LessonViewState(
-                title = lessonName,
+                title = args.lessonName,
                 items = persistentListOf(),
                 cta = null,
                 progress = LessonProgressViewState(0, 1),
@@ -94,8 +93,8 @@ class LessonViewModel(
 
     private suspend fun loadLesson() {
         lessonResponse = repository.fetchLesson(
-            course = courseId,
-            lesson = lessonId
+            course = args.courseId,
+            lesson = args.lessonId
         ).onRight {
             localState = LocalState(
                 selectedAnswers = it.progress.selectedAnswers,
@@ -115,11 +114,12 @@ class LessonViewModel(
 
         screenScope.launch {
             @Suppress("UNCHECKED_CAST")
-            val typedEventHandler = eventHandler as EventHandler<LessonViewEvent, LocalState>
+            val typedEventHandler = eventHandler as LessonEventHandler<LessonViewEvent>
             with(typedEventHandler) { handleEvent(event) }
         }
     }
 
+    @Immutable
     @optics
     data class LocalState(
         val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
@@ -138,6 +138,13 @@ class LessonViewModel(
             )
         }
     }
+
+    data class Args(
+        val courseId: CourseId,
+        val lessonId: LessonId,
+        val lessonName: String,
+    )
 }
 
-typealias LessonVmContext = VmContext<LessonViewModel.LocalState>
+typealias LessonVmContext = VmContext<LocalState, LessonViewModel.Args>
+typealias LessonEventHandler<E> = EventHandler<E, LocalState, LessonViewModel.Args>

@@ -5,19 +5,15 @@ import arrow.optics.typeclasses.Index
 import domain.SoundUseCase
 import ivy.content.SoundsUrls
 import ivy.model.AnswerId
-import ui.EventHandler
+import ui.screen.lesson.*
 import ui.screen.lesson.LessonViewModel.LocalState
-import ui.screen.lesson.LessonVmContext
 import ui.screen.lesson.QuestionTypeViewState.MultipleChoice
 import ui.screen.lesson.QuestionTypeViewState.SingleChoice
-import ui.screen.lesson.QuestionViewEvent
-import ui.screen.lesson.answered
 import ui.screen.lesson.mapper.toDomain
-import ui.screen.lesson.selectedAnswers
 
 class QuestionEventHandler(
     private val soundUseCase: SoundUseCase
-) : EventHandler<QuestionViewEvent, LocalState> {
+) : LessonEventHandler<QuestionViewEvent> {
     override val eventTypes = setOf(
         QuestionViewEvent.OnAnswerCheckChange::class,
         QuestionViewEvent.OnCheckClick::class,

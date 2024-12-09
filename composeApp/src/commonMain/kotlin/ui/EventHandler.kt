@@ -3,12 +3,12 @@ package ui
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass
 
-interface EventHandler<Event : Any, State : Any> {
+interface EventHandler<Event : Any, State : Any, Args : Any> {
     val eventTypes: Set<KClass<*>>
-    suspend fun VmContext<State>.handleEvent(event: Event)
+    suspend fun VmContext<State, Args>.handleEvent(event: Event)
 }
 
-interface VmContext<State> {
+interface VmContext<State : Any, Args : Any> {
     @EventHandlerDsl
     val state: State
 
@@ -16,6 +16,8 @@ interface VmContext<State> {
     fun modifyState(transformation: (State) -> State)
 
     val screenScope: CoroutineScope
+
+    val args: Args
 }
 
 @DslMarker

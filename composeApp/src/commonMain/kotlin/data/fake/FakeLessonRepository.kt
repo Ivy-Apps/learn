@@ -42,4 +42,11 @@ class FakeLessonRepository : LessonRepository {
     ): Either<String, Unit> {
         return Either.Right(Unit)
     }
+
+    override suspend fun markLessonAsCompleted(
+        course: CourseId,
+        lesson: LessonId
+    ): Either<String, Unit> {
+        return Either.Right(Unit)
+    }
 }

@@ -6,6 +6,7 @@ import data.lesson.mapper.LessonMapper
 import domain.SessionManager
 import domain.model.LessonProgress
 import domain.model.LessonWithProgress
+import ivy.data.source.CoursesDataSource
 import ivy.data.source.LessonDataSource
 import ivy.model.CourseId
 import ivy.model.LessonId
@@ -18,6 +19,7 @@ class LessonRepositoryImpl(
     private val datasource: LessonDataSource,
     private val mapper: LessonMapper,
     private val sessionManager: SessionManager,
+    private val coursesDataSource: CoursesDataSource,
 ) : LessonRepository {
 
     override suspend fun fetchLesson(
@@ -56,7 +58,21 @@ class LessonRepositoryImpl(
                     answered = progress.answered,
                     completed = progress.completed,
                 )
-            )
+            ).bind()
+        }
+    }
+
+    override suspend fun markLessonAsCompleted(
+        course: CourseId,
+        lesson: LessonId,
+    ): Either<String, Unit> = withContext(dispatchers.io) {
+        either {
+            val session = sessionManager.getSession().bind()
+            coursesDataSource.saveProgress(
+                session = session,
+                course = course,
+                lesson = lesson
+            ).bind()
         }
     }
 }
@@ -71,5 +87,10 @@ interface LessonRepository {
         course: CourseId,
         lesson: LessonId,
         progress: LessonProgress,
+    ): Either<String, Unit>
+
+    suspend fun markLessonAsCompleted(
+        course: CourseId,
+        lesson: LessonId,
     ): Either<String, Unit>
 }

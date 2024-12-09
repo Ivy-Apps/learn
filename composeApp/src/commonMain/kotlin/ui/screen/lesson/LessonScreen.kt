@@ -61,10 +61,15 @@ class LessonScreen(
         autoWire(::OnFinishClickEventHandler)
         autoWire(::OnChoiceClickEventHandler)
         register {
-            LessonViewModel(
+            LessonViewModel.Args(
                 courseId = courseId,
                 lessonId = lessonId,
                 lessonName = lessonName,
+            )
+        }
+        register {
+            LessonViewModel(
+                args = Di.get(),
                 screenScope = screenScope,
                 repository = Di.get(),
                 viewStateMapper = Di.get(),
