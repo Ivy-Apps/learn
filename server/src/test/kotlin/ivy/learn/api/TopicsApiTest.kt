@@ -2,6 +2,7 @@ package ivy.learn.api
 
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
+import ivy.data.source.CoursesDataSource
 import ivy.data.source.TopicsDataSource
 import ivy.data.source.model.TopicsResponse
 import ivy.di.Di
@@ -14,16 +15,28 @@ class TopicsApiTest : ServerTest() {
     @Test
     fun `fetches topics`() = beTest {
         // Given
-        val datasource: TopicsDataSource = Di.get()
+        val auth = registerUser()
+        val datasource = Di.get<TopicsDataSource>()
+        val courseDatasource = Di.get<CoursesDataSource>()
+        val firstCourse = CoursesContent.courses.first()
 
         // When
-        val result = datasource.fetchTopics()
+        courseDatasource.saveProgress(
+            session = auth.session.token,
+            course = firstCourse.id,
+            lesson = firstCourse.lessons.first()
+        )
+        val result = datasource.fetchTopics(
+            session = auth.session.token,
+        )
 
         // Then
         result.shouldBeRight() shouldBe TopicsResponse(
             topics = TopicsContent.topics,
             courses = CoursesContent.courses,
-            progress = emptyMap(),
+            progress = mapOf(
+                firstCourse.id to setOf(firstCourse.lessons.first())
+            ),
         )
     }
 }
