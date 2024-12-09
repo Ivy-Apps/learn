@@ -16,9 +16,9 @@ class TopicsRepositoryImpl(
     override suspend fun fetchTopics(): Either<String, TopicsResponse> =
         withContext(dispatchers.io) {
             either {
-                val session = sessionManager.getSession()
+                val session = sessionManager.getSession().bind()
                 topicsDataSource.fetchTopics(
-                    session = session.bind()
+                    session = session
                 ).bind()
             }
         }
