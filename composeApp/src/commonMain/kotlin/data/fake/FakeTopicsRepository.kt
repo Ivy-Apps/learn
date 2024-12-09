@@ -24,7 +24,7 @@ class FakeTopicsRepository : TopicsRepository {
                     id = courseId,
                     name = "Fake course",
                     tagline = "This is a fake course for testing purposes",
-                    image = ImageUrl("https://i.ibb.co/KKHNMPF/android-studio-heater.webp"),
+                    image = ImageUrl(Fakes.androidStudioImageUrl),
                     lessons = listOf(
                         LessonId("1"),
                         LessonId("2"),
