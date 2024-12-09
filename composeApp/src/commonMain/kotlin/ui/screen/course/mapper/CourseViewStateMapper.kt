@@ -21,11 +21,15 @@ class CourseViewStateMapper {
                     ?.toViewState(firstNotCompleted = firstNotCompletedLesson)
                     ?.let { lesson ->
                         listOf(
+                            CourseItemViewState.Arrow(
+                                progress = lesson.progress
+                            ),
                             lesson,
-                            CourseItemViewState.Arrow(lesson.progress)
                         )
-                    }.orEmpty()
-            }.dropLast(1).toImmutableList()
+                    }
+                    .orEmpty()
+            }.drop(n = 1)
+                .toImmutableList()
         )
     }
 
