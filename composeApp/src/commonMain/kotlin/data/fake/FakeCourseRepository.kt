@@ -6,13 +6,11 @@ import data.CourseRepository
 import ivy.content.EmptyContent
 import ivy.data.source.model.CourseResponse
 import ivy.model.*
-import kotlinx.coroutines.delay
 
 class FakeCourseRepository : CourseRepository {
     override suspend fun fetchCourse(
         courseId: CourseId
     ): Either<String, CourseResponse> {
-        delay(1_000)
         return CourseResponse(
             course = Course(
                 id = CourseId("1"),
