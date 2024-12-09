@@ -9,12 +9,12 @@ import ivy.model.CourseId
 import kotlinx.coroutines.withContext
 import util.DispatchersProvider
 
-class CourseRepository(
+class CourseRepositoryImpl(
     private val dispatchers: DispatchersProvider,
     private val dataSource: CoursesDataSource,
     private val sessionManager: SessionManager,
-) {
-    suspend fun fetchCourse(
+) : CourseRepository {
+    override suspend fun fetchCourse(
         courseId: CourseId
     ): Either<String, CourseResponse> = withContext(dispatchers.io) {
         either {
@@ -25,4 +25,8 @@ class CourseRepository(
             ).bind()
         }
     }
+}
+
+interface CourseRepository {
+    suspend fun fetchCourse(courseId: CourseId): Either<String, CourseResponse>
 }

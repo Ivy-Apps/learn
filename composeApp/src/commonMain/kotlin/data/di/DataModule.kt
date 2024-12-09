@@ -1,6 +1,7 @@
 package data.di
 
 import data.*
+import data.fake.FakeCourseRepository
 import data.fake.FakeLessonRepository
 import data.lesson.LessonRepository
 import data.lesson.LessonRepositoryImpl
@@ -15,7 +16,9 @@ import ivy.di.autowire.autoWire
 object DataModule : Di.Module {
     override fun init() = Di.appScope {
         autoWire(::TopicsRepository)
-        autoWire(::CourseRepository)
+        autoWire(::CourseRepositoryImpl)
+        autoWire(::FakeCourseRepository)
+        bindWithFake<CourseRepository, CourseRepositoryImpl, FakeCourseRepository>()
         autoWire(::LessonRepositoryImpl)
         autoWire(::FakeLessonRepository)
         bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
