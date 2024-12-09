@@ -12,7 +12,9 @@ class HomeViewStateMapper {
     fun TopicsResponse.toViewState(): ImmutableList<HomeItemViewState> {
         val coursesMap = courses.associateBy(Course::id)
         return topics.flatMap { topic ->
-            listOf(HomeItemViewState.Section(title = topic.name)) + topic.courses
+            listOf(
+                HomeItemViewState.Section(title = topic.name)
+            ) + topic.courses
                 .mapNotNull { courseId ->
                     coursesMap[courseId]?.let { course ->
                         HomeItemViewState.Course(

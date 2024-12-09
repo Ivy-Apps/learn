@@ -8,17 +8,22 @@ import ivy.data.source.model.TopicsResponse
 import kotlinx.coroutines.withContext
 import util.DispatchersProvider
 
-class TopicsRepository(
+class TopicsRepositoryImpl(
     private val dispatchers: DispatchersProvider,
     private val topicsDataSource: TopicsDataSource,
     private val sessionManager: SessionManager,
-) {
-    suspend fun fetchTopics(): Either<String, TopicsResponse> = withContext(dispatchers.io) {
-        either {
-            val session = sessionManager.getSession()
-            topicsDataSource.fetchTopics(
-                session = session.bind()
-            ).bind()
+) : TopicsRepository {
+    override suspend fun fetchTopics(): Either<String, TopicsResponse> =
+        withContext(dispatchers.io) {
+            either {
+                val session = sessionManager.getSession()
+                topicsDataSource.fetchTopics(
+                    session = session.bind()
+                ).bind()
+            }
         }
-    }
+}
+
+interface TopicsRepository {
+    suspend fun fetchTopics(): Either<String, TopicsResponse>
 }
