@@ -93,6 +93,8 @@ private fun LessonImage(
     modifier: Modifier = Modifier,
 ) {
     KamelImage(
+        resource = { asyncPainterResource(imageUrl) },
+        contentDescription = null,
         modifier = modifier
             .aspectRatio(
                 when (screenType()) {
@@ -103,8 +105,6 @@ private fun LessonImage(
             )
             .clip(RoundedCornerShape(topStart = 24.dp, bottomStart = 24.dp)),
         contentScale = ContentScale.FillHeight,
-        contentAlignment = Alignment.CenterStart,
-        resource = asyncPainterResource(imageUrl),
-        contentDescription = null,
+        contentAlignment = Alignment.CenterStart
     )
 }

@@ -67,6 +67,8 @@ private fun Banner(
 ) {
     Box {
         KamelImage(
+            resource = { asyncPainterResource(imageUrl) },
+            contentDescription = null,
             modifier = modifier
                 .fillMaxWidth()
                 .aspectRatio(
@@ -76,9 +78,7 @@ private fun Banner(
                         Desktop -> 5f
                     }
                 ),
-            contentScale = ContentScale.Crop,
-            resource = asyncPainterResource(imageUrl),
-            contentDescription = null
+            contentScale = ContentScale.Crop
         )
         ContinueButton(
             modifier = Modifier.align(Alignment.TopEnd),
