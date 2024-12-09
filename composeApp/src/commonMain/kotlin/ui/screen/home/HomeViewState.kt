@@ -16,7 +16,8 @@ sealed interface HomeItemViewState {
         val id: String,
         val imageUrl: String,
         val name: String,
-        val tagline: String
+        val tagline: String,
+        val progress: Float,
     ) : HomeItemViewState
 }
 
