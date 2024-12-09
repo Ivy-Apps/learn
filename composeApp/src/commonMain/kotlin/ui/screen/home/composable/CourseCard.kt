@@ -2,10 +2,7 @@ package ui.screen.home.composable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
@@ -42,6 +39,10 @@ fun CourseCard(
                 imageUrl = course.imageUrl,
                 onClick = onCourseClick
             )
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth(),
+                progress = course.progress,
+            )
             val isLargeScreen = isLargeScreen()
             Spacer(Modifier.height(if (isLargeScreen) 24.dp else 16.dp))
             Title(
@@ -67,6 +68,8 @@ private fun Banner(
 ) {
     Box {
         KamelImage(
+            resource = { asyncPainterResource(imageUrl) },
+            contentDescription = null,
             modifier = modifier
                 .fillMaxWidth()
                 .aspectRatio(
@@ -76,9 +79,7 @@ private fun Banner(
                         Desktop -> 5f
                     }
                 ),
-            contentScale = ContentScale.Crop,
-            resource = asyncPainterResource(imageUrl),
-            contentDescription = null
+            contentScale = ContentScale.Crop
         )
         ContinueButton(
             modifier = Modifier.align(Alignment.TopEnd),

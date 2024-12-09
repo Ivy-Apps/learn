@@ -26,6 +26,7 @@ import io.kamel.image.asyncPainterResource
 import ui.screen.course.CourseItemViewState
 import ui.screen.course.ProgressViewState
 import ui.theme.Gray
+import ui.theme.Green
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -42,10 +43,10 @@ fun LessonCard(
         elevation = 4.dp,
         border = BorderStroke(
             width = 2.dp,
-            color = if (lesson.progress == ProgressViewState.Current) {
-                MaterialTheme.colors.primary
-            } else {
-                Gray
+            color = when (lesson.progress) {
+                ProgressViewState.Completed -> Green
+                ProgressViewState.Current -> MaterialTheme.colors.primary
+                ProgressViewState.Upcoming -> Gray
             }
         ),
         onClick = onLessonClick
@@ -93,6 +94,8 @@ private fun LessonImage(
     modifier: Modifier = Modifier,
 ) {
     KamelImage(
+        resource = { asyncPainterResource(imageUrl) },
+        contentDescription = null,
         modifier = modifier
             .aspectRatio(
                 when (screenType()) {
@@ -103,8 +106,6 @@ private fun LessonImage(
             )
             .clip(RoundedCornerShape(topStart = 24.dp, bottomStart = 24.dp)),
         contentScale = ContentScale.FillHeight,
-        contentAlignment = Alignment.CenterStart,
-        resource = asyncPainterResource(imageUrl),
-        contentDescription = null,
+        contentAlignment = Alignment.CenterStart
     )
 }

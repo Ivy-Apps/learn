@@ -27,11 +27,11 @@ fun ImageLessonItem(
     modifier: Modifier = Modifier,
 ) {
     KamelImage(
+        resource = { asyncPainterResource(viewState.imageUrl) },
+        contentDescription = null,
         modifier = modifier
             .padding(top = ItemSpacingMedium)
             .size(imageSize())
-            .clip(RoundedCornerShape(16.dp)),
-        resource = asyncPainterResource(viewState.imageUrl),
-        contentDescription = null
+            .clip(RoundedCornerShape(16.dp))
     )
 }

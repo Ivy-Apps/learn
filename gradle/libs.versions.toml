@@ -71,7 +71,7 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 mockk = { module = "io.mockk:mockk", version = "1.13.13" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.4" }
 thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
-thirdparty-kamel = { module = "media.kamel:kamel-image", version = "1.0.2" }
+thirdparty-kamel = { module = "media.kamel:kamel-image-default", version = "1.0.1" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
 
 [bundles]
