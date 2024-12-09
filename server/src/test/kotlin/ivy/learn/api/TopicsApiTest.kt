@@ -22,7 +22,8 @@ class TopicsApiTest : ServerTest() {
         // Then
         result.shouldBeRight() shouldBe TopicsResponse(
             topics = TopicsContent.topics,
-            courses = CoursesContent.courses
+            courses = CoursesContent.courses,
+            progress = emptyMap(),
         )
     }
 }
