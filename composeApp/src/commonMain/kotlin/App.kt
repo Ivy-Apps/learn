@@ -23,12 +23,10 @@ fun App() {
 
     LaunchedEffect(Unit) {
         Di.init(
-            modules = setOf(
-                SharedModule,
-                AppModule,
-                DataModule,
-                DomainModule,
-            )
+            SharedModule,
+            AppModule,
+            DataModule,
+            DomainModule,
         )
         Di.appScope {
             register { uriHandler }
