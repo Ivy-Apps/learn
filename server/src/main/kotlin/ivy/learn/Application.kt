@@ -32,12 +32,10 @@ fun main(args: Array<String>) {
 
 fun initDi(devMode: Boolean) {
     Di.init(
-        modules = setOf(
-            SharedModule,
-            DataModule,
-            AppModule(devMode = devMode),
-            DomainModule,
-        )
+        SharedModule,
+        DataModule,
+        AppModule(devMode = devMode),
+        DomainModule,
     )
 }
 
