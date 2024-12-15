@@ -51,9 +51,11 @@ fun IntroContent(
                 animationFile = "intro_lottie_anim.json",
                 repeat = true
             )
-            Headline(text = "Hello!")
+            Headline(text = "Become a better software engineer")
             Spacer(modifier = Modifier.height(12.dp))
-            Title(text = "Learn programming by thinking.")
+            Title(
+                text = "Learn data structures, algorithms, architecture and software design by thinking."
+            )
             Spacer(modifier = Modifier.height(24.dp))
             GoogleSignInButton(
                 onClick = {
