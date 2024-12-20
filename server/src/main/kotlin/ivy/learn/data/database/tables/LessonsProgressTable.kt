@@ -7,10 +7,10 @@ import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.json.json
 
-object LessonsProgress : Table("lessons_progress") {
+object LessonsProgressTable : Table("lessons_progress") {
     val userId = reference(
         name = "user_id",
-        refColumn = Users.id,
+        refColumn = UsersTable.id,
         onDelete = ReferenceOption.CASCADE,
         onUpdate = ReferenceOption.CASCADE,
     ).index()

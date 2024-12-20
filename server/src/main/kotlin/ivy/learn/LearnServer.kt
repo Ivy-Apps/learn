@@ -38,12 +38,14 @@ class LearnServer(
             Di.get<TopicsApi>(),
             Di.get<GoogleAuthenticationApi>(),
             Di.get<UsersApi>(),
+            Di.get<MetricsApi>(),
         )
     }
 
     private fun injectDependencies() = Di.appScope {
         singleton<Logger> { LoggerFactory.getLogger("Application") }
         autoWire(::AnalyticsApi)
+        autoWire(::MetricsApi)
         autoWire(::LessonsApi)
         autoWire(::StatusApi)
         autoWire(::TopicsApi)

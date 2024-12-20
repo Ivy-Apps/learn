@@ -10,13 +10,13 @@ import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointBase
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.api.common.model.ServerError.BadRequest
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.auth.GoogleAuthorizationCode
 import org.slf4j.Logger
 
 class GoogleAuthenticationApi(
     private val serverMode: ServerMode,
-    private val authService: AuthenticationService,
+    private val authService: AuthService,
     private val logger: Logger,
 ) : Api {
     override fun Routing.endpoints() {

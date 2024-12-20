@@ -21,5 +21,6 @@ object DataModule : Di.Module {
         autoWire(::SessionRepository)
         autoWire(::UserRepository)
         autoWire(::AnalyticsRepository)
+        autoWire(::MetricsRepository)
     }
 }

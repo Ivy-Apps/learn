@@ -31,11 +31,12 @@ class LearnDatabase {
     private fun createDbSchema(database: Database): Either<Throwable, Database> = catch({
         transaction {
             SchemaUtils.create(
-                Users,
-                Sessions,
-                Analytics,
-                LessonsProgress,
-                CompletedLessons,
+                UsersTable,
+                SessionsTable,
+                AnalyticsTable,
+                LessonsProgressTable,
+                CompletedLessonsTable,
+                MetricsTable,
             )
         }
         Either.Right(database)

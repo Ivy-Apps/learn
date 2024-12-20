@@ -11,71 +11,71 @@ import util.Logger
 import util.TimeProvider
 
 class Analytics(
-    private val analyticsRepository: AnalyticsRepository,
-    private val logger: Logger,
-    private val appScope: CoroutineScope,
-    private val timeProvider: TimeProvider,
-    private val localStorage: LocalStorage,
+  private val analyticsRepository: AnalyticsRepository,
+  private val logger: Logger,
+  private val appScope: CoroutineScope,
+  private val timeProvider: TimeProvider,
+  private val localStorage: LocalStorage,
 ) {
-    var enabled = true
-        private set
+  var enabled = true
+    private set
 
-    suspend fun initialize() {
-        enabled = localStorage.getBoolean(ANALYTICS_ENABLED_KEY) ?: true
-        logger.debug("$TAG Initialized as enabled = $enabled")
-    }
+  suspend fun initialize() {
+    enabled = localStorage.getBoolean(KEY_ANALYTICS_ENABLED) ?: true
+    logger.debug("$TAG Initialized as enabled = $enabled")
+  }
 
-    fun logEvent(
-        source: Source,
-        event: String,
-        params: Map<String, String> = emptyMap(),
-    ) {
-        logEvent(
-            eventName = "${source.value}__$event",
+  fun logEvent(
+    source: Source,
+    event: String,
+    params: Map<String, String>? = null,
+  ) {
+    logEvent(
+      eventName = "${source.value}__$event",
+      params = params,
+    )
+  }
+
+  private fun logEvent(
+    eventName: String,
+    params: Map<String, String>? = null,
+  ) {
+    if (!enabled) return
+
+    appScope.launch {
+      // TODO: Optimize later by batching events
+      val paramsJson = Json.encodeToString(params)
+      logger.info("$TAG Tracking: '$eventName' with $paramsJson params.")
+      analyticsRepository.logEvent(
+        setOf(
+          AnalyticsEventDto(
+            eventName = eventName,
+            time = timeProvider.timeNow(),
             params = params,
+          )
         )
+      ).onLeft { error ->
+        logger.error("$TAG Error logging '$eventName': $error")
+      }.onRight {
+        logger.debug("$TAG Logged '$eventName'.")
+      }
     }
+  }
 
-    private fun logEvent(
-        eventName: String,
-        params: Map<String, String> = emptyMap(),
-    ) {
-        if (!enabled) return
+  suspend fun disable() {
+    enabled = false
+    localStorage.putBoolean(KEY_ANALYTICS_ENABLED, false)
+    logger.info("$TAG Analytics disabled.")
+  }
 
-        appScope.launch {
-            // TODO: Optimize later by batching events
-            val paramsJson = Json.encodeToString(params)
-            logger.info("$TAG Tracking: '$eventName' with $paramsJson params.")
-            analyticsRepository.logEvent(
-                setOf(
-                    AnalyticsEventDto(
-                        eventName = eventName,
-                        time = timeProvider.timeNow(),
-                        params = params,
-                    )
-                )
-            ).onLeft { error ->
-                logger.error("$TAG Error logging '$eventName': $error")
-            }.onRight {
-                logger.debug("$TAG Logged '$eventName'.")
-            }
-        }
-    }
+  suspend fun enable() {
+    enabled = true
+    localStorage.putBoolean(KEY_ANALYTICS_ENABLED, true)
+    logger.info("$TAG Analytics enabled.")
+  }
 
-    suspend fun disable() {
-        enabled = false
-        localStorage.putBoolean(ANALYTICS_ENABLED_KEY, false)
-        logger.info("$TAG Analytics disabled.")
-    }
-
-    suspend fun enable() {
-        enabled = true
-        localStorage.putBoolean(ANALYTICS_ENABLED_KEY, true)
-        logger.info("$TAG Analytics enabled.")
-    }
-
-    companion object {
-        const val TAG = "[Analytics]"
-        const val ANALYTICS_ENABLED_KEY = "analytics.is_enabled"
-    }
+  companion object {
+    const val TAG = "[Analytics]"
+    const val KEY_ANALYTICS_ENABLED = "analytics.is_enabled"
+  }
 }
