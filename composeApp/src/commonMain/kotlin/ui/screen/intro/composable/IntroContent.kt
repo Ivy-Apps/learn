@@ -54,7 +54,7 @@ fun IntroContent(
             Headline(text = "Become a better software engineer")
             Spacer(modifier = Modifier.height(12.dp))
             Title(
-                text = "Learn data structures, algorithms, architecture and software design by thinking."
+                text = "Learn data structures, algorithms, architecture and software design from first principles."
             )
             Spacer(modifier = Modifier.height(24.dp))
             GoogleSignInButton(
