@@ -5,7 +5,7 @@ import org.w3c.dom.Audio
 import org.w3c.dom.url.URLSearchParams
 
 class JsPlatform : Platform {
-    override val name: String = "Web with Kotlin/JS"
+    override val name: String = "web"
 
     override fun log(level: LogLevel, msg: String) {
         console.log("${level.name.uppercase()}: $msg")

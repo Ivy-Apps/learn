@@ -1,11 +1,10 @@
 import LogLevel.*
-import android.os.Build
 import android.util.Log
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 
 class AndroidPlatform : Platform {
-    override val name: String = "Android ${Build.VERSION.SDK_INT}"
+    override val name: String = "android"
 
     override fun log(level: LogLevel, msg: String) {
         val tag = ""
