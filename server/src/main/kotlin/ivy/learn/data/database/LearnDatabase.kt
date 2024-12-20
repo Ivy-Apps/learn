@@ -36,6 +36,7 @@ class LearnDatabase {
                 AnalyticsTable,
                 LessonsProgressTable,
                 CompletedLessonsTable,
+                MetricsTable,
             )
         }
         Either.Right(database)

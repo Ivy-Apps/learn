@@ -3,19 +3,21 @@ package ivy.learn.api
 import io.ktor.server.routing.*
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.postEndpoint
-import ivy.model.analytics.MetricsEventDto
+import ivy.learn.domain.MetricsService
+import ivy.model.analytics.MetricDto
 
 class MetricsApi(
+  private val service: MetricsService,
 ) : Api {
   override fun Routing.endpoints() {
     postEvents()
   }
 
   private fun Routing.postEvents() {
-    postEndpoint<MetricsEventDto, Unit>(
+    postEndpoint<MetricDto, Unit>(
       "metrics/event"
-    ) { _, request ->
-      TODO()
+    ) { metricBody, _ ->
+      service.logMetric(metricBody).bind()
     }
   }
 }

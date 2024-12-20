@@ -4,8 +4,9 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MetricsEventDto(
-  val eventName: String,
+data class MetricDto(
+  val clientId: String,
+  val name: String,
   val time: Instant,
   val params: Map<String, String>?,
 )
