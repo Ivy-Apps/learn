@@ -3,6 +3,7 @@ package domain.di
 import di.bindWithFake
 import domain.*
 import domain.analytics.Analytics
+import domain.analytics.Metrics
 import domain.fake.FakeGoogleAuthenticationUseCase
 import ivy.di.Di
 import ivy.di.autowire.autoWire
@@ -17,5 +18,6 @@ object DomainModule : Di.Module {
         autoWire(::DeleteUserDataUseCase)
         autoWireSingleton(::Analytics)
         autoWire(::SoundUseCase)
+        autoWireSingleton(::Metrics)
     }
 }

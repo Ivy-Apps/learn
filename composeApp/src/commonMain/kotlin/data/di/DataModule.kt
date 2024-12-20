@@ -15,20 +15,21 @@ import ivy.di.Di.register
 import ivy.di.autowire.autoWire
 
 object DataModule : Di.Module {
-    override fun init() = Di.appScope {
-        autoWire(::TopicsRepositoryImpl)
-        autoWire(::FakeTopicsRepository)
-        bindWithFake<TopicsRepository, TopicsRepositoryImpl, FakeTopicsRepository>()
-        autoWire(::CourseRepositoryImpl)
-        autoWire(::FakeCourseRepository)
-        bindWithFake<CourseRepository, CourseRepositoryImpl, FakeCourseRepository>()
-        autoWire(::LessonRepositoryImpl)
-        autoWire(::FakeLessonRepository)
-        bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
-        register<LocalStorage> { localStorage() }
-        autoWire(::UserRepository)
-        autoWire(::AnalyticsRepository)
-        autoWire(::LessonMapper)
-        autoWire(::SoundRepository)
-    }
+  override fun init() = Di.appScope {
+    autoWire(::TopicsRepositoryImpl)
+    autoWire(::FakeTopicsRepository)
+    bindWithFake<TopicsRepository, TopicsRepositoryImpl, FakeTopicsRepository>()
+    autoWire(::CourseRepositoryImpl)
+    autoWire(::FakeCourseRepository)
+    bindWithFake<CourseRepository, CourseRepositoryImpl, FakeCourseRepository>()
+    autoWire(::LessonRepositoryImpl)
+    autoWire(::FakeLessonRepository)
+    bindWithFake<LessonRepository, LessonRepositoryImpl, FakeLessonRepository>()
+    register<LocalStorage> { localStorage() }
+    autoWire(::UserRepository)
+    autoWire(::AnalyticsRepository)
+    autoWire(::LessonMapper)
+    autoWire(::SoundRepository)
+    autoWire(::MetricsRepository)
+  }
 }
