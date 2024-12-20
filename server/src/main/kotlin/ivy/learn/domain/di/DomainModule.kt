@@ -2,7 +2,12 @@ package ivy.learn.domain.di
 
 import ivy.di.Di
 import ivy.di.autowire.autoWire
-import ivy.learn.domain.*
+import ivy.learn.domain.CourseService
+import ivy.learn.domain.LessonService
+import ivy.learn.domain.MetricsService
+import ivy.learn.domain.TopicsService
+import ivy.learn.domain.analytics.Analytics
+import ivy.learn.domain.analytics.AnalyticsService
 import ivy.learn.domain.auth.AuthenticationService
 import ivy.learn.domain.auth.GoogleOAuthUseCase
 
@@ -15,5 +20,6 @@ object DomainModule : Di.Module {
         autoWire(::CourseService)
         autoWire(::TopicsService)
         autoWire(::MetricsService)
+        autoWire(::Analytics)
     }
 }

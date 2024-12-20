@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class AnalyticsRepository {
-    suspend fun insert(
+    fun insert(
         events: Set<AnalyticsEvent>
     ): Either<String, Set<AnalyticsEvent>> = catch({
         transaction {

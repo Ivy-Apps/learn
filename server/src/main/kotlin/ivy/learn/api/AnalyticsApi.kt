@@ -3,7 +3,7 @@ package ivy.learn.api
 import io.ktor.server.routing.*
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.postEndpointAuthenticated
-import ivy.learn.domain.AnalyticsService
+import ivy.learn.domain.analytics.AnalyticsService
 import ivy.learn.domain.auth.AuthenticationService
 import ivy.model.analytics.LogAnalyticsEventsRequest
 
