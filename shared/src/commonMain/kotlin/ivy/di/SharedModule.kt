@@ -34,6 +34,7 @@ object SharedModule : Di.Module {
         autoWire(::LottieAnimationLoader)
         autoWire(::UserDataSource)
         autoWire(::AnalyticsDataSource)
+        autoWire(::MetricsDataSource)
     }
 
     private fun Di.Scope.json() = singleton {

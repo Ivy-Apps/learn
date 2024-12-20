@@ -15,7 +15,7 @@ class MetricsApi(
 
   private fun Routing.postEvents() {
     postEndpoint<MetricDto, Unit>(
-      "metrics/event"
+      "metrics/log"
     ) { metricBody, _ ->
       service.logMetric(metricBody).bind()
     }
