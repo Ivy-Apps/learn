@@ -36,7 +36,7 @@ class Metrics(
       metricsRepository.log(
         metric = metric
       ).onRight {
-        logger.debug("$TAG Logged '${metric.name}' :$metric.")
+        logger.debug("$TAG Logged '${metric.name}': $metric.")
       }.onLeft { errMsg ->
         logger.error("$TAG Failed to '${metric.name}': $metric because $errMsg.")
       }
