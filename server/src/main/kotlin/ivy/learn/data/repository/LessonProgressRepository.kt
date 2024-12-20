@@ -3,7 +3,7 @@ package ivy.learn.data.repository
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.right
-import ivy.learn.data.database.tables.LessonsProgress
+import ivy.learn.data.database.tables.LessonsProgressTable
 import ivy.learn.domain.model.LessonProgress
 import ivy.learn.domain.model.UserId
 import ivy.model.CourseId
@@ -28,7 +28,7 @@ class LessonProgressRepository {
     }
 
     private fun rowExists(progress: LessonProgress): Boolean {
-        val row = LessonsProgress.select(LessonsProgress.lessonId)
+        val row = LessonsProgressTable.select(LessonsProgressTable.lessonId)
             .where {
                 primaryKeyMatches(progress.userId, progress.courseId, progress.lessonId)
             }
@@ -38,7 +38,7 @@ class LessonProgressRepository {
     }
 
     private fun update(progress: LessonProgress) {
-        val updatedRows = LessonsProgress.update(
+        val updatedRows = LessonsProgressTable.update(
             where = {
                 primaryKeyMatches(progress.userId, progress.courseId, progress.lessonId)
             }
@@ -53,7 +53,7 @@ class LessonProgressRepository {
     }
 
     private fun insert(progress: LessonProgress) {
-        LessonsProgress.insert {
+        LessonsProgressTable.insert {
             it[userId] = progress.userId.value
             it[courseId] = progress.courseId.value
             it[lessonId] = progress.lessonId.value
@@ -67,7 +67,7 @@ class LessonProgressRepository {
         lessonId: LessonId
     ): Either<String, LessonProgress?> = catch({
         transaction {
-            LessonsProgress.selectAll()
+            LessonsProgressTable.selectAll()
                 .where {
                     primaryKeyMatches(userId, courseId, lessonId)
                 }
@@ -85,16 +85,16 @@ class LessonProgressRepository {
         userId: UserId,
         courseId: CourseId,
         lessonId: LessonId
-    ): Op<Boolean> = (LessonsProgress.userId eq userId.value)
-        .and(LessonsProgress.courseId eq courseId.value)
-        .and(LessonsProgress.lessonId eq lessonId.value)
+    ): Op<Boolean> = (LessonsProgressTable.userId eq userId.value)
+        .and(LessonsProgressTable.courseId eq courseId.value)
+        .and(LessonsProgressTable.lessonId eq lessonId.value)
 
     private fun rowToLessonProgress(row: ResultRow): LessonProgress {
         return LessonProgress(
-            userId = UserId(row[LessonsProgress.userId].value),
-            courseId = CourseId(row[LessonsProgress.courseId]),
-            lessonId = LessonId(row[LessonsProgress.lessonId]),
-            state = row[LessonsProgress.state],
+            userId = UserId(row[LessonsProgressTable.userId].value),
+            courseId = CourseId(row[LessonsProgressTable.courseId]),
+            lessonId = LessonId(row[LessonsProgressTable.lessonId]),
+            state = row[LessonsProgressTable.state],
         )
     }
 }

@@ -3,7 +3,7 @@ package ivy.learn.data.repository.auth
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.right
-import ivy.learn.data.database.tables.Users
+import ivy.learn.data.database.tables.UsersTable
 import ivy.learn.domain.model.User
 import ivy.learn.domain.model.UserId
 import org.jetbrains.exposed.sql.*
@@ -13,8 +13,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 class UserRepository {
     fun findUserById(id: UserId): Either<String, User?> = catch({
         transaction {
-            Users.selectAll()
-                .where { Users.id eq id.value }
+            UsersTable.selectAll()
+                .where { UsersTable.id eq id.value }
                 .limit(1)
                 .map(::rowToUser)
                 .singleOrNull()
@@ -26,8 +26,8 @@ class UserRepository {
     // Find user by Email
     fun findUserByEmail(email: String): Either<String, User?> = catch({
         transaction {
-            Users.selectAll()
-                .where { Users.email eq email }
+            UsersTable.selectAll()
+                .where { UsersTable.email eq email }
                 .limit(1)
                 .map(::rowToUser)
                 .singleOrNull()
@@ -38,16 +38,16 @@ class UserRepository {
 
     private fun rowToUser(row: ResultRow): User {
         return User(
-            id = UserId(row[Users.id].value),
-            email = row[Users.email],
-            names = row[Users.names],
-            profilePicture = row[Users.profilePictureUrl]
+            id = UserId(row[UsersTable.id].value),
+            email = row[UsersTable.email],
+            names = row[UsersTable.names],
+            profilePicture = row[UsersTable.profilePictureUrl]
         )
     }
 
     fun create(user: User): Either<String, User> = catch({
         transaction {
-            Users.insert {
+            UsersTable.insert {
                 it[id] = user.id.value
                 it[email] = user.email
                 it[names] = user.names
@@ -61,8 +61,8 @@ class UserRepository {
 
     fun update(user: User): Either<String, Unit> = catch({
         transaction {
-            val updatedRows = Users.update(
-                where = { Users.id eq user.id.value }
+            val updatedRows = UsersTable.update(
+                where = { UsersTable.id eq user.id.value }
             ) {
                 it[id] = user.id.value
                 it[email] = user.email
@@ -80,7 +80,7 @@ class UserRepository {
 
     fun delete(id: UserId): Either<String, Unit> = catch({
         transaction {
-            val deletedRows = Users.deleteWhere { Users.id eq id.value }
+            val deletedRows = UsersTable.deleteWhere { UsersTable.id eq id.value }
             if (deletedRows != 1) {
                 throw IllegalStateException("Unexpected number of users deleted! Deleted $deletedRows rows.")
             }

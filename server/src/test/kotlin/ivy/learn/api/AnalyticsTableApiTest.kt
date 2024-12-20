@@ -18,7 +18,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class AnalyticsApiTest : ServerTest() {
+class AnalyticsTableApiTest : ServerTest() {
     enum class ValidEventsTestCase(
         val request: LogAnalyticsEventsRequest
     ) {

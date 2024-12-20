@@ -4,7 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.raise.catch
 import arrow.core.right
-import ivy.learn.data.database.tables.CompletedLessons
+import ivy.learn.data.database.tables.CompletedLessonsTable
 import ivy.learn.domain.model.CompletedLesson
 import ivy.learn.domain.model.UserId
 import ivy.model.CourseId
@@ -20,7 +20,7 @@ class CourseProgressRepository {
         completedLesson: CompletedLesson
     ): Either<String, CompletedLesson> = catch({
         transaction {
-            CompletedLessons.insert {
+            CompletedLessonsTable.insert {
                 it[userId] = completedLesson.userId.value
                 it[courseId] = completedLesson.courseId.value
                 it[lessonId] = completedLesson.lessonId.value
@@ -37,10 +37,10 @@ class CourseProgressRepository {
         courses: List<CourseId>
     ): Either<String, List<CompletedLesson>> = catch({
         transaction {
-            CompletedLessons.selectAll()
+            CompletedLessonsTable.selectAll()
                 .where {
-                    (CompletedLessons.userId eq userId.value)
-                        .and(CompletedLessons.courseId inList courses.map(CourseId::value))
+                    (CompletedLessonsTable.userId eq userId.value)
+                        .and(CompletedLessonsTable.courseId inList courses.map(CourseId::value))
                 }
                 .map(::rowToCompletedLesson)
         }.right()
@@ -50,10 +50,10 @@ class CourseProgressRepository {
 
     private fun rowToCompletedLesson(row: ResultRow): CompletedLesson {
         return CompletedLesson(
-            userId = UserId(row[CompletedLessons.userId].value),
-            courseId = CourseId(row[CompletedLessons.courseId]),
-            lessonId = LessonId(row[CompletedLessons.lessonId]),
-            time = row[CompletedLessons.time],
+            userId = UserId(row[CompletedLessonsTable.userId].value),
+            courseId = CourseId(row[CompletedLessonsTable.courseId]),
+            lessonId = LessonId(row[CompletedLessonsTable.lessonId]),
+            time = row[CompletedLessonsTable.time],
         )
     }
 }

@@ -5,11 +5,11 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
-object Sessions : Table(name = "sessions") {
+object SessionsTable : Table(name = "sessions") {
     val token = varchar("token", length = 128).uniqueIndex()
     val userId = reference(
         name = "user_id",
-        refColumn = Users.id,
+        refColumn = UsersTable.id,
         onDelete = ReferenceOption.CASCADE,
         onUpdate = ReferenceOption.CASCADE,
     ).index()

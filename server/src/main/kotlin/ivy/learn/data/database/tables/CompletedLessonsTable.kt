@@ -4,10 +4,10 @@ import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
-object CompletedLessons : Table(name = "completed_lessons") {
+object CompletedLessonsTable : Table(name = "completed_lessons") {
     val userId = reference(
         name = "user_id",
-        refColumn = Users.id,
+        refColumn = UsersTable.id,
         onDelete = ReferenceOption.CASCADE,
         onUpdate = ReferenceOption.CASCADE,
     ).index()
