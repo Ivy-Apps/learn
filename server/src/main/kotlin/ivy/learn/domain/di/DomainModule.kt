@@ -8,12 +8,12 @@ import ivy.learn.domain.MetricsService
 import ivy.learn.domain.TopicsService
 import ivy.learn.domain.analytics.Analytics
 import ivy.learn.domain.analytics.AnalyticsService
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.auth.GoogleOAuthUseCase
 
 object DomainModule : Di.Module {
     override fun init() = Di.appScope {
-        autoWire(::AuthenticationService)
+        autoWire(::AuthService)
         autoWire(::GoogleOAuthUseCase)
         autoWire(::AnalyticsService)
         autoWire(::LessonService)

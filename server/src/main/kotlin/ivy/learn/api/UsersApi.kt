@@ -5,11 +5,11 @@ import ivy.learn.api.common.Api
 import ivy.learn.api.common.deleteEndpointAuthenticated
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.auth.UserRepository
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.auth.AuthService
 import org.slf4j.Logger
 
 class UsersApi(
-    private val authService: AuthenticationService,
+    private val authService: AuthService,
     private val userRepository: UserRepository,
     private val logger: Logger,
 ) : Api {

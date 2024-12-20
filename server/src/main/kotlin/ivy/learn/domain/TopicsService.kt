@@ -8,7 +8,7 @@ import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.CourseProgressRepository
 import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.TopicsRepository
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.User
 import ivy.model.Course
 import ivy.model.CourseId
@@ -19,7 +19,7 @@ class TopicsService(
     private val topicsRepository: TopicsRepository,
     private val coursesRepository: CoursesRepository,
     private val courseProgressRepository: CourseProgressRepository,
-    private val authService: AuthenticationService,
+    private val authService: AuthService,
 ) {
     suspend fun loadTopics(
         sessionToken: SessionToken,

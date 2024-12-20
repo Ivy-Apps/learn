@@ -9,7 +9,7 @@ import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.CourseProgressRepository
 import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.LessonsRepository
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.CompletedLesson
 import ivy.learn.domain.model.UserId
 import ivy.learn.util.TimeProvider
@@ -19,7 +19,7 @@ import ivy.model.LessonId
 import ivy.model.auth.SessionToken
 
 class CourseService(
-    private val authService: AuthenticationService,
+    private val authService: AuthService,
     private val coursesRepository: CoursesRepository,
     private val lessonsRepository: LessonsRepository,
     private val courseProgressRepository: CourseProgressRepository,

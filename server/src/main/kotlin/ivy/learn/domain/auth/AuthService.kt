@@ -19,7 +19,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import java.util.*
 
-class AuthenticationService(
+class AuthService(
   private val oauthUseCase: GoogleOAuthUseCase,
   private val userRepository: UserRepository,
   private val sessionRepository: SessionRepository,

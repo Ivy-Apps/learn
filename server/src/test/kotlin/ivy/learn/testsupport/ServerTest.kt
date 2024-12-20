@@ -12,7 +12,7 @@ import ivy.learn.data.database.tables.UsersTable
 import ivy.learn.data.repository.auth.SessionRepository
 import ivy.learn.data.repository.auth.UserRepository
 import ivy.learn.domain.auth.Auth
-import ivy.learn.domain.auth.AuthenticationService.Companion.SESSION_EXPIRATION_DAYS
+import ivy.learn.domain.auth.AuthService.Companion.SESSION_EXPIRATION_DAYS
 import ivy.learn.domain.model.Session
 import ivy.learn.domain.model.User
 import ivy.learn.domain.model.UserId

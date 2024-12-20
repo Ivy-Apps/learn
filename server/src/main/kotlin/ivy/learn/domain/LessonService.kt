@@ -6,7 +6,7 @@ import io.ktor.util.logging.*
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.LessonProgressRepository
 import ivy.learn.data.repository.LessonsRepository
-import ivy.learn.domain.auth.AuthenticationService
+import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.LessonProgress
 import ivy.model.CourseId
 import ivy.model.LessonId
@@ -15,7 +15,7 @@ import ivy.model.lesson.LessonProgressDto
 import ivy.model.lesson.LessonResponse
 
 class LessonService(
-    private val authService: AuthenticationService,
+    private val authService: AuthService,
     private val lessonsRepository: LessonsRepository,
     private val progressRepository: LessonProgressRepository,
     private val logger: Logger,
