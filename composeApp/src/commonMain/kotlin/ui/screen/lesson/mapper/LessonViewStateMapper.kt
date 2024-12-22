@@ -47,7 +47,6 @@ class LessonViewStateMapper(
   }
 
   private fun ctaViewState(currentItem: LessonItem): CtaViewState {
-    platform.log(LogLevel.Debug, "Current item: $currentItem")
     return if (currentItem is LinearItem && currentItem.next == null) {
       CtaViewState.Finish(currentItem.id.toViewState())
     } else {
