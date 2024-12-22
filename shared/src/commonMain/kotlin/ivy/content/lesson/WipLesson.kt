@@ -12,28 +12,32 @@ fun wipLesson() = lessonContent {
   text("intro_body") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("Time Complexity (Big O) helps us compare how fast or slow an algorithm grows with respect to input size.")
-      line("We're going to explore what Big O means and how to distinguish common complexities like O(1), O(n), O(logn), O(n^2), and O(nlogn).")
+      line("Welcome to Time Complexity (Big O)!")
+      line("Big O shows how an algorithm’s running time grows when the input gets bigger.")
       newLine()
-      line("Let's start with a simple question:")
+      line("Let’s start with a question:")
     }
   }
 
   question("intro_question") {
-    question = "What do you think happens to an algorithm's running time as we increase the size of its input?"
-    clarification = "Reflect on how the algorithm changes when you have 10 inputs vs. 10,000 inputs."
+    question = "What happens to an algorithm’s runtime when we increase its input size?"
+    clarification = "Think about 10 items vs. 10 million items."
     answer(
-      text = "It stays the same always",
-      explanation = "Not typically correct. Most algorithms take longer with larger inputs."
+      text = "It never changes",
+      explanation = "That is rare. Most algorithms slow down when more data comes in."
     )
     answer(
-      text = "It grows in some predictable manner",
+      text = "It grows in a specific way (like linear, quadratic, etc.)",
       correct = true,
-      explanation = "Yes! This growth pattern is exactly what Big O attempts to describe."
+      explanation = "Yes. Big O describes how quickly it grows."
     )
     answer(
-      text = "It instantly crashes",
-      explanation = "Crashes might happen if there's no proper handling, but not the usual measure."
+      text = "It crashes right away",
+      explanation = "Crashes can happen, but that’s not about time complexity."
+    )
+    answer(
+      text = "It doubles no matter what",
+      explanation = "Not always. Some algorithms might double, others might do something else."
     )
   }
 
@@ -45,27 +49,34 @@ fun wipLesson() = lessonContent {
   text("why_matters_body") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("Big O notation helps us:")
-      bullet("Predict performance changes as data size grows")
-      bullet("Make informed decisions about which algorithm to use")
-      bullet("Optimize our code to handle large inputs efficiently")
+      line("Big O helps you:")
+      bullet("Predict how your program will handle large inputs.")
+      bullet("Choose the right approach for your problem.")
+      bullet("Avoid slow performance when data grows.")
       newLine()
-      line("Real-world analogy: Think of traveling by car vs. plane. For longer distances (bigger input), the choice of transport (algorithm) matters for speed.")
+      line("Example: Walking vs. flying. For short distances, walking is fine. For long distances, flying is much faster. Algorithms work the same way.")
     }
   }
 
   question("why_matters_question") {
-    question =
-      "In your daily life, when do you notice the need for faster methods or shortcuts as tasks get bigger or more frequent?"
-    clarification = "Try to connect this to traveling, cooking, or searching for information."
+    question = "Which real-life situation best shows that we need better methods for bigger tasks?"
+    clarification = "Think about tasks that get bigger, like laundry or searching a messy room."
     answer(
-      text = "When tasks get repetitive or huge",
-      correct = true,
-      explanation = "Exactly. The more work you have, the more important it is to find an efficient strategy."
+      text = "Doing a single small task at home",
+      explanation = "Small tasks don’t show big differences in methods."
     )
     answer(
-      text = "Never",
-      explanation = "Consider how searching for a piece of information is different when dealing with 10 items vs. 10,000 items."
+      text = "Doing a large pile of laundry fast",
+      correct = true,
+      explanation = "Yes! Bigger tasks need better strategies."
+    )
+    answer(
+      text = "Taking one file from a drawer",
+      explanation = "That’s not much data, so efficiency isn’t a big concern."
+    )
+    answer(
+      text = "Turning off the lights",
+      explanation = "That’s almost instant, like a constant-time action."
     )
   }
 
@@ -77,27 +88,35 @@ fun wipLesson() = lessonContent {
   text("big_o_basics_body") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("Big O is a rough measure of how an algorithm’s runtime or space requirements grow as input grows.")
-      line("Common complexities:")
-      bullet("O(1): Constant time – doesn't grow with input.")
-      bullet("O(n): Linear time – grows proportionally with input size.")
-      bullet("O(logn): Logarithmic time – grows slowly, typical of divide-and-conquer (like binary search).")
-      bullet("O(n^2): Quadratic time – grows quickly, typical of nested loops.")
-      bullet("O(nlogn): Common for efficient sorting algorithms (like mergesort).")
+      line("Big O shows how runtime changes if we keep increasing the input size.")
+      line("Common Big O complexities:")
+      bullet("O(1): Constant time – the runtime stays the same, no matter the input.")
+      bullet("O(n): Linear – the runtime grows in direct proportion to n.")
+      bullet("O(log n): Logarithmic – the runtime grows slowly, like in binary search.")
+      bullet("O(n^2): Quadratic – often caused by nested loops.")
+      bullet("O(n log n): A mix of linear and log steps, common in sorting.")
     }
   }
 
   question("big_o_basics_question") {
-    question = "Can you guess how many times the 'fast' vs. 'slow' algorithms loop or process steps for a large input?"
-    clarification = "Think about each complexity's meaning."
+    question = "Which idea describes O(n^2)?"
+    clarification = "Think about double nested loops or pair comparisons."
     answer(
-      text = "O(1) remains the same number of steps",
-      correct = true,
-      explanation = "Correct. No matter the input, it performs a constant number of operations."
+      text = "Checking every item once (one loop)",
+      explanation = "That is O(n)."
     )
     answer(
-      text = "O(n^2) means it loops linearly only once",
-      explanation = "Actually, O(n^2) implies a nested loop structure, roughly n × n operations."
+      text = "A constant-time operation",
+      explanation = "That’s O(1)."
+    )
+    answer(
+      text = "Comparing each item with every other item",
+      correct = true,
+      explanation = "Yes. That usually means n * n comparisons."
+    )
+    answer(
+      text = "Splitting data in half repeatedly",
+      explanation = "That suggests O(log n) or O(n log n)."
     )
   }
 
@@ -110,9 +129,9 @@ fun wipLesson() = lessonContent {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
       line("O(1): Constant Time")
-      line("Example: Accessing an element in an array by index.")
+      line("These operations take the same time, even if you jump from 10 to 10,000 items.")
       newLine()
-      line("Kotlin snippet:")
+      line("Example in Kotlin:")
     }
   }
 
@@ -120,22 +139,30 @@ fun wipLesson() = lessonContent {
     style = TextStyle.Body
     text = codeBuilder {
       line("val numbers = listOf(3, 7, 2, 9)")
-      line("// Accessing an element by index is O(1):")
-      line("val element = numbers[2]  // This is constant time")
+      line("// Access an element by index:")
+      line("val element = numbers[2] // O(1)")
     }
   }
 
   question("o1_question") {
-    question = "Why doesn't retrieving the 3rd element get slower if the list grows to 1000 elements?"
-    clarification = "Consider how indexing works in memory."
+    question = "Why is accessing numbers[2] O(1)?"
+    clarification = "Think about direct indexing in memory."
     answer(
-      text = "Because we still do one simple access operation",
-      correct = true,
-      explanation = "Correct. Element access by index is direct, no extra loops are needed."
+      text = "Because it looks at all elements each time",
+      explanation = "That would be O(n)."
     )
     answer(
-      text = "Because the list sorts itself",
-      explanation = "Sorting is unrelated here and would cost more than constant time."
+      text = "Because it goes straight to that spot in memory",
+      correct = true,
+      explanation = "Exactly. Arrays let you jump right to the index."
+    )
+    answer(
+      text = "Because it depends on a fancy sorting method",
+      explanation = "Sorting is not related here."
+    )
+    answer(
+      text = "Because the element does not exist",
+      explanation = "It does exist. We can access it directly."
     )
   }
 
@@ -143,9 +170,9 @@ fun wipLesson() = lessonContent {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
       line("O(n): Linear Time")
-      line("Example: Searching for a target in an unsorted list.")
+      line("Doubling the input will about double the runtime.")
       newLine()
-      line("Kotlin snippet:")
+      line("Kotlin example:")
     }
   }
 
@@ -162,26 +189,34 @@ fun wipLesson() = lessonContent {
   }
 
   question("on_question") {
-    question = "How many comparisons are made in the worst case for the linearSearch function if there are n elements?"
-    clarification = "Think about the for-loop."
+    question = "In the worst case, how many checks does linearSearch do for a list of size n?"
+    clarification = "Think about a loop from start to finish."
     answer(
-      text = "n comparisons",
+      text = "n checks",
       correct = true,
-      explanation = "Yes, in the worst case it checks each element once."
+      explanation = "Yes. We might check every element once."
     )
     answer(
-      text = "n^2 comparisons",
-      explanation = "This would imply a double nested loop, which is not the case here."
+      text = "n^2 checks",
+      explanation = "That would need nested loops."
+    )
+    answer(
+      text = "log n checks",
+      explanation = "That is binary search, which cuts in half each time."
+    )
+    answer(
+      text = "1 check",
+      explanation = "That would be constant time, not a full loop."
     )
   }
 
   text("ologn_example") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("O(logn): Logarithmic Time")
-      line("Example: Binary search on a sorted list.")
+      line("O(log n): Logarithmic Time")
+      line("Each step cuts the input in half. A bigger input only adds a few extra steps.")
       newLine()
-      line("Kotlin snippet:")
+      line("Kotlin example:")
     }
   }
 
@@ -203,16 +238,24 @@ fun wipLesson() = lessonContent {
   }
 
   question("ologn_question") {
-    question = "Why does binarySearch only require log(n) checks?"
-    clarification = "Focus on the while loop's dividing approach."
+    question = "Why is binarySearch O(log n)?"
+    clarification = "Look at how the search space changes in each loop."
     answer(
-      text = "Because each step narrows down the search space by half",
-      correct = true,
-      explanation = "Exactly. Halving repeatedly leads to a logarithmic growth in steps."
+      text = "It checks every element one by one",
+      explanation = "That is linear, O(n)."
     )
     answer(
-      text = "Because it still checks every element",
-      explanation = "No, that would be linear (n)."
+      text = "It removes half of the data each time",
+      correct = true,
+      explanation = "Yes. Halving each time is a log n pattern."
+    )
+    answer(
+      text = "It needs two nested loops",
+      explanation = "No. There is just one while loop."
+    )
+    answer(
+      text = "It only works for large n",
+      explanation = "Log n is about halving, not about needing a huge input."
     )
   }
 
@@ -220,7 +263,7 @@ fun wipLesson() = lessonContent {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
       line("O(n^2): Quadratic Time")
-      line("Example: A double nested loop comparing every item with every other item.")
+      line("A common case is a double loop, where each item is compared to every other item.")
       newLine()
       line("Kotlin snippet:")
     }
@@ -232,7 +275,7 @@ fun wipLesson() = lessonContent {
       line("fun pairwiseComparison(list: List<Int>) {")
       line("    for (i in list.indices) {")
       line("        for (j in list.indices) {")
-      line("            // Compare list[i] and list[j]")
+      line("            // Compare list[i] to list[j]")
       line("        }")
       line("    }")
       line("}")
@@ -240,131 +283,162 @@ fun wipLesson() = lessonContent {
   }
 
   question("on2_question") {
-    question = "How many comparisons happen in pairwiseComparison if there are n elements?"
-    clarification = "Look at the nested loops."
+    question = "How many comparisons happen if there are n elements?"
+    clarification = "Look at the two nested loops."
+    answer(
+      text = "n comparisons",
+      explanation = "One loop is n. But we have a second loop inside it."
+    )
     answer(
       text = "n^2 comparisons",
       correct = true,
-      explanation = "Right! Each of the n elements is compared with n elements, total n × n."
+      explanation = "Yes! Each of the n elements compares to n others."
     )
     answer(
-      text = "n comparisons",
-      explanation = "That would be a single loop, not nested loops."
+      text = "1 comparison",
+      explanation = "That would be constant time."
+    )
+    answer(
+      text = "log n comparisons",
+      explanation = "That would be halving. Not happening here."
     )
   }
 
   text("onlogn_example") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("O(n log n): Common for efficient sorting like mergesort or quicksort.")
-      newLine()
-      line("Real-world analogy: Imagine repeatedly halving tasks (like logn) but still doing it n times in total.")
+      line("O(n log n): This is common in efficient sorting (like mergesort).")
+      line("Think of it as splitting data in half (log n) but doing it across n items.")
     }
   }
 
   question("onlogn_question") {
-    question = "If mergesort runs in O(n log n), which operation do you suspect is repeated log n times?"
-    clarification = "Relate to the divide-and-conquer approach."
+    question = "If mergesort is O(n log n), which part is the log n part?"
+    clarification = "Mergesort splits the list in halves repeatedly."
     answer(
-      text = "Splitting or merging steps performed at each divide level",
-      correct = true,
-      explanation = "Yes. The list is split in half (log n splits), and each split is processed across n items."
+      text = "Comparing each element with every other",
+      explanation = "That is O(n^2)."
     )
     answer(
-      text = "A simple pass over all elements once",
-      explanation = "That would be O(n). The log factor indicates repeated divisions."
+      text = "Splitting the data in half many times",
+      correct = true,
+      explanation = "Yes! Each split reduces the problem to half."
+    )
+    answer(
+      text = "Sorting just two items",
+      explanation = "That’s a smaller sub-problem, not the overall approach."
+    )
+    answer(
+      text = "Accessing an element by index",
+      explanation = "That is O(1)."
     )
   }
 
   text("interactive_exercises_heading") {
     style = TextStyle.Heading
-    text = "5. Interactive Exercises for Differentiating Complexities"
+    text = "5. Interactive Exercises: Identify Complexities"
   }
 
   text("interactive_exercises_body") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("Activity: Label each scenario with its time complexity:")
-      bullet("1) Checking if the first element of a list is > 0.")
-      bullet("2) Counting vowels in a string of length n.")
-      bullet("3) Splitting a list in half repeatedly until one element is left.")
-      bullet("4) Comparing every name in a guest list with every other name.")
+      line("Try these scenarios and see which complexity fits.")
+      bullet("1) Getting the last element of a list directly.")
+      bullet("2) Going through a list of items from start to finish.")
+      bullet("3) Splitting a list in half, then half again, until only one item remains.")
+      bullet("4) Comparing each item with every other item in a list.")
     }
   }
 
   question("exercise_question") {
-    question = "Match the scenario to the complexity."
-    clarification = "Think about the descriptions of each complexity so far."
+    question = "Match each scenario to O(1), O(n), O(log n), or O(n^2)."
+    clarification = "Think about the patterns you learned."
     answer(
-      text = "1) O(1), 2) O(n), 3) O(logn), 4) O(n^2)",
+      text = "1) O(1), 2) O(n), 3) O(log n), 4) O(n^2)",
       correct = true,
-      explanation = "Well done! Each scenario directly maps to the complexity described earlier."
+      explanation = "Well done! Each one fits the pattern described."
     )
     answer(
-      text = "1) O(n), 2) O(1), 3) O(n^2), 4) O(logn)",
-      explanation = "Not quite. Revisit the definitions carefully."
+      text = "All are O(1)",
+      explanation = "That means no change with bigger data, which is not true."
+    )
+    answer(
+      text = "1) O(n), 2) O(n^2), 3) O(1), 4) O(log n)",
+      explanation = "This does not match the logic of each action."
+    )
+    answer(
+      text = "Everything is O(n^2)",
+      explanation = "We only get O(n^2) when loops are nested."
     )
   }
 
   text("real_world_apps_heading") {
     style = TextStyle.Heading
-    text = "6. Real-World Applications of Big O"
+    text = "6. Real-World Applications"
   }
 
   text("real_world_apps_body") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("Searching for a product in an online store (binary search on sorted data).")
-      line("Fetching a specific record from a database by key (O(1) if well-indexed).")
-      line("Sorting large data sets for analytics (O(n log n) algorithms).")
+      line("• Searching a large online store: can be O(log n) if sorted by product ID.")
+      line("• Sorting thousands of photos: often O(n log n) with modern sorting algorithms.")
+      line("• Looking up a key in a fast database: can be O(1) with the right data structure.")
     }
   }
 
   text("practical_identification_heading") {
     style = TextStyle.Heading
-    text = "7. Practical Questions and Tricks to Identify Time Complexities"
+    text = "7. Tips to Spot Time Complexities"
   }
 
   text("practical_identification_body") {
     style = TextStyle.BodySpacingMedium
     text = textBuilder {
-      line("1) Count the loops: Single loops often imply O(n), nested loops O(n^2).")
-      line("2) Check for halving steps: Often indicates O(log n).")
-      line("3) Combine patterns: If you do something n times that takes O(log n), it becomes O(n log n).")
-      line("4) Constant time operations are usually direct array or hash lookups (O(1)).")
+      line("1) One simple loop from 0 to n is O(n).")
+      line("2) A loop inside another loop is O(n^2).")
+      line("3) Halving the data each time is O(log n).")
+      line("4) Doing something O(log n) times for all n elements is O(n log n).")
+      line("5) Direct index access in an array is O(1).")
     }
   }
 
   question("identification_question") {
     question =
-      "Imagine you're reading code with a for-loop, and inside it, there's a binary search. What complexity do you suspect?"
-    clarification = "See #3 from the tips."
+      "If a loop runs n times, and inside it we do a binary search (which is O(log n)), what is the total complexity?"
+    clarification = "Combine O(n) and O(log n)."
+    answer(
+      text = "O(n^2)",
+      explanation = "That would need nested loops each going up to n."
+    )
     answer(
       text = "O(n log n)",
       correct = true,
-      explanation = "Yes! A for-loop (n times) and a log n search inside leads to O(n log n)."
+      explanation = "Yes. n times for the loop * log n for the search."
     )
     answer(
-      text = "O(n^2)",
-      explanation = "That would be a nested loop scenario, not a single loop with a log n operation inside."
+      text = "O(1)",
+      explanation = "It clearly depends on n, so it grows."
+    )
+    answer(
+      text = "O(log n)",
+      explanation = "We also have that outer loop running n times."
     )
   }
 
   text("reflection_heading") {
     style = TextStyle.Heading
-    text = "8. Reflection and Problem-Solving"
+    text = "8. Reflection and Next Steps"
   }
 
   text("reflection_body") {
     style = TextStyle.BodySpacingLarge
     text = textBuilder {
-      line("Use the guiding questions below to further solidify your understanding:")
-      bullet("In your own words, how would you explain Big O to a friend?")
-      bullet("What is the biggest difference between O(log n) and O(n)?")
-      bullet("How do you identify O(n^2) code quickly?")
-      bullet("Why do you think O(n log n) sorting algorithms are considered efficient?")
+      line("You did it! You now know O(1), O(n), O(log n), O(n^2), and O(n log n).")
+      bullet("Try explaining Big O to a friend using a real example.")
+      bullet("When coding, think: 'What happens if n doubles?'")
+      bullet("Practice with more code to sharpen your Big O skills.")
       newLine()
-      line("Remember: The best way to understand Big O is to practice analyzing different snippets of code. Ask yourself how many times each line runs as input grows.")
+      line("Great job! Enjoy writing faster programs and smarter solutions!")
     }
   }
 }
