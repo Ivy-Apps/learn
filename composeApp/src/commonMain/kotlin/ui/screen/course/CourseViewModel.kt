@@ -7,8 +7,8 @@ import domain.analytics.Analytics
 import domain.analytics.Param
 import domain.analytics.Source
 import ivy.data.source.model.CourseResponse
-import ivy.model.CourseId
-import ivy.model.LessonId
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import kotlinx.collections.immutable.persistentListOf
 import navigation.Navigation
 import ui.ComposeViewModel

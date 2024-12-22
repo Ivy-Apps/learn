@@ -8,8 +8,8 @@ import domain.model.LessonProgress
 import domain.model.LessonWithProgress
 import ivy.data.source.CoursesDataSource
 import ivy.data.source.LessonDataSource
-import ivy.model.CourseId
-import ivy.model.LessonId
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import ivy.model.lesson.LessonProgressDto
 import kotlinx.coroutines.withContext
 import util.DispatchersProvider

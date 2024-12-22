@@ -1,9 +1,9 @@
 package ui.screen.home.mapper
 
 import ivy.data.source.model.TopicsResponse
-import ivy.model.Course
-import ivy.model.CourseId
-import ivy.model.LessonId
+import ivy.learn.Course
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import ui.screen.home.HomeItemViewState

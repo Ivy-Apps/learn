@@ -4,6 +4,8 @@ import arrow.core.Either
 import arrow.core.raise.Raise
 import arrow.core.raise.either
 import ivy.data.source.model.TopicsResponse
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.CourseProgressRepository
 import ivy.learn.data.repository.CoursesRepository
@@ -11,8 +13,6 @@ import ivy.learn.data.repository.TopicsRepository
 import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.User
 import ivy.model.Course
-import ivy.model.CourseId
-import ivy.model.LessonId
 import ivy.model.auth.SessionToken
 
 class TopicsService(

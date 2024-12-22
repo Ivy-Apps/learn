@@ -1,7 +1,7 @@
-import ivy.model.TextStyle
-import ivy.model.dsl.codeBuilder
-import ivy.model.dsl.lessonContent
-import ivy.model.dsl.textBuilder
+import ivy.learn.TextStyle
+import ivy.learn.dsl.codeBuilder
+import ivy.learn.dsl.lessonContent
+import ivy.learn.dsl.textBuilder
 
 fun wipLesson() = lessonContent {
   text("intro_section") {

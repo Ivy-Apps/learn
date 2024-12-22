@@ -1,6 +1,6 @@
 package ivy.learn.data.database.tables
 
-import ivy.model.lesson.LessonProgressDto
+import ivy.learn.Lesson.LessonProgressDto
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.ReferenceOption

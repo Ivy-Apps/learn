@@ -9,7 +9,7 @@ import domain.analytics.Param
 import domain.analytics.Source
 import domain.model.LessonProgress
 import domain.model.LessonWithProgress
-import ivy.model.*
+import ivy.learn.*
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -22,128 +22,128 @@ import util.Logger
 
 
 class LessonViewModel(
-    override val args: Args,
-    override val screenScope: CoroutineScope,
-    private val repository: LessonRepository,
-    private val viewStateMapper: LessonViewStateMapper,
-    private val eventHandlers: Set<LessonEventHandler<*>>,
-    private val analytics: Analytics,
-    private val logger: Logger,
+  override val args: Args,
+  override val screenScope: CoroutineScope,
+  private val repository: LessonRepository,
+  private val viewStateMapper: LessonViewStateMapper,
+  private val eventHandlers: Set<LessonEventHandler<*>>,
+  private val analytics: Analytics,
+  private val logger: Logger,
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
 
-    private var lessonResponse by mutableStateOf<Either<String, LessonWithProgress>?>(null)
-    private var localState by mutableStateOf(LocalState.Initial)
+  private var lessonResponse by mutableStateOf<Either<String, LessonWithProgress>?>(null)
+  private var localState by mutableStateOf(LocalState.Initial)
 
-    override val state: LocalState
-        get() = localState
+  override val state: LocalState
+    get() = localState
 
-    override fun modifyState(transformation: (LocalState) -> LocalState) {
-        localState = transformation(localState)
-        saveLessonProgress(localState)
+  override fun modifyState(transformation: (LocalState) -> LocalState) {
+    localState = transformation(localState)
+    saveLessonProgress(localState)
+  }
+
+  private fun saveLessonProgress(localState: LocalState) {
+    screenScope.launch {
+      repository.saveLessonProgress(
+        course = args.courseId,
+        lesson = args.lessonId,
+        progress = LessonProgress(
+          selectedAnswers = localState.selectedAnswers,
+          openAnswersInput = localState.openAnswersInput,
+          chosen = localState.chosen,
+          answered = localState.answered,
+          completed = localState.completed,
+        )
+      ).onLeft { errMsg ->
+        logger.error("Lesson progress: $errMsg")
+      }
     }
+  }
 
-    private fun saveLessonProgress(localState: LocalState) {
-        screenScope.launch {
-            repository.saveLessonProgress(
-                course = args.courseId,
-                lesson = args.lessonId,
-                progress = LessonProgress(
-                    selectedAnswers = localState.selectedAnswers,
-                    openAnswersInput = localState.openAnswersInput,
-                    chosen = localState.chosen,
-                    answered = localState.answered,
-                    completed = localState.completed,
-                )
-            ).onLeft { errMsg ->
-                logger.error("Lesson progress: $errMsg")
-            }
-        }
+  @Composable
+  override fun viewState(): LessonViewState {
+    LaunchedEffect(Unit) {
+      loadLesson()
+      analytics.logEvent(
+        source = Source.Lesson,
+        event = "view",
+        params = mapOf(
+          Param.CourseId to args.courseId.value,
+          Param.LessonId to args.lessonId.value,
+          Param.LessonName to args.lessonName,
+        )
+      )
     }
-
-    @Composable
-    override fun viewState(): LessonViewState {
-        LaunchedEffect(Unit) {
-            loadLesson()
-            analytics.logEvent(
-                source = Source.Lesson,
-                event = "view",
-                params = mapOf(
-                    Param.CourseId to args.courseId.value,
-                    Param.LessonId to args.lessonId.value,
-                    Param.LessonName to args.lessonName,
-                )
-            )
+    return when (val response = lessonResponse) {
+      is Either.Right -> remember(localState, lessonResponse) {
+        with(viewStateMapper) {
+          response.value.lesson.toViewState(localState)
         }
-        return when (val response = lessonResponse) {
-            is Either.Right -> remember(localState, lessonResponse) {
-                with(viewStateMapper) {
-                    response.value.lesson.toViewState(localState)
-                }
-            }
+      }
 
-            null, is Either.Left -> LessonViewState(
-                title = args.lessonName,
-                items = persistentListOf(),
-                cta = null,
-                progress = LessonProgressViewState(0, 1),
-                itemsLoadedDiff = 0,
-            )
-        }
+      null, is Either.Left -> LessonViewState(
+        title = args.lessonName,
+        items = persistentListOf(),
+        cta = null,
+        progress = LessonProgressViewState(0, 1),
+        itemsLoadedDiff = 0,
+      )
     }
+  }
 
-    private suspend fun loadLesson() {
-        lessonResponse = repository.fetchLesson(
-            course = args.courseId,
-            lesson = args.lessonId
-        ).onRight {
-            localState = LocalState(
-                selectedAnswers = it.progress.selectedAnswers,
-                openAnswersInput = it.progress.openAnswersInput,
-                chosen = it.progress.chosen,
-                answered = it.progress.answered,
-                completed = it.progress.completed,
-            )
-        }
+  private suspend fun loadLesson() {
+    lessonResponse = repository.fetchLesson(
+      course = args.courseId,
+      lesson = args.lessonId
+    ).onRight {
+      localState = LocalState(
+        selectedAnswers = it.progress.selectedAnswers,
+        openAnswersInput = it.progress.openAnswersInput,
+        chosen = it.progress.chosen,
+        answered = it.progress.answered,
+        completed = it.progress.completed,
+      )
     }
+  }
 
-    override fun onEvent(event: LessonViewEvent) {
-        val eventHandler = eventHandlers.firstOrNull { handler ->
-            event::class in handler.eventTypes
-        }
-        checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
-
-        screenScope.launch {
-            @Suppress("UNCHECKED_CAST")
-            val typedEventHandler = eventHandler as LessonEventHandler<LessonViewEvent>
-            with(typedEventHandler) { handleEvent(event) }
-        }
+  override fun onEvent(event: LessonViewEvent) {
+    val eventHandler = eventHandlers.firstOrNull { handler ->
+      event::class in handler.eventTypes
     }
+    checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
 
-    @Immutable
-    @optics
-    data class LocalState(
-        val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
-        val openAnswersInput: Map<LessonItemId, String>,
-        val chosen: Map<LessonItemId, ChoiceOptionId>,
-        val answered: Set<LessonItemId>,
-        val completed: Set<LessonItemId>,
-    ) {
-        companion object {
-            val Initial = LocalState(
-                selectedAnswers = emptyMap(),
-                openAnswersInput = emptyMap(),
-                chosen = emptyMap(),
-                answered = emptySet(),
-                completed = emptySet(),
-            )
-        }
+    screenScope.launch {
+      @Suppress("UNCHECKED_CAST")
+      val typedEventHandler = eventHandler as LessonEventHandler<LessonViewEvent>
+      with(typedEventHandler) { handleEvent(event) }
     }
+  }
 
-    data class Args(
-        val courseId: CourseId,
-        val lessonId: LessonId,
-        val lessonName: String,
-    )
+  @Immutable
+  @optics
+  data class LocalState(
+    val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
+    val openAnswersInput: Map<LessonItemId, String>,
+    val chosen: Map<LessonItemId, ChoiceOptionId>,
+    val answered: Set<LessonItemId>,
+    val completed: Set<LessonItemId>,
+  ) {
+    companion object {
+      val Initial = LocalState(
+        selectedAnswers = emptyMap(),
+        openAnswersInput = emptyMap(),
+        chosen = emptyMap(),
+        answered = emptySet(),
+        completed = emptySet(),
+      )
+    }
+  }
+
+  data class Args(
+    val courseId: CourseId,
+    val lessonId: LessonId,
+    val lessonName: String,
+  )
 }
 
 typealias LessonVmContext = VmContext<LocalState, LessonViewModel.Args>

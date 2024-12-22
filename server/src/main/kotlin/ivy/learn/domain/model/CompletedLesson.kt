@@ -1,7 +1,7 @@
 package ivy.learn.domain.model
 
-import ivy.model.CourseId
-import ivy.model.LessonId
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import kotlinx.datetime.Instant
 
 data class CompletedLesson(

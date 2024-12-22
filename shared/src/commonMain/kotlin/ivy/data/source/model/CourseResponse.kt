@@ -1,11 +1,11 @@
 package ivy.data.source.model
 
-import ivy.model.Course
-import ivy.model.Lesson
+import ivy.learn.Course
+import ivy.learn.Lesson
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class CourseResponse(
-    val course: Course,
-    val lessons: List<Lesson>
+  val course: Course,
+  val lessons: List<Lesson>
 )

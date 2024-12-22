@@ -2,15 +2,15 @@ package ivy.learn.api
 
 import arrow.core.raise.ensureNotNull
 import io.ktor.server.routing.*
+import ivy.learn.CourseId
+import ivy.learn.Lesson.LessonProgressDto
+import ivy.learn.Lesson.LessonResponse
+import ivy.learn.LessonId
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointAuthenticated
 import ivy.learn.api.common.model.ServerError.BadRequest
 import ivy.learn.api.common.postEndpointAuthenticated
 import ivy.learn.domain.LessonService
-import ivy.model.CourseId
-import ivy.model.LessonId
-import ivy.model.lesson.LessonProgressDto
-import ivy.model.lesson.LessonResponse
 
 class LessonsApi(
     private val lessonService: LessonService,

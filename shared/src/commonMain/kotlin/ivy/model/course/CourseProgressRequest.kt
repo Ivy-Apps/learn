@@ -1,6 +1,6 @@
 package ivy.model.course
 
-import ivy.model.LessonId
+import ivy.learn.LessonId
 import kotlinx.serialization.Serializable
 
 @Serializable

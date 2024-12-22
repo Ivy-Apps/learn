@@ -3,7 +3,7 @@ package ui.screen.lesson.handler
 import arrow.optics.copy
 import domain.SoundUseCase
 import ivy.content.SoundsUrls
-import ivy.model.ChoiceOptionId
+import ivy.learn.ChoiceOptionId
 import ui.screen.lesson.*
 import ui.screen.lesson.LessonViewModel.LocalState
 import ui.screen.lesson.mapper.toDomain

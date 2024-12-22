@@ -3,11 +3,11 @@ package ivy.learn.data.repository
 import arrow.core.Either
 import arrow.core.raise.catch
 import arrow.core.right
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import ivy.learn.data.database.tables.LessonsProgressTable
 import ivy.learn.domain.model.LessonProgress
 import ivy.learn.domain.model.UserId
-import ivy.model.CourseId
-import ivy.model.LessonId
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 

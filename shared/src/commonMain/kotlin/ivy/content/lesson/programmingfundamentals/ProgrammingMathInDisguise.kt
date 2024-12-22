@@ -1,8 +1,8 @@
 package ivy.content.lesson.programmingfundamentals
 
 import ivy.content.LottieUrls
-import ivy.model.TextStyle
-import ivy.model.dsl.*
+import ivy.learn.TextStyle
+import ivy.learn.dsl.*
 
 const val HarryPlanet = "KX-147"
 const val CoreTemp = 314

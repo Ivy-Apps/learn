@@ -1,10 +1,10 @@
 package ivy.learn.data.cms.dsl
 
 import ivy.content.nameToId
-import ivy.model.CourseId
+import ivy.learn.CourseId
+import ivy.learn.dsl.LearnCmsDsl
 import ivy.model.Topic
 import ivy.model.TopicId
-import ivy.model.dsl.LearnCmsDsl
 
 abstract class TopicsDsl(builder: TopicsScope.() -> Unit) {
     private val scope = TopicsScopeImpl().apply(builder)

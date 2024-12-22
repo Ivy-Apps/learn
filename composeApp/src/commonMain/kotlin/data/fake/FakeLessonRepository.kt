@@ -5,10 +5,10 @@ import arrow.core.right
 import data.lesson.LessonRepository
 import domain.model.LessonProgress
 import domain.model.LessonWithProgress
-import ivy.model.CourseId
-import ivy.model.ImageUrl
-import ivy.model.Lesson
-import ivy.model.LessonId
+import ivy.learn.CourseId
+import ivy.learn.ImageUrl
+import ivy.learn.Lesson
+import ivy.learn.LessonId
 import wipLesson
 
 class FakeLessonRepository : LessonRepository {

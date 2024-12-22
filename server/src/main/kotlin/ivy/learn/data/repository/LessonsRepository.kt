@@ -3,11 +3,11 @@ package ivy.learn.data.repository
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensureNotNull
+import ivy.learn.CourseId
+import ivy.learn.Lesson
+import ivy.learn.LessonId
 import ivy.learn.data.cms.course.CoursesContent
 import ivy.learn.data.source.LessonContentDataSource
-import ivy.model.CourseId
-import ivy.model.Lesson
-import ivy.model.LessonId
 
 class LessonsRepository(
     private val lessonContentDataSource: LessonContentDataSource

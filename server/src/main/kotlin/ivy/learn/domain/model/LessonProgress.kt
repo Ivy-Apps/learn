@@ -1,8 +1,8 @@
 package ivy.learn.domain.model
 
-import ivy.model.CourseId
-import ivy.model.LessonId
-import ivy.model.lesson.LessonProgressDto
+import ivy.learn.CourseId
+import ivy.learn.Lesson.LessonProgressDto
+import ivy.learn.LessonId
 
 data class LessonProgress(
     val userId: UserId,

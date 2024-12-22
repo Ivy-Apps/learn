@@ -1,8 +1,8 @@
 package ui.screen.course.mapper
 
 import ivy.data.source.model.CourseResponse
-import ivy.model.Lesson
-import ivy.model.LessonId
+import ivy.learn.Lesson
+import ivy.learn.LessonId
 import kotlinx.collections.immutable.toImmutableList
 import ui.screen.course.CourseItemViewState
 import ui.screen.course.CourseViewState

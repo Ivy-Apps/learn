@@ -1,9 +1,9 @@
 package ivy.learn.testsupport.data.repository
 
+import ivy.learn.Lesson.LessonProgressDto
+import ivy.learn.LessonItemId
 import ivy.model.AnswerId
 import ivy.model.ChoiceOptionId
-import ivy.model.LessonItemId
-import ivy.model.lesson.LessonProgressDto
 
 object LessonProgressFixtures {
     fun state(

@@ -1,8 +1,8 @@
 package ivy.model.lesson
 
-import ivy.model.AnswerId
-import ivy.model.ChoiceOptionId
-import ivy.model.LessonItemId
+import ivy.learn.AnswerId
+import ivy.learn.ChoiceOptionId
+import ivy.learn.LessonItemId
 import kotlinx.serialization.Serializable
 
 @Serializable
