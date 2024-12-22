@@ -11,4 +11,9 @@ object AlgorithmFoundations : CourseDsl({
     tagline = "An introduction to Big O and its real-world importance.",
     imageUrl = "https://i.ibb.co/njy7FxD/time-complexity-1.webp",
   )
+  lesson(
+    name = "Time Complexity: Types",
+    tagline = "O(1), O(log(n)), O(n), O(n * log(n)), O(n^2), O(2^n), O(n!),... and how to find them!?",
+    imageUrl = "https://i.ibb.co/V2rg0mY/time-complexity-types.webp",
+  )
 })
