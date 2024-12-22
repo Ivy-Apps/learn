@@ -188,14 +188,26 @@ fun wipLesson() = lessonContent {
   }
 
   // 11. Final Wrap-Up
-  text("final_wrapup") {
-    style = TextStyle.BodySpacingMedium
+  text("final_wrapup_title") {
+    style = TextStyle.Heading
+    text = "Summary"
+  }
+  text("final_wrapup1") {
     text = """
-            Time complexity helps us understand performance. Big O notation is a tool to compare algorithms.
-            It’s about how fast they grow, not exact speeds. 
-            Fast binary search can save you time, unlike slow brute-forcing a PIN digit by digit.
-            Now you know why it matters! 
-            Joke: Binary search walks into a bar and starts looking in the middle. The bartender says, "Find anything yet?" 
+Time complexity helps us understand performance. Big O notation is a tool to compare algorithms.
+It’s about how fast they grow, not exact speeds. 
         """.trimIndent()
+  }
+  text("final_wrapup2") {
+    text = """
+Fast binary search can save you time, unlike slow brute-forcing a PIN digit by digit. Now you know why time complexity matters! 
+        """.trimIndent()
+    style = TextStyle.BodySpacingMedium
+  }
+  text("final_wrapup3") {
+    text = """
+Joke: Binary search walks into a bar and starts looking in the middle. The bartender says, "Find anything yet?" 
+        """.trimIndent()
+    style = TextStyle.BodySpacingMedium
   }
 }
