@@ -1,8 +1,8 @@
 package ivy.learn.data.repository
 
+import ivy.learn.Course
 import ivy.learn.CourseId
 import ivy.learn.data.cms.course.CoursesContent
-import ivy.model.Course
 
 class CoursesRepository {
     fun fetchCourses(): List<Course> = CoursesContent.courses
