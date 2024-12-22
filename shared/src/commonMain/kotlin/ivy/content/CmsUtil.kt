@@ -12,5 +12,3 @@ val EmptyContent = LessonContent(
     rootItem = LessonItemId(""),
     items = emptyMap()
 )
-
-fun nameToId(name: String): String = name.replace(" ", "-").lowercase()

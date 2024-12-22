@@ -22,9 +22,9 @@ class FakeTopicsRepository : TopicsRepository {
       courses = listOf(
         Course(
           id = courseId,
-          name = "Fake course",
-          tagline = "This is a fake course for testing purposes",
-          image = ImageUrl(Fakes.androidStudioImageUrl),
+          name = "Algorithm Foundations",
+          tagline = "Demystify space & time complexity, Big O... The first step to becoming an algorithm master.",
+          image = ImageUrl("https://i.ibb.co/566dj34/algo-fundamentals.webp"),
           lessons = listOf(
             LessonId("1"),
             LessonId("2"),
