@@ -5,7 +5,7 @@ import arrow.core.right
 import data.lesson.LessonRepository
 import domain.model.LessonProgress
 import domain.model.LessonWithProgress
-import ivy.content.lesson.programmingfundamentals.programmingMathInDisguise
+import ivy.content.lesson.wipLesson
 import ivy.model.CourseId
 import ivy.model.ImageUrl
 import ivy.model.Lesson
@@ -19,10 +19,10 @@ class FakeLessonRepository : LessonRepository {
         return LessonWithProgress(
             lesson = Lesson(
                 id = LessonId("fake"),
-                name = "Programming: Math in disguise",
-                tagline = "",
+                name = "WIP: Lesson",
+                tagline = "Fake lesson that we're working on right now!",
                 image = ImageUrl(""),
-                content = programmingMathInDisguise(),
+                content = wipLesson(),
                 completed = false,
             ),
             progress = LessonProgress(
