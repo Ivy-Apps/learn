@@ -1,19 +1,19 @@
 package domain.model
 
-import ivy.model.AnswerId
-import ivy.model.ChoiceOptionId
-import ivy.model.Lesson
-import ivy.model.LessonItemId
+import ivy.learn.AnswerId
+import ivy.learn.ChoiceOptionId
+import ivy.learn.Lesson
+import ivy.learn.LessonItemId
 
 data class LessonWithProgress(
-    val lesson: Lesson,
-    val progress: LessonProgress,
+  val lesson: Lesson,
+  val progress: LessonProgress,
 )
 
 data class LessonProgress(
-    val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
-    val openAnswersInput: Map<LessonItemId, String>,
-    val chosen: Map<LessonItemId, ChoiceOptionId>,
-    val answered: Set<LessonItemId>,
-    val completed: Set<LessonItemId>,
+  val selectedAnswers: Map<LessonItemId, Set<AnswerId>>,
+  val openAnswersInput: Map<LessonItemId, String>,
+  val chosen: Map<LessonItemId, ChoiceOptionId>,
+  val answered: Set<LessonItemId>,
+  val completed: Set<LessonItemId>,
 )

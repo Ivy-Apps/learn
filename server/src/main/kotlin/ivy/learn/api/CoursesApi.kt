@@ -3,12 +3,12 @@ package ivy.learn.api
 import arrow.core.raise.ensureNotNull
 import io.ktor.server.routing.*
 import ivy.data.source.model.CourseResponse
+import ivy.learn.CourseId
 import ivy.learn.api.common.Api
 import ivy.learn.api.common.getEndpointAuthenticated
 import ivy.learn.api.common.model.ServerError.BadRequest
 import ivy.learn.api.common.postEndpointAuthenticated
 import ivy.learn.domain.CourseService
-import ivy.model.CourseId
 import ivy.model.course.CourseProgressRequest
 
 class CoursesApi(

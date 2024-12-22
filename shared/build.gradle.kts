@@ -54,6 +54,7 @@ kotlin {
             api(libs.kotlin.serialization)
             api(libs.bundles.arrow)
             api(libs.ivyApps.di)
+            api(libs.ivyApps.learnDsl)
             api(libs.kotlinx.datetime)
         }
         androidMain.dependencies {

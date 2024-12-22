@@ -1,7 +1,7 @@
 package ui.screen.home
 
 import androidx.compose.runtime.Immutable
-import ivy.model.CourseId
+import ivy.learn.CourseId
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable

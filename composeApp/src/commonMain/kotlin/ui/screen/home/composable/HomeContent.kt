@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.*
 import component.button.IvyIconButton
-import ivy.model.CourseId
+import ivy.learn.CourseId
 import ui.screen.home.HomeItemViewState
 import ui.screen.home.HomeViewEvent
 import ui.screen.home.HomeViewState

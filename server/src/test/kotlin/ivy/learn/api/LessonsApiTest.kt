@@ -5,11 +5,11 @@ import io.kotest.matchers.maps.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import ivy.data.source.LessonDataSource
 import ivy.di.Di
+import ivy.learn.CourseId
+import ivy.learn.LessonId
+import ivy.learn.LessonItemId
 import ivy.learn.testsupport.ServerTest
 import ivy.learn.testsupport.data.repository.LessonProgressFixtures
-import ivy.model.CourseId
-import ivy.model.LessonId
-import ivy.model.LessonItemId
 import org.junit.Test
 
 class LessonsApiTest : ServerTest() {

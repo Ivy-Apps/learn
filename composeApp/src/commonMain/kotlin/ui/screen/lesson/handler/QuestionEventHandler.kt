@@ -4,7 +4,7 @@ import arrow.optics.dsl.index
 import arrow.optics.typeclasses.Index
 import domain.SoundUseCase
 import ivy.content.SoundsUrls
-import ivy.model.AnswerId
+import ivy.learn.AnswerId
 import ui.screen.lesson.*
 import ui.screen.lesson.LessonViewModel.LocalState
 import ui.screen.lesson.QuestionTypeViewState.MultipleChoice

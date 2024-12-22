@@ -1,7 +1,7 @@
 package ivy.content
 
-import ivy.model.LessonContent
-import ivy.model.LessonItemId
+import ivy.learn.LessonContent
+import ivy.learn.LessonItemId
 
 val CourseImage = "https://i.ibb.co/7WY4N3R/lesson.webp"
 val LessonImage = "https://i.ibb.co/7WY4N3R/lesson.webp"

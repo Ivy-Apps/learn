@@ -6,8 +6,8 @@ import arrow.core.raise.option
 import ivy.di.Di
 import ivy.di.Di.register
 import ivy.di.autowire.autoWire
-import ivy.model.CourseId
-import ivy.model.LessonId
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import navigation.Route
 import navigation.Router
 import navigation.Screen

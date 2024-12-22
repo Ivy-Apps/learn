@@ -5,7 +5,7 @@ import arrow.core.raise.either
 import domain.SessionManager
 import ivy.data.source.CoursesDataSource
 import ivy.data.source.model.CourseResponse
-import ivy.model.CourseId
+import ivy.learn.CourseId
 import kotlinx.coroutines.withContext
 import util.DispatchersProvider
 

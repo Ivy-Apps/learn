@@ -3,13 +3,13 @@ package ivy.learn.domain
 import arrow.core.Either
 import arrow.core.raise.either
 import io.ktor.util.logging.*
+import ivy.learn.CourseId
+import ivy.learn.LessonId
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.data.repository.LessonProgressRepository
 import ivy.learn.data.repository.LessonsRepository
 import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.LessonProgress
-import ivy.model.CourseId
-import ivy.model.LessonId
 import ivy.model.auth.SessionToken
 import ivy.model.lesson.LessonProgressDto
 import ivy.model.lesson.LessonResponse
