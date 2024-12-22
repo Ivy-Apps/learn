@@ -14,9 +14,9 @@ class FakeCourseRepository : CourseRepository {
     return CourseResponse(
       course = Course(
         id = CourseId("1"),
-        name = "Fake course",
-        tagline = "This is a fake course used for testing purposes",
-        image = ImageUrl("fake"),
+        name = "Algorithm Foundations",
+        tagline = "Demystify space & time complexity, Big O... The first step to becoming an algorithm master.",
+        image = ImageUrl("https://i.ibb.co/566dj34/algo-fundamentals.webp"),
         lessons = listOf(
           LessonId(("1")),
           LessonId(("2")),
@@ -29,9 +29,9 @@ class FakeCourseRepository : CourseRepository {
       lessons = listOf(
         Lesson(
           id = LessonId("1"),
-          name = "Fake lesson 1",
-          tagline = "Fake lesson for testing purposes",
-          image = ImageUrl(Fakes.androidStudioImageUrl),
+          name = "Time Complexity: What and Why?",
+          tagline = "An introduction to Big O and its real-world importance.",
+          image = ImageUrl("https://i.ibb.co/njy7FxD/time-complexity-1.webp"),
           content = EmptyContent,
           completed = true,
         ),
