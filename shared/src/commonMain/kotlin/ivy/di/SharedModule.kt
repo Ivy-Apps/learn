@@ -12,11 +12,8 @@ import ivy.data.LottieAnimationLoader
 import ivy.data.source.*
 import ivy.di.Di.singleton
 import ivy.di.autowire.autoWire
-import ivy.learn.*
+import ivy.learn.dsl.lessonJson
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import platform
 import io.ktor.client.plugins.logging.LogLevel as KtorLogLevel
 
@@ -24,7 +21,9 @@ object SharedModule : Di.Module {
 
   override fun init() = Di.appScope {
     singleton<Platform> { platform() }
-    json()
+    singleton<Json> {
+      lessonJson()
+    }
     ktorClient()
     autoWire(::HerokuServerUrlProvider)
     autoWire(::LocalServerUrlProvider)
@@ -37,27 +36,6 @@ object SharedModule : Di.Module {
     autoWire(::MetricsDataSource)
   }
 
-  private fun Di.Scope.json() = singleton {
-    Json {
-      ignoreUnknownKeys = true
-      isLenient = true
-      coerceInputValues = true
-      explicitNulls = false
-      serializersModule = SerializersModule {
-        polymorphic(LessonItem::class) {
-          subclass(ChoiceItem.serializer())
-          subclass(ImageItem.serializer())
-          subclass(LessonNavigationItem.serializer())
-          subclass(LinkItem.serializer())
-          subclass(LottieAnimationItem.serializer())
-          subclass(MysteryItem.serializer())
-          subclass(OpenQuestionItem.serializer())
-          subclass(QuestionItem.serializer())
-          subclass(TextItem.serializer())
-        }
-      }
-    }
-  }
 
   private fun Di.Scope.ktorClient() = singleton {
     val platform = Di.get<Platform>()

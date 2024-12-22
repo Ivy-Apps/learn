@@ -1,119 +1,213 @@
 import ivy.learn.TextStyle
-import ivy.learn.dsl.codeBuilder
-import ivy.learn.dsl.codeExample
 import ivy.learn.dsl.lessonContent
 
 fun wipLesson() = lessonContent {
+
+  // 1. Introduction
   text("intro_heading") {
-    text = "What is Time Complexity and Why Does it Matter?"
     style = TextStyle.Heading
+    text = "Time Complexity: What and Why?"
   }
 
   text("intro_body") {
+    style = TextStyle.Body
     text =
-      "Imagine you are searching for a friend's phone number in a huge phonebook. If you randomly flip pages, it could take a long time. But if you follow an organized approach, like starting with the letter of their last name, you save time. Time complexity helps us understand how fast or slow an algorithm is as the size of the input grows."
+      "Time complexity measures how fast an algorithm runs as the input grows. It helps us compare methods and pick the best one."
+  }
+
+  // 2. Introductory Question
+  question("why_care_question") {
+    question = "Why should we care about time complexity when writing code?"
+    clarification = "Think about how your code might behave as data grows."
+
+    answer(
+      text = "We don't need to; all code runs instantly",
+      explanation = "Not true. Large inputs slow down code; time complexity helps us plan.",
+      correct = false
+    )
+
+    answer(
+      text = "It tells us how difficult the code is to write",
+      explanation = "No. Time complexity is about performance, not coding difficulty.",
+      correct = false
+    )
+
+    answer(
+      text = "It lets us predict performance for big inputs",
+      explanation = "Correct! Time complexity shows how an algorithm scales.",
+      correct = true
+    )
+
+    answer(
+      text = "It's only for math geniuses",
+      explanation = "Time complexity basics are for everyone, not just math experts.",
+      correct = false
+    )
+  }
+
+  // 3. Simple Analogy
+  text("analogy_body") {
     style = TextStyle.BodySpacingMedium
-  }
-
-  text("importance") {
     text =
-      "Understanding time complexity helps us write efficient code, saving time and resources in real-world applications."
-    style = TextStyle.BodySpacingLarge
+      "Imagine looking for a friend's number in a giant phonebook. If you check each page, it takes longer as the book grows. That's time complexity!"
   }
 
-  text("big_o_intro") {
-    text =
-      "Big O notation is a way to describe the performance of an algorithm. It focuses on the worst-case scenario as input size increases. Let’s explore with an example!"
-    style = TextStyle.BodySpacingMedium
+  // 4. Code Example (Linear Search)
+  code("linear_search_example") {
+    line("# A simple linear search in Python")
+    line("def find_number(phonebook, friend_name):")
+    line("    for i, entry in enumerate(phonebook):")
+    line("        if entry == friend_name:")
+    line("            return i")
+    line("    return -1")
   }
 
-  codeExample("linear_search_code") {
-    text = codeBuilder {
-      line("# Python example: Searching for a number in a list")
-      line("def search(array, target):")
-      line("  for i in range(len(array)):")
-      line("    if array[i] == target:")
-      line("      return i")
-      line("  return -1")
-    }
-  }
-
-  text("linear_search_explained") {
-    text =
-      "This function searches through the list one by one until it finds the target or finishes checking the entire list."
-    style = TextStyle.BodySpacingMedium
-  }
-
+  // 5. Question: Linear Search
   question("linear_search_question") {
-    question = "If there are 10 elements in the list, in the worst case, how many checks does the function make?"
-    clarification = "Think about when the target is not in the list."
-    answer(text = "1", explanation = "Incorrect. The function checks all elements in the worst case.")
-    answer(text = "5", explanation = "Incorrect. This would be true for the average case, not the worst case.")
+    question = "How many steps does the linear search take in the worst case?"
+    clarification = "Think of how you scan one by one."
+
     answer(
-      text = "10",
-      correct = true,
-      explanation = "Correct! The function checks every element in the list in the worst case."
+      text = "It checks every entry, so it grows with the size of the list",
+      explanation = "Correct. That's O(n).",
+      correct = true
     )
-    answer(text = "20", explanation = "No. There are only 10 elements in the list.")
+
+    answer(
+      text = "It magically finds the entry with just one check",
+      explanation = "Nope. That would be O(1), which is not how linear search works.",
+      correct = false
+    )
+
+    answer(
+      text = "It does half the work for each check, so it’s O(log n)",
+      explanation = "This describes binary search, not linear search.",
+      correct = false
+    )
+
+    answer(
+      text = "Time complexity does not change with list size",
+      explanation = "It does change; a bigger list means more steps.",
+      correct = false
+    )
   }
 
-  text("linear_time_explained") {
-    text =
-      "In this example, the time complexity is O(n), where n is the number of elements in the list. This means the time it takes grows linearly with the input size."
-    style = TextStyle.BodySpacingMedium
+  // 6. Binary Search Code Example
+  code("binary_search_example") {
+    line("# A simple binary search in Python")
+    line("# Note: This requires a sorted list.")
+    line("def find_number_binary(phonebook, friend_name):")
+    line("    low = 0")
+    line("    high = len(phonebook) - 1")
+    line("    while low <= high:")
+    line("        mid = (low + high) // 2")
+    line("        if phonebook[mid] == friend_name:")
+    line("            return mid")
+    line("        elif phonebook[mid] < friend_name:")
+    line("            low = mid + 1")
+    line("        else:")
+    line("            high = mid - 1")
+    line("    return -1")
   }
 
-  text("better_way") {
-    text =
-      "Now imagine searching for a word in a dictionary. You don’t check every word; you use the alphabetical order to skip many words. This is much faster."
-    style = TextStyle.BodySpacingLarge
-  }
-
-  codeExample("binary_search_code") {
-    text = codeBuilder {
-      line("# Python example: Binary search")
-      line("def binary_search(array, target):")
-      line("  left, right = 0, len(array) - 1")
-      line("  while left <= right:")
-      line("    mid = (left + right) // 2")
-      line("    if array[mid] == target:")
-      line("      return mid")
-      line("    elif array[mid] < target:")
-      line("      left = mid + 1")
-      line("    else:")
-      line("      right = mid - 1")
-      line("  return -1")
-    }
-  }
-
-  text("binary_search_explained") {
-    text =
-      "This function uses a divide-and-conquer strategy to search. It splits the list into halves, eliminating half the possibilities each time."
-    style = TextStyle.BodySpacingMedium
-  }
-
+  // 7. Question: Binary Search
   question("binary_search_question") {
-    question = "If there are 100 elements in the list, in the worst case, how many checks does the function make?"
-    clarification = "Remember, the function splits the list in half each time."
-    answer(text = "100", explanation = "Incorrect. This would be true for a linear search, not binary search.")
-    answer(text = "50", explanation = "No, binary search reduces the problem by halving, not checking every element.")
-    answer(text = "7", explanation = "Close, but not quite. Try calculating log2(100).")
+    question = "Why is binary search faster than linear search on a sorted list?"
+    clarification = "Think about how each guess cuts the search range in half."
+
     answer(
-      text = "7 (approximately)",
-      correct = true,
-      explanation = "Correct! Binary search performs about log2(n) checks in the worst case."
+      text = "Because it does not need the list to be sorted",
+      explanation = "Incorrect. Binary search only works correctly when the list is sorted.",
+      correct = false
+    )
+
+    answer(
+      text = "It checks each element one by one",
+      explanation = "No, that's linear search, not binary search.",
+      correct = false
+    )
+
+    answer(
+      text = "It splits the list in half each time, so it only takes O(log n) steps",
+      explanation = "Correct! Each comparison halves the search space.",
+      correct = true
+    )
+
+    answer(
+      text = "It tries every possible entry in random order",
+      explanation = "No, random guesses would not guarantee O(log n).",
+      correct = false
     )
   }
 
-  text("log_time_explained") {
+  // 8. Big O Explanation
+  text("big_o_body") {
+    style = TextStyle.BodySpacingLarge
     text =
-      "In this example, the time complexity is O(log n), where n is the number of elements. This means the time grows much slower compared to O(n)."
-    style = TextStyle.BodySpacingMedium
+      "Big O notation describes how an algorithm’s runtime grows with the input size. For example, O(n) means the time grows in direct proportion to n, and O(log n) means the time grows much slower."
   }
 
-  text("summary") {
-    text =
-      "Time complexity helps us compare algorithms. Linear search (O(n)) is slower for large inputs, while binary search (O(log n)) is faster. Understanding this helps us write better code!"
-    style = TextStyle.BodySpacingLarge
+  // 9. Brute Force PIN Example
+  code("brute_force_pin") {
+    line("# Brute-forcing a 4-digit PIN")
+    line("def brute_force_pin():")
+    line("    for pin in range(10000): # 0000 to 9999")
+    line("        # Try the PIN")
+    line("        if test_pin(pin):")
+    line("            return pin")
+  }
+
+  // 10. Question: PIN Complexity
+  question("pin_complexity_question") {
+    question = "When brute-forcing a 4-digit PIN, how does the runtime grow with more digits?"
+    clarification = "Think about how many tries you need as digits increase."
+
+    answer(
+      text = "It doesn’t grow; always 4 digits",
+      explanation = "Incorrect. Adding more digits means more possibilities.",
+      correct = false
+    )
+
+    answer(
+      text = "It grows linearly with the number of digits (O(n))",
+      explanation = "Not exactly; each extra digit multiplies possibilities by 10.",
+      correct = false
+    )
+
+    answer(
+      text = "It grows exponentially with the number of digits (10^n)",
+      explanation = "Correct! Each new digit multiplies the attempts by 10.",
+      correct = true
+    )
+
+    answer(
+      text = "It becomes constant for any length of PIN",
+      explanation = "No. More digits always mean more attempts.",
+      correct = false
+    )
+  }
+
+  // 11. Final Wrap-Up
+  text("final_wrapup_title") {
+    style = TextStyle.Heading
+    text = "Summary"
+  }
+  text("final_wrapup1") {
+    text = """
+Time complexity helps us understand performance. Big O notation is a tool to compare algorithms.
+It’s about how fast they grow, not exact speeds. 
+        """.trimIndent()
+  }
+  text("final_wrapup2") {
+    text = """
+Fast binary search can save you time, unlike slow brute-forcing a PIN digit by digit. Now you know why time complexity matters! 
+        """.trimIndent()
+    style = TextStyle.BodySpacingMedium
+  }
+  text("final_wrapup3") {
+    text = """
+Joke: Binary search walks into a bar and starts looking in the middle. The bartender says, "Find anything yet?" 
+        """.trimIndent()
+    style = TextStyle.BodySpacingMedium
   }
 }

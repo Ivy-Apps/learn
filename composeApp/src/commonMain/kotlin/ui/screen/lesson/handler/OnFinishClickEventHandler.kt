@@ -2,6 +2,8 @@ package ui.screen.lesson.handler
 
 import data.lesson.LessonRepository
 import domain.SoundUseCase
+import domain.analytics.Analytics
+import domain.analytics.Source
 import ivy.content.SoundsUrls
 import navigation.Navigation
 import ui.screen.lesson.LessonEventHandler
@@ -14,6 +16,7 @@ class OnFinishClickEventHandler(
     private val soundUseCase: SoundUseCase,
     private val lessonRepository: LessonRepository,
     private val logger: Logger,
+    private val analytics: Analytics,
 ) : LessonEventHandler<LessonViewEvent.OnFinishClick> {
     override val eventTypes = setOf(LessonViewEvent.OnFinishClick::class)
 
@@ -28,5 +31,9 @@ class OnFinishClickEventHandler(
         ).onLeft { errMsg ->
             logger.error("Failed to mark lesson as completed because: $errMsg")
         }
+        analytics.logEvent(
+            source = Source.Lesson,
+            event = "complete"
+        )
     }
 }

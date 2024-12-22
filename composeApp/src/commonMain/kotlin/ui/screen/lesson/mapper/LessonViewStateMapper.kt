@@ -47,7 +47,6 @@ class LessonViewStateMapper(
   }
 
   private fun ctaViewState(currentItem: LessonItem): CtaViewState {
-    platform.log(LogLevel.Debug, "Current item: $currentItem")
     return if (currentItem is LinearItem && currentItem.next == null) {
       CtaViewState.Finish(currentItem.id.toViewState())
     } else {
@@ -81,6 +80,7 @@ class LessonViewStateMapper(
     is OpenQuestionItem -> toViewState(localState)
     is QuestionItem -> toViewState(localState)
     is TextItem -> toViewState()
+    is CodeItem -> toViewState()
     is SoundItem -> toViewState()
   }
 
@@ -170,6 +170,11 @@ class LessonViewStateMapper(
       TextStyle.BodySpacingMedium -> TextStyleViewState.BodyMediumSpacing
       TextStyle.BodySpacingLarge -> TextStyleViewState.BodyBigSpacing
     }
+  )
+
+  private fun CodeItem.toViewState(): CodeItemViewState = CodeItemViewState(
+    id = id.toViewState(),
+    code = code,
   )
 
   private fun SoundItem.toViewState(): SoundItemViewState = SoundItemViewState(
