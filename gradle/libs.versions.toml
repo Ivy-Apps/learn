@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.2"
+agp = "8.7.3"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -14,15 +14,15 @@ arrow = "1.2.4"
 junit = "4.13.2"
 kotlin = "2.1.0"
 ktor = "3.0.1"
-ktor-client = "3.0.1"
-logback = "1.5.12"
+ktor-client = "3.0.3"
+logback = "1.5.15"
 kotest = "5.9.1"
-kotlin-coroutines = "1.9.0"
-jebrains-exposed = "0.56.0"
-compose-multiplatform = "1.7.1"
+kotlin-coroutines = "1.10.1"
+jebrains-exposed = "0.57.0"
+compose-multiplatform = "1.8.0+dev1989"
 
 [libraries]
-ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.6" }
+ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.7" }
 ivyApps-learnDsl = { module = "com.ivy-apps:learn-content-dsl", version = "0.0.6" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -69,10 +69,10 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-mockk = { module = "io.mockk:mockk", version = "1.13.13" }
+mockk = { module = "io.mockk:mockk", version = "1.13.14" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.4" }
 thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
-thirdparty-kamel = { module = "media.kamel:kamel-image-default", version = "1.0.1" }
+thirdparty-kamel = { module = "media.kamel:kamel-image-default", version = "1.0.2" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
 
 [bundles]
