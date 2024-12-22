@@ -9,7 +9,7 @@ import ivy.model.CourseId
 import ivy.model.ImageUrl
 import ivy.model.Lesson
 import ivy.model.LessonId
-import timeComplexityLesson
+import wipLesson
 
 class FakeLessonRepository : LessonRepository {
   override suspend fun fetchLesson(
@@ -22,7 +22,7 @@ class FakeLessonRepository : LessonRepository {
         name = "WIP: Lesson",
         tagline = "Fake lesson that we're working on right now!",
         image = ImageUrl(""),
-        content = timeComplexityLesson(),
+        content = wipLesson(),
         completed = false,
       ),
       progress = LessonProgress(
