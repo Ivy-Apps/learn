@@ -2,7 +2,6 @@ package data.fake
 
 import arrow.core.Either
 import arrow.core.right
-import bigONotationLesson
 import data.lesson.LessonRepository
 import domain.model.LessonProgress
 import domain.model.LessonWithProgress
@@ -10,6 +9,7 @@ import ivy.model.CourseId
 import ivy.model.ImageUrl
 import ivy.model.Lesson
 import ivy.model.LessonId
+import timeComplexityLesson
 
 class FakeLessonRepository : LessonRepository {
   override suspend fun fetchLesson(
@@ -22,7 +22,7 @@ class FakeLessonRepository : LessonRepository {
         name = "WIP: Lesson",
         tagline = "Fake lesson that we're working on right now!",
         image = ImageUrl(""),
-        content = bigONotationLesson(),
+        content = timeComplexityLesson(),
         completed = false,
       ),
       progress = LessonProgress(
