@@ -31,10 +31,7 @@ fun CodeLessonItem(
   ) {
     BodyBig(
       modifier = modifier
-        .padding(
-          horizontal = 12.dp,
-          vertical = 24.dp,
-        )
+        .padding(all = 24.dp)
         .then(
           when (screenType()) {
             Mobile -> Modifier.sizeIn(
