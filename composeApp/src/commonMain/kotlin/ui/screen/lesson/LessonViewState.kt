@@ -32,6 +32,13 @@ data class TextItemViewState(
 ) : LessonItemViewState
 
 @Immutable
+data class CodeItemViewState(
+    override val id: LessonItemIdViewState,
+    val code: String,
+) : LessonItemViewState
+
+
+@Immutable
 enum class TextStyleViewState {
     Heading,
     Body,

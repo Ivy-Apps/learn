@@ -24,139 +24,141 @@ val ItemSpacingBig = 48.dp
 
 @Composable
 fun LessonContent(
-    viewState: LessonViewState,
-    onEvent: (LessonViewEvent) -> Unit
+  viewState: LessonViewState,
+  onEvent: (LessonViewEvent) -> Unit
 ) {
-    LearnScaffold(
-        backButton = BackButton(
-            onBackClick = {
-                onEvent(LessonViewEvent.OnBackClick)
-            }
-        ),
-        title = viewState.title,
-        topBarCenterContent = {
-            LessonProgressBar(viewState = viewState.progress)
-        }
-    ) { contentPadding ->
-        Box(
-            modifier = Modifier.fillMaxSize()
-                .padding(contentPadding)
-        ) {
-            LessonItemsLazyColumn(
-                viewState = viewState,
-                onEvent = onEvent,
-            )
-            if (viewState.cta != null) {
-                CtaBar(
-                    modifier = Modifier.align(Alignment.BottomCenter),
-                    viewState = viewState.cta,
-                    onContinueClick = { itemId ->
-                        onEvent(LessonViewEvent.OnContinueClick(itemId))
-                    },
-                    onFinishClick = { itemId ->
-                        onEvent(LessonViewEvent.OnFinishClick(itemId))
-                    }
-                )
-            }
-        }
+  LearnScaffold(
+    backButton = BackButton(
+      onBackClick = {
+        onEvent(LessonViewEvent.OnBackClick)
+      }
+    ),
+    title = viewState.title,
+    topBarCenterContent = {
+      LessonProgressBar(viewState = viewState.progress)
     }
+  ) { contentPadding ->
+    Box(
+      modifier = Modifier.fillMaxSize()
+        .padding(contentPadding)
+    ) {
+      LessonItemsLazyColumn(
+        viewState = viewState,
+        onEvent = onEvent,
+      )
+      if (viewState.cta != null) {
+        CtaBar(
+          modifier = Modifier.align(Alignment.BottomCenter),
+          viewState = viewState.cta,
+          onContinueClick = { itemId ->
+            onEvent(LessonViewEvent.OnContinueClick(itemId))
+          },
+          onFinishClick = { itemId ->
+            onEvent(LessonViewEvent.OnFinishClick(itemId))
+          }
+        )
+      }
+    }
+  }
 }
 
 @Composable
 private fun LessonItemsLazyColumn(
-    viewState: LessonViewState,
-    onEvent: (LessonViewEvent) -> Unit,
-    modifier: Modifier = Modifier,
+  viewState: LessonViewState,
+  onEvent: (LessonViewEvent) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    val horizontalPadding = when (screenType()) {
-        Mobile -> 16.dp
-        Tablet -> 24.dp
-        Desktop -> 64.dp
-    }
-    val listState = rememberLazyListState()
+  val horizontalPadding = when (screenType()) {
+    Mobile -> 16.dp
+    Tablet -> 24.dp
+    Desktop -> 64.dp
+  }
+  val listState = rememberLazyListState()
 
-    AutoScrollEffect(
-        listState = listState,
-        viewState = viewState,
+  AutoScrollEffect(
+    listState = listState,
+    viewState = viewState,
+  )
+
+  LazyColumn(
+    modifier = modifier
+      .fillMaxSize(),
+    state = listState,
+    horizontalAlignment = Alignment.CenterHorizontally,
+    contentPadding = PaddingValues(
+      bottom = 96.dp,
+      start = horizontalPadding,
+      end = horizontalPadding,
     )
-
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize(),
-        state = listState,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(
-            bottom = 96.dp,
-            start = horizontalPadding,
-            end = horizontalPadding,
+  ) {
+    items(
+      items = viewState.items,
+      key = {
+        it.id.value
+      }
+    ) { itemViewState ->
+      when (itemViewState) {
+        is ChoiceItemViewState -> ChoiceLessonItem(
+          viewState = itemViewState,
+          onChoiceClick = { choiceOptionViewState ->
+            onEvent(
+              LessonViewEvent.OnChoiceClick(
+                questionId = itemViewState.id,
+                choiceId = choiceOptionViewState.id
+              )
+            )
+          }
         )
-    ) {
-        items(
-            items = viewState.items,
-            key = {
-                it.id.value
-            }
-        ) { itemViewState ->
-            when (itemViewState) {
-                is ChoiceItemViewState -> ChoiceLessonItem(
-                    viewState = itemViewState,
-                    onChoiceClick = { choiceOptionViewState ->
-                        onEvent(
-                            LessonViewEvent.OnChoiceClick(
-                                questionId = itemViewState.id,
-                                choiceId = choiceOptionViewState.id
-                            )
-                        )
-                    }
-                )
 
-                is ImageItemViewState -> ImageLessonItem(itemViewState)
+        is ImageItemViewState -> ImageLessonItem(itemViewState)
 
-                is LessonNavigationItemViewState -> {
-                    // TODO
-                }
-
-                is LinkItemViewState -> {
-                    // TODO
-                }
-
-                is LottieAnimationItemViewState -> LottieAnimationLessonItem(itemViewState)
-
-                is MysteryItemViewState -> {
-                    // TODO
-                }
-
-                is OpenQuestionItemViewState -> {
-                    // TODO
-                }
-
-                is QuestionItemViewState -> QuestionLessonItem(
-                    viewState = itemViewState,
-                    onAnswerCheckChange = { type, answerViewState, checked ->
-                        onEvent(
-                            QuestionViewEvent.OnAnswerCheckChange(
-                                questionId = itemViewState.id,
-                                questionType = type,
-                                answerId = answerViewState.id,
-                                checked = checked,
-                            )
-                        )
-                    },
-                    onCheckClick = { answers ->
-                        onEvent(QuestionViewEvent.OnCheckClick(itemViewState.id, answers))
-                    }
-                )
-
-                is TextItemViewState -> TextLessonItem(itemViewState)
-
-                is SoundItemViewState -> SoundLessonItem(
-                    viewState = itemViewState,
-                    onClick = { soundUrl ->
-                        onEvent(LessonViewEvent.OnSoundClick(soundUrl))
-                    }
-                )
-            }
+        is LessonNavigationItemViewState -> {
+          // TODO
         }
-        autoScrollEmptySpace()
+
+        is LinkItemViewState -> {
+          // TODO
+        }
+
+        is LottieAnimationItemViewState -> LottieAnimationLessonItem(itemViewState)
+
+        is MysteryItemViewState -> {
+          // TODO
+        }
+
+        is OpenQuestionItemViewState -> {
+          // TODO
+        }
+
+        is QuestionItemViewState -> QuestionLessonItem(
+          viewState = itemViewState,
+          onAnswerCheckChange = { type, answerViewState, checked ->
+            onEvent(
+              QuestionViewEvent.OnAnswerCheckChange(
+                questionId = itemViewState.id,
+                questionType = type,
+                answerId = answerViewState.id,
+                checked = checked,
+              )
+            )
+          },
+          onCheckClick = { answers ->
+            onEvent(QuestionViewEvent.OnCheckClick(itemViewState.id, answers))
+          }
+        )
+
+        is TextItemViewState -> TextLessonItem(itemViewState)
+
+        is CodeItemViewState -> CodeLessonItem(itemViewState)
+
+        is SoundItemViewState -> SoundLessonItem(
+          viewState = itemViewState,
+          onClick = { soundUrl ->
+            onEvent(LessonViewEvent.OnSoundClick(soundUrl))
+          }
+        )
+      }
     }
+    autoScrollEmptySpace()
+  }
 }
