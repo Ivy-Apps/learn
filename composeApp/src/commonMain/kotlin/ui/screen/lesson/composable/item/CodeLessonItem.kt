@@ -65,8 +65,15 @@ fun CodeLessonItem(
 
 @Composable
 fun highlightSyntax(code: String): AnnotatedString {
-  val keywords = setOf("def", "if", "elif", "return")
   val primaryColor = MaterialTheme.colors.primary
+  val secondaryColor = MaterialTheme.colors.secondary
+  val keywords = mapOf(
+    "def" to primaryColor,
+    "if" to secondaryColor,
+    "elif" to secondaryColor,
+    "return" to secondaryColor,
+    "for" to secondaryColor,
+  )
   val commentColor = Gray
 
   return buildAnnotatedString {
@@ -75,37 +82,39 @@ fun highlightSyntax(code: String): AnnotatedString {
     var i = 0
     var inComment = false
 
+    fun processKeyword() {
+      val word = buffer.toString()
+      if (word in keywords) {
+        withStyle(style = SpanStyle(color = keywords[word]!!)) {
+          append(word)
+        }
+      } else {
+        append(word)
+      }
+      buffer.clear()
+    }
+
     while (i < code.length) {
       val char = code[i]
 
       if (inComment) {
         // Append the entire comment in gray
         commentBuffer.append(char)
-        i++
         if (char == '\n') {
           withStyle(style = SpanStyle(color = commentColor)) {
             append(commentBuffer.toString())
           }
           commentBuffer.clear()
           inComment = false
-          continue
-        } else {
-          continue
         }
+        i++
+        continue
       }
 
       when {
         char == '#' -> {
           // Process existing buffer before starting a comment
-          val word = buffer.toString()
-          if (keywords.contains(word)) {
-            withStyle(style = SpanStyle(color = primaryColor)) {
-              append(word)
-            }
-          } else {
-            append(word)
-          }
-          buffer.clear()
+          processKeyword()
 
           // Start processing the comment
           commentBuffer.append(char)
@@ -118,16 +127,9 @@ fun highlightSyntax(code: String): AnnotatedString {
         }
 
         else -> {
-          // Process accumulated word
-          val word = buffer.toString()
-          if (keywords.contains(word)) {
-            withStyle(style = SpanStyle(color = primaryColor)) {
-              append(word)
-            }
-          } else {
-            append(word)
-          }
-          buffer.clear()
+          // non-word character
+          // ' ' (space), new line or tabulation
+          processKeyword()
 
           // Append the non-word character
           append(char.toString())
@@ -138,13 +140,6 @@ fun highlightSyntax(code: String): AnnotatedString {
     }
 
     // Handle any remaining keyword in the buffer
-    val word = buffer.toString()
-    if (keywords.contains(word)) {
-      withStyle(style = SpanStyle(color = primaryColor)) {
-        append(word)
-      }
-    } else {
-      append(word)
-    }
+    processKeyword()
   }
 }
