@@ -11,13 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import component.IvyImage
 import component.ScreenType.*
 import component.isLargeScreen
 import component.screenType
 import component.text.SubTitle
 import component.text.Title
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import ui.screen.home.HomeItemViewState
 import ui.theme.LightGray
 
@@ -67,9 +66,8 @@ private fun Banner(
     modifier: Modifier = Modifier,
 ) {
     Box {
-        KamelImage(
-            resource = { asyncPainterResource(imageUrl) },
-            contentDescription = null,
+        IvyImage(
+            imageUrl = imageUrl,
             modifier = modifier
                 .fillMaxWidth()
                 .aspectRatio(
