@@ -18,7 +18,7 @@ class StatusApi(
             StatusResponse(
                 message = "Hello, world! (devMode = ${serverMode.devMode})",
                 time = time,
-                version = "02.12.2024"
+                version = "Auto-deploy test",
             )
         }
     }
