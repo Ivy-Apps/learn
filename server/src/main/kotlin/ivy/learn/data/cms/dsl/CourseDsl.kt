@@ -53,10 +53,11 @@ class CourseScopeImpl : CourseScope {
     name: String,
     tagline: String,
     imageUrl: String,
+    id: String,
   ) {
     lessons.add(
       Lesson(
-        id = LessonId(nameToId(name)),
+        id = LessonId(id),
         name = name,
         tagline = tagline,
         image = ImageUrl(imageUrl),
@@ -87,5 +88,6 @@ interface CourseScope {
     name: String,
     tagline: String,
     imageUrl: String,
+    id: String = nameToId(name),
   )
 }
