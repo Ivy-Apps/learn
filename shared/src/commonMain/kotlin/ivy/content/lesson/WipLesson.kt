@@ -18,6 +18,11 @@ fun wipLesson() = lessonContent {
     line("            return pin")
   }
 
+  image("phonebook_img") {
+    imageUrl =
+      "https://i.ibb.co/Xy2zQ44/DALL-E-2024-12-23-00-03-54-A-visual-analogy-for-time-complexity-a-person-flipping-through-a-giant-ph.webp"
+  }
+
   code("demo-code") {
     line("# A simple linear search in Python")
     line("def find_number(phonebook, friend_name):")

@@ -17,8 +17,8 @@ import ui.screen.lesson.composable.ItemSpacingMedium
 
 @Composable
 fun imageSize(): Dp = when (screenType()) {
-    Mobile, Tablet -> 232.dp
-    Desktop -> 284.dp
+    Mobile, Tablet -> 264.dp
+    Desktop -> 320.dp
 }
 
 @Composable
