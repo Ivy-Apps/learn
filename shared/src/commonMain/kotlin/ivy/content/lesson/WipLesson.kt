@@ -18,9 +18,17 @@ fun wipLesson() = lessonContent {
     line("            return pin")
   }
 
+  image("sdsd") {
+    imageUrl = "invalid"
+  }
+
   image("phonebook_img") {
     imageUrl =
       "https://i.ibb.co/Xy2zQ44/DALL-E-2024-12-23-00-03-54-A-visual-analogy-for-time-complexity-a-person-flipping-through-a-giant-ph.webp"
+  }
+
+  image("time-complexity-diagram") {
+    imageUrl = "https://i.ibb.co/b71s1Xy/time-complexity-diagram.jpg"
   }
 
   code("demo-code") {
