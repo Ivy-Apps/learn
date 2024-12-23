@@ -20,6 +20,7 @@ import component.ScreenType.Mobile
 import component.screenType
 import ui.screen.lesson.CodeItemViewState
 import ui.screen.lesson.composable.ItemSpacingMedium
+import ui.theme.Gray
 import ui.theme.colorsExt
 
 @Composable
@@ -66,32 +67,73 @@ fun CodeLessonItem(
 fun highlightSyntax(code: String): AnnotatedString {
   val keywords = setOf("def", "if", "elif", "return")
   val primaryColor = MaterialTheme.colors.primary
+  val commentColor = Gray
 
   return buildAnnotatedString {
     val buffer = StringBuilder()
+    val commentBuffer = StringBuilder()
     var i = 0
+    var inComment = false
 
     while (i < code.length) {
       val char = code[i]
 
-      if (char.isLetterOrDigit() || char == '_') {
-        // Accumulate potential keyword
-        buffer.append(char)
-      } else {
-        // Process accumulated word
-        val word = buffer.toString()
-        if (keywords.contains(word)) {
-          // Apply style to keyword
-          withStyle(style = SpanStyle(color = primaryColor)) {
+      if (inComment) {
+        // Append the entire comment in gray
+        commentBuffer.append(char)
+        i++
+        if (char == '\n') {
+          withStyle(style = SpanStyle(color = commentColor)) {
+            append(commentBuffer.toString())
+          }
+          commentBuffer.clear()
+          inComment = false
+          continue
+        } else {
+          continue
+        }
+      }
+
+      when {
+        char == '#' -> {
+          // Process existing buffer before starting a comment
+          val word = buffer.toString()
+          if (keywords.contains(word)) {
+            withStyle(style = SpanStyle(color = primaryColor)) {
+              append(word)
+            }
+          } else {
             append(word)
           }
-        } else {
-          append(word) // Append as normal text
+          buffer.clear()
+
+          // Start processing the comment
+          commentBuffer.append(char)
+          inComment = true
         }
-        // Append the non-word character
-        append(char.toString())
-        buffer.clear()
+
+        char.isLetterOrDigit() || char == '_' -> {
+          // Accumulate potential keyword
+          buffer.append(char)
+        }
+
+        else -> {
+          // Process accumulated word
+          val word = buffer.toString()
+          if (keywords.contains(word)) {
+            withStyle(style = SpanStyle(color = primaryColor)) {
+              append(word)
+            }
+          } else {
+            append(word)
+          }
+          buffer.clear()
+
+          // Append the non-word character
+          append(char.toString())
+        }
       }
+
       i++
     }
 
