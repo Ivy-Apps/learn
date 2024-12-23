@@ -33,7 +33,12 @@ class OnFinishClickEventHandler(
     soundUseCase.playSound(SoundsUrls.CompleteLesson)
     analytics.logEvent(
       source = Source.Lesson,
-      event = "complete"
+      event = "complete",
+      params = mapOf(
+        "courseId" to args.courseId.value,
+        "lessonId" to args.lessonId.value,
+        "lessonName" to args.lessonName,
+      )
     )
   }
 }
