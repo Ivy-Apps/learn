@@ -5,6 +5,10 @@ import domain.SoundUseCase
 import domain.analytics.Analytics
 import domain.analytics.Source
 import ivy.content.SoundsUrls
+import ivy.model.analytics.courseId
+import ivy.model.analytics.lessonId
+import ivy.model.analytics.lessonName
+import ivy.model.analytics.params
 import navigation.Navigation
 import ui.screen.lesson.LessonEventHandler
 import ui.screen.lesson.LessonViewEvent
@@ -34,11 +38,11 @@ class OnFinishClickEventHandler(
     analytics.logEvent(
       source = Source.Lesson,
       event = "complete",
-      params = mapOf(
-        "courseId" to args.courseId.value,
-        "lessonId" to args.lessonId.value,
-        "lessonName" to args.lessonName,
-      )
+      params = params {
+        courseId(args.courseId)
+        lessonId(args.lessonId)
+        lessonName(args.lessonName)
+      }
     )
   }
 }

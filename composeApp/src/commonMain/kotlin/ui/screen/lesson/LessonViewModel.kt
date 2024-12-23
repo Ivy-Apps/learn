@@ -5,11 +5,14 @@ import arrow.core.Either
 import arrow.optics.optics
 import data.lesson.LessonRepository
 import domain.analytics.Analytics
-import domain.analytics.Param
 import domain.analytics.Source
 import domain.model.LessonProgress
 import domain.model.LessonWithProgress
 import ivy.learn.*
+import ivy.model.analytics.courseId
+import ivy.model.analytics.lessonId
+import ivy.model.analytics.lessonName
+import ivy.model.analytics.params
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -67,11 +70,11 @@ class LessonViewModel(
       analytics.logEvent(
         source = Source.Lesson,
         event = "view",
-        params = mapOf(
-          Param.CourseId to args.courseId.value,
-          Param.LessonId to args.lessonId.value,
-          Param.LessonName to args.lessonName,
-        )
+        params = params {
+          courseId(args.courseId)
+          lessonId(args.lessonId)
+          lessonName(args.lessonName)
+        }
       )
     }
     return when (val response = lessonResponse) {
