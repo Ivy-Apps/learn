@@ -9,6 +9,15 @@ fun wipLesson() = lessonContent {
     text = "Time Complexity: What and Why?"
   }
 
+  code("demo-code") {
+    line("# A simple linear search in Python")
+    line("def find_number(phonebook, friend_name):")
+    line("    for i, entry in enumerate(phonebook):")
+    line("        if entry == friend_name:")
+    line("            return i")
+    line("    return -1")
+  }
+
   text("intro_body") {
     style = TextStyle.Body
     text =
