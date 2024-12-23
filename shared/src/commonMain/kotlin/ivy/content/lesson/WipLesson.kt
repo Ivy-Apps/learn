@@ -9,6 +9,15 @@ fun wipLesson() = lessonContent {
     text = "Time Complexity: What and Why?"
   }
 
+  code("brute_force_pin**") {
+    line("# Brute-forcing a 4-digit PIN")
+    line("def brute_force_pin():")
+    line("    for pin in range(10000): # 0000 to 9999")
+    line("        # Try the PIN")
+    line("        if test_pin(pin):")
+    line("            return pin")
+  }
+
   code("demo-code") {
     line("# A simple linear search in Python")
     line("def find_number(phonebook, friend_name):")

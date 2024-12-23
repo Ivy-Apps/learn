@@ -28,7 +28,7 @@ fun highlightSyntax(
       var i = 0
       var inComment = false
 
-      fun processKeyword() {
+      fun processBufferedKeyword() {
         val word = buffer.toString()
         if (word in keywords) {
           withStyle(style = SpanStyle(color = keywords[word]!!)) {
@@ -60,7 +60,7 @@ fun highlightSyntax(
         when {
           char == '#' -> {
             // Process existing buffer before starting a comment
-            processKeyword()
+            processBufferedKeyword()
 
             // Start processing the comment
             commentBuffer.append(char)
@@ -75,7 +75,7 @@ fun highlightSyntax(
           else -> {
             // non-word character
             // ' ' (space), new line or tabulation
-            processKeyword()
+            processBufferedKeyword()
 
             // Append the non-word character
             append(char.toString())
@@ -86,7 +86,7 @@ fun highlightSyntax(
       }
 
       // Handle any remaining keyword in the buffer
-      processKeyword()
+      processBufferedKeyword()
     }
   }
 }
