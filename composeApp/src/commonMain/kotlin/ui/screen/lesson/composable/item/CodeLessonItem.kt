@@ -6,13 +6,17 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import component.PythonSyntaxHighlight
 import component.ScreenType.Mobile
+import component.highlightSyntax
 import component.screenType
-import component.text.BodyBig
 import ui.screen.lesson.CodeItemViewState
 import ui.screen.lesson.composable.ItemSpacingMedium
 import ui.theme.colorsExt
@@ -29,9 +33,15 @@ fun CodeLessonItem(
     contentColor = MaterialTheme.colorsExt.onBackgroundVariant,
     border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.primary)
   ) {
-    BodyBig(
+    Text(
       modifier = modifier
-        .padding(all = 24.dp)
+        .padding(
+          vertical = 24.dp,
+          horizontal = when (screenType()) {
+            Mobile -> 8.dp
+            else -> 24.dp
+          }
+        )
         .then(
           when (screenType()) {
             Mobile -> Modifier.sizeIn(
@@ -41,8 +51,16 @@ fun CodeLessonItem(
             else -> Modifier
           }
         ),
-      text = viewState.code,
+      text = highlightSyntax(
+        code = viewState.code,
+        syntaxHighlight = remember { PythonSyntaxHighlight() }
+      ),
+      style = MaterialTheme.typography.body1.copy(
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+      ),
       textAlign = TextAlign.Start,
     )
   }
 }
+

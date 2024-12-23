@@ -22,94 +22,95 @@ import ui.screen.home.HomeViewState
 
 @Composable
 fun HomeContent(
-    viewState: HomeViewState,
-    onEvent: (HomeViewEvent) -> Unit
+  viewState: HomeViewState,
+  onEvent: (HomeViewEvent) -> Unit
 ) {
-    LearnScaffold(
-        backButton = null,
-        title = "Learn",
-        actions = {
-            SettingsButton(
-                onClick = {
-                    onEvent(HomeViewEvent.OnSettingsClick)
-                }
-            )
+  LearnScaffold(
+    backButton = null,
+    title = "Learn",
+    actions = { modifier ->
+      SettingsButton(
+        modifier = modifier,
+        onClick = {
+          onEvent(HomeViewEvent.OnSettingsClick)
         }
-    ) { contentPadding ->
-        val columnsCount = when (screenType()) {
-            ScreenType.Mobile -> 1
-            ScreenType.Tablet -> 2
-            ScreenType.Desktop -> 3
-        }
-        val horizontalPadding = platformHorizontalPadding()
-        LazyVerticalGrid(
-            modifier = Modifier.padding(contentPadding),
-            columns = GridCells.Fixed(
-                count = columnsCount
-            ),
-            verticalArrangement = Arrangement.spacedBy(
-                if (isLargeScreen()) 16.dp else 12.dp
-            ),
-            horizontalArrangement = Arrangement.spacedBy(
-                if (isLargeScreen()) 24.dp else 12.dp
-            ),
-            contentPadding = PaddingValues(
-                top = 16.dp,
-                bottom = 48.dp,
-                start = horizontalPadding,
-                end = horizontalPadding
-            )
-        ) {
-            items(
-                items = viewState.items,
-                span = {
-                    when (it) {
-                        is HomeItemViewState.Course -> GridItemSpan(1)
-                        is HomeItemViewState.Section -> GridItemSpan(columnsCount)
-                    }
-                },
-                key = {
-                    when (it) {
-                        is HomeItemViewState.Course -> it.id
-                        is HomeItemViewState.Section -> it.title
-                    }
-                }
-            ) {
-                when (it) {
-                    is HomeItemViewState.Course -> CourseCard(
-                        course = it,
-                        onCourseClick = {
-                            onEvent(
-                                HomeViewEvent.OnCourseClick(
-                                    id = CourseId(it.id),
-                                    name = it.name
-                                )
-                            )
-                        })
-
-                    is HomeItemViewState.Section -> Section(
-                        modifier = Modifier.padding(top = 12.dp),
-                        section = it
-                    )
-                }
-            }
-        }
+      )
     }
+  ) { contentPadding ->
+    val columnsCount = when (screenType()) {
+      ScreenType.Mobile -> 1
+      ScreenType.Tablet -> 2
+      ScreenType.Desktop -> 3
+    }
+    val horizontalPadding = platformHorizontalPadding()
+    LazyVerticalGrid(
+      modifier = Modifier.padding(contentPadding),
+      columns = GridCells.Fixed(
+        count = columnsCount
+      ),
+      verticalArrangement = Arrangement.spacedBy(
+        if (isLargeScreen()) 16.dp else 12.dp
+      ),
+      horizontalArrangement = Arrangement.spacedBy(
+        if (isLargeScreen()) 24.dp else 12.dp
+      ),
+      contentPadding = PaddingValues(
+        top = 16.dp,
+        bottom = 48.dp,
+        start = horizontalPadding,
+        end = horizontalPadding
+      )
+    ) {
+      items(
+        items = viewState.items,
+        span = {
+          when (it) {
+            is HomeItemViewState.Course -> GridItemSpan(1)
+            is HomeItemViewState.Section -> GridItemSpan(columnsCount)
+          }
+        },
+        key = {
+          when (it) {
+            is HomeItemViewState.Course -> it.id
+            is HomeItemViewState.Section -> it.title
+          }
+        }
+      ) {
+        when (it) {
+          is HomeItemViewState.Course -> CourseCard(
+            course = it,
+            onCourseClick = {
+              onEvent(
+                HomeViewEvent.OnCourseClick(
+                  id = CourseId(it.id),
+                  name = it.name
+                )
+              )
+            })
+
+          is HomeItemViewState.Section -> Section(
+            modifier = Modifier.padding(top = 12.dp),
+            section = it
+          )
+        }
+      }
+    }
+  }
 }
 
 @Composable
 private fun SettingsButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+  modifier: Modifier = Modifier,
+  onClick: () -> Unit
 ) {
-    IvyIconButton(
-        modifier = modifier,
-        icon = {
-            Icon(
-                imageVector = Icons.Filled.Settings,
-                contentDescription = null
-            )
-        },
-        onClick = onClick
-    )
+  IvyIconButton(
+    modifier = modifier,
+    icon = {
+      Icon(
+        imageVector = Icons.Filled.Settings,
+        contentDescription = null
+      )
+    },
+    onClick = onClick
+  )
 }

@@ -12,28 +12,28 @@ import ui.screen.lesson.LessonVmContext
 import util.Logger
 
 class OnFinishClickEventHandler(
-    private val navigation: Navigation,
-    private val soundUseCase: SoundUseCase,
-    private val lessonRepository: LessonRepository,
-    private val logger: Logger,
-    private val analytics: Analytics,
+  private val navigation: Navigation,
+  private val soundUseCase: SoundUseCase,
+  private val lessonRepository: LessonRepository,
+  private val logger: Logger,
+  private val analytics: Analytics,
 ) : LessonEventHandler<LessonViewEvent.OnFinishClick> {
-    override val eventTypes = setOf(LessonViewEvent.OnFinishClick::class)
+  override val eventTypes = setOf(LessonViewEvent.OnFinishClick::class)
 
-    override suspend fun LessonVmContext.handleEvent(
-        event: LessonViewEvent.OnFinishClick
-    ) {
-        navigation.navigateBack()
-        soundUseCase.playSound(SoundsUrls.CompleteLesson)
-        lessonRepository.markLessonAsCompleted(
-            course = args.courseId,
-            lesson = args.lessonId,
-        ).onLeft { errMsg ->
-            logger.error("Failed to mark lesson as completed because: $errMsg")
-        }
-        analytics.logEvent(
-            source = Source.Lesson,
-            event = "complete"
-        )
+  override suspend fun LessonVmContext.handleEvent(
+    event: LessonViewEvent.OnFinishClick
+  ) {
+    lessonRepository.markLessonAsCompleted(
+      course = args.courseId,
+      lesson = args.lessonId,
+    ).onLeft { errMsg ->
+      logger.error("Failed to mark lesson as completed because: $errMsg")
     }
+    navigation.navigateBack()
+    soundUseCase.playSound(SoundsUrls.CompleteLesson)
+    analytics.logEvent(
+      source = Source.Lesson,
+      event = "complete"
+    )
+  }
 }

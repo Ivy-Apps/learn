@@ -9,6 +9,100 @@ fun wipLesson() = lessonContent {
     text = "Time Complexity: What and Why?"
   }
 
+  code("brute_force_pin**") {
+    line("# Brute-forcing a 4-digit PIN")
+    line("def brute_force_pin():")
+    line("    for pin in range(10000): # 0000 to 9999")
+    line("        # Try the PIN")
+    line("        if test_pin(pin):")
+    line("            return pin")
+  }
+
+  image("sdsd") {
+    imageUrl = "invalid"
+  }
+
+  image("phonebook_img") {
+    imageUrl =
+      "https://i.ibb.co/Xy2zQ44/DALL-E-2024-12-23-00-03-54-A-visual-analogy-for-time-complexity-a-person-flipping-through-a-giant-ph.webp"
+  }
+
+  image("time-complexity-diagram") {
+    imageUrl = "https://i.ibb.co/b71s1Xy/time-complexity-diagram.jpg"
+  }
+
+  code("demo-code") {
+    line("# A simple linear search in Python")
+    line("def find_number(phonebook, friend_name):")
+    line("    for i, entry in enumerate(phonebook):")
+    line("        if entry == friend_name:")
+    line("            return i")
+    line("    return -1")
+  }
+
+  code("constant_time_example**") {
+    line("# O(1): Accessing the first element is always one step")
+    line("def get_first_element(items):")
+    line("    return items[0]")
+  }
+
+  code("log_time_example**") {
+    line("# O(log n): Binary search example (requires a sorted list)")
+    line("def find_item(sorted_list, target):")
+    line("    low, high = 0, len(sorted_list) - 1")
+    line("    while low <= high:")
+    line("        mid = (low + high) // 2")
+    line("        if sorted_list[mid] == target:")
+    line("            return mid")
+    line("        elif sorted_list[mid] < target:")
+    line("            low = mid + 1")
+    line("        else:")
+    line("            high = mid - 1")
+    line("    return -1")
+  }
+
+  code("linear_time_example**") {
+    line("# O(n): Print each item in the list once")
+    line("def print_all_items(items):")
+    line("    for x in items:")
+    line("        print(x)")
+  }
+
+  code("n_log_n_example**") {
+    line("# O(n log n): Simplified merge sort example")
+    line("def merge_sort(items):")
+    line("    if len(items) <= 1:")
+    line("        return items")
+    line("    mid = len(items) // 2")
+    line("    left = merge_sort(items[:mid])")
+    line("    right = merge_sort(items[mid:])")
+    line("    return merge(left, right)")
+
+    line("")
+    line("def merge(left, right):")
+    line("    result = []")
+    line("    i = j = 0")
+    line("    while i < len(left) and j < len(right):")
+    line("        if left[i] < right[j]:")
+    line("            result.append(left[i])")
+    line("            i += 1")
+    line("        else:")
+    line("            result.append(right[j])")
+    line("            j += 1")
+    line("    result.extend(left[i:])")
+    line("    result.extend(right[j:])")
+    line("    return result")
+  }
+
+  code("quadratic_time_example**") {
+    line("# O(n^2): Compare every item with every other item")
+    line("def compare_pairs(items):")
+    line("    for i in range(len(items)):")
+    line("        for j in range(len(items)):")
+    line("            if i != j:")
+    line("                print(items[i], items[j])")
+  }
+
   text("intro_body") {
     style = TextStyle.Body
     text =
