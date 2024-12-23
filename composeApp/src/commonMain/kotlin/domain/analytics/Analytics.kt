@@ -38,7 +38,7 @@ class Analytics(
 
   private fun logEvent(
     eventName: String,
-    params: Map<String, String>? = null,
+    params: Map<String, String>?,
   ) {
     if (!enabled) return
 

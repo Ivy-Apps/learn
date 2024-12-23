@@ -7,6 +7,7 @@ import domain.analytics.Analytics
 import domain.analytics.Source
 import ivy.content.SoundsUrls
 import ivy.learn.AnswerId
+import ivy.model.analytics.*
 import ui.screen.lesson.*
 import ui.screen.lesson.LessonViewModel.LocalState
 import ui.screen.lesson.QuestionTypeViewState.MultipleChoice
@@ -89,11 +90,16 @@ class QuestionEventHandler(
       } else {
         "answer_incorrectly"
       },
-      params = mapOf(
-        "questionId" to event.questionId.value,
-        "answers" to event.answers.filter { it.selected }
-          .joinToString(separator = ", ") { it.text }
-      )
+      params = params {
+        courseId(args.courseId)
+        lessonId(args.lessonId)
+        courseName(args.lessonName)
+        questionId(event.questionId.value)
+        answers(
+          event.answers.filter { it.selected }
+            .joinToString(separator = ", ") { it.text }
+        )
+      }
     )
   }
 }
