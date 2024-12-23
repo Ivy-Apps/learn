@@ -9,7 +9,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import component.ScreenType.Mobile
@@ -48,12 +52,57 @@ fun CodeLessonItem(
             else -> Modifier
           }
         ),
-      text = viewState.code,
+      text = highlightSyntax(viewState.code),
       style = MaterialTheme.typography.body1.copy(
         fontSize = 18.sp,
         lineHeight = 24.sp,
       ),
       textAlign = TextAlign.Start,
     )
+  }
+}
+
+@Composable
+fun highlightSyntax(code: String): AnnotatedString {
+  val keywords = setOf("def", "if", "elif", "return")
+  val primaryColor = MaterialTheme.colors.primary
+
+  return buildAnnotatedString {
+    val buffer = StringBuilder()
+    var i = 0
+
+    while (i < code.length) {
+      val char = code[i]
+
+      if (char.isLetterOrDigit() || char == '_') {
+        // Accumulate potential keyword
+        buffer.append(char)
+      } else {
+        // Process accumulated word
+        val word = buffer.toString()
+        if (keywords.contains(word)) {
+          // Apply style to keyword
+          withStyle(style = SpanStyle(color = primaryColor)) {
+            append(word)
+          }
+        } else {
+          append(word) // Append as normal text
+        }
+        // Append the non-word character
+        append(char.toString())
+        buffer.clear()
+      }
+      i++
+    }
+
+    // Handle any remaining keyword in the buffer
+    val word = buffer.toString()
+    if (keywords.contains(word)) {
+      withStyle(style = SpanStyle(color = primaryColor)) {
+        append(word)
+      }
+    } else {
+      append(word)
+    }
   }
 }
