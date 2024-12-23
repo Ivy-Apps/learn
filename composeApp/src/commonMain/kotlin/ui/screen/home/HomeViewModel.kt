@@ -62,7 +62,7 @@ class HomeViewModel(
 
     private fun logEvent(
         event: String,
-        params: Map<String, String> = emptyMap(),
+        params: Map<String, String>? = null,
     ) {
         analytics.logEvent(
             source = Source.Home,
