@@ -146,6 +146,7 @@ class LessonViewStateMapper(
     clarification = clarification,
     type = if (correct.size == 1) QuestionTypeViewState.SingleChoice else QuestionTypeViewState.MultipleChoice,
     answers = answers.map { it.toViewState(this, localState) }
+      .shuffled()
       .toImmutableList(),
     answered = id in localState.answered,
   )
