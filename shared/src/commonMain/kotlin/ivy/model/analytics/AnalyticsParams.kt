@@ -9,6 +9,7 @@ object AnalyticsParams {
   val lessonId = "lessonId"
   val lessonName = "lessonName"
   val questionId = "questionId"
+  val itemId = "itemId"
   val answers = "answers"
 }
 
@@ -35,6 +36,11 @@ fun AnalyticsParamsScope.lessonName(name: String) {
 @AnalyticsParamsDsl
 fun AnalyticsParamsScope.questionId(id: String) {
   param(AnalyticsParams.questionId, id)
+}
+
+@AnalyticsParamsDsl
+fun AnalyticsParamsScope.itemId(id: String) {
+  param(AnalyticsParams.itemId, id)
 }
 
 @AnalyticsParamsDsl
