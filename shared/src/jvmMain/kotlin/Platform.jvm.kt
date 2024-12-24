@@ -21,6 +21,10 @@ class JVMPlatform: Platform {
     override fun getUrlParam(key: String): String? {
         return null
     }
+
+    override fun setSocialPreview(title: String, description: String, imageUrl: String, pageUrl: String) {
+        // n/a
+    }
 }
 
 actual fun platform(): Platform = JVMPlatform()
