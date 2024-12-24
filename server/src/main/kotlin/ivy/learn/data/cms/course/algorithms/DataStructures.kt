@@ -25,21 +25,25 @@ object DataStructures : CourseDsl({
     imageUrl = "https://i.ibb.co/rHq5PZL/linked-lists.webp"
   )
   lesson(
+    id = "sets",
     name = "Sets",
     tagline = "Unique elements. No duplicates.",
     imageUrl = "https://i.ibb.co/HzMFHVV/sets.webp"
   )
   lesson(
+    id = "maps",
     name = "Maps",
     tagline = "Key-Value pairs. Associative arrays.",
     imageUrl = "https://i.ibb.co/D4VbPT9/maps.webp"
   )
   lesson(
+    id = "stacks",
     name = "Stacks",
     tagline = "LIFO: Last In, First Out.",
     imageUrl = "https://i.ibb.co/kc06zjZ/stack.webp"
   )
   lesson(
+    id = "queues",
     name = "Queues",
     tagline = "FIFO: First In, First Out.",
     imageUrl = "https://i.ibb.co/6s05L65/queues.webp"
