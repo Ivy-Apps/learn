@@ -12,7 +12,6 @@ import ivy.learn.CourseId
 import ivy.learn.LessonId
 import ivy.learn.LessonItemId
 import ivy.learn.data.cms.course.CoursesContent
-import ivy.learn.data.cms.course.algorithms.DataStructures
 import ivy.learn.testsupport.ServerTest
 import ivy.learn.testsupport.data.repository.LessonProgressFixtures
 import org.junit.Test
@@ -63,31 +62,27 @@ class LessonsApiTest : ServerTest() {
       course.lessons.map { lessonId ->
         course.id to lessonId
       }
+    }.forEach { (courseId, lessonId) ->
+
+      // Given
+      val auth = registerUser()
+      val datasource = Di.get<LessonDataSource>()
+
+
+      // When
+      val response = datasource.fetchLesson(
+        session = auth.session.token,
+        course = courseId,
+        lesson = lessonId,
+      )
+
+      // Then
+      withClue("courseId = ${courseId.value}, lessonId = ${lessonId.value}") {
+        val successResponse = response.shouldBeRight()
+        successResponse.lesson.id shouldBe lessonId
+        successResponse.lesson.content.items.shouldNotBeEmpty()
+      }
     }
-      .filter { (courseId, _) ->
-        courseId != DataStructures.course.id
-      }
-      .forEach { (courseId, lessonId) ->
-
-        // Given
-        val auth = registerUser()
-        val datasource = Di.get<LessonDataSource>()
-
-
-        // When
-        val response = datasource.fetchLesson(
-          session = auth.session.token,
-          course = courseId,
-          lesson = lessonId,
-        )
-
-        // Then
-        withClue("courseId = ${courseId.value}, lessonId = ${lessonId.value}") {
-          val successResponse = response.shouldBeRight()
-          successResponse.lesson.id shouldBe lessonId
-          successResponse.lesson.content.items.shouldNotBeEmpty()
-        }
-      }
   }
 
 

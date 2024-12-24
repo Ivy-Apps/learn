@@ -49,26 +49,31 @@ object DataStructures : CourseDsl({
     imageUrl = "https://i.ibb.co/6s05L65/queues.webp"
   )
   lesson(
+    id = "trees",
     name = "Trees",
     tagline = "Hierarchical data structures.",
     imageUrl = "https://i.ibb.co/kG4wqnv/trees.webp"
   )
   lesson(
+    id = "graphs",
     name = "Graphs",
     tagline = "Networks of nodes and edges.",
     imageUrl = "https://i.ibb.co/cbsSHcj/graphs.webp"
   )
   lesson(
+    id = "heaps",
     name = "Heaps",
     tagline = "Priority Queues. Efficiently find the max or min.",
     imageUrl = "https://i.ibb.co/0y7Stzd/heaps.webp"
   )
   lesson(
+    id = "tries",
     name = "Tries",
     tagline = "Prefix Trees. Efficient string search.",
     imageUrl = "https://i.ibb.co/4T8XKrc/tries.webp"
   )
   lesson(
+    id = "hash-tables",
     name = "Hash Tables",
     tagline = "Fast lookups. Key-Value pairs.",
     imageUrl = "https://i.ibb.co/BKNN73g/hash-tables.webp"
