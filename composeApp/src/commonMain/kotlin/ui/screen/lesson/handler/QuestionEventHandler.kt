@@ -93,7 +93,7 @@ class QuestionEventHandler(
       params = params {
         courseId(args.courseId)
         lessonId(args.lessonId)
-        courseName(args.lessonName)
+        lessonName(args.lessonName)
         questionId(event.questionId.value)
         answers(
           event.answers.filter { it.selected }
