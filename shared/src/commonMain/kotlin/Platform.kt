@@ -6,6 +6,12 @@ interface Platform {
     fun httpClient(config: HttpClientConfig<*>.() -> Unit = {}): HttpClient
     fun playSound(soundUrl: String)
     fun getUrlParam(key: String): String?
+    fun setSocialPreview(
+        title: String,
+        description: String,
+        imageUrl: String,
+        pageUrl: String,
+    )
 }
 
 enum class LogLevel {
