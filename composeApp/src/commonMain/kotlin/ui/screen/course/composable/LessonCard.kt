@@ -97,7 +97,7 @@ private fun LessonImage(
     modifier = modifier
       .aspectRatio(
         when (screenType()) {
-          Mobile -> 0.6f
+          Mobile -> 0.8f
           Tablet -> 1f
           Desktop -> 1f
         }
