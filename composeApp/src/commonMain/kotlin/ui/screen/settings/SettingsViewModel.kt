@@ -88,11 +88,13 @@ class SettingsViewModel(
   private fun handlePrivacyClick() {
     scope.launch {
       if (analytics.enabled) {
+        logEvent(event = "disable_analytics")
         analytics.disable()
         toaster.showToast("Analytics disabled")
       } else {
         analytics.enable()
         toaster.showToast("Analytics enabled")
+        logEvent(event = "enable_analytics")
       }
     }
 
