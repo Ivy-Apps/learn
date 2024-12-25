@@ -17,7 +17,7 @@ class GoogleAuthRedirect(
     override suspend fun handle(): Boolean {
         val sessionTokenParam = platform.getUrlParam(IvyConstants.PARAM_SESSION_TOKEN)
         if (sessionTokenParam != null) {
-            sessionManager.authenticate(SessionToken(sessionTokenParam))
+            sessionManager.login(SessionToken(sessionTokenParam))
             analytics.logEvent(
                 source = Source.Intro,
                 event = "continue_with_google"

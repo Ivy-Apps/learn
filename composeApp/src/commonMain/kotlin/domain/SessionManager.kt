@@ -11,9 +11,14 @@ class SessionManager(
 ) {
   private var cachedSession: Session? = null
 
-  suspend fun authenticate(token: SessionToken) {
-    localStorage.putString(KET_SESSION_TOKEN, token.value)
+  suspend fun login(token: SessionToken) {
+    localStorage.putString(KEY_SESSION_TOKEN, token.value)
     cachedSession = Session.LoggedIn(token)
+  }
+
+  suspend fun startAnonymousSession() {
+    localStorage.putBoolean(KEY_IS_ANONYMOUS_SESSION, true)
+    cachedSession = Session.Anonymous
   }
 
   suspend fun getSessionToken(): Either<String, SessionToken> = either {
@@ -34,7 +39,7 @@ class SessionManager(
   }
 
   private suspend fun loggedInSessionOrNull(): Session.LoggedIn? {
-    return localStorage.getString(KET_SESSION_TOKEN)
+    return localStorage.getString(KEY_SESSION_TOKEN)
       ?.let { token ->
         Session.LoggedIn(SessionToken(token))
       }
@@ -50,11 +55,12 @@ class SessionManager(
 
   suspend fun logout() {
     cachedSession = Session.LoggedOut
-    localStorage.remove(KET_SESSION_TOKEN)
+    localStorage.remove(KEY_SESSION_TOKEN)
+    localStorage.remove(KEY_IS_ANONYMOUS_SESSION)
   }
 
   companion object {
-    const val KET_SESSION_TOKEN = "sessionToken"
+    const val KEY_SESSION_TOKEN = "sessionToken"
     const val KEY_IS_ANONYMOUS_SESSION = "isAnonymousSession"
   }
 }
