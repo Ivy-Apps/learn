@@ -1,21 +1,25 @@
 package ui.screen.intro.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import component.LocalLottieAnimation
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
 import component.platformHorizontalPadding
-import component.text.Headline
-import component.text.Title
 import ui.screen.intro.IntroViewEvent
 import ui.screen.intro.IntroViewState
+import ui.theme.Gray
 
 
 @Composable
@@ -35,18 +39,22 @@ fun IntroContent(
     ) {
       Spacer(modifier = Modifier.weight(1f))
       IntroAnimation()
-      Headline(text = "Become a better software engineer")
+      Text(
+        text = "Become a better software engineer",
+        style = MaterialTheme.typography.h4,
+        fontWeight = FontWeight.SemiBold,
+      )
       Spacer(modifier = Modifier.height(12.dp))
-      Title(
-        text = "Learn data structures, algorithms, architecture and software design from first principles."
+      Text(
+        text = "Learn data structures, algorithms, architecture and software design from first principles.",
+        style = MaterialTheme.typography.body1,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Medium,
       )
       Spacer(modifier = Modifier.height(24.dp))
-      GoogleSignInButton(
-        onClick = { onEvent(IntroViewEvent.OnContinueWithGoogleClick) }
-      )
-      Spacer(modifier = Modifier.height(12.dp))
-      LearnMoreButton(
-        onClick = { onEvent(IntroViewEvent.OnLearnMoreClick) }
+      ButtonsSection(
+        onContinueWithGoogleClick = { onEvent(IntroViewEvent.OnContinueWithGoogleClick) },
+        onLearnMoreClick = { onEvent(IntroViewEvent.OnLearnMoreClick) }
       )
       Spacer(modifier = Modifier.weight(1f))
       IntroLegalText()
@@ -66,13 +74,40 @@ private fun IntroAnimation(
 }
 
 @Composable
+private fun ColumnScope.ButtonsSection(
+  onContinueWithGoogleClick: () -> Unit,
+  onLearnMoreClick: () -> Unit,
+) {
+  val density = LocalDensity.current
+  var googleButtonWidth by remember { mutableStateOf(0.dp) }
+  GoogleSignInButton(
+    modifier = Modifier.onSizeChanged {
+      googleButtonWidth = with(density) { it.width.toDp() }
+    },
+    onClick = onContinueWithGoogleClick,
+  )
+  Spacer(modifier = Modifier.height(8.dp))
+  Text(
+    text = "or",
+    fontSize = 18.sp,
+    fontWeight = FontWeight.Light,
+    color = Gray,
+  )
+  Spacer(modifier = Modifier.height(8.dp))
+  LearnMoreButton(
+    modifier = Modifier.defaultMinSize(minWidth = googleButtonWidth),
+    onClick = onLearnMoreClick
+  )
+}
+
+@Composable
 private fun LearnMoreButton(
   onClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   IvyButton(
     modifier = modifier,
-    appearance = ButtonAppearance.Text(style = ButtonStyle.Secondary),
+    appearance = ButtonAppearance.Outlined(style = ButtonStyle.Primary),
     text = {
       Text("Learn more")
     },
