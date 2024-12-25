@@ -1,9 +1,10 @@
 package ivy.learn.api
 
 import io.ktor.server.routing.*
+import ivy.data.sessionToken
 import ivy.data.source.model.TopicsResponse
 import ivy.learn.api.common.Api
-import ivy.learn.api.common.getEndpointAuthenticated
+import ivy.learn.api.common.getEndpoint
 import ivy.learn.domain.TopicsService
 
 class TopicsApi(
@@ -14,9 +15,9 @@ class TopicsApi(
     }
 
     private fun Routing.loadTopics() {
-        getEndpointAuthenticated<TopicsResponse>("/topics") { _, sessionToken ->
+        getEndpoint<TopicsResponse>("/topics") { headers, _ ->
             topicsService.loadTopics(
-                sessionToken = sessionToken
+                sessionToken = headers.sessionToken()
             ).bind()
         }
     }
