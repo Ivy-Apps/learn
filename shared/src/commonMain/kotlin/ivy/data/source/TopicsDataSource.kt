@@ -14,25 +14,27 @@ import ivy.data.source.model.TopicsResponse
 import ivy.model.auth.SessionToken
 
 class TopicsDataSource(
-    private val httpClient: HttpClient,
-    private val urlProvider: ServerUrlProvider,
+  private val httpClient: HttpClient,
+  private val urlProvider: ServerUrlProvider,
 ) {
-    suspend fun fetchTopics(
-        session: SessionToken,
-    ): Either<String, TopicsResponse> = catch({
-        either {
-            val response = httpClient.get(
-                "${urlProvider.serverUrl}/topics"
-            ) {
-                contentType(ContentType.Application.Json)
-                headerSessionToken(session)
-            }
-            ensure(response.status.isSuccess()) {
-                "Failed to fetch topics, status - ${response.status}"
-            }
-            response.body<TopicsResponse>()
+  suspend fun fetchTopics(
+    session: SessionToken?,
+  ): Either<String, TopicsResponse> = catch({
+    either {
+      val response = httpClient.get(
+        "${urlProvider.serverUrl}/topics"
+      ) {
+        contentType(ContentType.Application.Json)
+        if (session != null) {
+          headerSessionToken(session)
         }
-    }) { e ->
-        Either.Left("Failed to fetch topics: ${e.message}")
+      }
+      ensure(response.status.isSuccess()) {
+        "Failed to fetch topics, status - ${response.status}"
+      }
+      response.body<TopicsResponse>()
     }
+  }) { e ->
+    Either.Left("Failed to fetch topics: ${e.message}")
+  }
 }

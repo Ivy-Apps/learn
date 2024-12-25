@@ -81,10 +81,10 @@ suspend inline fun <reified Body : Any> Raise<ServerError>.extractBody(
 @IvyServerDsl
 inline fun <reified Response : Any> Routing.getEndpoint(
     path: String,
-    crossinline handler: suspend Raise<ServerError>.(Parameters) -> Response
+    crossinline handler: suspend Raise<ServerError>.(Headers, Parameters) -> Response
 ) {
     getEndpointBase(path) { call ->
-        val response = handler(call.parameters)
+        val response = handler(call.request.headers, call.parameters)
         call.respond(HttpStatusCode.OK, response)
     }
 }

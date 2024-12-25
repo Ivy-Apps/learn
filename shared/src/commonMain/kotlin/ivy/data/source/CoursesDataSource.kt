@@ -23,14 +23,16 @@ class CoursesDataSource(
   private val urlProvider: ServerUrlProvider,
 ) {
   suspend fun fetchCourseById(
-    session: SessionToken,
+    session: SessionToken?,
     courseId: CourseId
   ): Either<String, CourseResponse> = catch({
     httpClient.get(
       "${urlProvider.serverUrl}/courses/${courseId.value}"
     ) {
       contentType(ContentType.Application.Json)
-      headerSessionToken(session)
+      if (session != null) {
+        headerSessionToken(session)
+      }
     }.body<CourseResponse>().right()
   }) { e ->
     Either.Left("Failed to fetch '${courseId.value}' course: ${e.message}")
