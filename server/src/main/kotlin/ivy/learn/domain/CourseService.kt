@@ -16,6 +16,7 @@ import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.CompletedLesson
 import ivy.learn.domain.model.UserId
 import ivy.learn.util.TimeProvider
+import ivy.letCo
 import ivy.model.auth.SessionToken
 
 class CourseService(
@@ -26,25 +27,28 @@ class CourseService(
   private val timeProvider: TimeProvider,
 ) {
   suspend fun loadCourse(
-    sessionToken: SessionToken,
+    sessionToken: SessionToken?,
     courseId: CourseId
   ): Either<ServerError, CourseResponse> = either {
     val course = coursesRepository.fetchCourseById(courseId)
     ensureNotNull(course) {
       ServerError.BadRequest("Course not found for id $courseId")
     }
-    val user = authService.getUser(sessionToken).bind()
+    val user = sessionToken?.letCo(authService::getUser)?.bind()
     val lessons = lessonsRepository.fetchPartialLessons(courseId)
       .mapLeft(ServerError::BadRequest)
       .bind()
-    val lessonsWithProgress = lessonWithProgress(
-      userId = user.id,
-      courseId = course.id,
-      lessons = lessons,
-    )
     CourseResponse(
       course = course,
-      lessons = lessonsWithProgress,
+      lessons = if (user != null) {
+        lessonWithProgress(
+          userId = user.id,
+          courseId = course.id,
+          lessons = lessons,
+        )
+      } else {
+        lessons
+      },
     )
   }
 

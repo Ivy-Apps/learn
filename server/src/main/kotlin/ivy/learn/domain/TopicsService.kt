@@ -13,6 +13,7 @@ import ivy.learn.data.repository.CoursesRepository
 import ivy.learn.data.repository.TopicsRepository
 import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.model.User
+import ivy.letCo
 import ivy.model.auth.SessionToken
 
 class TopicsService(
@@ -24,7 +25,7 @@ class TopicsService(
   suspend fun loadTopics(
     sessionToken: SessionToken?,
   ): Either<ServerError, TopicsResponse> = either {
-    val user = sessionToken?.let { authService.getUser(it) }?.bind()
+    val user = sessionToken?.letCo(authService::getUser)?.bind()
     val courses = coursesRepository.fetchCourses()
 
     TopicsResponse(

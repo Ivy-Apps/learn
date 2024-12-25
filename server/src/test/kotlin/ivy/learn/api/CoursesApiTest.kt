@@ -33,6 +33,26 @@ class CoursesApiTest : ServerTest() {
   }
 
   @Test
+  fun `fetches courses logged-out`() = beTest {
+    CoursesContent.courses.forEach { course ->
+      // Given
+      val datasource = Di.get<CoursesDataSource>()
+      val courseId = course.id
+
+      // When
+      val result = datasource.fetchCourseById(
+        session = null,
+        courseId = courseId
+      )
+
+      // Then
+      withClue("courseId = ${courseId.value}") {
+        result.shouldBeRight().lessons.shouldNotBeEmpty()
+      }
+    }
+  }
+
+  @Test
   fun `saves course progress`() = beTest {
     // Given
     val auth = registerUser()
