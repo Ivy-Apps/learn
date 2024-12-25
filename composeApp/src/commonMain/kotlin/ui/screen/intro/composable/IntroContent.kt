@@ -32,7 +32,13 @@ fun IntroContent(
   Surface {
     Column(
       modifier = Modifier.fillMaxSize()
-        .padding(horizontal = 24.dp),
+        .padding(
+          horizontal = when (screenType()) {
+            Mobile -> 24.dp
+            Tablet -> 48.dp
+            Desktop -> 64.dp
+          }
+        ),
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       LazyColumn(
@@ -52,12 +58,14 @@ fun IntroContent(
             style = MaterialTheme.typography.h4,
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp,
+            lineHeight = 24.sp,
           )
           Spacer(modifier = Modifier.height(12.dp))
           Text(
             text = "Learn data structures, algorithms, architecture and software design from first principles.",
             style = MaterialTheme.typography.body1,
             fontSize = 18.sp,
+            lineHeight = 18.sp,
             fontWeight = FontWeight.Medium,
           )
         }
@@ -110,10 +118,11 @@ private fun ButtonsSection(
     },
     onClick = onContinueWithGoogleClick,
   )
-  Spacer(modifier = Modifier.height(4.dp))
+  Spacer(modifier = Modifier.height(7.dp))
   Text(
     text = "or",
     fontSize = 14.sp,
+    lineHeight = 14.sp,
     color = Gray,
   )
   Spacer(modifier = Modifier.height(4.dp))
