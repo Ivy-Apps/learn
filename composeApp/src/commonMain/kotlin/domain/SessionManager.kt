@@ -2,50 +2,60 @@ package domain
 
 import arrow.core.Either
 import arrow.core.raise.either
-import arrow.core.raise.ensureNotNull
+import arrow.core.raise.ensure
 import data.storage.LocalStorage
 import ivy.model.auth.SessionToken
 
 class SessionManager(
   private val localStorage: LocalStorage,
 ) {
-  private var session: Session? = null
+  private var cachedSession: Session? = null
 
   suspend fun authenticate(token: SessionToken) {
-    localStorage.putString(SESSION_TOKEN_KEY, token.value)
-    session = Session.LoggedIn(token)
+    localStorage.putString(KET_SESSION_TOKEN, token.value)
+    cachedSession = Session.LoggedIn(token)
   }
 
   suspend fun getSessionToken(): Either<String, SessionToken> = either {
-    val session = getSessionTokenOrNull()
-    ensureNotNull(session) {
+    val session = getSession()
+    ensure(session is Session.LoggedIn) {
       "No session found. Please login"
     }
-    session
+    session.sessionToken
   }
 
-  suspend fun isLoggedIn(): Boolean = getSessionTokenOrNull() != null
+  suspend fun getSession(): Session {
+    cachedSession?.let { return it }
 
-  suspend fun getSessionTokenOrNull(): SessionToken? {
-    return cachedLoggedSessionOrNull()?.sessionToken ?: localStorage.getString(SESSION_TOKEN_KEY)
-      ?.let(::SessionToken)
-      ?.also { token ->
-        session = Session.LoggedIn(sessionToken = token)
+    val session = loggedInSessionOrNull()
+      ?: anonymousSessionOrNull()
+    cachedSession = session
+    return session ?: Session.LoggedOut
+  }
+
+  private suspend fun loggedInSessionOrNull(): Session.LoggedIn? {
+    return localStorage.getString(KET_SESSION_TOKEN)
+      ?.let { token ->
+        Session.LoggedIn(SessionToken(token))
       }
   }
 
-  private fun cachedLoggedSessionOrNull(): Session.LoggedIn? {
-    return session as? Session.LoggedIn
+  private suspend fun anonymousSessionOrNull(): Session.Anonymous? {
+    return if (localStorage.getBoolean(KEY_IS_ANONYMOUS_SESSION) == true) {
+      Session.Anonymous
+    } else {
+      null
+    }
   }
 
   suspend fun logout() {
-    session = Session.LoggedOut
-    localStorage.remove(SESSION_TOKEN_KEY)
+    cachedSession = Session.LoggedOut
+    localStorage.remove(KET_SESSION_TOKEN)
   }
 
   companion object {
-    const val SESSION_TOKEN_KEY = "sessionToken"
-    const val IS_LOGGED_OUT_SESSION_KEY = "isLoggedOutSession"
+    const val KET_SESSION_TOKEN = "sessionToken"
+    const val KEY_IS_ANONYMOUS_SESSION = "isAnonymousSession"
   }
 }
 

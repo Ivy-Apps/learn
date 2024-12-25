@@ -2,6 +2,7 @@ package domain.analytics
 
 import data.AnalyticsRepository
 import data.storage.LocalStorage
+import domain.Session
 import domain.SessionManager
 import ivy.model.analytics.AnalyticsEventDto
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +45,7 @@ class Analytics(
     if (!enabled) return
 
     appScope.launch {
-      if (sessionManager.isLoggedIn()) {
+      if (sessionManager.getSession() is Session.LoggedIn) {
         trackLoggedAnalyticsEvent(
           eventName = eventName,
           params = params,
