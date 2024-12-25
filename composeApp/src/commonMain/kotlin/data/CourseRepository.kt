@@ -10,23 +10,23 @@ import kotlinx.coroutines.withContext
 import util.DispatchersProvider
 
 class CourseRepositoryImpl(
-    private val dispatchers: DispatchersProvider,
-    private val dataSource: CoursesDataSource,
-    private val sessionManager: SessionManager,
+  private val dispatchers: DispatchersProvider,
+  private val dataSource: CoursesDataSource,
+  private val sessionManager: SessionManager,
 ) : CourseRepository {
-    override suspend fun fetchCourse(
-        courseId: CourseId
-    ): Either<String, CourseResponse> = withContext(dispatchers.io) {
-        either {
-            val session = sessionManager.getSession().bind()
-            dataSource.fetchCourseById(
-                session = session,
-                courseId = courseId,
-            ).bind()
-        }
+  override suspend fun fetchCourse(
+    courseId: CourseId
+  ): Either<String, CourseResponse> = withContext(dispatchers.io) {
+    either {
+      val session = sessionManager.getSession().getOrNull()
+      dataSource.fetchCourseById(
+        session = session,
+        courseId = courseId,
+      ).bind()
     }
+  }
 }
 
 interface CourseRepository {
-    suspend fun fetchCourse(courseId: CourseId): Either<String, CourseResponse>
+  suspend fun fetchCourse(courseId: CourseId): Either<String, CourseResponse>
 }
