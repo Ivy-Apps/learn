@@ -43,6 +43,7 @@ fun IntroContent(
         text = "Become a better software engineer",
         style = MaterialTheme.typography.h4,
         fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp,
       )
       Spacer(modifier = Modifier.height(12.dp))
       Text(
@@ -51,7 +52,7 @@ fun IntroContent(
         fontSize = 18.sp,
         fontWeight = FontWeight.Medium,
       )
-      Spacer(modifier = Modifier.height(24.dp))
+      Spacer(modifier = Modifier.height(48.dp))
       ButtonsSection(
         onContinueWithGoogleClick = { onEvent(IntroViewEvent.OnContinueWithGoogleClick) },
         onLearnMoreClick = { onEvent(IntroViewEvent.OnLearnMoreClick) }
@@ -86,14 +87,13 @@ private fun ColumnScope.ButtonsSection(
     },
     onClick = onContinueWithGoogleClick,
   )
-  Spacer(modifier = Modifier.height(8.dp))
+  Spacer(modifier = Modifier.height(4.dp))
   Text(
     text = "or",
-    fontSize = 18.sp,
-    fontWeight = FontWeight.Light,
+    fontSize = 14.sp,
     color = Gray,
   )
-  Spacer(modifier = Modifier.height(8.dp))
+  Spacer(modifier = Modifier.height(4.dp))
   LearnMoreButton(
     modifier = Modifier.defaultMinSize(minWidth = googleButtonWidth),
     onClick = onLearnMoreClick
