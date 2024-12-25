@@ -10,6 +10,9 @@ import ivy.learn.CourseId
 import ivy.learn.LessonId
 import ivy.model.analytics.*
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import navigation.AccessControl
 import navigation.Navigation
 import ui.ComposeViewModel
 import ui.screen.course.mapper.CourseViewStateMapper
@@ -22,6 +25,8 @@ class CourseViewModel(
   private val repository: CourseRepository,
   private val mapper: CourseViewStateMapper,
   private val analytics: Analytics,
+  private val screenScope: CoroutineScope,
+  private val accessControl: AccessControl,
 ) : ComposeViewModel<CourseViewState, CourseViewEvent> {
 
   private var courseResponse by mutableStateOf<CourseResponse?>(null)
@@ -69,13 +74,18 @@ class CourseViewModel(
         lessonName(event.name)
       }
     )
-    navigation.navigateTo(
-      LessonScreen(
-        courseId = courseId,
-        lessonId = lessonId,
-        lessonName = event.name,
-      )
-    )
+    screenScope.launch {
+      accessControl.ensureLoggedIn {
+        navigation.navigateTo(
+          LessonScreen(
+            courseId = courseId,
+            lessonId = lessonId,
+            lessonName = event.name,
+          )
+        )
+      }
+    }
+
   }
 
   private fun logEvent(

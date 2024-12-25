@@ -44,7 +44,7 @@ class Analytics(
     if (!enabled) return
 
     appScope.launch {
-      if (sessionManager.getSessionOrNull() != null) {
+      if (sessionManager.isLoggedIn()) {
         trackLoggedAnalyticsEvent(
           eventName = eventName,
           params = params,

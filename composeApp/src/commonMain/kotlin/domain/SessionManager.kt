@@ -24,6 +24,8 @@ class SessionManager(
         session
     }
 
+    suspend fun isLoggedIn(): Boolean = getSessionOrNull() != null
+
     suspend fun getSessionOrNull(): SessionToken? {
         return sessionToken ?: localStorage.getString(SESSION_TOKEN_KEY)
             ?.let(::SessionToken)

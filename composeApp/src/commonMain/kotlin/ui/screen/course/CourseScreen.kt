@@ -53,6 +53,8 @@ class CourseScreen(
                 repository = Di.get(),
                 mapper = Di.get(),
                 analytics = Di.get(),
+                screenScope = Di.get(),
+                accessControl = Di.get()
             )
         }
     }

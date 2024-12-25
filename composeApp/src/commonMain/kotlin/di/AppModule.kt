@@ -12,6 +12,7 @@ import ivy.di.autowire.autoWireSingleton
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import navigation.AccessControl
 import navigation.Navigation
 import navigation.redirects.GoogleAuthRedirect
 import navigation.redirects.LoggedOutUserRedirect
@@ -43,6 +44,7 @@ object AppModule : Di.Module {
             autoWire(::GoogleAuthRedirect)
             autoWire(::LoggedOutUserRedirect)
             autoWire(::TimeProvider)
+            autoWire(::AccessControl)
         }
     }
 }
