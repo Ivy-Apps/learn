@@ -5,8 +5,6 @@ import data.storage.LocalStorage
 import ivy.model.analytics.AnalyticsEventDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import util.Logger
 import util.TimeProvider
 
@@ -44,8 +42,7 @@ class Analytics(
 
     appScope.launch {
       // TODO: Optimize later by batching events
-      val paramsJson = Json.encodeToString(params)
-      logger.info("$TAG Tracking: '$eventName' with $paramsJson params.")
+      logger.info("$TAG Tracking: '$eventName' with $params params.")
       analyticsRepository.logEvent(
         setOf(
           AnalyticsEventDto(
