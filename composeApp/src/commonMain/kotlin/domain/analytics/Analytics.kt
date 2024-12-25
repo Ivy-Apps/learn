@@ -2,6 +2,7 @@ package domain.analytics
 
 import data.AnalyticsRepository
 import data.storage.LocalStorage
+import domain.SessionManager
 import ivy.model.analytics.AnalyticsEventDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -14,6 +15,8 @@ class Analytics(
   private val appScope: CoroutineScope,
   private val timeProvider: TimeProvider,
   private val localStorage: LocalStorage,
+  private val sessionManager: SessionManager,
+  private val metrics: Metrics,
 ) {
   var enabled = true
     private set
@@ -41,21 +44,37 @@ class Analytics(
     if (!enabled) return
 
     appScope.launch {
-      // TODO: Optimize later by batching events
-      logger.info("$TAG Tracking: '$eventName' with $params params.")
-      analyticsRepository.logEvent(
-        setOf(
-          AnalyticsEventDto(
-            eventName = eventName,
-            time = timeProvider.timeNow(),
-            params = params,
-          )
+      if (sessionManager.getSessionOrNull() != null) {
+        trackLoggedAnalyticsEvent(
+          eventName = eventName,
+          params = params,
         )
-      ).onLeft { error ->
-        logger.error("$TAG Error logging '$eventName': $error")
-      }.onRight {
-        logger.debug("$TAG Logged '$eventName'.")
+      } else {
+        metrics.logMetric(
+          name = eventName,
+          params = params,
+        )
       }
+    }
+  }
+
+  private suspend fun trackLoggedAnalyticsEvent(
+    eventName: String,
+    params: Map<String, String>?,
+  ) {
+    logger.info("$TAG Tracking: '$eventName' with $params params.")
+    analyticsRepository.logEvent(
+      setOf(
+        AnalyticsEventDto(
+          eventName = eventName,
+          time = timeProvider.timeNow(),
+          params = params,
+        )
+      )
+    ).onLeft { error ->
+      logger.error("$TAG Error logging '$eventName': $error")
+    }.onRight {
+      logger.debug("$TAG Logged '$eventName'.")
     }
   }
 
