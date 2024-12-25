@@ -16,7 +16,7 @@ class UserRepository(
 ) {
     suspend fun deleteUserData(): Either<String, Unit> = withContext(dispatches.io) {
         either {
-            val session = sessionManager.getSession().bind()
+            val session = sessionManager.getSessionToken().bind()
             logger.info("Initiating delete user data request...")
             userDataSource.deleteUserData(session).bind()
         }

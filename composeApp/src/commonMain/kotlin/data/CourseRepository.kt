@@ -18,7 +18,7 @@ class CourseRepositoryImpl(
     courseId: CourseId
   ): Either<String, CourseResponse> = withContext(dispatchers.io) {
     either {
-      val session = sessionManager.getSession().getOrNull()
+      val session = sessionManager.getSessionToken().getOrNull()
       dataSource.fetchCourseById(
         session = session,
         courseId = courseId,

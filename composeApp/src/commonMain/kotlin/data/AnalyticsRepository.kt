@@ -18,7 +18,7 @@ class AnalyticsRepository(
         events: Set<AnalyticsEventDto>,
     ): Either<String, Unit> = either {
         withContext(dispatchers.io) {
-            val session = sessionManager.getSession().bind()
+            val session = sessionManager.getSessionToken().bind()
             dataSource.logEvents(
                 session = session,
                 request = LogAnalyticsEventsRequest(

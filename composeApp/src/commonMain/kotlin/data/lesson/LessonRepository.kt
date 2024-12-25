@@ -27,7 +27,7 @@ class LessonRepositoryImpl(
         lesson: LessonId
     ): Either<String, LessonWithProgress> = either {
         withContext(dispatchers.io) {
-            val session = sessionManager.getSession().bind()
+            val session = sessionManager.getSessionToken().bind()
             datasource.fetchLesson(
                 session = session,
                 course = course,
@@ -46,7 +46,7 @@ class LessonRepositoryImpl(
         progress: LessonProgress
     ): Either<String, Unit> = either {
         withContext(dispatchers.io) {
-            val session = sessionManager.getSession().bind()
+            val session = sessionManager.getSessionToken().bind()
             datasource.saveProgress(
                 session = session,
                 course = course,
@@ -67,7 +67,7 @@ class LessonRepositoryImpl(
         lesson: LessonId,
     ): Either<String, Unit> = withContext(dispatchers.io) {
         either {
-            val session = sessionManager.getSession().bind()
+            val session = sessionManager.getSessionToken().bind()
             coursesDataSource.saveProgress(
                 session = session,
                 course = course,
