@@ -1,6 +1,7 @@
 package ui.screen.intro.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -13,10 +14,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import component.LocalLottieAnimation
+import component.ScreenType.*
 import component.button.ButtonAppearance
 import component.button.ButtonStyle
 import component.button.IvyButton
-import component.platformHorizontalPadding
+import component.screenType
 import ui.screen.intro.IntroViewEvent
 import ui.screen.intro.IntroViewState
 import ui.theme.Gray
@@ -30,35 +32,46 @@ fun IntroContent(
   Surface {
     Column(
       modifier = Modifier.fillMaxSize()
-        .padding(
-          vertical = 24.dp,
-          horizontal = platformHorizontalPadding()
-        ),
+        .padding(horizontal = 24.dp),
       horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center
     ) {
-      Spacer(modifier = Modifier.weight(1f))
-      IntroAnimation()
-      Text(
-        text = "Become a better software engineer",
-        style = MaterialTheme.typography.h4,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 24.sp,
-      )
-      Spacer(modifier = Modifier.height(12.dp))
-      Text(
-        text = "Learn data structures, algorithms, architecture and software design from first principles.",
-        style = MaterialTheme.typography.body1,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Medium,
-      )
-      Spacer(modifier = Modifier.height(48.dp))
-      ButtonsSection(
-        onContinueWithGoogleClick = { onEvent(IntroViewEvent.OnContinueWithGoogleClick) },
-        onLearnMoreClick = { onEvent(IntroViewEvent.OnLearnMoreClick) }
-      )
-      Spacer(modifier = Modifier.weight(1f))
+      LazyColumn(
+        modifier = Modifier
+          .fillMaxWidth()
+          .weight(1f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
+      ) {
+        item {
+          IntroAnimation()
+          Spacer(modifier = Modifier.height(24.dp))
+        }
+        item {
+          Text(
+            text = "Become a better software engineer",
+            style = MaterialTheme.typography.h4,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 24.sp,
+          )
+          Spacer(modifier = Modifier.height(12.dp))
+          Text(
+            text = "Learn data structures, algorithms, architecture and software design from first principles.",
+            style = MaterialTheme.typography.body1,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+          )
+        }
+        item {
+          Spacer(modifier = Modifier.height(48.dp))
+          ButtonsSection(
+            onContinueWithGoogleClick = { onEvent(IntroViewEvent.OnContinueWithGoogleClick) },
+            onLearnMoreClick = { onEvent(IntroViewEvent.OnLearnMoreClick) }
+          )
+          Spacer(Modifier.height(48.dp))
+        }
+      }
       IntroLegalText()
+      Spacer(Modifier.height(24.dp))
     }
   }
 }
@@ -68,14 +81,24 @@ private fun IntroAnimation(
   modifier: Modifier = Modifier,
 ) {
   LocalLottieAnimation(
-    modifier = modifier.size(400.dp),
+    modifier = modifier
+      .padding(horizontal = 24.dp)
+      .sizeIn(
+        maxWidth = when (screenType()) {
+          Mobile -> 360.dp
+          Tablet -> 320.dp
+          Desktop -> 400.dp
+        }
+      )
+      .fillMaxWidth()
+      .aspectRatio(1f, matchHeightConstraintsFirst = true),
     animationFile = "intro_lottie_anim.json",
     repeat = true
   )
 }
 
 @Composable
-private fun ColumnScope.ButtonsSection(
+private fun ButtonsSection(
   onContinueWithGoogleClick: () -> Unit,
   onLearnMoreClick: () -> Unit,
 ) {
