@@ -1,6 +1,6 @@
-# Ivy Learn
+# [Ivy Learn](https://ivylearn.app/)
 
-Learn programming by thinking.
+Become a better software engineer. Learn algorithms, data structures, architecture and software design from first principles. [ivylearn.app](https://ivylearn.app/) ✨
 
 **To run the web app:**
 
