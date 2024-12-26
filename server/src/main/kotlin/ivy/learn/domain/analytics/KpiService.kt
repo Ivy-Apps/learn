@@ -29,9 +29,9 @@ class KpiService(
     }
 
     val kpis = listOf(
-      Di.get<UsersCountKpi>(),
       Di.get<IntroViewsKpi>(),
       Di.get<IntroLearnMoreClicksKpi>(),
+      Di.get<UsersCountKpi>(),
       Di.get<CoursesViewKpi>(),
       Di.get<LessonViewsKpi>(),
       Di.get<UsersCompletedLessonKpi>(),
