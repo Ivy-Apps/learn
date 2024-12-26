@@ -2,7 +2,7 @@ package ui.screen.kpi.composable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -46,9 +46,12 @@ private fun Content(
     modifier = modifier,
     contentPadding = PaddingValues(all = 24.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
-    horizontalAlignment = Alignment.CenterHorizontally,
+    horizontalAlignment = Alignment.Start,
   ) {
-    items(items = viewState.kpis) { item ->
+    itemsIndexed(
+      items = viewState.kpis,
+      key = { index, item -> "${index}_${item.name}" }
+    ) { _, item ->
       KpiItem(item = item)
     }
   }

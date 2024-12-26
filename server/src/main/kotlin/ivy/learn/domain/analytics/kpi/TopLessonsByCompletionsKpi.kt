@@ -25,11 +25,8 @@ SELECT params::TEXT, count(*) FROM analytics
         while (rs.next()) {
           val params = Json.decodeFromString<Map<String, String>>(rs.getString(1))
           val count = rs.getLong(2)
-          if (textBuilder.isNotBlank()) {
-            textBuilder.append(", ")
-          }
           textBuilder.append(
-            "${params[AnalyticsParams.courseId]}/${params[AnalyticsParams.lessonId]}: $count"
+            "${params[AnalyticsParams.courseId]}/${params[AnalyticsParams.lessonId]}: $count\n"
           )
         }
       }

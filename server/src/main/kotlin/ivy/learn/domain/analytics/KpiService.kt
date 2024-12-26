@@ -29,17 +29,17 @@ class KpiService(
     }
 
     val kpis = listOf(
-      Di.get<UsersCountKpi>(),
       Di.get<IntroViewsKpi>(),
       Di.get<IntroLearnMoreClicksKpi>(),
+      Di.get<UsersCountKpi>(),
       Di.get<CoursesViewKpi>(),
       Di.get<LessonViewsKpi>(),
+      Di.get<AvgLessonViewsPerUserKpi>(),
       Di.get<UsersCompletedLessonKpi>(),
       Di.get<ActiveUsersAvgCompletedLessonsKpi>(),
       Di.get<TopCoursesByViewsKpi>(),
       Di.get<TopLessonsByViewsKpi>(),
       Di.get<TopLessonsByCompletionsKpi>(),
-      Di.get<AvgLessonViewsPerUserKpi>(),
     ).map { it.compute() }
 
     KpisResponse(
