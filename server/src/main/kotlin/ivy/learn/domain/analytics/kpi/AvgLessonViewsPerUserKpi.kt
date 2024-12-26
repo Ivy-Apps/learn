@@ -2,11 +2,10 @@ package ivy.learn.domain.analytics.kpi
 
 import ivy.data.source.model.KpiDto
 import ivy.learn.data.database.tables.AnalyticsTable
-import org.jetbrains.exposed.sql.count
 import org.jetbrains.exposed.sql.statements.StatementType
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class ActiveUsersAvgCompletedLessonsKpi : Kpi {
+class AvgLessonViewsPerUserKpi : Kpi {
   override suspend fun compute(): KpiDto = transaction {
     var sum = 0L
     var count = 0
@@ -15,11 +14,9 @@ class ActiveUsersAvgCompletedLessonsKpi : Kpi {
 SELECT COUNT(*) FROM analytics 
     WHERE event = ? 
     GROUP by user_id 
-    HAVING count(*) >= ?       
       """,
       args = listOf(
-        AnalyticsTable.event.columnType to "lesson__complete",
-        AnalyticsTable.userId.count().columnType to 1L,
+        AnalyticsTable.event.columnType to "lesson__view",
       ),
       explicitStatementType = StatementType.SELECT,
       transform = { rs ->
@@ -30,7 +27,7 @@ SELECT COUNT(*) FROM analytics
       }
     )
     KpiDto(
-      name = "Avg # of completed lessons per active user",
+      name = "Avg # of lesson views per user",
       text = (sum / count.toDouble()).toString(),
     )
   }
