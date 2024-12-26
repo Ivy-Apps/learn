@@ -31,5 +31,6 @@ object DomainModule : Di.Module {
     autoWire(::LessonViewsKpi)
     autoWire(::UsersCompletedLessonKpi)
     autoWire(::ActiveUsersAvgCompletedLessonsKpi)
+    autoWire(::TopCoursesByViewsKpi)
   }
 }
