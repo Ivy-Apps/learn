@@ -4,7 +4,9 @@ import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
 import ivy.data.source.model.KpiResponse
+import ivy.di.Di
 import ivy.learn.api.common.model.ServerError
+import ivy.learn.domain.analytics.kpi.UsersCountKpi
 import ivy.learn.domain.auth.AuthService
 import ivy.model.auth.SessionToken
 
@@ -26,8 +28,14 @@ class KpiService(
       ServerError.Unauthorized
     }
 
+    val kpis = listOf(
+      Di.get<UsersCountKpi>()
+    ).map { it.compute() }
+
     KpiResponse(
-      kpis = listOf()
+      kpis = kpis,
     )
   }
 }
+
+
