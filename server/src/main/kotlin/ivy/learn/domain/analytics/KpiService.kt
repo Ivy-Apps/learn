@@ -34,7 +34,7 @@ class KpiService(
       Di.get<IntroLearnMoreClicksKpi>(),
       Di.get<CoursesViewKpi>(),
       Di.get<LessonViewsKpi>(),
-
+      Di.get<UsersCompletedLessonKpi>(),
     ).map { it.compute() }
 
     KpiResponse(

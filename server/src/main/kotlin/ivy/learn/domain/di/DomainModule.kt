@@ -29,5 +29,6 @@ object DomainModule : Di.Module {
     autoWire(::IntroLearnMoreClicksKpi)
     autoWire(::CoursesViewKpi)
     autoWire(::LessonViewsKpi)
+    autoWire(::UsersCompletedLessonKpi)
   }
 }
