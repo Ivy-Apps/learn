@@ -3,6 +3,7 @@ package ivy.learn.domain.analytics.kpi
 import ivy.data.source.model.KpiDto
 import ivy.learn.data.database.tables.AnalyticsTable
 import org.jetbrains.exposed.sql.count
+import org.jetbrains.exposed.sql.statements.StatementType
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ActiveUsersAvgCompletedLessonsKpi : Kpi {
@@ -20,7 +21,7 @@ SELECT COUNT(*) FROM analytics
         AnalyticsTable.event.columnType to "lesson__complete",
         AnalyticsTable.userId.count().columnType to 1L,
       ),
-      explicitStatementType = null,
+      explicitStatementType = StatementType.SELECT,
       transform = { rs ->
         while (rs.next()) {
           sum += rs.getLong(1)
