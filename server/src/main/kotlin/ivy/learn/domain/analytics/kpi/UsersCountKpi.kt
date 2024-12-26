@@ -11,7 +11,7 @@ class UsersCountKpi : Kpi {
       .single()[UsersTable.id.count()]
     KpiDto(
       name = "# of users",
-      text = count.toString()
+      value = count.toString()
     )
   }
 }

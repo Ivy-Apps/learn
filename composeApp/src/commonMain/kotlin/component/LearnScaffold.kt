@@ -31,7 +31,7 @@ fun LearnScaffold(
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     topBarCenterContent: (@Composable () -> Unit)? = null,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (contentPadding: PaddingValues) -> Unit
 ) {
     Scaffold(
         modifier = modifier,

@@ -31,7 +31,7 @@ SELECT COUNT(*) FROM analytics
     )
     KpiDto(
       name = "Avg # of completed lessons per active user",
-      text = (sum / count.toDouble()).toString(),
+      value = (sum / count.toDouble()).toString(),
     )
   }
 }

@@ -28,7 +28,7 @@ SELECT COUNT(*) FROM analytics
     )
     KpiDto(
       name = "Avg # of lesson views per user",
-      text = (sum / count.toDouble()).toString(),
+      value = (sum / count.toDouble()).toString(),
     )
   }
 }

@@ -8,7 +8,7 @@ class IntroLearnMoreClicksKpi : Kpi {
     val count = metricsDistinctCount(metricName = "intro__learn_more_click")
     KpiDto(
       name = "# of unique intro learn more clicks",
-      text = count.toString(),
+      value = count.toString(),
     )
   }
 }

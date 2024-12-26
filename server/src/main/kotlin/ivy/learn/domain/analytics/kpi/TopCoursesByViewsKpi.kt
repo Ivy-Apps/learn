@@ -36,7 +36,7 @@ SELECT params::TEXT, count(*) FROM analytics
     )
     KpiDto(
       name = "Top Courses by views",
-      text = textBuilder.toString(),
+      value = textBuilder.toString(),
     )
   }
 }

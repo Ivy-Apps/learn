@@ -8,7 +8,7 @@ class IntroViewsKpi : Kpi {
     val count = metricsDistinctCount(metricName = "intro__view")
     KpiDto(
       name = "# of unique intro views",
-      text = count.toString()
+      value = count.toString()
     )
   }
 }

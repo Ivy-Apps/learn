@@ -10,5 +10,5 @@ data class KpisResponse(
 @Serializable
 data class KpiDto(
   val name: String,
-  val text: String,
+  val value: String,
 )

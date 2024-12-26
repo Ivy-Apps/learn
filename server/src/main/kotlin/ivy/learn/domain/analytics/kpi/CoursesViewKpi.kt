@@ -8,7 +8,7 @@ class CoursesViewKpi : Kpi {
     val count = totalDistinctCount(event = "course__view")
     KpiDto(
       name = "# of people viewed a course",
-      text = count.toString()
+      value = count.toString()
     )
   }
 }

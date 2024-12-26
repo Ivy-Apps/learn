@@ -8,7 +8,7 @@ class LessonViewsKpi : Kpi {
     val count = analyticsDistinctCount(event = "lesson__view")
     KpiDto(
       name = "# of users viewed a lesson",
-      text = count.toString()
+      value = count.toString()
     )
   }
 }
