@@ -12,14 +12,14 @@ class ActiveUsersAvgCompletedLessonsKpi : Kpi {
     exec(
       stmt = """
 SELECT COUNT(*) FROM analytics 
-    WHERE event = 'lesson__complete' 
+    WHERE event = ? 
     GROUP by user_id 
-    HAVING count(*) >= 1        
+    HAVING count(*) >= ?       
       """,
       args = listOf(
-        AnalyticsTable.userId.columnType to "lesson__complete",
+        AnalyticsTable.event.columnType to "lesson__complete",
         AnalyticsTable.userId.count().columnType to 1L,
-      ).take(0),
+      ),
       explicitStatementType = null,
       transform = { rs ->
         while (rs.next()) {
