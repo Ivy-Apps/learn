@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.statements.StatementType
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class TopCoursesByViewsKpi : Kpi {
+class TopLessonsByViewsKpi : Kpi {
   override suspend fun compute(): KpiDto = transaction {
     val textBuilder = StringBuilder()
     exec(
@@ -18,7 +18,7 @@ SELECT params::TEXT, count(*) FROM analytics
     ORDER BY count(*) DESC;       
       """,
       args = listOf(
-        AnalyticsTable.event.columnType to "course__view",
+        AnalyticsTable.event.columnType to "lesson__view",
       ),
       explicitStatementType = StatementType.SELECT,
       transform = { rs ->
@@ -29,13 +29,13 @@ SELECT params::TEXT, count(*) FROM analytics
             textBuilder.append(", ")
           }
           textBuilder.append(
-            "${params[AnalyticsParams.courseId]}: $count"
+            "${params[AnalyticsParams.courseId]}/${params[AnalyticsParams.lessonId]}: $count"
           )
         }
       }
     )
     KpiDto(
-      name = "Top Courses by views",
+      name = "Top Lessons by views",
       text = textBuilder.toString(),
     )
   }
