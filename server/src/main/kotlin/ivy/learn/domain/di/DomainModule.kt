@@ -9,6 +9,7 @@ import ivy.learn.domain.TopicsService
 import ivy.learn.domain.analytics.Analytics
 import ivy.learn.domain.analytics.AnalyticsService
 import ivy.learn.domain.analytics.KpiService
+import ivy.learn.domain.analytics.kpi.CourseViewKpi
 import ivy.learn.domain.analytics.kpi.IntroLearnMoreClicksKpi
 import ivy.learn.domain.analytics.kpi.IntroViewsKpi
 import ivy.learn.domain.analytics.kpi.UsersCountKpi
@@ -29,5 +30,6 @@ object DomainModule : Di.Module {
         autoWire(::UsersCountKpi)
         autoWire(::IntroViewsKpi)
         autoWire(::IntroLearnMoreClicksKpi)
+        autoWire(::CourseViewKpi)
     }
 }
