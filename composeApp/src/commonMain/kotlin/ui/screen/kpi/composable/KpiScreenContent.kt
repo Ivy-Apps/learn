@@ -30,7 +30,7 @@ fun KpiScreenContent(
     ) {
       when (viewState) {
         is KpiViewState.Content -> Content(viewState)
-        KpiViewState.Error -> ErrorState()
+        is KpiViewState.Error -> ErrorState(viewState)
         KpiViewState.Loading -> LoadingState()
       }
     }
@@ -75,11 +75,12 @@ private fun KpiItem(
 
 @Composable
 private fun ErrorState(
+  viewState: KpiViewState.Error,
   modifier: Modifier = Modifier,
 ) {
   Text(
     modifier = modifier,
-    text = "There was an error! Refresh the page"
+    text = "There was an error! Refresh the page. Error:\n" + viewState.errMsg
   )
 }
 

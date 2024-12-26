@@ -31,5 +31,6 @@ object DataModule : Di.Module {
     autoWire(::LessonMapper)
     autoWire(::SoundRepository)
     autoWire(::MetricsRepository)
+    autoWire(::KpisRepository)
   }
 }
