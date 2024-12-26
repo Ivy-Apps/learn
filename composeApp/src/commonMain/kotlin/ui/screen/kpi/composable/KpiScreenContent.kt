@@ -43,7 +43,7 @@ private fun Content(
   modifier: Modifier = Modifier,
 ) {
   LazyColumn(
-    modifier = modifier,
+    modifier = modifier.fillMaxWidth(),
     contentPadding = PaddingValues(all = 24.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
     horizontalAlignment = Alignment.Start,

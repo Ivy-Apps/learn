@@ -16,7 +16,7 @@ class KpiService(
   companion object {
     val ALLOWED_USERS = setOf(
       "iliyan.germanov971@gmail.com",
-      "nicolegeorgievva@gmail.com",
+      "nicole.georgievva@gmail.com",
     )
   }
 
