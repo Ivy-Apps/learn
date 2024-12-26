@@ -17,6 +17,7 @@ import ivy.di.Di.singleton
 import ivy.di.autowire.autoWire
 import ivy.learn.api.*
 import ivy.learn.api.common.Api
+import ivy.learn.api.common.KPIsApi
 import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.data.database.LearnDatabase
 import kotlinx.serialization.json.Json
@@ -39,6 +40,7 @@ class LearnServer(
             Di.get<GoogleAuthenticationApi>(),
             Di.get<UsersApi>(),
             Di.get<MetricsApi>(),
+            Di.get<KPIsApi>(),
         )
     }
 
@@ -52,6 +54,7 @@ class LearnServer(
         autoWire(::CoursesApi)
         autoWire(::GoogleAuthenticationApi)
         autoWire(::UsersApi)
+        autoWire(::KPIsApi)
     }
 
     fun init(ktorApp: Application): Either<String, Unit> = either {

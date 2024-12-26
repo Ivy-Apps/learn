@@ -8,6 +8,7 @@ import ivy.learn.domain.MetricsService
 import ivy.learn.domain.TopicsService
 import ivy.learn.domain.analytics.Analytics
 import ivy.learn.domain.analytics.AnalyticsService
+import ivy.learn.domain.analytics.KpiService
 import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.auth.GoogleOAuthUseCase
 
@@ -21,5 +22,6 @@ object DomainModule : Di.Module {
         autoWire(::TopicsService)
         autoWire(::MetricsService)
         autoWire(::Analytics)
+        autoWire(::KpiService)
     }
 }
