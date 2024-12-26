@@ -46,7 +46,7 @@ private fun Content(
     modifier = modifier,
     contentPadding = PaddingValues(all = 24.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
-    horizontalAlignment = Alignment.CenterHorizontally,
+    horizontalAlignment = Alignment.Start,
   ) {
     items(items = viewState.kpis) { item ->
       KpiItem(item = item)
