@@ -17,7 +17,7 @@ fun Transaction.metricsDistinctCount(metricName: String): Long = MetricsTable
   .single()[MetricsTable.clientId.countDistinct()]
 
 @Suppress("unused")
-fun Transaction.analyticsDistinctCount(eventName: String): Long = AnalyticsTable
+fun Transaction.analyticsDistinctCount(event: String): Long = AnalyticsTable
   .select(AnalyticsTable.userId.countDistinct())
-  .where { AnalyticsTable.event eq eventName }
+  .where { AnalyticsTable.event eq event }
   .single()[AnalyticsTable.userId.countDistinct()]

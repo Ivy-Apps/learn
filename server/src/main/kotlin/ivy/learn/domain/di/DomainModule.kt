@@ -9,27 +9,25 @@ import ivy.learn.domain.TopicsService
 import ivy.learn.domain.analytics.Analytics
 import ivy.learn.domain.analytics.AnalyticsService
 import ivy.learn.domain.analytics.KpiService
-import ivy.learn.domain.analytics.kpi.CourseViewKpi
-import ivy.learn.domain.analytics.kpi.IntroLearnMoreClicksKpi
-import ivy.learn.domain.analytics.kpi.IntroViewsKpi
-import ivy.learn.domain.analytics.kpi.UsersCountKpi
+import ivy.learn.domain.analytics.kpi.*
 import ivy.learn.domain.auth.AuthService
 import ivy.learn.domain.auth.GoogleOAuthUseCase
 
 object DomainModule : Di.Module {
-    override fun init() = Di.appScope {
-        autoWire(::AuthService)
-        autoWire(::GoogleOAuthUseCase)
-        autoWire(::AnalyticsService)
-        autoWire(::LessonService)
-        autoWire(::CourseService)
-        autoWire(::TopicsService)
-        autoWire(::MetricsService)
-        autoWire(::Analytics)
-        autoWire(::KpiService)
-        autoWire(::UsersCountKpi)
-        autoWire(::IntroViewsKpi)
-        autoWire(::IntroLearnMoreClicksKpi)
-        autoWire(::CourseViewKpi)
-    }
+  override fun init() = Di.appScope {
+    autoWire(::AuthService)
+    autoWire(::GoogleOAuthUseCase)
+    autoWire(::AnalyticsService)
+    autoWire(::LessonService)
+    autoWire(::CourseService)
+    autoWire(::TopicsService)
+    autoWire(::MetricsService)
+    autoWire(::Analytics)
+    autoWire(::KpiService)
+    autoWire(::UsersCountKpi)
+    autoWire(::IntroViewsKpi)
+    autoWire(::IntroLearnMoreClicksKpi)
+    autoWire(::CoursesViewKpi)
+    autoWire(::LessonViewsKpi)
+  }
 }

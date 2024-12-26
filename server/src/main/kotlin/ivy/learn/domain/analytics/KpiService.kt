@@ -6,10 +6,7 @@ import arrow.core.raise.ensure
 import ivy.data.source.model.KpiResponse
 import ivy.di.Di
 import ivy.learn.api.common.model.ServerError
-import ivy.learn.domain.analytics.kpi.CourseViewKpi
-import ivy.learn.domain.analytics.kpi.IntroLearnMoreClicksKpi
-import ivy.learn.domain.analytics.kpi.IntroViewsKpi
-import ivy.learn.domain.analytics.kpi.UsersCountKpi
+import ivy.learn.domain.analytics.kpi.*
 import ivy.learn.domain.auth.AuthService
 import ivy.model.auth.SessionToken
 
@@ -35,7 +32,8 @@ class KpiService(
       Di.get<UsersCountKpi>(),
       Di.get<IntroViewsKpi>(),
       Di.get<IntroLearnMoreClicksKpi>(),
-      Di.get<CourseViewKpi>(),
+      Di.get<CoursesViewKpi>(),
+      Di.get<LessonViewsKpi>(),
 
     ).map { it.compute() }
 
