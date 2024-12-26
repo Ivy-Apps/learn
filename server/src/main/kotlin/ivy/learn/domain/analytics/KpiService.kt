@@ -6,6 +6,7 @@ import arrow.core.raise.ensure
 import ivy.data.source.model.KpiResponse
 import ivy.di.Di
 import ivy.learn.api.common.model.ServerError
+import ivy.learn.domain.analytics.kpi.IntroLearnMoreClicksKpi
 import ivy.learn.domain.analytics.kpi.IntroViewsKpi
 import ivy.learn.domain.analytics.kpi.UsersCountKpi
 import ivy.learn.domain.auth.AuthService
@@ -32,6 +33,7 @@ class KpiService(
     val kpis = listOf(
       Di.get<UsersCountKpi>(),
       Di.get<IntroViewsKpi>(),
+      Di.get<IntroLearnMoreClicksKpi>(),
     ).map { it.compute() }
 
     KpiResponse(
