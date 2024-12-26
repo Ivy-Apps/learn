@@ -1,7 +1,7 @@
 package ivy.learn.api.common
 
 import io.ktor.server.routing.*
-import ivy.data.source.model.KpiResponse
+import ivy.data.source.model.KpisResponse
 import ivy.learn.domain.analytics.KpiService
 
 class KPIsApi(
@@ -12,7 +12,7 @@ class KPIsApi(
   }
 
   private fun Routing.kpis() {
-    getEndpointAuthenticated<KpiResponse>("/kpis") { _, sessionToken ->
+    getEndpointAuthenticated<KpisResponse>("/kpis") { _, sessionToken ->
       service.computeKpis(sessionToken).bind()
     }
   }

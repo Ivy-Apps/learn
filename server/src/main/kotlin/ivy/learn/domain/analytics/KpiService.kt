@@ -3,7 +3,7 @@ package ivy.learn.domain.analytics
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
-import ivy.data.source.model.KpiResponse
+import ivy.data.source.model.KpisResponse
 import ivy.di.Di
 import ivy.learn.api.common.model.ServerError
 import ivy.learn.domain.analytics.kpi.*
@@ -22,7 +22,7 @@ class KpiService(
 
   suspend fun computeKpis(
     sessionToken: SessionToken,
-  ): Either<ServerError, KpiResponse> = either {
+  ): Either<ServerError, KpisResponse> = either {
     val user = authService.getUser(sessionToken).bind()
     ensure(user.email in ALLOWED_USERS) {
       ServerError.Unauthorized
@@ -38,7 +38,7 @@ class KpiService(
       Di.get<ActiveUsersAvgCompletedLessonsKpi>(),
     ).map { it.compute() }
 
-    KpiResponse(
+    KpisResponse(
       kpis = kpis,
     )
   }

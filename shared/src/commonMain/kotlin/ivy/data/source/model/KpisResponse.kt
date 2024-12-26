@@ -3,7 +3,7 @@ package ivy.data.source.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class KpiResponse(
+data class KpisResponse(
   val kpis: List<KpiDto>,
 )
 

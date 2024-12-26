@@ -8,6 +8,7 @@ import ivy.di.Di.register
 import ivy.learn.config.ServerConfiguration
 import ivy.learn.config.ServerConfigurationProvider
 import ivy.learn.data.database.LearnDatabase
+import ivy.learn.data.database.tables.MetricsTable
 import ivy.learn.data.database.tables.UsersTable
 import ivy.learn.data.repository.auth.SessionRepository
 import ivy.learn.data.repository.auth.UserRepository
@@ -45,6 +46,7 @@ open class ServerTest {
         Di.get<LearnDatabase>().init(serverConfig.database)
         transaction {
             UsersTable.deleteAll()
+            MetricsTable.deleteAll()
         }
     }
 

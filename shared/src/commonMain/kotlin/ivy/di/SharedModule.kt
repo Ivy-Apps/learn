@@ -34,6 +34,7 @@ object SharedModule : Di.Module {
     autoWire(::UserDataSource)
     autoWire(::AnalyticsDataSource)
     autoWire(::MetricsDataSource)
+    autoWire(::KpisDataSource)
   }
 
 
