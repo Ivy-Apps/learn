@@ -12,6 +12,7 @@ import ivy.model.auth.SessionToken
 
 class KpiService(
   private val authService: AuthService,
+  private val funnel: KpiFunnel,
 ) {
   companion object {
     val ALLOWED_USERS = setOf(
@@ -28,23 +29,23 @@ class KpiService(
       ServerError.Unauthorized
     }
 
-    val kpis = listOf(
-      Di.get<IntroViewsKpi>(),
-      Di.get<IntroLearnMoreClicksKpi>(),
-      Di.get<UsersCountKpi>(),
-      Di.get<CoursesViewKpi>(),
-      Di.get<LessonViewsKpi>(),
-      Di.get<AvgLessonViewsPerUserKpi>(),
-      Di.get<UsersCompletedLessonKpi>(),
-      Di.get<ActiveUsersAvgCompletedLessonsKpi>(),
-      Di.get<TopLessonsByDistinctViewsKpi>(),
-      Di.get<TopLessonsByDistinctCompletionsKpi>(),
-      Di.get<TopLessonsByDistinctCompletionRateKpi>(),
-      Di.get<TopCoursesByDistinctViewsKpi>(),
-    ).map { it.compute() }
 
     KpisResponse(
-      kpis = kpis,
+      funnel = funnel.compute(),
+      kpis = listOf(
+        Di.get<IntroViewsKpi>(),
+        Di.get<IntroLearnMoreClicksKpi>(),
+        Di.get<UsersCountKpi>(),
+        Di.get<CoursesViewKpi>(),
+        Di.get<LessonViewsKpi>(),
+        Di.get<AvgLessonViewsPerUserKpi>(),
+        Di.get<UsersCompletedLessonKpi>(),
+        Di.get<ActiveUsersAvgCompletedLessonsKpi>(),
+        Di.get<TopLessonsByDistinctViewsKpi>(),
+        Di.get<TopLessonsByDistinctCompletionsKpi>(),
+        Di.get<TopLessonsByDistinctCompletionRateKpi>(),
+        Di.get<TopCoursesByDistinctViewsKpi>(),
+      ).map { it.compute() },
     )
   }
 }

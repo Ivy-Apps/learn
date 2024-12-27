@@ -2,7 +2,6 @@ package ivy.learn.domain.analytics.kpi
 
 import ivy.data.source.model.KpiDto
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.text.DecimalFormat
 
 class TopLessonsByDistinctCompletionRateKpi : Kpi {
   override suspend fun compute(): KpiDto = transaction {
@@ -21,14 +20,12 @@ class TopLessonsByDistinctCompletionRateKpi : Kpi {
       }
     )
     KpiDto(
-      name = "Top Lessons by distinct user_id completion rate %",
+      name = "Top Lessons by most user completion rate %",
       value = buildString {
         lessonViews.forEach { (lessonId, views) ->
           if (views > 0) {
             val completions = lessonCompletions[lessonId] ?: 0
-            val percentageFormatter = DecimalFormat("#.00")
-            val ratio = (completions / views) * 100
-            append("$lessonId: ${percentageFormatter.format(ratio)}% ($completions completions / $views views)\n")
+            append("$lessonId: ${ratioPercent(completions, views)} ($completions completions / $views views)\n")
           }
         }
       }
