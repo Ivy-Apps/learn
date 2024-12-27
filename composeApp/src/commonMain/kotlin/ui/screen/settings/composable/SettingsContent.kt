@@ -121,8 +121,8 @@ private fun LazyListScope.sectionDivider(text: String) {
         bottom = 8.dp
       ),
       text = text,
-      style = IvyTheme.typography.b1,
-      fontWeight = FontWeight.SemiBold,
+      style = IvyTheme.typography.b2,
+      fontWeight = FontWeight.Medium,
       color = Gray
     )
   }
