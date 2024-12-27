@@ -48,10 +48,14 @@ jobs:
       - name: Copy index.html to 404.html
         run: cp composeApp/build/dist/js/productionExecutable/index.html composeApp/build/dist/js/productionExecutable/404.html
 
+      - name: Pre-render URLs
+        run: python3 scripts/pre_render.py
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'composeApp/build/dist/js/productionExecutable'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
