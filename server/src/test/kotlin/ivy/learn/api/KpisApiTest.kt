@@ -62,7 +62,7 @@ class KpisApiTest : ServerTest() {
     val email: String,
   ) {
     ILIYAN(email = "iliyan.germanov971@gmail.com"),
-    NICOLE(email = "nicolegeorgievva@gmail.com"),
+    NICOLE(email = "nicole.georgievva@gmail.com"),
   }
 
   @Test
