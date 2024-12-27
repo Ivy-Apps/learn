@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,12 +21,11 @@ import component.IvyImage
 import component.ScreenType.*
 import component.isLargeScreen
 import component.screenType
-import component.text.SubTitle
-import component.text.Title
 import ui.screen.course.CourseItemViewState
 import ui.screen.course.ProgressViewState
 import ui.theme.Gray
 import ui.theme.Green
+import ui.theme.IvyTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -72,15 +72,17 @@ fun LessonCard(
           .padding(vertical = 16.dp),
         verticalArrangement = Arrangement.Center,
       ) {
-        Title(
+        Text(
           text = lesson.name,
-          fontWeight = FontWeight.Bold
+          style = IvyTheme.typography.b1,
+          fontWeight = FontWeight.SemiBold
         )
         Spacer(Modifier.height(8.dp))
-        SubTitle(
+        Text(
           text = lesson.tagline,
           maxLines = 3,
           overflow = TextOverflow.Ellipsis,
+          style = IvyTheme.typography.b2
         )
       }
     }
