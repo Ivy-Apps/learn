@@ -2,7 +2,6 @@ package ui.screen.intro.composable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -22,6 +21,7 @@ import component.screenType
 import ui.screen.intro.IntroViewEvent
 import ui.screen.intro.IntroViewState
 import ui.theme.Gray
+import ui.theme.IvyTheme
 
 
 @Composable
@@ -55,17 +55,13 @@ fun IntroContent(
         item {
           Text(
             text = "Become a better software engineer",
-            style = MaterialTheme.typography.h4,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp,
-            lineHeight = 24.sp,
+            style = IvyTheme.typography.h2,
+            fontWeight = FontWeight.SemiBold
           )
           Spacer(modifier = Modifier.height(12.dp))
           Text(
             text = "Learn data structures, algorithms, architecture and software design from first principles.",
-            style = MaterialTheme.typography.body1,
-            fontSize = 18.sp,
-            lineHeight = 18.sp,
+            style = IvyTheme.typography.b1,
             fontWeight = FontWeight.Medium,
           )
         }
