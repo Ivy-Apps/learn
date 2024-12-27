@@ -2,6 +2,7 @@ package ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -10,6 +11,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import learn.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
+
+val LocalTypography = compositionLocalOf<Typography> { error("No typography composition local") }
 
 @Immutable
 interface Typography {
@@ -21,7 +24,7 @@ interface Typography {
 }
 
 @Immutable
-class MobileTypography : Typography {
+object MobileTypography : Typography {
   override val h1 = ivyTextStyle(32.sp)
   override val h2 = ivyTextStyle(24.sp)
   override val b1 = ivyTextStyle(20.sp)
@@ -30,7 +33,7 @@ class MobileTypography : Typography {
 }
 
 @Immutable
-class DesktopTypography : Typography {
+object DesktopTypography : Typography {
   override val h1 = ivyTextStyle(48.sp)
   override val h2 = ivyTextStyle(32.sp)
   override val b1 = ivyTextStyle(24.sp)
