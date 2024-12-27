@@ -55,7 +55,7 @@ fun CodeLessonItem(
         code = viewState.code,
         syntaxHighlight = remember { PythonSyntaxHighlight() }
       ),
-      style = MaterialTheme.typography.body1.copy(
+      style = IvyTheme.typography.body1.copy(
         fontSize = 18.sp,
         lineHeight = 24.sp,
       ),

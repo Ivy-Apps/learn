@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import component.BackButton
@@ -23,7 +23,7 @@ import component.platformHorizontalPadding
 import ui.screen.settings.SettingsViewEvent
 import ui.screen.settings.SettingsViewState
 import ui.theme.Gray
-import ui.theme.colorsExt
+import ui.theme.IvyTheme
 
 @Composable
 fun SettingsContent(
@@ -122,7 +122,8 @@ private fun LazyListScope.sectionDivider(text: String) {
                 bottom = 8.dp
             ),
             text = text,
-            style = MaterialTheme.typography.subtitle1,
+            style = IvyTheme.typography.b1,
+            fontWeight = FontWeight.SemiBold,
             color = Gray
         )
     }
@@ -168,11 +169,7 @@ private fun SoundSwitch(
             onSoundEnabledChange(!soundEnabled)
         },
         text = {
-            Text(
-                text = "Sounds",
-                style = MaterialTheme.typography.button,
-                color = MaterialTheme.colorsExt.onBackgroundVariant
-            )
+            Text(text = "Sounds")
         }
     )
 }

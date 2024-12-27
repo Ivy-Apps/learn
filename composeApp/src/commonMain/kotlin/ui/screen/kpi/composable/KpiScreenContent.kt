@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -65,13 +64,13 @@ private fun KpiItem(
   Column(modifier = modifier) {
     Text(
       text = item.name,
-      style = MaterialTheme.typography.body1,
+      style = IvyTheme.typography.body1,
       fontWeight = FontWeight.SemiBold,
     )
     Spacer(Modifier.height(4.dp))
     Text(
       text = item.value,
-      style = MaterialTheme.typography.body2
+      style = IvyTheme.typography.body2
     )
   }
 }

@@ -18,7 +18,7 @@ fun BodyBig(
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.body1.copy(
+        style = IvyTheme.typography.body1.copy(
             fontSize = 18.sp,
             lineHeight = 24.sp,
         ),
@@ -35,7 +35,7 @@ fun Body(
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.body1
+        style = IvyTheme.typography.body1
     )
 }
 
@@ -50,7 +50,7 @@ fun BodySmall(
         modifier = modifier,
         text = text,
         color = color,
-        style = MaterialTheme.typography.body2,
+        style = IvyTheme.typography.body2,
         fontWeight = fontWeight,
     )
 }

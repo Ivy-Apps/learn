@@ -18,7 +18,7 @@ fun Title(
         modifier = modifier,
         fontWeight = fontWeight,
         text = text,
-        style = MaterialTheme.typography.h6,
+      style = IvyTheme.typography.h6,
         color = color
     )
 }

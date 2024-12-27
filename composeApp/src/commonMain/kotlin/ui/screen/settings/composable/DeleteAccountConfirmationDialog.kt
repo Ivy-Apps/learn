@@ -25,7 +25,7 @@ fun DeleteAccountConfirmationDialog(
         title = {
             Text(
                 text = "Confirm Account Deletion",
-                style = MaterialTheme.typography.subtitle1
+              style = IvyTheme.typography.subtitle1
             )
         },
         text = {
@@ -33,7 +33,7 @@ fun DeleteAccountConfirmationDialog(
                 text = "By proceeding, you confirm your request to permanently delete your account and all " +
                         "associated data. This action is irreversible and cannot be undone. Please review our " +
                         "Privacy Policy and Terms of Service for further details.",
-                style = MaterialTheme.typography.subtitle2
+              style = IvyTheme.typography.subtitle2
             )
         },
         onDismissRequest = onCancelDeleteAccountClick,

@@ -1,6 +1,5 @@
 package component.text
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +17,7 @@ fun SubTitle(
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.subtitle1,
+      style = IvyTheme.typography.subtitle1,
         fontWeight = fontWeight,
         maxLines = maxLines,
         overflow = overflow,

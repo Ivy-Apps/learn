@@ -1,6 +1,5 @@
 package ui.screen.lesson.composable.item.common
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +14,7 @@ fun QuestionText(
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.subtitle1,
+      style = IvyTheme.typography.subtitle1,
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
     )

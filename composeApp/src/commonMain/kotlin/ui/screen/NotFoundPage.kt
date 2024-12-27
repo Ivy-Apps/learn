@@ -22,13 +22,13 @@ fun NotFoundPage(
     ) {
         Text(
             text = "Page not found :/",
-            style = MaterialTheme.typography.h2,
+            style = IvyTheme.typography.h2,
             color = MaterialTheme.colors.error
         )
         Spacer(Modifier.height(16.dp))
         Text(
             text = "No routing found for: $route",
-            style = MaterialTheme.typography.body1
+            style = IvyTheme.typography.body1
         )
     }
 }

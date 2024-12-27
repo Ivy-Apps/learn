@@ -16,7 +16,7 @@ fun Headline(
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.h4,
+        style = IvyTheme.typography.h4,
         color = color,
         fontWeight = FontWeight.Black,
     )
@@ -31,7 +31,7 @@ fun HeadlineSmall(
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.h5,
+        style = IvyTheme.typography.h5,
         color = color,
         fontWeight = FontWeight.Black,
     )
