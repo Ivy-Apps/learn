@@ -10,7 +10,7 @@ abstract class TopItemDistinctUserIdEventCountKpi : Kpi {
 
   override suspend fun compute(): KpiDto = transaction {
     val textBuilder = StringBuilder()
-    analyticsDistinctUserIdCountByParams(
+    analyticsDistinctUserIdCountGroupedByParams(
       eventName = eventName,
       onProcess = { params, count ->
         textBuilder.append(

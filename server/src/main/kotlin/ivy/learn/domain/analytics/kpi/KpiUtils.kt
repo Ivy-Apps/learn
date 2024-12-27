@@ -25,7 +25,7 @@ fun Transaction.analyticsDistinctCount(event: String): Long = AnalyticsTable
   .single()[AnalyticsTable.userId.countDistinct()]
 
 @Suppress("unused")
-fun Transaction.analyticsDistinctUserIdCountByParams(
+fun Transaction.analyticsDistinctUserIdCountGroupedByParams(
   eventName: String,
   onProcess: (params: Map<String, String>, count: Long) -> Unit,
 ) {
