@@ -56,8 +56,10 @@ fun lessonKpiId(params: Map<String, String>): String {
   return "${params[AnalyticsParams.courseId]}/${params[AnalyticsParams.lessonId]}"
 }
 
-fun ratioPercent(a: Long, b: Long): String {
+fun ratioPercent(a: Long, b: Long): Double = (a / b.toDouble()) * 100
+
+fun ratioPercentFormatted(a: Long, b: Long): String {
+  val ratio = ratioPercent(a, b)
   val percentageFormatter = DecimalFormat("0.00")
-  val ratio = (a / b.toDouble()) * 100
   return "${percentageFormatter.format(ratio)}%"
 }
