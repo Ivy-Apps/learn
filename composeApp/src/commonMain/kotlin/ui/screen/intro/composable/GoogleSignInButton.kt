@@ -16,10 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import learn.composeapp.generated.resources.Res
 import learn.composeapp.generated.resources.google_signin_logo
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.IvyTheme
 import ui.theme.RobotoFontFamily
 
 @Composable
@@ -69,8 +69,7 @@ fun GoogleSignInButton(
       } else {
         Color(0xFFE3E3E3)
       },
-      fontSize = 14.sp,
-      lineHeight = 14.sp,
+      style = IvyTheme.typography.b2,
       fontWeight = FontWeight.Medium,
       fontFamily = RobotoFontFamily,
       textAlign = TextAlign.Center,
