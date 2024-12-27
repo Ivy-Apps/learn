@@ -19,16 +19,23 @@ class TopLessonsByDistinctCompletionRateKpi : Kpi {
         lessonCompletions[lessonKpiId(params)] = count
       }
     )
+
     KpiDto(
       name = "Top Lessons by most user completion rate %",
-      value = buildString {
-        lessonViews.forEach { (lessonId, views) ->
-          if (views > 0) {
-            val completions = lessonCompletions[lessonId] ?: 0
-            append("$lessonId: ${ratioPercent(completions, views)} ($completions completions / $views views)\n")
-          }
+      value = lessonViews
+        .filter { (_, views) ->
+          views > 0
         }
-      }
+        .map { (lessonId, views) ->
+          val completions = lessonCompletions[lessonId] ?: 0
+          val ratioPercentFormatted = ratioPercentFormatted(completions, views)
+          val formattedText = "$lessonId: $ratioPercentFormatted ($completions completions / $views views)"
+          ratioPercent(views, completions) to formattedText
+        }.sortedByDescending { (completionRatio, _) ->
+          completionRatio
+        }.joinToString(separator = "\n") { (_, text) ->
+          text
+        }
     )
   }
 }

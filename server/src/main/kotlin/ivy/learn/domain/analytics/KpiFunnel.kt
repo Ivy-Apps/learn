@@ -2,7 +2,7 @@ package ivy.learn.domain.analytics
 
 import ivy.data.source.model.KpiDto
 import ivy.learn.data.database.tables.AnalyticsTable
-import ivy.learn.domain.analytics.kpi.ratioPercent
+import ivy.learn.domain.analytics.kpi.ratioPercentFormatted
 import ivy.learn.domain.analytics.kpi.totalDistinctCount
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.count
@@ -30,24 +30,24 @@ class KpiFunnel {
       ),
       KpiDto(
         name = "Enter app",
-        value = "$enterApp (${ratioPercent(enterApp, introViews)})"
+        value = "$enterApp (${ratioPercentFormatted(enterApp, introViews)})"
       ),
       KpiDto(
         name = "View course",
-        value = "$viewCourse (${ratioPercent(viewCourse, enterApp)})"
+        value = "$viewCourse (${ratioPercentFormatted(viewCourse, enterApp)})"
       ),
       KpiDto(
         name = "View lesson",
-        value = "$viewLesson (${ratioPercent(viewLesson, viewCourse)})"
+        value = "$viewLesson (${ratioPercentFormatted(viewLesson, viewCourse)})"
       ),
       KpiDto(
         name = "Complete lesson",
-        value = "$completeLesson (${ratioPercent(completeLesson, viewLesson)})"
+        value = "$completeLesson (${ratioPercentFormatted(completeLesson, viewLesson)})"
       ),
       KpiDto(
         name = "Complete 2 lesson",
         value = "$usersCompletedAtLeastTwoLessons " +
-            "(${ratioPercent(usersCompletedAtLeastTwoLessons, completeLesson)})"
+            "(${ratioPercentFormatted(usersCompletedAtLeastTwoLessons, completeLesson)})"
       ),
     )
   }
