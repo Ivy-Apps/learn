@@ -75,7 +75,7 @@ private fun CtaButton(
   onClick: () -> Unit,
 ) {
   IvyButton(
-    modifier = modifier.defaultMinSize(minWidth = 300.dp),
+    modifier = modifier.defaultMinSize(minWidth = 224.dp),
     appearance = ButtonAppearance.Filled.Primary,
     text = {
       Text(text = text)

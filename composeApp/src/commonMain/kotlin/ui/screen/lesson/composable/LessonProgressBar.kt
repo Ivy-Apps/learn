@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import ui.screen.lesson.LessonProgressViewState
+import ui.theme.Gray
+import ui.theme.LightGray
 
 
 @Composable
@@ -29,10 +31,20 @@ fun LessonProgressBar(
       targetValue = viewState.done / viewState.total.toFloat(),
     )
     // background (total)
-    ProgressBarLine(width = progressBarWidth, color = MaterialTheme.colors.primaryVariant.copy(alpha = 0.8f))
+    ProgressBarLine(
+      width = progressBarWidth,
+      color = if (MaterialTheme.colors.isLight) {
+        LightGray.copy(alpha = 0.4f)
+      } else {
+        Gray.copy(alpha = 0.4f)
+      }
+    )
     // foreground (progress)
     val progressWidth = (progressBarWidth * progressPercent).coerceAtMost(progressBarWidth)
-    ProgressBarLine(width = progressWidth, color = MaterialTheme.colors.secondary)
+    ProgressBarLine(
+      width = progressWidth,
+      color = MaterialTheme.colors.secondary
+    )
   }
 }
 
