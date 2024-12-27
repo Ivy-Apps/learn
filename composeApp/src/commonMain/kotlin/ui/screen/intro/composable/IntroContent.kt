@@ -60,8 +60,7 @@ fun IntroContent(
           Spacer(modifier = Modifier.height(12.dp))
           Text(
             text = "Learn data structures, algorithms, architecture and software design from first principles.",
-            style = IvyTheme.typography.b1,
-            fontWeight = FontWeight.Medium,
+            style = IvyTheme.typography.b1
           )
         }
         item {
