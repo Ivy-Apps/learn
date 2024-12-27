@@ -21,7 +21,13 @@ class KpiViewModel(
 
     return when (val result = res) {
       is Either.Left -> KpiViewState.Error(result.value)
-      is Either.Right -> KpiViewState.Content(result.value.kpis.toImmutableList())
+      is Either.Right -> {
+        val kpisResponse = result.value
+        KpiViewState.Content(
+          funnel = kpisResponse.funnel.toImmutableList(),
+          kpis = kpisResponse.kpis.toImmutableList()
+        )
+      }
       null -> KpiViewState.Loading
     }
   }
