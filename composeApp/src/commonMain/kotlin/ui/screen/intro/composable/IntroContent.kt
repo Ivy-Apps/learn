@@ -11,7 +11,6 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import component.LocalLottieAnimation
 import component.ScreenType.*
 import component.button.ButtonAppearance
@@ -117,8 +116,8 @@ private fun ButtonsSection(
   Spacer(modifier = Modifier.height(7.dp))
   Text(
     text = "or",
-    fontSize = 14.sp,
-    lineHeight = 14.sp,
+    style = IvyTheme.typography.b2,
+    fontWeight = FontWeight.Medium,
     color = Gray,
   )
   Spacer(modifier = Modifier.height(4.dp))
