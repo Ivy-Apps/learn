@@ -52,7 +52,7 @@ private fun Content(
   ) {
     sectionDivider(name = "Funnel")
     itemsIndexed(
-      items = viewState.kpis,
+      items = viewState.funnel,
       key = { index, item -> "funnel_${index}_${item.name}" }
     ) { _, item ->
       KpiItem(item = item)
