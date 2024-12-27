@@ -119,6 +119,11 @@ tasks.withType<KspTask> {
       include("**/*.kt")
     }
     delete("build/generated/ksp/js/jsMain/kotlin")
+    copy {
+      from("build/generated/ksp/desktop/desktopMain/kotlin")
+      into("build/generated/ksp/commonMain/kotlin")
+      include("**/*.kt")
+    }
     delete("build/generated/ksp/desktop/desktopMain/kotlin")
   }
 }
