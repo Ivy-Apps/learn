@@ -16,31 +16,69 @@ val LocalTypography = compositionLocalOf<Typography> { error("No typography comp
 
 @Immutable
 interface Typography {
+  @get:Composable
   val h1: TextStyle
+
+  @get:Composable
   val h2: TextStyle
+
+  @get:Composable
   val b1: TextStyle
+
+  @get:Composable
   val b2: TextStyle
+
+  @get:Composable
   val label: TextStyle
 }
 
 @Immutable
 object MobileTypography : Typography {
-  override val h1 = ivyTextStyle(32.sp)
-  override val h2 = ivyTextStyle(24.sp)
-  override val b1 = ivyTextStyle(20.sp)
-  override val b2 = ivyTextStyle(16.sp)
-  override val label = ivyTextStyle(12.sp)
+  override val h1
+    @Composable
+    get() = ivyTextStyle(32.sp)
+
+  override val h2
+    @Composable
+    get() = ivyTextStyle(24.sp)
+
+  override val b1
+    @Composable
+    get() = ivyTextStyle(20.sp)
+
+  override val b2
+    @Composable
+    get() = ivyTextStyle(16.sp)
+
+  override val label
+    @Composable
+    get() = ivyTextStyle(12.sp)
 }
 
 @Immutable
 object DesktopTypography : Typography {
-  override val h1 = ivyTextStyle(48.sp)
-  override val h2 = ivyTextStyle(32.sp)
-  override val b1 = ivyTextStyle(24.sp)
-  override val b2 = ivyTextStyle(20.sp)
-  override val label = ivyTextStyle(16.sp)
+  override val h1
+    @Composable
+    get() = ivyTextStyle(48.sp)
+
+  override val h2
+    @Composable
+    get() = ivyTextStyle(32.sp)
+
+  override val b1
+    @Composable
+    get() = ivyTextStyle(24.sp)
+
+  override val b2
+    @Composable
+    get() = ivyTextStyle(20.sp)
+
+  override val label
+    @Composable
+    get() = ivyTextStyle(16.sp)
 }
 
+@Composable
 private fun ivyTextStyle(size: TextUnit): TextStyle {
   return TextStyle(
     fontSize = size,
@@ -50,7 +88,8 @@ private fun ivyTextStyle(size: TextUnit): TextStyle {
 }
 
 val RobotoFontFamily
-  @Composable get() = FontFamily(
+  @Composable
+  get() = FontFamily(
     Font(Res.font.roboto_regular, FontWeight.Normal),
     Font(Res.font.roboto_bold, FontWeight.Bold),
     Font(Res.font.roboto_italic, FontWeight.Normal, style = FontStyle.Italic),
