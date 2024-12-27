@@ -5,7 +5,6 @@ import androidx.compose.runtime.LaunchedEffect
 import domain.GoogleAuthenticationUseCase
 import domain.SessionManager
 import domain.analytics.Analytics
-import domain.analytics.Metrics
 import domain.analytics.Source
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -15,7 +14,6 @@ import ui.screen.home.HomeScreen
 
 class IntroViewModel(
   private val googleAuthenticationUseCase: GoogleAuthenticationUseCase,
-  private val metrics: Metrics,
   private val sessionManager: SessionManager,
   private val analytics: Analytics,
   private val scope: CoroutineScope,
@@ -24,7 +22,10 @@ class IntroViewModel(
   @Composable
   override fun viewState(): IntroViewState {
     LaunchedEffect(Unit) {
-      metrics.logMetric(name = "intro__view")
+      analytics.logEvent(
+        source = Source.Intro,
+        event = "intro__view"
+      )
     }
     return IntroViewState()
   }
