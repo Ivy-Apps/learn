@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -74,13 +75,15 @@ private fun KpiItem(
   Column(modifier = modifier) {
     Text(
       text = item.name,
-      style = IvyTheme.typography.b1,
+      style = MaterialTheme.typography.body1,
       fontWeight = FontWeight.SemiBold,
     )
     Spacer(Modifier.height(4.dp))
     Text(
       text = item.value,
-      style = IvyTheme.typography.b2
+      style = MaterialTheme.typography.body2,
+      fontWeight = FontWeight.Medium,
+      color = MaterialTheme.colors.secondary,
     )
   }
 }
@@ -94,6 +97,7 @@ private fun LazyListScope.sectionDivider(
     Text(
       text = name,
       style = IvyTheme.typography.h1,
+      color = MaterialTheme.colors.primary,
     )
   }
 }
