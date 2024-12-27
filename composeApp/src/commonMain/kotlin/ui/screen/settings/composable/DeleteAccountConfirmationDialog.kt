@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.button.ButtonAppearance
-import component.button.ButtonStyle
 import component.button.IvyButton
 import ui.screen.settings.DeleteDialogViewState
 import ui.theme.IvyTheme
@@ -40,7 +39,7 @@ fun DeleteAccountConfirmationDialog(
     onDismissRequest = onCancelDeleteAccountClick,
     confirmButton = {
       IvyButton(
-        appearance = ButtonAppearance.Filled(ButtonStyle.Destructive),
+        appearance = ButtonAppearance.Filled.Destructive,
         loading = viewState.ctaLoading,
         onClick = onConfirmDeleteAccountClick,
         text = {
@@ -50,7 +49,7 @@ fun DeleteAccountConfirmationDialog(
     },
     dismissButton = {
       IvyButton(
-        appearance = ButtonAppearance.Filled(ButtonStyle.Neutral),
+        appearance = ButtonAppearance.Filled.Neutral,
         onClick = onCancelDeleteAccountClick,
         text = {
           Text(text = "Cancel")

@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import component.button.ButtonAppearance
-import component.button.ButtonStyle
 import component.button.IvyButton
 import ui.screen.lesson.AnswerViewState
 import ui.screen.lesson.QuestionItemViewState
@@ -193,7 +192,7 @@ private fun CheckButton(
 ) {
   IvyButton(
     modifier = modifier,
-    appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+    appearance = ButtonAppearance.Filled.Primary,
     enabled = enabled,
     text = {
       Text(text = "Check")

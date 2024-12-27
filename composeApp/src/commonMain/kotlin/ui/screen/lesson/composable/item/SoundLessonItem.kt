@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import component.button.ButtonAppearance
-import component.button.ButtonStyle
 import component.button.IvyButton
 import ui.screen.lesson.SoundItemViewState
 import ui.screen.lesson.composable.ItemSpacing
@@ -21,7 +20,7 @@ fun SoundLessonItem(
 ) {
   IvyButton(
     modifier = modifier.padding(top = ItemSpacing),
-    appearance = ButtonAppearance.Outlined(ButtonStyle.Secondary),
+    appearance = ButtonAppearance.Outlined.Secondary,
     text = {
       Text(text = viewState.text)
     },

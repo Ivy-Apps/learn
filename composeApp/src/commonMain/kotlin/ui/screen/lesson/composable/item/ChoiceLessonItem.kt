@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.ScreenType.*
 import component.button.ButtonAppearance
-import component.button.ButtonStyle
 import component.button.IvyButton
 import component.screenType
 import kotlinx.collections.immutable.ImmutableList
@@ -84,7 +83,7 @@ private fun ChoiceOption(
 ) {
   IvyButton(
     modifier = modifier,
-    appearance = ButtonAppearance.Outlined(ButtonStyle.Primary),
+    appearance = ButtonAppearance.Outlined.Primary,
     text = {
       Text(text = viewState.text)
     },

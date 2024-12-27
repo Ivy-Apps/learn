@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.button.ButtonAppearance
-import component.button.ButtonStyle
 import component.button.IvyButton
 import ui.screen.lesson.CtaViewState
 import ui.screen.lesson.LessonItemIdViewState
@@ -77,7 +76,7 @@ private fun CtaButton(
 ) {
   IvyButton(
     modifier = modifier.defaultMinSize(minWidth = 300.dp),
-    appearance = ButtonAppearance.Filled(ButtonStyle.Primary),
+    appearance = ButtonAppearance.Filled.Primary,
     text = {
       Text(text = text)
     },
