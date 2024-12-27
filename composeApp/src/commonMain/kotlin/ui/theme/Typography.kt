@@ -29,7 +29,7 @@ interface Typography {
   val b2: TextStyle
 
   @get:Composable
-  val label: TextStyle
+  val caption: TextStyle
 }
 
 @Immutable
@@ -50,7 +50,7 @@ object MobileTypography : Typography {
     @Composable
     get() = ivyTextStyle(14.sp)
 
-  override val label
+  override val caption
     @Composable
     get() = ivyTextStyle(12.sp)
 }
@@ -73,7 +73,7 @@ object DesktopTypography : Typography {
     @Composable
     get() = ivyTextStyle(14.sp)
 
-  override val label
+  override val caption
     @Composable
     get() = ivyTextStyle(12.sp)
 }
