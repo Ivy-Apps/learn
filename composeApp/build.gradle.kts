@@ -113,17 +113,22 @@ compose.experimental {
 // Configure KSP to output to the commonMain directory
 tasks.withType<KspTask> {
   doLast {
-    copy {
-      from("build/generated/ksp/js/jsMain/kotlin")
-      into("build/generated/ksp/commonMain/kotlin")
-      include("**/*.kt")
-    }
-    delete("build/generated/ksp/js/jsMain/kotlin")
-    copy {
-      from("build/generated/ksp/desktop/desktopMain/kotlin")
-      into("build/generated/ksp/commonMain/kotlin")
-      include("**/*.kt")
-    }
-    delete("build/generated/ksp/desktop/desktopMain/kotlin")
+    fixKspConflicts()
   }
+}
+
+fun fixKspConflicts() {
+  fun fixTarget(target: String) {
+    copy {
+      from("build/generated/ksp/$target/${target}Main/kotlin")
+      into("build/generated/ksp/commonMain/kotlin")
+      include("**/*.kt")
+    }
+    delete("build/generated/ksp/$target/${target}Main/kotlin")
+  }
+  fixTarget("js")
+  fixTarget("desktop")
+  fixTarget("android")
+  fixTarget("ios")
+  fixTarget("native")
 }
