@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import ivy.IvyUrls
+import ui.theme.IvyTheme
 
 @Composable
 fun IntroLegalText(
@@ -57,7 +58,7 @@ fun IntroLegalText(
   ClickableText(
     modifier = modifier,
     text = text,
-    style = MaterialTheme.typography.caption.copy(
+    style = IvyTheme.typography.caption.copy(
       textAlign = TextAlign.Center,
     ),
     onClick = { offset ->
