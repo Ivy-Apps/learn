@@ -14,60 +14,27 @@ import ui.theme.IvyTheme
 import ui.theme.colorsExt
 
 sealed interface ButtonAppearance {
-  val style: ButtonStyle
+  data object Focused : ButtonAppearance
 
   sealed interface Filled : ButtonAppearance {
-    data object Primary : Filled {
-      override val style = ButtonStyle.Primary
-    }
-
-    data object Secondary : Filled {
-      override val style = ButtonStyle.Secondary
-    }
-
-    data object Neutral : Filled {
-      override val style = ButtonStyle.Neutral
-    }
-
-    data object Destructive : Filled {
-      override val style = ButtonStyle.Destructive
-    }
+    data object Primary : Filled
+    data object Secondary : Filled
+    data object Neutral : Filled
+    data object Destructive : Filled
   }
 
   sealed interface Outlined : ButtonAppearance {
-    data object Primary : Outlined {
-      override val style = ButtonStyle.Primary
-    }
-
-    data object Secondary : Outlined {
-      override val style = ButtonStyle.Secondary
-    }
-
-    data object Neutral : Outlined {
-      override val style = ButtonStyle.Neutral
-    }
-
-    data object Destructive : Outlined {
-      override val style = ButtonStyle.Destructive
-    }
+    data object Primary : Outlined
+    data object Secondary : Outlined
+    data object Neutral : Outlined
+    data object Destructive : Outlined
   }
 
   sealed interface Text : ButtonAppearance {
-    data object Primary : Text {
-      override val style = ButtonStyle.Primary
-    }
-
-    data object Secondary : Text {
-      override val style = ButtonStyle.Secondary
-    }
-
-    data object Neutral : Text {
-      override val style = ButtonStyle.Neutral
-    }
-
-    data object Destructive : Text {
-      override val style = ButtonStyle.Destructive
-    }
+    data object Primary : Text
+    data object Secondary : Text
+    data object Neutral : Text
+    data object Destructive : Text
   }
 }
 
@@ -89,10 +56,17 @@ fun IvyButton(
   iconRight: @Composable (RowScope.() -> Unit)? = null,
   onClick: () -> Unit,
 ) {
-  val contentPadding = PaddingValues(
-    horizontal = 16.dp,
-    vertical = 8.dp
-  )
+  val contentPadding = if (appearance is ButtonAppearance.Focused) {
+    PaddingValues(
+      horizontal = 16.dp,
+      vertical = 12.dp
+    )
+  } else {
+    PaddingValues(
+      horizontal = 16.dp,
+      vertical = 8.dp
+    )
+  }
 
   ButtonWrapper(
     modifier = modifier,
@@ -146,6 +120,24 @@ private fun ButtonWrapper(
   val colors = appearance.buttonColors()
 
   when (appearance) {
+    ButtonAppearance.Focused -> {
+      Button(
+        modifier = modifier,
+        enabled = enabled,
+        elevation = ButtonDefaults.elevation(
+          defaultElevation = 6.dp,
+          pressedElevation = 12.dp,
+          disabledElevation = 0.dp,
+          hoveredElevation = 8.dp,
+          focusedElevation = 8.dp
+        ),
+        contentPadding = contentPadding,
+        colors = colors,
+        onClick = onClick,
+        content = content
+      )
+    }
+
     is ButtonAppearance.Filled -> {
       Button(
         modifier = modifier,
@@ -191,7 +183,16 @@ private fun ButtonAppearance.buttonColors(): ButtonColors {
     is ButtonAppearance.Filled -> this.colors()
     is ButtonAppearance.Outlined -> this.colors()
     is ButtonAppearance.Text -> this.colors()
+    is ButtonAppearance.Focused -> this.colors()
   }
+}
+
+@Composable
+private fun ButtonAppearance.Focused.colors(): ButtonColors {
+  return ButtonDefaults.buttonColors(
+    backgroundColor = MaterialTheme.colors.primary,
+    contentColor = MaterialTheme.colors.onPrimary
+  )
 }
 
 @Composable
@@ -278,3 +279,27 @@ private fun ButtonStyle.outlinedBorderColor(): Color {
     ButtonStyle.Destructive -> MaterialTheme.colors.error
   }
 }
+
+private val ButtonAppearance.style: ButtonStyle
+  get() = when (this) {
+    ButtonAppearance.Filled.Destructive,
+    ButtonAppearance.Outlined.Destructive,
+    ButtonAppearance.Text.Destructive
+      -> ButtonStyle.Destructive
+
+    ButtonAppearance.Outlined.Neutral,
+    ButtonAppearance.Filled.Neutral,
+    ButtonAppearance.Text.Neutral
+      -> ButtonStyle.Neutral
+
+    ButtonAppearance.Focused,
+    ButtonAppearance.Filled.Primary,
+    ButtonAppearance.Outlined.Primary,
+    ButtonAppearance.Text.Primary
+      -> ButtonStyle.Primary
+
+    ButtonAppearance.Filled.Secondary,
+    ButtonAppearance.Outlined.Secondary,
+    ButtonAppearance.Text.Secondary
+      -> ButtonStyle.Secondary
+  }
