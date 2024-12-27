@@ -30,24 +30,24 @@ class KpiFunnel {
       ),
       KpiDto(
         name = "Enter app",
-        value = "$enterApp (${ratioPercentFormatted(enterApp, introViews)})"
+        value = "$enterApp (${ratioPercentFormatted(enterApp, outOf = introViews)})"
       ),
       KpiDto(
         name = "View course",
-        value = "$viewCourse (${ratioPercentFormatted(viewCourse, enterApp)})"
+        value = "$viewCourse (${ratioPercentFormatted(viewCourse, outOf = enterApp)})"
       ),
       KpiDto(
         name = "View lesson",
-        value = "$viewLesson (${ratioPercentFormatted(viewLesson, viewCourse)})"
+        value = "$viewLesson (${ratioPercentFormatted(viewLesson, outOf = viewCourse)})"
       ),
       KpiDto(
         name = "Complete lesson",
-        value = "$completeLesson (${ratioPercentFormatted(completeLesson, viewLesson)})"
+        value = "$completeLesson (${ratioPercentFormatted(completeLesson, outOf = viewLesson)})"
       ),
       KpiDto(
         name = "Complete 2 lesson",
         value = "$usersCompletedAtLeastTwoLessons " +
-            "(${ratioPercentFormatted(usersCompletedAtLeastTwoLessons, completeLesson)})"
+            "(${ratioPercentFormatted(usersCompletedAtLeastTwoLessons, outOf = completeLesson)})"
       ),
     )
   }
