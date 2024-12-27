@@ -36,53 +36,86 @@ interface Typography {
 object MobileTypography : Typography {
   override val h1
     @Composable
-    get() = ivyTextStyle(28.sp)
+    get() = ivyTextStyle(
+      fontSize = 28.sp,
+      lineHeight = 30.sp
+    )
 
   override val h2
     @Composable
-    get() = ivyTextStyle(20.sp)
+    get() = ivyTextStyle(
+      fontSize = 20.sp,
+      lineHeight = 22.sp
+    )
 
   override val b1
     @Composable
-    get() = ivyTextStyle(16.sp)
+    get() = ivyTextStyle(
+      fontSize = 16.sp,
+      lineHeight = 18.sp
+    )
 
   override val b2
     @Composable
-    get() = ivyTextStyle(14.sp)
+    get() = ivyTextStyle(
+      fontSize = 14.sp,
+      lineHeight = 16.sp
+    )
 
   override val caption
     @Composable
-    get() = ivyTextStyle(12.sp)
+    get() = ivyTextStyle(
+      fontSize = 12.sp,
+      lineHeight = 14.sp
+    )
 }
 
 @Immutable
 object DesktopTypography : Typography {
   override val h1
     @Composable
-    get() = ivyTextStyle(32.sp)
+    get() = ivyTextStyle(
+      fontSize = 32.sp,
+      lineHeight = 34.sp
+    )
 
   override val h2
     @Composable
-    get() = ivyTextStyle(24.sp)
+    get() = ivyTextStyle(
+      fontSize = 24.sp,
+      lineHeight = 26.sp
+    )
 
   override val b1
     @Composable
-    get() = ivyTextStyle(20.sp)
+    get() = ivyTextStyle(
+      fontSize = 20.sp,
+      lineHeight = 22.sp
+    )
 
   override val b2
     @Composable
-    get() = ivyTextStyle(16.sp)
+    get() = ivyTextStyle(
+      fontSize = 16.sp,
+      lineHeight = 18.sp
+    )
 
   override val caption
     @Composable
-    get() = ivyTextStyle(14.sp)
+    get() = ivyTextStyle(
+      fontSize = 14.sp,
+      lineHeight = 16.sp
+    )
 }
 
 @Composable
-private fun ivyTextStyle(size: TextUnit): TextStyle {
+private fun ivyTextStyle(
+  fontSize: TextUnit,
+  lineHeight: TextUnit
+): TextStyle {
   return TextStyle(
-    fontSize = size,
-    lineHeight = size,
+    fontSize = fontSize,
+    lineHeight = lineHeight,
     fontFamily = RobotoFontFamily,
   )
 }
