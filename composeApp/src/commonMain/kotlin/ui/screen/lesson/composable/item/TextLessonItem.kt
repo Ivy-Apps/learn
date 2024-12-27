@@ -10,7 +10,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import component.ScreenType.*
 import component.screenType
-import component.text.BodyBig
 import ui.screen.lesson.TextItemViewState
 import ui.screen.lesson.TextStyleViewState
 import ui.screen.lesson.composable.ItemSpacing
@@ -74,7 +73,7 @@ private fun LessonBodyText(
   text: String,
   modifier: Modifier = Modifier,
 ) {
-  BodyBig(
+  Text(
     modifier = modifier.then(
       when (screenType()) {
         Desktop, Tablet -> Modifier.sizeIn(
@@ -88,6 +87,7 @@ private fun LessonBodyText(
       }
     ),
     text = text,
+    style = IvyTheme.typography.b2,
     textAlign = TextAlign.Start,
   )
 }
