@@ -14,14 +14,12 @@ import androidx.compose.ui.unit.dp
 import component.LocalLottieAnimation
 import component.ScreenType.*
 import component.button.ButtonAppearance
-import component.button.ButtonStyle
 import component.button.IvyButton
 import component.screenType
 import ui.screen.intro.IntroViewEvent
 import ui.screen.intro.IntroViewState
 import ui.theme.Gray
 import ui.theme.IvyTheme
-
 
 @Composable
 fun IntroContent(
@@ -60,8 +58,7 @@ fun IntroContent(
           Spacer(modifier = Modifier.height(12.dp))
           Text(
             text = "Learn data structures, algorithms, architecture and software design from first principles.",
-            style = IvyTheme.typography.b1,
-            fontWeight = FontWeight.Medium,
+            style = IvyTheme.typography.b1
           )
         }
         item {
@@ -134,7 +131,7 @@ private fun LearnMoreButton(
 ) {
   IvyButton(
     modifier = modifier,
-    appearance = ButtonAppearance.Outlined(style = ButtonStyle.Primary),
+    appearance = ButtonAppearance.Outlined.Primary,
     text = {
       Text("Learn more")
     },

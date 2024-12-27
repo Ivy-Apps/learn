@@ -20,31 +20,31 @@ import ui.screen.lesson.LessonProgressViewState
 
 @Composable
 fun LessonProgressBar(
-    viewState: LessonProgressViewState,
-    modifier: Modifier = Modifier,
-    progressBarWidth: Dp = 164.dp,
+  viewState: LessonProgressViewState,
+  modifier: Modifier = Modifier,
+  progressBarWidth: Dp = 164.dp,
 ) {
-    Box(modifier = modifier) {
-        val progressPercent by animateFloatAsState(
-            targetValue = viewState.done / viewState.total.toFloat(),
-        )
-        // background (total)
-        ProgressBarLine(width = progressBarWidth, color = MaterialTheme.colors.secondary.copy(alpha = 0.4f))
-        // foreground (progress)
-        val progressWidth = (progressBarWidth * progressPercent).coerceAtMost(progressBarWidth)
-        ProgressBarLine(width = progressWidth, color = MaterialTheme.colors.secondary)
-    }
+  Box(modifier = modifier) {
+    val progressPercent by animateFloatAsState(
+      targetValue = viewState.done / viewState.total.toFloat(),
+    )
+    // background (total)
+    ProgressBarLine(width = progressBarWidth, color = MaterialTheme.colors.primaryVariant.copy(alpha = 0.8f))
+    // foreground (progress)
+    val progressWidth = (progressBarWidth * progressPercent).coerceAtMost(progressBarWidth)
+    ProgressBarLine(width = progressWidth, color = MaterialTheme.colors.secondary)
+  }
 }
 
 @Composable
 private fun ProgressBarLine(
-    width: Dp,
-    color: Color,
-    modifier: Modifier = Modifier,
+  width: Dp,
+  color: Color,
+  modifier: Modifier = Modifier,
 ) {
-    Spacer(
-        modifier.height(8.dp)
-            .width(width)
-            .background(color, RoundedCornerShape(percent = 50))
-    )
+  Spacer(
+    modifier.height(8.dp)
+      .width(width)
+      .background(color, RoundedCornerShape(percent = 50))
+  )
 }

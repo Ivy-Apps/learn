@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import component.LearnScaffold
 import ivy.data.source.model.KpiDto
 import ui.screen.kpi.KpiViewState
+import ui.theme.IvyTheme
 
 @Composable
 fun KpiScreenContent(
@@ -65,13 +65,13 @@ private fun KpiItem(
   Column(modifier = modifier) {
     Text(
       text = item.name,
-      style = MaterialTheme.typography.body1,
+      style = IvyTheme.typography.b1,
       fontWeight = FontWeight.SemiBold,
     )
     Spacer(Modifier.height(4.dp))
     Text(
       text = item.value,
-      style = MaterialTheme.typography.body2
+      style = IvyTheme.typography.b2
     )
   }
 }

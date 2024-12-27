@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import ui.theme.IvyTheme
 import ui.theme.colorsExt
 
 class Toaster(
@@ -100,7 +101,7 @@ fun Toast(
                 vertical = 12.dp,
             ),
         text = viewState.msg,
-        style = MaterialTheme.typography.body1,
+        style = IvyTheme.typography.b2,
         color = MaterialTheme.colorsExt.backgroundVariant,
     )
 }

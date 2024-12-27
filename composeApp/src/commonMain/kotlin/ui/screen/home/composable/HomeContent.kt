@@ -88,7 +88,7 @@ fun HomeContent(
               )
             })
 
-          is HomeItemViewState.Section -> Section(
+          is HomeItemViewState.Section -> HomeTopicDivider(
             modifier = Modifier.padding(top = 12.dp),
             section = it
           )
