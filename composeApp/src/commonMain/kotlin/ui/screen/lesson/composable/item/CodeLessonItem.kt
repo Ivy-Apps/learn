@@ -12,13 +12,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import component.PythonSyntaxHighlight
 import component.ScreenType.Mobile
 import component.highlightSyntax
 import component.screenType
 import ui.screen.lesson.CodeItemViewState
 import ui.screen.lesson.composable.ItemSpacingMedium
+import ui.theme.IvyTheme
 import ui.theme.colorsExt
 
 @Composable
@@ -55,12 +55,8 @@ fun CodeLessonItem(
         code = viewState.code,
         syntaxHighlight = remember { PythonSyntaxHighlight() }
       ),
-      style = IvyTheme.typography.body1.copy(
-        fontSize = 18.sp,
-        lineHeight = 24.sp,
-      ),
+      style = IvyTheme.typography.b2,
       textAlign = TextAlign.Start,
     )
   }
 }
-

@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import component.LearnScaffold
 import ivy.data.source.model.KpiDto
 import ui.screen.kpi.KpiViewState
+import ui.theme.IvyTheme
 
 @Composable
 fun KpiScreenContent(
@@ -64,13 +65,13 @@ private fun KpiItem(
   Column(modifier = modifier) {
     Text(
       text = item.name,
-      style = IvyTheme.typography.body1,
+      style = IvyTheme.typography.b1,
       fontWeight = FontWeight.SemiBold,
     )
     Spacer(Modifier.height(4.dp))
     Text(
       text = item.value,
-      style = IvyTheme.typography.body2
+      style = IvyTheme.typography.b2
     )
   }
 }

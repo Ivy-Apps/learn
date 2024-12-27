@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import ui.theme.IvyTheme
 
 @Composable
 fun BodyBig(
@@ -18,7 +19,7 @@ fun BodyBig(
     Text(
         modifier = modifier,
         text = text,
-        style = IvyTheme.typography.body1.copy(
+        style = IvyTheme.typography.b1.copy(
             fontSize = 18.sp,
             lineHeight = 24.sp,
         ),
@@ -35,7 +36,7 @@ fun Body(
     Text(
         modifier = modifier,
         text = text,
-        style = IvyTheme.typography.body1
+        style = IvyTheme.typography.b1
     )
 }
 
@@ -50,7 +51,7 @@ fun BodySmall(
         modifier = modifier,
         text = text,
         color = color,
-        style = IvyTheme.typography.body2,
+        style = IvyTheme.typography.b2,
         fontWeight = fontWeight,
     )
 }
