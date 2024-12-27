@@ -8,7 +8,10 @@ import kotlinx.collections.immutable.ImmutableList
 sealed interface KpiViewState {
   data object Loading : KpiViewState
   data class Error(val errMsg: String) : KpiViewState
-  data class Content(val kpis: ImmutableList<KpiDto>) : KpiViewState
+  data class Content(
+    val funnel: ImmutableList<KpiDto>,
+    val kpis: ImmutableList<KpiDto>
+  ) : KpiViewState
 }
 
 sealed interface KpiViewEvent

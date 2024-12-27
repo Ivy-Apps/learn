@@ -6,7 +6,6 @@ import data.SoundRepository
 import domain.DeleteUserDataUseCase
 import domain.SessionManager
 import domain.analytics.Analytics
-import domain.analytics.Metrics
 import domain.analytics.Source
 import ivy.IvyUrls
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +26,6 @@ class SettingsViewModel(
   private val analytics: Analytics,
   private val toaster: Toaster,
   private val soundRepository: SoundRepository,
-  private val metrics: Metrics,
 ) : ComposeViewModel<SettingsViewState, SettingsViewEvent> {
   private var soundEnabled by mutableStateOf(true)
   private var deleteDialog by mutableStateOf<DeleteDialogViewState?>(null)
@@ -130,7 +128,7 @@ class SettingsViewModel(
       deleteDialog = DeleteDialogViewState(ctaLoading = true)
       deleteUserDataUseCase.execute()
       deleteDialog = DeleteDialogViewState(ctaLoading = false)
-      metrics.logMetric(name = "account__deleted")
+      logEvent(event = "account__deleted")
     }
   }
 

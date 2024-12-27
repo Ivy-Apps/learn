@@ -42,10 +42,8 @@ class Analytics(
     eventName: String,
     params: Map<String, String>?,
   ) {
-    if (!enabled) return
-
     appScope.launch {
-      if (sessionManager.getSession() is Session.LoggedIn) {
+      if (enabled && sessionManager.getSession() is Session.LoggedIn) {
         trackLoggedAnalyticsEvent(
           eventName = eventName,
           params = params,

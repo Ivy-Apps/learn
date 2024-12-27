@@ -7,6 +7,7 @@ import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.countDistinct
 import org.jetbrains.exposed.sql.statements.StatementType
+import java.text.DecimalFormat
 
 @Suppress("unused")
 fun Transaction.totalDistinctCount(event: String): Long {
@@ -51,7 +52,12 @@ SELECT params::TEXT, count(DISTINCT user_id) FROM analytics
   )
 }
 
-
 fun lessonKpiId(params: Map<String, String>): String {
   return "${params[AnalyticsParams.courseId]}/${params[AnalyticsParams.lessonId]}"
+}
+
+fun ratioPercent(a: Long, b: Long): String {
+  val percentageFormatter = DecimalFormat("0.00")
+  val ratio = (a / b.toDouble()) * 100
+  return "${percentageFormatter.format(ratio)}%"
 }

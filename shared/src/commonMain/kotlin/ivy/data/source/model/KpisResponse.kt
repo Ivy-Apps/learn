@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KpisResponse(
+  val funnel: List<KpiDto>,
   val kpis: List<KpiDto>,
 )
 
