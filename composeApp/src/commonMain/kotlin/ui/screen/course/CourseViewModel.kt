@@ -6,7 +6,6 @@ import data.CourseRepository
 import domain.analytics.Analytics
 import domain.analytics.Source
 import ivy.data.source.model.CourseResponse
-import ivy.learn.CourseId
 import ivy.learn.LessonId
 import ivy.model.analytics.*
 import kotlinx.collections.immutable.persistentListOf
@@ -19,8 +18,7 @@ import ui.screen.course.mapper.CourseViewStateMapper
 import ui.screen.lesson.LessonScreen
 
 class CourseViewModel(
-  private val courseId: CourseId,
-  private val courseName: String,
+  args: CourseScreen.Args,
   private val navigation: Navigation,
   private val repository: CourseRepository,
   private val mapper: CourseViewStateMapper,
@@ -28,6 +26,8 @@ class CourseViewModel(
   private val screenScope: CoroutineScope,
   private val accessControl: AccessControl,
 ) : ComposeViewModel<CourseViewState, CourseViewEvent> {
+  private val courseId = args.courseId
+  private val courseName = args.courseName
 
   private var courseResponse by mutableStateOf<CourseResponse?>(null)
 

@@ -101,7 +101,7 @@ class WebSystemNavigation(
       .mapNotNull {
         val parts = it.split("=")
         if (parts.size == 2) {
-          val key = decodeURIComponent(parts[0])
+          val key = decodeURIComponent(parts[0].lowercase())
           val value = decodeURIComponent(parts[1])
           key to value
         } else null
