@@ -39,6 +39,7 @@ class KpiService(
       Di.get<ActiveUsersAvgCompletedLessonsKpi>(),
       Di.get<TopLessonsByDistinctViewsKpi>(),
       Di.get<TopLessonsByDistinctCompletionsKpi>(),
+      Di.get<TopLessonsByDistinctCompletionRateKpi>(),
       Di.get<TopCoursesByDistinctViewsKpi>(),
     ).map { it.compute() }
 

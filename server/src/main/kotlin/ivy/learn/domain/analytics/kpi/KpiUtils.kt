@@ -2,6 +2,7 @@ package ivy.learn.domain.analytics.kpi
 
 import ivy.learn.data.database.tables.AnalyticsTable
 import ivy.learn.data.database.tables.MetricsTable
+import ivy.model.analytics.AnalyticsParams
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.countDistinct
@@ -48,4 +49,9 @@ SELECT params::TEXT, count(DISTINCT user_id) FROM analytics
       }
     }
   )
+}
+
+
+fun lessonKpiId(params: Map<String, String>): String {
+  return "${params[AnalyticsParams.courseId]}/${params[AnalyticsParams.lessonId]}"
 }
