@@ -4,10 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ui.theme.Gray
+import ui.theme.IvyTheme
 import ui.theme.colorsExt
 
 sealed interface ButtonAppearance {
@@ -48,28 +50,32 @@ fun IvyButton(
         enabled = enabled && !loading,
         onClick = onClick
     ) {
-        when {
-            loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    color = LocalContentColor.current
-                )
-            }
+        CompositionLocalProvider(
+            LocalTextStyle provides IvyTheme.typography.b1
+        ) {
+            when {
+                loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = LocalContentColor.current
+                    )
+                }
 
-            icon != null -> {
-                icon()
-                Spacer(Modifier.width(8.dp))
-                text()
-            }
+                icon != null -> {
+                    icon()
+                    Spacer(Modifier.width(8.dp))
+                    text()
+                }
 
-            iconRight != null -> {
-                text()
-                Spacer(Modifier.width(8.dp))
-                iconRight()
-            }
+                iconRight != null -> {
+                    text()
+                    Spacer(Modifier.width(8.dp))
+                    iconRight()
+                }
 
-            else -> {
-                text()
+                else -> {
+                    text()
+                }
             }
         }
     }
