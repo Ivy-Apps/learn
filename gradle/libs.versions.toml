@@ -91,6 +91,15 @@ test = [
     "kotest-assertions-arrow",
     "kotlin-coroutines-test"
 ]
+test-kmp = [
+    "kotlin-test",
+    "google-testparameterinjector",
+    "kotest-assertions",
+    "kotest-property",
+    "kotest-property-arrow",
+    "kotest-assertions-arrow",
+    "kotlin-coroutines-test"
+]
 ktor-client-common = [
     "ktor-client-content-negotiation",
     "ktor-serialization-json",
