@@ -110,9 +110,7 @@ class LessonViewModel(
   }
 
   override fun onEvent(event: LessonViewEvent) {
-    val eventHandler = eventHandlers.value.firstOrNull { handler ->
-      event::class in handler.eventTypes
-    }
+    val eventHandler = eventHandlers.value[event::class]
     checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }
 
     screenScope.launch {

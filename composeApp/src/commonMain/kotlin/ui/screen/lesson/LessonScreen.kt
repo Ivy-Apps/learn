@@ -17,6 +17,7 @@ import ui.screen.lesson.handler.*
 import ui.screen.lesson.mapper.LessonTreeManager
 import ui.screen.lesson.mapper.LessonViewStateMapper
 import kotlin.jvm.JvmInline
+import kotlin.reflect.KClass
 
 object LessonRouter : Router<LessonScreen> {
   const val PATH = "lesson"
@@ -62,7 +63,8 @@ class LessonScreen(
     autoWire(::LessonViewStateMapper)
     autoWire(::OnBackClickEventHandler)
     autoWire(::OnContinueClickEventHandler)
-    autoWire(::QuestionEventHandler)
+    autoWire(::OnAnswerCheckChangeEventHandler)
+    autoWire(::OnCheckClickEventHandler)
     autoWire(::OnSoundClickEventHandler)
     autoWire(::OnFinishClickEventHandler)
     autoWire(::OnChoiceClickEventHandler)
@@ -75,13 +77,14 @@ class LessonScreen(
     }
     register {
       EventHandlers(
-        setOf(
-          Di.get<OnBackClickEventHandler>(),
-          Di.get<OnContinueClickEventHandler>(),
-          Di.get<QuestionEventHandler>(),
-          Di.get<OnSoundClickEventHandler>(),
-          Di.get<OnFinishClickEventHandler>(),
-          Di.get<OnChoiceClickEventHandler>(),
+        mapOf(
+          LessonViewEvent.OnBackClick::class to Di.get<OnBackClickEventHandler>(),
+          LessonViewEvent.OnContinueClick::class to Di.get<OnContinueClickEventHandler>(),
+          QuestionViewEvent.OnAnswerCheckChange::class to Di.get<OnAnswerCheckChangeEventHandler>(),
+          QuestionViewEvent.OnCheckClick::class to Di.get<OnCheckClickEventHandler>(),
+          LessonViewEvent.OnSoundClick::class to Di.get<OnSoundClickEventHandler>(),
+          OnFinishClickEventHandler::class to Di.get<OnFinishClickEventHandler>(),
+          LessonViewEvent.OnChoiceClick::class to Di.get<OnChoiceClickEventHandler>(),
         )
       )
     }
@@ -97,5 +100,5 @@ class LessonScreen(
   }
 
   @JvmInline
-  value class EventHandlers(val value: Set<LessonEventHandler<*>>)
+  value class EventHandlers(val value: Map<KClass<*>, LessonEventHandler<*>>)
 }

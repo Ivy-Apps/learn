@@ -8,8 +8,6 @@ import ui.screen.lesson.LessonVmContext
 class OnBackClickEventHandler(
     private val navigation: Navigation
 ) : LessonEventHandler<LessonViewEvent.OnBackClick> {
-    override val eventTypes = setOf(LessonViewEvent.OnBackClick::class)
-
     override suspend fun LessonVmContext.handleEvent(
         event: LessonViewEvent.OnBackClick
     ) {

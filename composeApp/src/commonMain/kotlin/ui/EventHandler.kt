@@ -1,10 +1,8 @@
 package ui
 
 import kotlinx.coroutines.CoroutineScope
-import kotlin.reflect.KClass
 
 interface EventHandler<Event : Any, State : Any, Args : Any> {
-    val eventTypes: Set<KClass<*>>
     suspend fun VmContext<State, Args>.handleEvent(event: Event)
 }
 
