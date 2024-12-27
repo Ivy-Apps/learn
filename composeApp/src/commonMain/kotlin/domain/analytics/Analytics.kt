@@ -5,15 +5,15 @@ import data.storage.LocalStorage
 import domain.Session
 import domain.SessionManager
 import ivy.model.analytics.AnalyticsEventDto
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import util.AppScope
 import util.Logger
 import util.TimeProvider
 
 class Analytics(
   private val analyticsRepository: AnalyticsRepository,
   private val logger: Logger,
-  private val appScope: CoroutineScope,
+  private val appScope: AppScope,
   private val timeProvider: TimeProvider,
   private val localStorage: LocalStorage,
   private val sessionManager: SessionManager,
@@ -42,7 +42,7 @@ class Analytics(
     eventName: String,
     params: Map<String, String>?,
   ) {
-    appScope.launch {
+    appScope.get.launch {
       if (enabled && sessionManager.getSession() is Session.LoggedIn) {
         trackLoggedAnalyticsEvent(
           eventName = eventName,

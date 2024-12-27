@@ -4,32 +4,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import kotlinx.coroutines.flow.StateFlow
 import ui.screen.NotFoundPage
 import ui.screen.home.HomeScreen
 
 class Navigation(
-    private val systemNavigation: SystemNavigation,
+  private val systemNavigation: SystemNavigation,
 ) {
-    @Composable
-    fun NavHost() {
-        val currentRoute by systemNavigation.currentRoute.collectAsState()
-        val screen = remember(currentRoute) {
-            Routing.resolve(currentRoute)?.also(Screen::initialize)
-        }
-        screen?.Content() ?: NotFoundPage(currentRoute)
-    }
+  val currentPath: StateFlow<FullPath> = systemNavigation.currentPath
 
-    fun navigateTo(screen: Screen) {
-        systemNavigation.navigateTo(screen)
+  @Composable
+  fun NavHost() {
+    val currentRoute by systemNavigation.currentRoute.collectAsState()
+    val screen = remember(currentRoute) {
+      Routing.resolve(currentRoute)?.also(Screen::initialize)
     }
+    screen?.Content() ?: NotFoundPage(currentRoute)
+  }
 
-    fun replaceWith(screen: Screen) {
-        systemNavigation.replaceWith(screen)
-    }
+  fun navigateTo(screen: Screen) {
+    systemNavigation.navigateTo(screen)
+  }
 
-    fun navigateBack() {
-        if (!systemNavigation.navigateBack()) {
-            navigateTo(HomeScreen())
-        }
+  fun replaceWith(screen: Screen) {
+    systemNavigation.replaceWith(screen)
+  }
+
+  fun navigateBack() {
+    if (!systemNavigation.navigateBack()) {
+      navigateTo(HomeScreen())
     }
+  }
 }

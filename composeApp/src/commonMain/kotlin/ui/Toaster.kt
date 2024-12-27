@@ -15,16 +15,16 @@ import ivy.di.Di
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import ui.theme.IvyTheme
 import ui.theme.colorsExt
+import util.AppScope
 
 class Toaster(
-    private val appScope: CoroutineScope,
+    private val appScope: AppScope,
 ) {
     private val _toasts = MutableSharedFlow<ImmutableList<ToastViewState>>()
     val toasts: SharedFlow<ImmutableList<ToastViewState>> = _toasts
@@ -35,7 +35,7 @@ class Toaster(
         msg: String,
         durationMs: Int = 2_000,
     ) {
-        appScope.launch {
+        appScope.get.launch {
             val toast = ToastViewState(
                 msg = msg,
                 durationMs = durationMs,
