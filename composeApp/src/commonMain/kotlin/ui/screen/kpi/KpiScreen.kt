@@ -8,6 +8,7 @@ import ivy.di.autowire.autoWire
 import navigation.Route
 import navigation.Router
 import navigation.Screen
+import ui.ComposeViewModel
 import ui.screen.kpi.composable.KpiScreenContent
 
 object KpiRouter : Router<KpiScreen> {
@@ -23,18 +24,19 @@ object KpiRouter : Router<KpiScreen> {
   }
 }
 
-class KpiScreen : Screen() {
+class KpiScreen : Screen<KpiViewState, KpiViewEvent>() {
+  override val name = "kpi"
   override fun toRoute(): Route = KpiRouter.toRoute(this)
-
-  val viewModel by lazy { Di.get<KpiViewModel>() }
+  override fun getViewModel(affinity: Di.Scope): ComposeViewModel<KpiViewState, KpiViewEvent> {
+    return Di.get<KpiViewModel>(affinity = affinity)
+  }
 
   override fun Di.Scope.onDi() {
     autoWire(::KpiViewModel)
   }
 
   @Composable
-  override fun Content() {
-    val viewState = viewModel.viewState()
+  override fun Content(viewState: KpiViewState, onEvent: (KpiViewEvent) -> Unit) {
     KpiScreenContent(
       viewState = viewState,
     )

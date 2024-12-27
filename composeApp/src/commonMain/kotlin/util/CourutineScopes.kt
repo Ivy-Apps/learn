@@ -8,6 +8,6 @@ import kotlin.jvm.JvmInline
 @JvmInline
 value class AppScope internal constructor(val get: CoroutineScope)
 
-fun initAppScope() {
-  AppScope(CoroutineScope(Dispatchers.Main + CoroutineName("App")))
+fun initAppScope(): AppScope {
+  return AppScope(CoroutineScope(Dispatchers.Main + CoroutineName("App")))
 }

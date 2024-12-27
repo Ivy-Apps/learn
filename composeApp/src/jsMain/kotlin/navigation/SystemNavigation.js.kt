@@ -4,9 +4,11 @@ import ivy.di.Di
 import kotlinx.browser.window
 import kotlinx.coroutines.flow.*
 import util.AppScope
+import util.Logger
 
 class WebSystemNavigation(
   private val appScope: AppScope,
+  private val logger: Logger,
 ) : SystemNavigation {
 
   // Initialize with the current route
@@ -14,7 +16,10 @@ class WebSystemNavigation(
   override val currentPath: StateFlow<FullPath> = _pathChange
 
   override val currentRoute: StateFlow<Route>
-    get() = currentPath.map { it.toRoute() }
+    get() = currentPath.map { fullPath ->
+      logger.debug("on path change to '${fullPath.value}'")
+      fullPath.toRoute()
+    }
       .stateIn(
         scope = appScope.get,
         started = SharingStarted.Eagerly,
@@ -34,7 +39,7 @@ class WebSystemNavigation(
     // Emit the initial route on startup is already handled by initializing _routeChange
   }
 
-  override fun navigateTo(screen: Screen) {
+  override fun navigateTo(screen: Screen<*, *>) {
     navigateTo(screen.toFullPath())
   }
 
@@ -43,7 +48,7 @@ class WebSystemNavigation(
     emitCurrentRoute()
   }
 
-  override fun replaceWith(screen: Screen) {
+  override fun replaceWith(screen: Screen<*, *>) {
     replaceWith(screen.toFullPath())
   }
 
@@ -52,7 +57,7 @@ class WebSystemNavigation(
     emitCurrentRoute()
   }
 
-  private fun Screen.toFullPath(): FullPath {
+  private fun Screen<*, *>.toFullPath(): FullPath {
     val route = toRoute()
     val params = buildString {
       for ((key, value) in route.params) {
@@ -77,19 +82,19 @@ class WebSystemNavigation(
 
   private fun getCurrentPath(): FullPath {
     val route = window.location.pathname.trimStart('/')
-    return FullPath(value = route + '?' + window.location.search)
+    return FullPath(value = route + window.location.search)
   }
 
   private fun FullPath.toRoute(): Route {
-    val (path, search) = value.split("?")
+    val parts = value.split("?")
     return Route(
-      path = path,
-      params = parseParams(search)
+      path = parts.getOrElse(0) { "" },
+      params = parts.getOrNull(1).let(::parseParams)
     )
   }
 
-  private fun parseParams(query: String): Map<String, String> {
-    if (query.isEmpty() || query == "?") return emptyMap()
+  private fun parseParams(query: String?): Map<String, String> {
+    if (query.isNullOrEmpty() || query == "?") return emptyMap()
 
     return query.trimStart('?')
       .split("&")
@@ -112,4 +117,5 @@ class WebSystemNavigation(
 
 actual fun systemNavigation(): SystemNavigation = WebSystemNavigation(
   appScope = Di.get(),
+  logger = Di.get(),
 )

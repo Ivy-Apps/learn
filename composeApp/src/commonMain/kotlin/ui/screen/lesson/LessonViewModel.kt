@@ -29,7 +29,7 @@ class LessonViewModel(
   override val screenScope: CoroutineScope,
   private val repository: LessonRepository,
   private val viewStateMapper: LessonViewStateMapper,
-  private val eventHandlers: Set<LessonEventHandler<*>>,
+  private val eventHandlers: LessonScreen.EventHandlers,
   private val analytics: Analytics,
   private val logger: Logger,
 ) : ComposeViewModel<LessonViewState, LessonViewEvent>, LessonVmContext {
@@ -110,7 +110,7 @@ class LessonViewModel(
   }
 
   override fun onEvent(event: LessonViewEvent) {
-    val eventHandler = eventHandlers.firstOrNull { handler ->
+    val eventHandler = eventHandlers.value.firstOrNull { handler ->
       event::class in handler.eventTypes
     }
     checkNotNull(eventHandler) { "EventHandler for ${event::class} is not defined!" }

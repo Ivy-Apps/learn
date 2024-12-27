@@ -11,9 +11,9 @@ interface SystemNavigation {
   val currentRoute: StateFlow<Route>
   val currentPath: StateFlow<FullPath>
 
-  fun navigateTo(screen: Screen)
+  fun navigateTo(screen: Screen<*, *>)
   fun navigateTo(path: FullPath)
-  fun replaceWith(screen: Screen)
+  fun replaceWith(screen: Screen<*, *>)
   fun replaceWith(path: FullPath)
   fun navigateBack(): Boolean
 }
