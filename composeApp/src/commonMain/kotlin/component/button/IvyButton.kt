@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.theme.Gray
 import ui.theme.IvyTheme
@@ -51,7 +52,9 @@ fun IvyButton(
         onClick = onClick
     ) {
         CompositionLocalProvider(
-            LocalTextStyle provides IvyTheme.typography.b1
+            LocalTextStyle provides IvyTheme.typography.b2.copy(
+                fontWeight = FontWeight.Medium
+            )
         ) {
             when {
                 loading -> {

@@ -44,11 +44,11 @@ object MobileTypography : Typography {
 
   override val b1
     @Composable
-    get() = ivyTextStyle(20.sp)
+    get() = ivyTextStyle(16.sp)
 
   override val b2
     @Composable
-    get() = ivyTextStyle(16.sp)
+    get() = ivyTextStyle(14.sp)
 
   override val label
     @Composable
@@ -59,23 +59,23 @@ object MobileTypography : Typography {
 object DesktopTypography : Typography {
   override val h1
     @Composable
-    get() = ivyTextStyle(48.sp)
+    get() = ivyTextStyle(32.sp)
 
   override val h2
     @Composable
-    get() = ivyTextStyle(32.sp)
+    get() = ivyTextStyle(24.sp)
 
   override val b1
     @Composable
-    get() = ivyTextStyle(24.sp)
+    get() = ivyTextStyle(16.sp)
 
   override val b2
     @Composable
-    get() = ivyTextStyle(20.sp)
+    get() = ivyTextStyle(14.sp)
 
   override val label
     @Composable
-    get() = ivyTextStyle(16.sp)
+    get() = ivyTextStyle(12.sp)
 }
 
 @Composable
