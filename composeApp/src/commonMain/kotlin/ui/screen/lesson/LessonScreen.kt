@@ -83,8 +83,8 @@ class LessonScreen(
           QuestionViewEvent.OnAnswerCheckChange::class to Di.get<OnAnswerCheckChangeEventHandler>(),
           QuestionViewEvent.OnCheckClick::class to Di.get<OnCheckClickEventHandler>(),
           LessonViewEvent.OnSoundClick::class to Di.get<OnSoundClickEventHandler>(),
-          OnFinishClickEventHandler::class to Di.get<OnFinishClickEventHandler>(),
           LessonViewEvent.OnChoiceClick::class to Di.get<OnChoiceClickEventHandler>(),
+          LessonViewEvent.OnFinishClick::class to Di.get<OnFinishClickEventHandler>()
         )
       )
     }
