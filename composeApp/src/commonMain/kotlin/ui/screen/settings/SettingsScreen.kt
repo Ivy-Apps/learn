@@ -8,35 +8,38 @@ import ivy.di.autowire.autoWire
 import navigation.Route
 import navigation.Router
 import navigation.Screen
+import ui.ComposeViewModel
 import ui.screen.settings.composable.SettingsContent
 
 object SettingsRouter : Router<SettingsScreen> {
-    const val PATH = "settings"
+  const val PATH = "settings"
 
-    override fun fromRoute(route: Route): Option<SettingsScreen> = option {
-        ensure(route.path == PATH)
-        SettingsScreen()
-    }
+  override fun fromRoute(route: Route): Option<SettingsScreen> = option {
+    ensure(route.path == PATH)
+    SettingsScreen()
+  }
 
-    override fun toRoute(screen: SettingsScreen): Route {
-        return Route(path = PATH)
-    }
+  override fun toRoute(screen: SettingsScreen): Route {
+    return Route(path = PATH)
+  }
 }
 
-class SettingsScreen : Screen() {
-    override fun toRoute(): Route = SettingsRouter.toRoute(this)
+class SettingsScreen : Screen<SettingsViewState, SettingsViewEvent>() {
+  override val name = "settings"
+  override fun toRoute(): Route = SettingsRouter.toRoute(this)
+  override fun getViewModel(affinity: Di.Scope): ComposeViewModel<SettingsViewState, SettingsViewEvent> {
+    return Di.get<SettingsViewModel>(affinity = affinity)
+  }
 
-    override fun Di.Scope.onDi() {
-        autoWire(::SettingsViewModel)
-    }
+  override fun Di.Scope.onDi() {
+    autoWire(::SettingsViewModel)
+  }
 
-    private val viewModel: SettingsViewModel by lazy { Di.get() }
-
-    @Composable
-    override fun Content() {
-        SettingsContent(
-            viewState = viewModel.viewState(),
-            onEvent = viewModel::onEvent
-        )
-    }
+  @Composable
+  override fun Content(viewState: SettingsViewState, onEvent: (SettingsViewEvent) -> Unit) {
+    SettingsContent(
+      viewState = viewState,
+      onEvent = onEvent
+    )
+  }
 }

@@ -4,8 +4,8 @@ import Platform
 import data.MetricsRepository
 import data.storage.LocalStorage
 import ivy.model.analytics.MetricDto
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import util.AppScope
 import util.Logger
 import util.TimeProvider
 import kotlin.uuid.ExperimentalUuidApi
@@ -14,7 +14,7 @@ import kotlin.uuid.Uuid
 class Metrics(
   private val metricsRepository: MetricsRepository,
   private val logger: Logger,
-  private val appScope: CoroutineScope,
+  private val appScope: AppScope,
   private val timeProvider: TimeProvider,
   private val localStorage: LocalStorage,
   private val platform: Platform,
@@ -25,7 +25,7 @@ class Metrics(
     name: String,
     params: Map<String, String>? = null,
   ) {
-    appScope.launch {
+    appScope.get.launch {
       val clientId = ensureClientId()
       val metric = MetricDto(
         clientId = clientId,
@@ -55,7 +55,7 @@ class Metrics(
 
   private fun registerNewClientId(): String = generateClientId().also { newClientId ->
     clientId = newClientId
-    appScope.launch {
+    appScope.get.launch {
       localStorage.putString(KEY_METRICS_CLIENT_ID, newClientId)
     }
   }

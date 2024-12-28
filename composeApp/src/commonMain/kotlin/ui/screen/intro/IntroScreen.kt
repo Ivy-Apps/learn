@@ -8,35 +8,38 @@ import ivy.di.autowire.autoWire
 import navigation.Route
 import navigation.Router
 import navigation.Screen
+import ui.ComposeViewModel
 import ui.screen.intro.composable.IntroContent
 
 object IntroRouter : Router<IntroScreen> {
-    const val PATH = "intro"
+  const val PATH = "intro"
 
-    override fun fromRoute(route: Route): Option<IntroScreen> = option {
-        ensure(route.path == PATH)
-        IntroScreen()
-    }
+  override fun fromRoute(route: Route): Option<IntroScreen> = option {
+    ensure(route.path == PATH)
+    IntroScreen()
+  }
 
-    override fun toRoute(screen: IntroScreen): Route {
-        return Route(PATH)
-    }
+  override fun toRoute(screen: IntroScreen): Route {
+    return Route(PATH)
+  }
 }
 
-class IntroScreen : Screen() {
-    override fun toRoute(): Route = IntroRouter.toRoute(this)
+class IntroScreen : Screen<IntroViewState, IntroViewEvent>() {
+  override val name = "intro"
+  override fun toRoute(): Route = IntroRouter.toRoute(this)
+  override fun getViewModel(affinity: Di.Scope): ComposeViewModel<IntroViewState, IntroViewEvent> {
+    return Di.get<IntroViewModel>(affinity = affinity)
+  }
 
-    override fun Di.Scope.onDi() {
-        autoWire(::IntroViewModel)
-    }
+  override fun Di.Scope.onDi() {
+    autoWire(::IntroViewModel)
+  }
 
-    private val viewModel: IntroViewModel by lazy { Di.get() }
-
-    @Composable
-    override fun Content() {
-        IntroContent(
-            viewState = viewModel.viewState(),
-            onEvent = viewModel::onEvent
-        )
-    }
+  @Composable
+  override fun Content(viewState: IntroViewState, onEvent: (IntroViewEvent) -> Unit) {
+    IntroContent(
+      viewState = viewState,
+      onEvent = onEvent,
+    )
+  }
 }

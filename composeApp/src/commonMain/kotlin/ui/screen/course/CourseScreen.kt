@@ -10,62 +10,65 @@ import ivy.learn.CourseId
 import navigation.Route
 import navigation.Router
 import navigation.Screen
+import ui.ComposeViewModel
 import ui.screen.course.composable.CourseContent
 import ui.screen.course.mapper.CourseViewStateMapper
 
 object CourseRouter : Router<CourseScreen> {
-    const val PATH = "course"
-    const val COURSE_ID = "course_id"
-    const val COURSE_NAME = "course_name"
+  const val PATH = "course"
+  const val COURSE_ID = "course_id"
+  const val COURSE_NAME = "course_name"
 
-    override fun fromRoute(route: Route): Option<CourseScreen> = option {
-        ensure(route.path == PATH)
-        CourseScreen(
-            courseId = route[COURSE_ID].bind().let(::CourseId),
-            courseName = route[COURSE_NAME].bind(),
-        )
-    }
+  override fun fromRoute(route: Route): Option<CourseScreen> = option {
+    ensure(route.path == PATH)
+    CourseScreen(
+      courseId = route[COURSE_ID].bind().let(::CourseId),
+      courseName = route[COURSE_NAME].bind(),
+    )
+  }
 
-    override fun toRoute(screen: CourseScreen): Route {
-        return Route(
-            path = PATH,
-            params = mapOf(
-                COURSE_ID to screen.courseId.value,
-                COURSE_NAME to screen.courseName,
-            )
-        )
-    }
+  override fun toRoute(screen: CourseScreen): Route {
+    return Route(
+      path = PATH,
+      params = mapOf(
+        COURSE_ID to screen.courseId.value,
+        COURSE_NAME to screen.courseName,
+      )
+    )
+  }
 }
 
 class CourseScreen(
+  val courseId: CourseId,
+  val courseName: String,
+) : Screen<CourseViewState, CourseViewEvent>() {
+  override val name = "course"
+  override fun toRoute(): Route = CourseRouter.toRoute(this)
+  override fun getViewModel(affinity: Di.Scope): ComposeViewModel<CourseViewState, CourseViewEvent> {
+    return Di.get<CourseViewModel>(affinity = affinity)
+  }
+
+  override fun Di.Scope.onDi() {
+    autoWire(::CourseViewStateMapper)
+    register {
+      Args(
+        courseId = courseId,
+        courseName = courseName,
+      )
+    }
+    autoWire(::CourseViewModel)
+  }
+
+  @Composable
+  override fun Content(viewState: CourseViewState, onEvent: (CourseViewEvent) -> Unit) {
+    CourseContent(
+      viewState = viewState,
+      onEvent = onEvent,
+    )
+  }
+
+  data class Args(
     val courseId: CourseId,
     val courseName: String,
-) : Screen() {
-    override fun toRoute(): Route = CourseRouter.toRoute(this)
-
-    override fun Di.Scope.onDi() {
-        autoWire(::CourseViewStateMapper)
-        register {
-            CourseViewModel(
-                courseId = courseId,
-                courseName = courseName,
-                navigation = Di.get(),
-                repository = Di.get(),
-                mapper = Di.get(),
-                analytics = Di.get(),
-                screenScope = Di.get(),
-                accessControl = Di.get()
-            )
-        }
-    }
-
-    private val viewModel: CourseViewModel by lazy { Di.get() }
-
-    @Composable
-    override fun Content() {
-        CourseContent(
-            viewState = viewModel.viewState(),
-            onEvent = viewModel::onEvent
-        )
-    }
+  )
 }

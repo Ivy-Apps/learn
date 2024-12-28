@@ -60,6 +60,8 @@ fun IntroLegalText(
     text = text,
     style = IvyTheme.typography.caption.copy(
       textAlign = TextAlign.Center,
+      // TODO: There's a Compose Multiplatform bug so better use default font
+      fontFamily = null,
     ),
     onClick = { offset ->
       val annotation = text.getStringAnnotations(tag = "URL", start = offset, end = offset)

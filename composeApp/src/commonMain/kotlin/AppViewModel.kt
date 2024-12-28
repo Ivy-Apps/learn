@@ -3,6 +3,7 @@ import androidx.compose.runtime.LaunchedEffect
 import domain.analytics.Analytics
 import ivy.di.Di
 import navigation.redirects.GoogleAuthRedirect
+import navigation.redirects.LoggedInRedirect
 import navigation.redirects.LoggedOutUserRedirect
 import util.Logger
 
@@ -15,6 +16,7 @@ class AppViewModel(
         listOf(
             Di.get<GoogleAuthRedirect>(),
             Di.get<LoggedOutUserRedirect>(),
+            Di.get<LoggedInRedirect>(),
         )
     }
 

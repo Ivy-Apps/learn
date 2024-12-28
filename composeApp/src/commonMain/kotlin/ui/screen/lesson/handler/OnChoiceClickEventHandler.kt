@@ -11,8 +11,6 @@ import ui.screen.lesson.mapper.toDomain
 class OnChoiceClickEventHandler(
     private val soundUseCase: SoundUseCase
 ) : LessonEventHandler<LessonViewEvent.OnChoiceClick> {
-    override val eventTypes = setOf(LessonViewEvent.OnChoiceClick::class)
-
     override suspend fun LessonVmContext.handleEvent(event: LessonViewEvent.OnChoiceClick) {
         modifyState { state ->
             val questionId = event.questionId.toDomain()

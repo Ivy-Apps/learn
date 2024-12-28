@@ -16,8 +16,6 @@ class OnContinueClickEventHandler(
   private val soundUseCase: SoundUseCase,
   private val analytics: Analytics,
 ) : LessonEventHandler<LessonViewEvent.OnContinueClick> {
-  override val eventTypes = setOf(LessonViewEvent.OnContinueClick::class)
-
   override suspend fun LessonVmContext.handleEvent(
     event: LessonViewEvent.OnContinueClick
   ) {

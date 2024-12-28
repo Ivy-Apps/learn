@@ -8,10 +8,14 @@ class AccessControl(
   private val navigation: Navigation,
   private val sessionManager: SessionManager,
 ) {
-  suspend fun ensureLoggedIn(block: () -> Unit) {
+  suspend fun ensureLoggedIn(
+    onDenied: (suspend () -> Unit)? = null,
+    block: () -> Unit,
+  ) {
     if (sessionManager.getSession() is Session.LoggedIn) {
       block()
     } else {
+      onDenied?.invoke()
       navigation.navigateTo(IntroScreen())
     }
   }

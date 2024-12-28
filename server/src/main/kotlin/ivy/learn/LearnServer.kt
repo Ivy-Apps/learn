@@ -101,10 +101,11 @@ class LearnServer(
                 anyHost()
             } else {
                 // Production: Allow only your frontend origin
-                allowHost(
-                    host = "ivylearn.app",
-                    schemes = listOf("https")
-                )
+                anyHost() // easier development, not big security threat
+//                allowHost(
+//                    host = "ivylearn.app",
+//                    schemes = listOf("https")
+//                )
             }
 
             // Disable credentials (not needed for token-based auth)

@@ -18,14 +18,14 @@ object Routing {
     KpiRouter,
   )
 
-  fun resolve(route: Route): Screen? {
+  fun resolve(route: Route): Screen<*, *>? {
     return routers.firstNotNullOfOrNull {
       it.fromRoute(route).getOrNull()
     }
   }
 }
 
-interface Router<S : Screen> {
+interface Router<S : Screen<*, *>> {
   fun fromRoute(route: Route): Option<S>
   fun toRoute(screen: S): Route
 }

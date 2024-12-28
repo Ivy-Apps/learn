@@ -1,88 +1,110 @@
 package navigation
 
+import ivy.di.Di
 import kotlinx.browser.window
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
+import util.AppScope
+import util.Logger
 
-class WebSystemNavigation : SystemNavigation {
+class WebSystemNavigation(
+  private val appScope: AppScope,
+  private val logger: Logger,
+) : SystemNavigation {
 
-    // Initialize with the current route
-    private val _routeChange = MutableStateFlow(getCurrentRouteInfo())
-    override val currentRoute: StateFlow<Route> = _routeChange
+  // Initialize with the current route
+  private val _pathChange = MutableStateFlow(getCurrentPath())
+  override val currentPath: StateFlow<FullPath> = _pathChange
 
-    init {
-        setupRouteChangeListener()
+  override val currentRoute: StateFlow<Route>
+    get() = currentPath.map { fullPath ->
+      logger.debug("on path change to '${fullPath.value}'")
+      fullPath.toRoute()
     }
+      .stateIn(
+        scope = appScope.get,
+        started = SharingStarted.Eagerly,
+        initialValue = currentPath.value.toRoute(),
+      )
+
+  init {
+    setupRouteChangeListener()
+  }
 
 
-    private fun setupRouteChangeListener() {
-        // Listen for back/forward navigation using addEventListener
-        window.addEventListener("popstate", {
-            emitCurrentRoute()
-        })
-        // Emit the initial route on startup is already handled by initializing _routeChange
-    }
+  private fun setupRouteChangeListener() {
+    // Listen for back/forward navigation using addEventListener
+    window.addEventListener("popstate", {
+      emitCurrentRoute()
+    })
+    // Emit the initial route on startup is already handled by initializing _routeChange
+  }
 
-    override fun navigateTo(screen: Screen) {
-        window.history.pushState(js("({})"), "", screen.toFullPath())
-        emitCurrentRoute() // Update the route immediately
-    }
+  override fun navigateTo(screen: Screen<*, *>) {
+    navigateTo(screen.toFullPath())
+  }
 
-    override fun replaceWith(screen: Screen) {
-        window.history.replaceState(js("({})"), "", screen.toFullPath())
-        emitCurrentRoute()
-    }
+  override fun navigateTo(path: FullPath) {
+    window.history.pushState(js("({})"), "", path.value)
+    emitCurrentRoute()
+  }
 
-    private fun Screen.toFullPath(): String {
-        val route = toRoute()
-        val params = buildString {
-            for ((key, value) in route.params) {
-                append(if (isEmpty()) '?' else '&')
-                append("$key=$value")
-            }
-        }
-        return "${route.path}$params"
-    }
+  override fun replaceWith(screen: Screen<*, *>) {
+    replaceWith(screen.toFullPath())
+  }
 
-    override fun navigateBack(): Boolean {
-        if (window.history.length <= 1) return false
+  override fun replaceWith(path: FullPath) {
+    window.history.replaceState(js("({})"), "", path.value)
+    emitCurrentRoute()
+  }
 
-        window.history.back() // Let the browser handle back navigation
-        // No need to call emitCurrentRoute() here; the listener will handle it
-        return true
-    }
+  override fun navigateBack(): Boolean {
+    if (window.history.length <= 1) return false
 
-    private fun emitCurrentRoute() {
-        val routeInfo = getCurrentRouteInfo()
-        _routeChange.value = routeInfo // Update the StateFlow with the new route
-    }
+    window.history.back() // Let the browser handle back navigation
+    // No need to call emitCurrentRoute() here; the listener will handle it
+    return true
+  }
 
-    private fun getCurrentRouteInfo(): Route {
-        val route = window.location.pathname.trimStart('/')
-        val params = parseParams(window.location.search)
-        return Route(route, params)
-    }
+  private fun emitCurrentRoute() {
+    _pathChange.value = getCurrentPath()
+  }
 
-    private fun parseParams(query: String): Map<String, String> {
-        if (query.isEmpty() || query == "?") return emptyMap()
+  private fun getCurrentPath(): FullPath {
+    val route = window.location.pathname.trimStart('/')
+    return FullPath(value = route + window.location.search)
+  }
 
-        return query.trimStart('?')
-            .split("&")
-            .mapNotNull {
-                val parts = it.split("=")
-                if (parts.size == 2) {
-                    val key = decodeURIComponent(parts[0])
-                    val value = decodeURIComponent(parts[1])
-                    key to value
-                } else null
-            }
-            .toMap()
-    }
+  private fun FullPath.toRoute(): Route {
+    val parts = value.split("?")
+    return Route(
+      path = parts.getOrElse(0) { "" },
+      params = parts.getOrNull(1).let(::parseParams)
+    )
+  }
 
-    private fun decodeURIComponent(encoded: String): String {
-        return js("decodeURIComponent")(encoded) as String
-    }
+  private fun parseParams(query: String?): Map<String, String> {
+    if (query.isNullOrEmpty() || query == "?") return emptyMap()
+
+    return query.trimStart('?')
+      .split("&")
+      .mapNotNull {
+        val parts = it.split("=")
+        if (parts.size == 2) {
+          val key = decodeURIComponent(parts[0].lowercase())
+          val value = decodeURIComponent(parts[1])
+          key to value
+        } else null
+      }
+      .toMap()
+  }
+
+  private fun decodeURIComponent(encoded: String): String {
+    return js("decodeURIComponent")(encoded) as String
+  }
 }
 
 
-actual fun systemNavigation(): SystemNavigation = WebSystemNavigation()
+actual fun systemNavigation(): SystemNavigation = WebSystemNavigation(
+  appScope = Di.get(),
+  logger = Di.get(),
+)

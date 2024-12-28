@@ -8,8 +8,6 @@ import ui.screen.lesson.LessonVmContext
 class OnSoundClickEventHandler(
     private val soundUseCase: SoundUseCase
 ) : LessonEventHandler<LessonViewEvent.OnSoundClick> {
-    override val eventTypes = setOf(LessonViewEvent.OnSoundClick::class)
-
     override suspend fun LessonVmContext.handleEvent(event: LessonViewEvent.OnSoundClick) {
         soundUseCase.playSound(event.soundUrl)
     }

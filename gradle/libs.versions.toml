@@ -22,8 +22,8 @@ jebrains-exposed = "0.56.0"
 compose-multiplatform = "1.7.1"
 
 [libraries]
-ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.6" }
-ivyApps-learnDsl = { module = "com.ivy-apps:learn-content-dsl", version = "0.0.6" }
+ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.7" }
+ivyApps-learnDsl = { module = "com.ivy-apps:learn-content-dsl", version = "0.0.7" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }

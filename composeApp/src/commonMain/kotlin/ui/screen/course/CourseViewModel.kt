@@ -6,7 +6,6 @@ import data.CourseRepository
 import domain.analytics.Analytics
 import domain.analytics.Source
 import ivy.data.source.model.CourseResponse
-import ivy.learn.CourseId
 import ivy.learn.LessonId
 import ivy.model.analytics.*
 import kotlinx.collections.immutable.persistentListOf
@@ -14,20 +13,24 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import navigation.AccessControl
 import navigation.Navigation
+import navigation.redirects.LoggedInRedirect
+import navigation.toFullPath
 import ui.ComposeViewModel
 import ui.screen.course.mapper.CourseViewStateMapper
 import ui.screen.lesson.LessonScreen
 
 class CourseViewModel(
-  private val courseId: CourseId,
-  private val courseName: String,
+  args: CourseScreen.Args,
   private val navigation: Navigation,
   private val repository: CourseRepository,
   private val mapper: CourseViewStateMapper,
   private val analytics: Analytics,
   private val screenScope: CoroutineScope,
   private val accessControl: AccessControl,
+  private val loggedInRedirect: LoggedInRedirect,
 ) : ComposeViewModel<CourseViewState, CourseViewEvent> {
+  private val courseId = args.courseId
+  private val courseName = args.courseName
 
   private var courseResponse by mutableStateOf<CourseResponse?>(null)
 
@@ -75,14 +78,17 @@ class CourseViewModel(
       }
     )
     screenScope.launch {
-      accessControl.ensureLoggedIn {
-        navigation.navigateTo(
-          LessonScreen(
-            courseId = courseId,
-            lessonId = lessonId,
-            lessonName = event.name,
-          )
-        )
+      val lessonScreen = LessonScreen(
+        courseId = courseId,
+        lessonId = lessonId,
+        lessonName = event.name,
+      )
+      accessControl.ensureLoggedIn(
+        onDenied = {
+          loggedInRedirect.prepare(lessonScreen.toFullPath())
+        }
+      ) {
+        navigation.navigateTo(lessonScreen)
       }
     }
 

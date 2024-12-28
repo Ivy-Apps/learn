@@ -28,9 +28,9 @@ class TopLessonsByDistinctCompletionRateKpi : Kpi {
         }
         .map { (lessonId, views) ->
           val completions = lessonCompletions[lessonId] ?: 0
-          val ratioPercentFormatted = ratioPercentFormatted(completions, views)
+          val ratioPercentFormatted = ratioPercentFormatted(completions, outOf = views)
           val formattedText = "$lessonId: $ratioPercentFormatted ($completions completions / $views views)"
-          ratioPercent(views, completions) to formattedText
+          ratioPercent(completions, outOf = views) to formattedText
         }.sortedByDescending { (completionRatio, _) ->
           completionRatio
         }.joinToString(separator = "\n") { (_, text) ->

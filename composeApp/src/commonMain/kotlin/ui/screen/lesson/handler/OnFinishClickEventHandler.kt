@@ -22,8 +22,6 @@ class OnFinishClickEventHandler(
   private val logger: Logger,
   private val analytics: Analytics,
 ) : LessonEventHandler<LessonViewEvent.OnFinishClick> {
-  override val eventTypes = setOf(LessonViewEvent.OnFinishClick::class)
-
   override suspend fun LessonVmContext.handleEvent(
     event: LessonViewEvent.OnFinishClick
   ) {
