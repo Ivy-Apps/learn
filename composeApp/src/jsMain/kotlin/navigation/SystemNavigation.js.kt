@@ -57,17 +57,6 @@ class WebSystemNavigation(
     emitCurrentRoute()
   }
 
-  private fun Screen<*, *>.toFullPath(): FullPath {
-    val route = toRoute()
-    val params = buildString {
-      for ((key, value) in route.params) {
-        append(if (isEmpty()) '?' else '&')
-        append("$key=$value")
-      }
-    }
-    return FullPath("${route.path}$params")
-  }
-
   override fun navigateBack(): Boolean {
     if (window.history.length <= 1) return false
 

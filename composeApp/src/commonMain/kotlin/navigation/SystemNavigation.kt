@@ -32,4 +32,18 @@ data class Route(
   }
 }
 
+fun Screen<*, *>.toFullPath(): FullPath {
+  return toRoute().toFullPath()
+}
+
+fun Route.toFullPath(): FullPath {
+  val params = buildString {
+    for ((key, value) in params) {
+      append(if (isEmpty()) '?' else '&')
+      append("$key=$value")
+    }
+  }
+  return FullPath("${path}$params")
+}
+
 expect fun systemNavigation(): SystemNavigation

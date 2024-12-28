@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import navigation.AccessControl
 import navigation.Navigation
+import navigation.redirects.LoggedInRedirect
+import navigation.toFullPath
 import ui.ComposeViewModel
 import ui.screen.course.mapper.CourseViewStateMapper
 import ui.screen.lesson.LessonScreen
@@ -25,6 +27,7 @@ class CourseViewModel(
   private val analytics: Analytics,
   private val screenScope: CoroutineScope,
   private val accessControl: AccessControl,
+  private val loggedInRedirect: LoggedInRedirect,
 ) : ComposeViewModel<CourseViewState, CourseViewEvent> {
   private val courseId = args.courseId
   private val courseName = args.courseName
@@ -75,14 +78,17 @@ class CourseViewModel(
       }
     )
     screenScope.launch {
-      accessControl.ensureLoggedIn {
-        navigation.navigateTo(
-          LessonScreen(
-            courseId = courseId,
-            lessonId = lessonId,
-            lessonName = event.name,
-          )
-        )
+      val lessonScreen = LessonScreen(
+        courseId = courseId,
+        lessonId = lessonId,
+        lessonName = event.name,
+      )
+      accessControl.ensureLoggedIn(
+        onDenied = {
+          loggedInRedirect.prepare(lessonScreen.toFullPath())
+        }
+      ) {
+        navigation.navigateTo(lessonScreen)
       }
     }
 

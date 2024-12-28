@@ -29,8 +29,16 @@ class Navigation(
     systemNavigation.navigateTo(screen)
   }
 
+  fun navigateTo(path: FullPath) {
+    systemNavigation.navigateTo(path)
+  }
+
   fun replaceWith(screen: Screen<*, *>) {
     systemNavigation.replaceWith(screen)
+  }
+
+  fun replaceWith(path: FullPath) {
+    systemNavigation.replaceWith(path)
   }
 
   fun navigateBack() {

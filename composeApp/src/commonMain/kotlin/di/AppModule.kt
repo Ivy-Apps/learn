@@ -12,6 +12,7 @@ import ivy.di.autowire.autoWireSingleton
 import navigation.AccessControl
 import navigation.Navigation
 import navigation.redirects.GoogleAuthRedirect
+import navigation.redirects.LoggedInRedirect
 import navigation.redirects.LoggedOutUserRedirect
 import navigation.systemNavigation
 import ui.Toaster
@@ -37,6 +38,7 @@ object AppModule : Di.Module {
       autoWire(::Logger)
       autoWire(::GoogleAuthRedirect)
       autoWire(::LoggedOutUserRedirect)
+      autoWire(::LoggedInRedirect)
       autoWire(::TimeProvider)
       autoWire(::AccessControl)
     }
