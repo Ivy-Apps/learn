@@ -15,7 +15,7 @@ class LoggedOutUserRedirect(
   override suspend fun handle(): Boolean {
     if (sessionManager.getSession() is Session.LoggedOut) {
       val currentPath = navigation.currentPath.value
-      navigation.replaceWith(IntroScreen())
+      navigation.replaceWith(IntroScreen(showLearnMore = true))
       loggedInRedirect.prepare(currentPath)
       return true
     }

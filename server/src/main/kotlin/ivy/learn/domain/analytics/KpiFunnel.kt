@@ -18,10 +18,19 @@ class KpiFunnel {
     val viewCourse = totalDistinctCount(event = "course__view")
     val viewLesson = totalDistinctCount(event = "lesson__view")
     val completeLesson = totalDistinctCount("lesson__complete")
-    val usersCompletedAtLeastTwoLessons = analyticsEventDistinctUsersCountHavingAtLeast(
-      event = "lesson__complete",
-      minEventCount = 2
-    )
+
+    val completeNLessons = listOf(
+      "Complete 2 lessons" to 2,
+      "Complete 3 lessons" to 3,
+      "Complete 5 lessons" to 5,
+      "Complete 10 lessons" to 10,
+    ).map { (name, atLeastN) ->
+      val usersCount = analyticsEventDistinctUsersCountHavingAtLeast(
+        event = "lesson__complete",
+        minEventCount = atLeastN
+      )
+      name to usersCount
+    }
 
     listOf(
       KpiDto(
@@ -44,12 +53,14 @@ class KpiFunnel {
         name = "Complete lesson",
         value = "$completeLesson (${ratioPercentFormatted(completeLesson, outOf = viewLesson)})"
       ),
+    ) + completeNLessons.mapIndexed { i, (name, count) ->
+      val previousCount = completeNLessons.getOrNull(i - 1)?.second ?: completeLesson
       KpiDto(
-        name = "Complete 2 lesson",
-        value = "$usersCompletedAtLeastTwoLessons " +
-            "(${ratioPercentFormatted(usersCompletedAtLeastTwoLessons, outOf = completeLesson)})"
-      ),
-    )
+        name = name,
+        value = "$count " +
+            "(${ratioPercentFormatted(count, outOf = previousCount)})"
+      )
+    }
   }
 
   private fun Transaction.analyticsEventDistinctUsersCountHavingAtLeast(

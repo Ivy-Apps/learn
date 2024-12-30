@@ -16,7 +16,11 @@ class AccessControl(
       block()
     } else {
       onDenied?.invoke()
-      navigation.navigateTo(IntroScreen())
+      navigation.navigateTo(
+        IntroScreen(
+          showLearnMore = false,
+        )
+      )
     }
   }
 }
