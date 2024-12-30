@@ -127,6 +127,8 @@ private fun ButtonsSection(
       modifier = Modifier.defaultMinSize(minWidth = googleButtonWidth),
       onClick = onLearnMoreClick
     )
+  } else {
+    Spacer(Modifier.height(96.dp))
   }
 }
 
