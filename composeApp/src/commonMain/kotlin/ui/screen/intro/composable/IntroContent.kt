@@ -65,7 +65,11 @@ fun IntroContent(
           Spacer(modifier = Modifier.height(48.dp))
           ButtonsSection(
             onContinueWithGoogleClick = { onEvent(IntroViewEvent.OnContinueWithGoogleClick) },
-            onLearnMoreClick = { onEvent(IntroViewEvent.OnLearnMoreClick) }
+            onLearnMoreClick = if (viewState.showLearnMore) {
+              { onEvent(IntroViewEvent.OnLearnMoreClick) }
+            } else {
+              null
+            }
           )
           Spacer(Modifier.height(48.dp))
         }
@@ -100,7 +104,7 @@ private fun IntroAnimation(
 @Composable
 private fun ButtonsSection(
   onContinueWithGoogleClick: () -> Unit,
-  onLearnMoreClick: () -> Unit,
+  onLearnMoreClick: (() -> Unit)?,
 ) {
   val density = LocalDensity.current
   var googleButtonWidth by remember { mutableStateOf(0.dp) }
@@ -110,18 +114,20 @@ private fun ButtonsSection(
     },
     onClick = onContinueWithGoogleClick,
   )
-  Spacer(modifier = Modifier.height(7.dp))
-  Text(
-    text = "or",
-    style = IvyTheme.typography.b2,
-    fontWeight = FontWeight.Medium,
-    color = Gray,
-  )
-  Spacer(modifier = Modifier.height(4.dp))
-  LearnMoreButton(
-    modifier = Modifier.defaultMinSize(minWidth = googleButtonWidth),
-    onClick = onLearnMoreClick
-  )
+  if (onLearnMoreClick != null) {
+    Spacer(modifier = Modifier.height(7.dp))
+    Text(
+      text = "or",
+      style = IvyTheme.typography.b2,
+      fontWeight = FontWeight.Medium,
+      color = Gray,
+    )
+    Spacer(modifier = Modifier.height(4.dp))
+    LearnMoreButton(
+      modifier = Modifier.defaultMinSize(minWidth = googleButtonWidth),
+      onClick = onLearnMoreClick
+    )
+  }
 }
 
 @Composable

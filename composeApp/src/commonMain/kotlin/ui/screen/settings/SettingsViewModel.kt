@@ -103,7 +103,7 @@ class SettingsViewModel(
     logEvent("click_logout")
     scope.launch {
       sessionManager.logout()
-      navigation.replaceWith(IntroScreen())
+      navigation.replaceWith(IntroScreen(showLearnMore = true))
     }
   }
 

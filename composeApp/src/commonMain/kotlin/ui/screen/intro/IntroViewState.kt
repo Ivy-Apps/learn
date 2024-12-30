@@ -1,6 +1,8 @@
 package ui.screen.intro
 
-class IntroViewState
+data class IntroViewState(
+    val showLearnMore: Boolean,
+)
 
 sealed interface IntroViewEvent {
     data object OnContinueWithGoogleClick : IntroViewEvent

@@ -18,6 +18,7 @@ class IntroViewModel(
   private val analytics: Analytics,
   private val scope: CoroutineScope,
   private val navigation: Navigation,
+  private val args: IntroScreen.Args,
 ) : ComposeViewModel<IntroViewState, IntroViewEvent> {
   @Composable
   override fun viewState(): IntroViewState {
@@ -27,8 +28,13 @@ class IntroViewModel(
         event = "intro__view"
       )
     }
-    return IntroViewState()
+    return IntroViewState(
+      showLearnMore = getShowLearnMore()
+    )
   }
+
+  @Composable
+  fun getShowLearnMore(): Boolean = args.showLearnMore
 
   override fun onEvent(event: IntroViewEvent) {
     when (event) {

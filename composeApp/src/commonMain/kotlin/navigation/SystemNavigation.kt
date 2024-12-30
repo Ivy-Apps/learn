@@ -30,6 +30,10 @@ data class Route(
   operator fun get(key: String): Option<String> {
     return params[key]?.some() ?: None
   }
+
+  fun getBoolean(key: String): Option<Boolean> {
+    return params[key]?.toBooleanStrict()?.some() ?: None
+  }
 }
 
 fun Screen<*, *>.toFullPath(): FullPath {
