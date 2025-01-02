@@ -89,9 +89,62 @@ fun highlightSyntax(
   }
 }
 
+class LineCommentProcessor : Processor {
+  private var inComment = false
+
+  private val commentBuffer = StringBuilder()
+
+  override fun AnnotatedString.Builder.process(
+    syntaxHighlight: SyntaxHighlightProvider,
+    keywords: ImmutableMap<String, Color>,
+    char: Char
+  ): Boolean {
+    commentBuffer.append(char)
+    if (inComment || syntaxHighlight.lineComment.startsWith(commentBuffer)) {
+      if (!inComment && syntaxHighlight.lineComment == commentBuffer.toString()) {
+        inComment = true
+      }
+
+      if (char == '\n') {
+        // comment end
+        withStyle(style = SpanStyle(color = Gray)) {
+          append(commentBuffer.toString())
+        }
+        commentBuffer.clear()
+        inComment = false
+      }
+      return true
+    } else {
+      commentBuffer.clear()
+      return false
+    }
+  }
+}
+
+class KeywordProcessor : Processor {
+  override fun AnnotatedString.Builder.process(
+    syntaxHighlight: SyntaxHighlightProvider,
+    keywords: ImmutableMap<String, Color>,
+    char: Char
+  ): Boolean {
+    TODO("Not yet implemented")
+  }
+
+}
+
+interface Processor {
+  fun AnnotatedString.Builder.process(
+    syntaxHighlight: SyntaxHighlightProvider,
+    keywords: ImmutableMap<String, Color>,
+    char: Char
+  ): Boolean
+}
+
 @Immutable
 interface SyntaxHighlightProvider {
   @Composable
   fun rememberKeywords(): ImmutableMap<String, Color>
+
+  val lineComment: String
 }
 
