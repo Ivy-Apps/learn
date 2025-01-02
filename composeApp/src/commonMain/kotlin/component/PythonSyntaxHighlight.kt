@@ -116,4 +116,6 @@ class PythonSyntaxHighlight : SyntaxHighlightProvider {
       )
     }
   }
+
+  override val lineComment = "#"
 }

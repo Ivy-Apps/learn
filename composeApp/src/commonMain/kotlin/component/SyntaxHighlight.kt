@@ -95,10 +95,12 @@ class LineCommentProcessor : Processor {
   private val commentBuffer = StringBuilder()
 
   override fun AnnotatedString.Builder.process(
+    leftOver: String?,
     syntaxHighlight: SyntaxHighlightProvider,
     keywords: ImmutableMap<String, Color>,
     char: Char
-  ): Boolean {
+  ): Processor.Result {
+    leftOver?.let(commentBuffer::append)
     commentBuffer.append(char)
     if (inComment || syntaxHighlight.lineComment.startsWith(commentBuffer)) {
       if (!inComment && syntaxHighlight.lineComment == commentBuffer.toString()) {
@@ -113,20 +115,24 @@ class LineCommentProcessor : Processor {
         commentBuffer.clear()
         inComment = false
       }
-      return true
+      return Processor.Result.Processing
     } else {
-      commentBuffer.clear()
-      return false
+      return Processor.Result.NotMatching(
+        leftOver = commentBuffer.toString()
+      ).also {
+        commentBuffer.clear()
+      }
     }
   }
 }
 
 class KeywordProcessor : Processor {
   override fun AnnotatedString.Builder.process(
+    leftOver: String?,
     syntaxHighlight: SyntaxHighlightProvider,
     keywords: ImmutableMap<String, Color>,
     char: Char
-  ): Boolean {
+  ): Processor.Result {
     TODO("Not yet implemented")
   }
 
@@ -134,10 +140,16 @@ class KeywordProcessor : Processor {
 
 interface Processor {
   fun AnnotatedString.Builder.process(
+    leftOver: String?,
     syntaxHighlight: SyntaxHighlightProvider,
     keywords: ImmutableMap<String, Color>,
     char: Char
-  ): Boolean
+  ): Result
+
+  sealed interface Result {
+    data object Processing : Result
+    data class NotMatching(val leftOver: String) : Result
+  }
 }
 
 @Immutable
