@@ -9,6 +9,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentListOf
 import ui.theme.Gray
 
 @Composable
@@ -17,138 +18,176 @@ fun highlightSyntax(
   syntaxHighlight: SyntaxHighlightProvider,
 ): AnnotatedString {
   val keywords = syntaxHighlight.rememberKeywords()
-  val commentColor = Gray
+
+  val processors = remember {
+    persistentListOf(
+      LineCommentProcessor(),
+      KeywordsProcessor(),
+    )
+  }
 
   return remember(code, syntaxHighlight) {
     buildAnnotatedString {
-      val buffer = StringBuilder()
-      val commentBuffer = StringBuilder()
-      var i = 0
-      var inComment = false
-
-      fun processBufferedKeyword() {
-        val word = buffer.toString()
-        if (word in keywords) {
-          withStyle(style = SpanStyle(color = keywords[word]!!)) {
-            append(word)
-          }
-        } else {
-          append(word)
-        }
-        buffer.clear()
-      }
-
-      while (i < code.length) {
-        val char = code[i]
-
-        if (inComment) {
-          // Append the entire comment in gray
-          commentBuffer.append(char)
-          if (char == '\n') {
-            withStyle(style = SpanStyle(color = commentColor)) {
-              append(commentBuffer.toString())
+      var leftOver: String? = null
+      var currentProcessor: Processor? = null
+      for (char in code) {
+        for (prc in processors) {
+          val res = prc.process(
+            leftOver = leftOver,
+            syntaxHighlight = syntaxHighlight,
+            keywords = keywords,
+            char = char,
+          )
+          when (res) {
+            is Processor.Result.NotMatched -> {
+              currentProcessor = null
+              leftOver = res.leftOver
             }
-            commentBuffer.clear()
-            inComment = false
+
+            Processor.Result.Processing -> {
+              if (currentProcessor != null && prc.id != currentProcessor.id) {
+                with(currentProcessor) {
+                  onInterrupt(
+                    leftOver = leftOver,
+                    syntaxHighlight = syntaxHighlight,
+                    keywords = keywords,
+                    char = char
+                  )
+                }
+              }
+              currentProcessor = prc
+              leftOver = null
+              break
+            }
+
+            is Processor.Result.Commit -> {
+              if (currentProcessor != null && prc.id != currentProcessor.id) {
+                with(currentProcessor) {
+                  onInterrupt(
+                    leftOver = leftOver,
+                    syntaxHighlight = syntaxHighlight,
+                    keywords = keywords,
+                    char = char
+                  )
+                }
+              }
+              currentProcessor = null
+              with(res) {
+                change()
+              }
+              leftOver = null
+            }
           }
-          i++
-          continue
         }
-
-        when {
-          char == '#' -> {
-            // Process existing buffer before starting a comment
-            processBufferedKeyword()
-
-            // Start processing the comment
-            commentBuffer.append(char)
-            inComment = true
-          }
-
-          char.isLetterOrDigit() || char == '_' -> {
-            // Accumulate potential keyword
-            buffer.append(char)
-          }
-
-          else -> {
-            // non-word character
-            // ' ' (space), new line or tabulation
-            processBufferedKeyword()
-
-            // Append the non-word character
-            append(char.toString())
-          }
-        }
-
-        i++
       }
-
-      // Handle any remaining keyword in the buffer
-      processBufferedKeyword()
     }
   }
 }
 
 class LineCommentProcessor : Processor {
+  override val id = "line-comment"
+
   private var inComment = false
 
   private val commentBuffer = StringBuilder()
 
-  override fun AnnotatedString.Builder.process(
+  override fun process(
     leftOver: String?,
     syntaxHighlight: SyntaxHighlightProvider,
     keywords: ImmutableMap<String, Color>,
     char: Char
   ): Processor.Result {
     leftOver?.let(commentBuffer::append)
-    commentBuffer.append(char)
-    if (inComment || syntaxHighlight.lineComment.startsWith(commentBuffer)) {
-      if (!inComment && syntaxHighlight.lineComment == commentBuffer.toString()) {
+    val lineComment = syntaxHighlight.lineComment
+    if (
+      inComment ||
+      (commentBuffer.isNotEmpty() && commentBuffer.startsWith(lineComment)) ||
+      lineComment.startsWith(char)
+    ) {
+      commentBuffer.append(char)
+      if (!inComment && lineComment in commentBuffer) {
         inComment = true
       }
 
       if (char == '\n') {
         // comment end
-        withStyle(style = SpanStyle(color = Gray)) {
-          append(commentBuffer.toString())
+        return Processor.Result.Commit({
+          withStyle(style = SpanStyle(color = Gray)) {
+            append(commentBuffer.toString())
+          }
+        }).also {
+          commentBuffer.clear()
+          inComment = false
         }
-        commentBuffer.clear()
-        inComment = false
       }
       return Processor.Result.Processing
     } else {
-      return Processor.Result.NotMatching(
+      return Processor.Result.NotMatched(
         leftOver = commentBuffer.toString()
       ).also {
         commentBuffer.clear()
       }
     }
   }
+
+  override fun AnnotatedString.Builder.onInterrupt(
+    leftOver: String?,
+    syntaxHighlight: SyntaxHighlightProvider,
+    keywords: ImmutableMap<String, Color>,
+    char: Char
+  ) {
+    // do nothing
+  }
 }
 
-class KeywordProcessor : Processor {
-  override fun AnnotatedString.Builder.process(
+class KeywordsProcessor : Processor {
+  override val id = "keywords"
+
+  private val buffer = StringBuilder()
+
+  override fun process(
     leftOver: String?,
     syntaxHighlight: SyntaxHighlightProvider,
     keywords: ImmutableMap<String, Color>,
     char: Char
   ): Processor.Result {
+    TODO()
+  }
+
+  private fun Char.isWordChar() = isLetterOrDigit() || this == '_'
+
+  override fun AnnotatedString.Builder.onInterrupt(
+    leftOver: String?,
+    syntaxHighlight: SyntaxHighlightProvider,
+    keywords: ImmutableMap<String, Color>,
+    char: Char
+  ) {
     TODO("Not yet implemented")
   }
 
 }
 
 interface Processor {
-  fun AnnotatedString.Builder.process(
+  val id: String
+
+  fun process(
     leftOver: String?,
     syntaxHighlight: SyntaxHighlightProvider,
     keywords: ImmutableMap<String, Color>,
     char: Char
   ): Result
 
+  fun AnnotatedString.Builder.onInterrupt(
+    leftOver: String?,
+    syntaxHighlight: SyntaxHighlightProvider,
+    keywords: ImmutableMap<String, Color>,
+    char: Char
+  )
+
   sealed interface Result {
     data object Processing : Result
-    data class NotMatching(val leftOver: String) : Result
+    data class Commit(val change: AnnotatedString.Builder.() -> Unit) : Result
+    data class NotMatched(val leftOver: String) : Result
   }
 }
 
