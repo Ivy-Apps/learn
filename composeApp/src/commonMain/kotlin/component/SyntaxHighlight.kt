@@ -21,8 +21,8 @@ fun highlightSyntax(
 
   val processors = remember {
     persistentListOf(
-      LineCommentProcessor(),
-      KeywordsProcessor(),
+      LineCommentProcessor(syntaxHighlight),
+      KeywordsProcessor(keywords),
     )
   }
 
@@ -30,117 +30,111 @@ fun highlightSyntax(
     buildAnnotatedString {
       var leftOver: String? = null
       var currentProcessor: Processor? = null
-      for (char in code) {
-        for (prc in processors) {
-          val res = prc.process(
-            leftOver = leftOver,
-            syntaxHighlight = syntaxHighlight,
-            keywords = keywords,
-            char = char,
-          )
-          when (res) {
-            is Processor.Result.NotMatched -> {
-              currentProcessor = null
-              leftOver = res.leftOver
-            }
 
-            Processor.Result.Processing -> {
-              if (currentProcessor != null && prc.id != currentProcessor.id) {
-                with(currentProcessor) {
-                  onInterrupt(
-                    leftOver = leftOver,
-                    syntaxHighlight = syntaxHighlight,
-                    keywords = keywords,
-                    char = char
-                  )
-                }
-              }
-              currentProcessor = prc
-              leftOver = null
-              break
-            }
+      var processorIndex = 0
+      var i = 0
+      var previousI = i
 
-            is Processor.Result.Commit -> {
-              if (currentProcessor != null && prc.id != currentProcessor.id) {
-                with(currentProcessor) {
-                  onInterrupt(
-                    leftOver = leftOver,
-                    syntaxHighlight = syntaxHighlight,
-                    keywords = keywords,
-                    char = char
-                  )
-                }
-              }
-              currentProcessor = null
-              with(res) {
-                change()
-              }
-              leftOver = null
-            }
+      while (i < code.length) {
+        val processor = processors[processorIndex]
+        val res = processor.process(
+          code = code,
+          i = i
+        )
+        when (res) {
+          is Processor.Result.Commit -> {
+            with(res) { change() }
+            previousI = i
+            processorIndex = 0
           }
+
+          Processor.Result.NotMatched -> {
+            i = previousI
+            processorIndex++
+          }
+
+          Processor.Result.Processing -> TODO()
         }
       }
     }
   }
 }
 
-class LineCommentProcessor : Processor {
+class LineCommentProcessor(
+  syntaxHighlight: SyntaxHighlightProvider,
+) : Processor {
   override val id = "line-comment"
 
   private var inComment = false
+  private val lineComment = syntaxHighlight.lineComment
 
-  private val commentBuffer = StringBuilder()
+  private var startIndex: Int = Processor.NONE
 
   override fun process(
-    leftOver: String?,
-    syntaxHighlight: SyntaxHighlightProvider,
-    keywords: ImmutableMap<String, Color>,
-    char: Char
+    code: String,
+    i: Int,
   ): Processor.Result {
-    leftOver?.let(commentBuffer::append)
-    val lineComment = syntaxHighlight.lineComment
-    if (
-      inComment ||
-      (commentBuffer.isNotEmpty() && commentBuffer.startsWith(lineComment)) ||
-      lineComment.startsWith(char)
-    ) {
-      commentBuffer.append(char)
-      if (!inComment && lineComment in commentBuffer) {
-        inComment = true
-      }
-
-      if (char == '\n') {
-        // comment end
-        return Processor.Result.Commit({
-          withStyle(style = SpanStyle(color = Gray)) {
-            append(commentBuffer.toString())
+    if (startIndex == -1) {
+      startIndex = i
+    }
+    return when {
+      inComment -> {
+        if (code[i] == '\n') {
+          Processor.Result.Commit {
+            withStyle(style = SpanStyle(color = Gray)) {
+              append(code.slice(startIndex..i))
+            }
+          }.also {
+            inComment = false
+            startIndex = Processor.NONE
           }
-        }).also {
-          commentBuffer.clear()
-          inComment = false
+        } else {
+          Processor.Result.Processing
         }
       }
-      return Processor.Result.Processing
-    } else {
-      return Processor.Result.NotMatched(
-        leftOver = commentBuffer.toString()
-      ).also {
-        commentBuffer.clear()
+
+      startWithComment(code, i) -> {
+        inComment = true
+        Processor.Result.Processing
+      }
+
+      matchesComment(code, i) -> {
+        Processor.Result.Processing
+      }
+
+      else -> {
+        startIndex = Processor.NONE
+        Processor.Result.NotMatched
       }
     }
   }
 
-  override fun AnnotatedString.Builder.onInterrupt(
-    leftOver: String?,
-    syntaxHighlight: SyntaxHighlightProvider,
-    keywords: ImmutableMap<String, Color>,
-    char: Char
-  ) {
-    // do nothing
+  private fun startWithComment(
+    code: String,
+    i: Int,
+  ): Boolean {
+    return (i - startIndex + 1) >= lineComment.length &&
+        code.slice(startIndex until lineComment.length) == lineComment
   }
+
+  private fun matchesComment(
+    code: String,
+    i: Int
+  ): Boolean {
+    for (j in startIndex..i) {
+      if (code[i] != lineComment[j - startIndex]) {
+        return true
+      }
+    }
+    return true
+  }
+
+  override fun AnnotatedString.Builder.onInterrupt(code: String, i: Int) {}
 }
 
-class KeywordsProcessor : Processor {
+class KeywordsProcessor(
+  private val keywords: ImmutableMap<String, Color>,
+) : Processor {
   override val id = "keywords"
 
   private val buffer = StringBuilder()
@@ -171,23 +165,23 @@ interface Processor {
   val id: String
 
   fun process(
-    leftOver: String?,
-    syntaxHighlight: SyntaxHighlightProvider,
-    keywords: ImmutableMap<String, Color>,
-    char: Char
+    code: String,
+    i: Int,
   ): Result
 
   fun AnnotatedString.Builder.onInterrupt(
-    leftOver: String?,
-    syntaxHighlight: SyntaxHighlightProvider,
-    keywords: ImmutableMap<String, Color>,
-    char: Char
+    code: String,
+    i: Int,
   )
 
   sealed interface Result {
     data object Processing : Result
     data class Commit(val change: AnnotatedString.Builder.() -> Unit) : Result
-    data class NotMatched(val leftOver: String) : Result
+    data object NotMatched : Result
+  }
+
+  companion object {
+    val NONE = -1
   }
 }
 
