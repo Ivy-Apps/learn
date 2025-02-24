@@ -1,25 +1,25 @@
 [versions]
-agp = "8.7.2"
+agp = "8.8.1"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.3"
+androidx-activityCompose = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
 androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-arrow = "1.2.4"
+arrow = "2.0.0"
 junit = "4.13.2"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 ktor = "3.0.1"
-ktor-client = "3.0.1"
-logback = "1.5.12"
+ktor-client = "3.1.0"
+logback = "1.5.16"
 kotest = "5.9.1"
-kotlin-coroutines = "1.9.0"
-jebrains-exposed = "0.56.0"
-compose-multiplatform = "1.7.1"
+kotlin-coroutines = "1.10.1"
+jebrains-exposed = "0.59.0"
+compose-multiplatform = "1.8.0+dev2123"
 
 [libraries]
 ivyApps-di = { module = "com.ivy-apps:di", version = "0.0.7" }
@@ -49,7 +49,7 @@ kotest-property-arrow = { module = "io.kotest.extensions:kotest-property-arrow",
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.8" }
-kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.3" }
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.0" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client" }
@@ -69,11 +69,11 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-mockk = { module = "io.mockk:mockk", version = "1.13.13" }
-postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.4" }
+mockk = { module = "io.mockk:mockk", version = "1.13.16" }
+postgresql-driver = { module = "org.postgresql:postgresql", version = "42.7.5" }
 thirdparty-lottieMultiplatform = { module = "io.github.alexzhirkevich:compottie", version = "1.1.2" }
-thirdparty-kamel = { module = "media.kamel:kamel-image-default", version = "1.0.1" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
+thirdparty-kamel = { module = "media.kamel:kamel-image-default", version = "1.0.3" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.2" }
 
 [bundles]
 arrow = [
@@ -125,4 +125,4 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version = "2.1.0-1.0.29" }
+ksp = { id = "com.google.devtools.ksp", version = "2.1.10-1.0.30" }
